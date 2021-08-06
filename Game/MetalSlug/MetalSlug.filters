@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="System\Graphics.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Window.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Program.cpp" />
+    <ClCompile Include="Renders\IA\VertexBuffer.cpp" />
+    <ClCompile Include="Renders\IA\IndexBuffer.cpp" />
+    <ClCompile Include="Renders\IA\InputLayout.cpp" />
+    <ClCompile Include="Renders\Shaders\IShader.cpp" />
+    <ClCompile Include="Renders\Shaders\VertexShader.cpp" />
+    <ClCompile Include="Renders\Shaders\PixelShader.cpp" />
+    <ClCompile Include="Renders\Resources\VertexType.cpp" />
+    <ClCompile Include="Renders\RS\RasterizerState.cpp" />
+    <ClCompile Include="System\Time.cpp" />
+    <ClCompile Include="System\Mouse.cpp" />
+    <ClCompile Include="System\Keyboard.cpp" />
+    <ClCompile Include="Geometry\Square.cpp" />
+    <ClCompile Include="Utilities\Math.cpp" />
+    <ClCompile Include="Geometry\Line.cpp" />
+    <ClCompile Include="Geometry\Circle.cpp" />
+    <ClCompile Include="Utilities\RenderTexture.cpp" />
+    <ClCompile Include="Geometry\FilledCircle.cpp" />
+    <ClCompile Include="Renders\Resources\ViewFactory.cpp" />
+    <ClCompile Include="Geometry\TextureRect.cpp" />
+    <ClCompile Include="Utilities\String.cpp" />
+    <ClCompile Include="Utilities\Path.cpp" />
+    <ClCompile Include="System\GUI\Gui.cpp" />
+    <ClCompile Include="Utilities\SoundSystem.cpp" />
+    <ClCompile Include="Renders\Resources\Texture2D.cpp" />
+    <ClCompile Include="Utilities\Animator.cpp" />
+    <ClCompile Include="Geometry\AnimationRect.cpp" />
+    <ClCompile Include="System\Camera.cpp" />
+    <ClCompile Include="TileMap\TileSet.cpp" />
+    <ClCompile Include="TileMap\TileMap.cpp" />
+    <ClCompile Include="Scenes\Scene_Stage.cpp" />
+    <ClCompile Include="Scenes\Scene_Intro.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="System\Graphics.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Window.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Program.h" />
+    <ClInclude Include="Renders\IA\VertexBuffer.h" />
+    <ClInclude Include="Renders\IA\IndexBuffer.h" />
+    <ClInclude Include="Renders\IA\InputLayout.h" />
+    <ClInclude Include="Renders\Shaders\IShader.h" />
+    <ClInclude Include="Renders\Shaders\VertexShader.h" />
+    <ClInclude Include="Renders\Shaders\PixelShader.h" />
+    <ClInclude Include="Renders\Resources\VertexType.h" />
+    <ClInclude Include="Renders\Resources\ShaderBuffer.h" />
+    <ClInclude Include="Renders\Resources\GlobalBuffer.h" />
+    <ClInclude Include="Renders\RS\RasterizerState.h" />
+    <ClInclude Include="System\Time.h" />
+    <ClInclude Include="System\Mouse.h" />
+    <ClInclude Include="System\Keyboard.h" />
+    <ClInclude Include="Geometry\Square.h" />
+    <ClInclude Include="Utilities\Math.h" />
+    <ClInclude Include="Geometry\Line.h" />
+    <ClInclude Include="Geometry\Circle.h" />
+    <ClInclude Include="Scenes\Scene.h" />
+    <ClInclude Include="Scenes\SceneList.h" />
+    <ClInclude Include="Utilities\RenderTexture.h" />
+    <ClInclude Include="Geometry\FilledCircle.h" />
+    <ClInclude Include="Renders\Resources\ViewFactory.h" />
+    <ClInclude Include="Geometry\TextureRect.h" />
+    <ClInclude Include="Utilities\String.h" />
+    <ClInclude Include="Utilities\Path.h" />
+    <ClInclude Include="System\GUI\Gui.h" />
+    <ClInclude Include="Utilities\SoundSystem.h" />
+    <ClInclude Include="Renders\Resources\Texture2D.h" />
+    <ClInclude Include="Utilities\Animator.h" />
+    <ClInclude Include="Geometry\AnimationRect.h" />
+    <ClInclude Include="System\Camera.h" />
+    <ClInclude Include="Utilities\Singleton.h" />
+    <ClInclude Include="TileMap\TileSet.h" />
+    <ClInclude Include="TileMap\TileMap.h" />
+    <ClInclude Include="Scenes\Scene_Stage.h" />
+    <ClInclude Include="Scenes\Scene_Intro.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="System">
+      <UniqueIdentifier>{76e8886d-7502-45a7-9cde-76153d31c328}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
