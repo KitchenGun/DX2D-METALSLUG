@@ -11,7 +11,7 @@ Stage::~Stage()
 
 void Stage::Init()
 {
-	player = new Player(Vector3(0, 100, 0), Vector3(3, 3, 1), 0);
+	player = new Player(Vector3(100, 100, 0), Vector3(3, 3, 1), 0);
 }
 
 void Stage::Update()

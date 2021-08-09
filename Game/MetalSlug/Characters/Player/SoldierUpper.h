@@ -10,4 +10,9 @@ public://持失切 社瑚切 update render
 	void SetClip(string name);
 public:
 	void SetAnimation();
+	void SetSize(Vector3 tempSize);
+	void SetPos(Vector3 tempPos);
+	void SetPlayer(Player* player) { this->player = player; }
+private:
+	Player* player;
 };

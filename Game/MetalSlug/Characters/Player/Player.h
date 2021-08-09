@@ -16,6 +16,12 @@ enum class SOLDIER
 	MARCO
 };
 
+enum class DIRECTION
+{
+	NONE=0,
+	LEFT,
+	RIGHT
+};
 
 class Player
 {
@@ -24,9 +30,11 @@ public://持失切 社瑚切 update render
 	~Player();
 	void Update();
 	void Render();
-
+	void Input();
 public:
 	Vector3 GetPos() { return pos; }
+	float GetSize() { return size; }
+	DIRECTION GetDir() { return dir; }
 protected:
 	HP PlayerHP = 0;
 	JUMPPOW PlayerJumpPow = 0;
@@ -39,4 +47,6 @@ private:
 	SoldierUpper* upperBody = nullptr;
 
 	Vector3 pos;
+	float size;
+	DIRECTION dir=DIRECTION::NONE;
 };
