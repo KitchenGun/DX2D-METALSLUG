@@ -26,7 +26,7 @@ public://持失切 社瑚切 update render
 	void Render();
 
 public:
-		
+	Vector3 GetPos() { return pos; }
 protected:
 	HP PlayerHP = 0;
 	JUMPPOW PlayerJumpPow = 0;
@@ -37,4 +37,6 @@ protected:
 private:
 	SoldierLower* lowerBody = nullptr;
 	SoldierUpper* upperBody = nullptr;
+
+	Vector3 pos;
 };

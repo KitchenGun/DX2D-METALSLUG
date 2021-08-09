@@ -7,6 +7,7 @@ public://持失切 社瑚切 update render
 	void Update() override;
 	void Render() override;
 
+	void SetClip(string name);
 public:
 	void SetAnimation();
 };

@@ -25,9 +25,14 @@ void SoldierUpper::Render()
 	PlayerAnimationRect::Render();
 }
 
+void SoldierUpper::SetClip(string name)
+{
+	animator->SetCurrentAnimClip(String::ToWString(name));
+}
+
 void SoldierUpper::SetAnimation()
 {//텍스쳐 주소 입력하여서 텍스쳐 자원 제작
-	texture = new Texture2D(L"./_Textures/Character/Idle/Upper.png");
+	texture = new Texture2D(L"./_Textures/Character/Idle/RUpper.png");
 	//idle
 	animClips.push_back(new AnimationClip(L"Idle", texture, 4, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	animator = new Animator(animClips);
