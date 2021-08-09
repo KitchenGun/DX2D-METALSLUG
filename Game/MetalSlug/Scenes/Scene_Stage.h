@@ -12,6 +12,6 @@ public:
 	void PostRender() override;
 
 private:
-	TextureRect* background=nullptr;
-	Texture2D* mapTex=nullptr;
+	AnimationRect* Map = nullptr;
+	Player* player = nullptr;
 };

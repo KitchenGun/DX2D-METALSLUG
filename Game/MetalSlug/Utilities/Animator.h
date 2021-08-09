@@ -10,7 +10,7 @@ public:
 	Vector2 GetKeyframe(UINT index) { return keyframes[index]; }//쌓아둔 키 프레임의 인덱스를 통해서 포지션 정보를 획득
 	Vector2 GetTexelFrameSize() { return texelFrameSize; }
 	UINT GetFrameCount() { return frameCount; }
-	UINT GetLastFrameIndex() { return keyframes.size()-1; } //마지막 값을 받는 것이다 그렇기 때문에 -1하는 것이다.
+	int GetLastFrameIndex() { return keyframes.size()-1; } //마지막 값을 받는 것이다 그렇기 때문에 -1하는 것이다.
 	bool GetIsReverse() { return bReverse; }
 
 	wstring GetClipName() { return clipName; }

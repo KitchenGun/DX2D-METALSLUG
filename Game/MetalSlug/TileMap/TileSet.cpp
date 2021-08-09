@@ -31,7 +31,9 @@ void TileSet::GUI()
 			for (UINT x = 0; x < tileXCount; x++)
 			{
 				ImGui::PushID(x + (y*tileYCount));//순서대로 id설정
-				if(ImGui::ImageButton(texId,ImVec2(x*texelTileSize.x,y*texelTileSize.y),ImVec2(texelTileSize.x+(x*texelTileSize.x),texelTileSize.y+(y*texelTileSize.y))));
+				if(ImGui::ImageButton(texId,ImVec2(x*texelTileSize.x,y*texelTileSize.y),
+					ImVec2(texelTileSize.x+(x*texelTileSize.x),
+						texelTileSize.y+(y*texelTileSize.y))));
 				{
 					selectedStartUv = Vector2(x*texelTileSize.x, y*texelTileSize.y);
 				}

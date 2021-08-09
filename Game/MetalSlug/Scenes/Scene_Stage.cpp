@@ -7,20 +7,17 @@ Stage::Stage()
 
 Stage::~Stage()
 {
-	SAFE_DELETE(background);
-	SAFE_DELETE(mapTex);
 }
 
 void Stage::Init()
 {
-	background = new TextureRect(Vector3(0, 0, 0), Vector3(269 *5, 2327 *5, 1), 0);
-	//mapTex = new Texture2D(L"./_Textures/Map.png");
-	//background->SetSRV(mapTex->GetSRV());
+	player = new Player(Vector3(0, 100, 0), Vector3(3, 3, 1), 0);
 }
 
 void Stage::Update()
 {
-	Camera::Get()->Move(Vector3(0,0,0) + Vector3(0, 200, 0));
+	player->Update();
+	Camera::Get()->Move(Vector3(0, 0, 0));
 }
 
 void Stage::PreRender()
@@ -29,8 +26,7 @@ void Stage::PreRender()
 
 void Stage::Render()
 {
-	background->Render();
-	
+	player->Render();
 }
 
 void Stage::PostRender()

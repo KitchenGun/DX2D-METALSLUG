@@ -15,7 +15,5 @@ public:
 	int index=0;
 
 private:
-	TextureRect* background;
-	Texture2D* mapTex = nullptr;
 private:
 };

@@ -1,6 +1,11 @@
 #pragma once
 
+#pragma warning(disable: 26812)//dx 파일 경고 안보이게 만듬
 #pragma warning(disable: 26595)//dx 파일 경고 안보이게 만듬
+#pragma warning(disable: 26495)//dx 파일 경고 안보이게 만듬
+#pragma warning(disable: 4390)//dx 파일 경고 안보이게 만듬
+#pragma warning(disable: 4244)//dx 파일 경고 안보이게 만듬
+
 #define NOMINMAX  //DX의 기본 최소 최대 정의 쓰지 않겠다
 #define no_init_all//2017만 존재하는 버그 2019에서 수정됨
 

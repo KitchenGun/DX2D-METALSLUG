@@ -44,7 +44,7 @@ Camera::Camera()
 	D3DXMatrixLookAtLH(&view,&Vector3(0,0,0),&Vector3(0,0,1), &Vector3(0, 1, 0));
 	//좌하단 원점이 아닌 화면기준을 원점으로 잡음
 	//잘건드리면 확대기능 만들수있을 것 같다
-	D3DXMatrixOrthoLH(&proj, WinMaxWidth, WinMaxHeight, 0, 1);
+	D3DXMatrixOrthoOffCenterLH(&proj, 0, WinMaxWidth, 0, WinMaxHeight, 0, 1);
 	VPBuffer->SetView(view);
 	VPBuffer->SetProjection(proj);
 }

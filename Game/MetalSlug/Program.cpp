@@ -17,7 +17,7 @@ void Program::Init()
 {
 	sceneList.push_back(new Intro());
 	sceneList.push_back(new Stage());
-	currentScene = sceneList[0];
+	currentScene = sceneList[1];
 	currentScene->Init();
 }
 
