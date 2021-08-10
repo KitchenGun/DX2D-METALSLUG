@@ -10,6 +10,17 @@ enum class STATE
 	SLUG
 };
 
+enum class SOLDIERSTATE
+{
+	NONE = 0,
+	IDLE,
+	MOVE,
+	CROUCH,
+	CROUCHMOVE,
+	JUMP,
+	JUMPMOVE
+};
+
 enum class SOLDIER
 {
 	NONE=0,
@@ -35,6 +46,7 @@ public:
 	Vector3 GetPos() { return pos; }
 	float GetSize() { return size; }
 	DIRECTION GetDir() { return dir; }
+	bool GetisCrouch() { return isCrouch; }
 protected:
 	HP PlayerHP = 0;
 	JUMPPOW PlayerJumpPow = 0;
@@ -46,7 +58,9 @@ private:
 	SoldierLower* lowerBody = nullptr;
 	SoldierUpper* upperBody = nullptr;
 
+	bool isCrouch = false;
 	Vector3 pos;
 	float size;
 	DIRECTION dir=DIRECTION::NONE;
+	SOLDIERSTATE soldierState = SOLDIERSTATE::NONE;
 };

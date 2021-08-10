@@ -6,6 +6,7 @@ SoldierUpper::SoldierUpper(Vector3 position, Vector3 size, float rotation)
 	:PlayerAnimationRect(position, size, rotation)
 {
 	SetAnimation();
+	texture = new Texture2D(L"./_Textures/Character/Idle/RUpper.png");
 	animator->SetCurrentAnimClip(L"Idle");
 	animator->bLoop = true;
 }
@@ -23,6 +24,7 @@ void SoldierUpper::Update()
 void SoldierUpper::Render()
 {
 	PlayerAnimationRect::Render();
+
 }
 
 void SoldierUpper::SetClip(string name)
@@ -43,15 +45,55 @@ void SoldierUpper::SetClip(string name)
 			name = "LIdle";
 		}
 	}
+	if (name == "CrouchIdle")
+	{
+		if (player->GetDir() == DIRECTION::RIGHT)
+		{
+			SetSize(Vector3(34 * player->GetSize(), 24 * player->GetSize(), 1));
+			SetPos(player->GetPos());
+			texture = new Texture2D(L"./_Textures/Character/Crouch/RCrouchIdle.png");
+			name == "RCrouchIdle";
+		}
+		else if (player->GetDir() == DIRECTION::LEFT)
+		{
+			SetSize(Vector3(34 * player->GetSize(), 24 * player->GetSize(), 1));
+			SetPos(player->GetPos()+Vector3(-12*player->GetSize(),0,0));
+			texture = new Texture2D(L"./_Textures/Character/Crouch/LCrouchIdle.png");
+			name == "LCrouchIdle";
+		}
+	}
+	else if (name == "RCrouchMove")
+	{
+		SetSize(Vector3(37 * player->GetSize(), 24 * player->GetSize(), 1));
+		SetPos(player->GetPos());
+		texture = new Texture2D(L"./_Textures/Character/Crouch/RCrouchMove.png");
+	}
+	else if (name == "LCrouchMove")
+	{
+		SetSize(Vector3(37 * player->GetSize(), 24 * player->GetSize(), 1));
+		SetPos(player->GetPos() + Vector3(-15 * player->GetSize(), 0, 0));
+		texture = new Texture2D(L"./_Textures/Character/Crouch/LCrouchMove.png");
+	}
 	animator->SetCurrentAnimClip(String::ToWString(name));
+	cout << animator->GetCurrentFrame() << endl;
 }
 
 void SoldierUpper::SetAnimation()
 {//텍스쳐 주소 입력하여서 텍스쳐 자원 제작
-	texture = new Texture2D(L"./_Textures/Character/Idle/RUpper.png");
 	//idle
-	animClips.push_back(new AnimationClip(L"RIdle", texture, 4, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
-	animClips.push_back(new AnimationClip(L"LIdle", texture, 4, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+	texture = new Texture2D(L"./_Textures/Character/Idle/RUpper.png");
+	animClips.push_back(new AnimationClip(L"RIdle", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/Character/Idle/LUpper.png");
+	animClips.push_back(new AnimationClip(L"LIdle", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+	//crouch
+	texture = new Texture2D(L"./_Textures/Character/Crouch/RCrouchIdle.png");
+	animClips.push_back(new AnimationClip(L"RCrouchIdle", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/Character/Crouch/LCrouchIdle.png");
+	animClips.push_back(new AnimationClip(L"LCrouchIdle", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/Character/Crouch/RCrouchMove.png");
+	animClips.push_back(new AnimationClip(L"RCrouchMove", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/Character/Crouch/LCrouchIdle.png");
+	animClips.push_back(new AnimationClip(L"LCrouchMove", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
 	animator = new Animator(animClips);
 }
 

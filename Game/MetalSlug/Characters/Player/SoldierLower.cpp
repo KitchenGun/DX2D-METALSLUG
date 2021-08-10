@@ -22,7 +22,10 @@ void SoldierLower::Update()
 
 void SoldierLower::Render()
 {
-	PlayerAnimationRect::Render();
+	if (!player->GetisCrouch())
+	{
+		PlayerAnimationRect::Render();
+	}
 }
 
 void SoldierLower::SetClip(string name)

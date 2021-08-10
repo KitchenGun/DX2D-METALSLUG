@@ -31,24 +31,69 @@ void Player::Render()
 
 void Player::Input()
 {
-	if (Keyboard::Get()->Press(VK_RIGHT))
+
+	if (Keyboard::Get()->Press(VK_DOWN))//아래키 입력
+	{
+		isCrouch = true;
+		soldierState = SOLDIERSTATE::CROUCH;
+		upperBody->SetClip("CrouchIdle");
+	}
+	else if (Keyboard::Get()->Up(VK_DOWN))
+	{
+		isCrouch = false;
+		soldierState = SOLDIERSTATE::IDLE;
+		lowerBody->SetClip("Idle");
+		upperBody->SetClip("Idle");
+	}
+
+	cout << isCrouch << endl;
+	if (Keyboard::Get()->Press(VK_RIGHT))//우측 입력
 	{
 		dir = DIRECTION::RIGHT;
-		lowerBody->SetClip("RMove");
-		upperBody->SetClip("Idle");
+		if (isCrouch)
+		{
+			soldierState = SOLDIERSTATE::CROUCHMOVE;
+			upperBody->SetClip("RCrouchMove");
+		}
+		else
+		{
+			soldierState = SOLDIERSTATE::MOVE;
+			lowerBody->SetClip("RMove");
+			upperBody->SetClip("Idle");
+		}
 	}
-	else if(Keyboard::Get()->Press(VK_LEFT))
+	else if (Keyboard::Get()->Press(VK_LEFT))//좌측 입력
 	{
 		dir = DIRECTION::LEFT;
-		lowerBody->SetClip("LMove");
-		upperBody->SetClip("Idle");
+		if (isCrouch)
+		{
+			soldierState = SOLDIERSTATE::CROUCHMOVE;
+			upperBody->SetClip("LCrouchMove");
+		}
+		else
+		{
+			soldierState = SOLDIERSTATE::MOVE;
+			lowerBody->SetClip("LMove");
+			upperBody->SetClip("Idle");
+		}
 	}
-	else
+	else if (Keyboard::Get()->Up(VK_RIGHT) || Keyboard::Get()->Up(VK_LEFT))//좌우측 입력 종료
 	{
-		lowerBody->SetClip("Idle");
+		if (isCrouch)
+		{
+			soldierState = SOLDIERSTATE::CROUCH;
+			upperBody->SetClip("CrouchIdle");
+		}
+		else
+		{
+			soldierState = SOLDIERSTATE::IDLE;
+			lowerBody->SetClip("Idle");
+			upperBody->SetClip("Idle");
+		}
 	}
-
-
 }
+
+
+
 
 
