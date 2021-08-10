@@ -7,7 +7,7 @@ SoldierUpper::SoldierUpper(Vector3 position, Vector3 size, float rotation)
 {
 	SetAnimation();
 	texture = new Texture2D(L"./_Textures/Character/Idle/RUpper.png");
-	animator->SetCurrentAnimClip(L"Idle");
+	animator->SetCurrentAnimClip(L"RIdle");
 	animator->bLoop = true;
 }
 
@@ -32,6 +32,7 @@ void SoldierUpper::SetClip(string name)
 	if (name == "Idle")
 	{
 		SetSize(Vector3(30 * player->GetSize(), 30 * player->GetSize(), 1));
+		animator->bLoop = true;
 		if (player->GetDir() == DIRECTION::RIGHT)
 		{
 			SetPos(player->GetPos() + Vector3(0, 8 * player->GetSize(), 0));
@@ -47,10 +48,12 @@ void SoldierUpper::SetClip(string name)
 	}
 	if (name == "CrouchIdle")
 	{
+		animator->bLoop = true;
 		if (player->GetDir() == DIRECTION::RIGHT)
 		{
 			SetSize(Vector3(34 * player->GetSize(), 24 * player->GetSize(), 1));
 			SetPos(player->GetPos());
+			animator->bLoop = true;
 			texture = new Texture2D(L"./_Textures/Character/Crouch/RCrouchIdle.png");
 			name == "RCrouchIdle";
 		}
@@ -58,24 +61,43 @@ void SoldierUpper::SetClip(string name)
 		{
 			SetSize(Vector3(34 * player->GetSize(), 24 * player->GetSize(), 1));
 			SetPos(player->GetPos()+Vector3(-12*player->GetSize(),0,0));
+			animator->bLoop = true;
 			texture = new Texture2D(L"./_Textures/Character/Crouch/LCrouchIdle.png");
 			name == "LCrouchIdle";
 		}
 	}
-	else if (name == "RCrouchMove")
+	if (name == "RCrouchMove")
 	{
 		SetSize(Vector3(37 * player->GetSize(), 24 * player->GetSize(), 1));
 		SetPos(player->GetPos());
+		animator->bLoop = true;
 		texture = new Texture2D(L"./_Textures/Character/Crouch/RCrouchMove.png");
 	}
-	else if (name == "LCrouchMove")
+	if (name == "LCrouchMove")
 	{
 		SetSize(Vector3(37 * player->GetSize(), 24 * player->GetSize(), 1));
 		SetPos(player->GetPos() + Vector3(-15 * player->GetSize(), 0, 0));
+		animator->bLoop = true;
 		texture = new Texture2D(L"./_Textures/Character/Crouch/LCrouchMove.png");
 	}
+	if (name == "Jump")
+	{
+		SetSize(Vector3(33 * player->GetSize(), 26 * player->GetSize(), 1));
+		animator->bLoop = false;
+		if (player->GetDir() == DIRECTION::RIGHT)
+		{
+			SetPos(player->GetPos() + Vector3(-8 * player->GetSize(), 20*player->GetSize(), 0));
+			texture = new Texture2D(L"./_Textures/Character/Jump/Upper/RJumpHandUpper.png");
+			name = "RJumpHandRunUpper";
+		}
+		else if (player->GetDir() == DIRECTION::LEFT)
+		{
+			SetPos(player->GetPos() + Vector3(-5 * player->GetSize(), 20 * player->GetSize(), 0));
+			texture = new Texture2D(L"./_Textures/Character/Jump/Upper/LJumpHandUpper.png");
+			name = "LJumpHandUpper";
+		}
+	}
 	animator->SetCurrentAnimClip(String::ToWString(name));
-	cout << animator->GetCurrentFrame() << endl;
 }
 
 void SoldierUpper::SetAnimation()
@@ -94,6 +116,15 @@ void SoldierUpper::SetAnimation()
 	animClips.push_back(new AnimationClip(L"RCrouchMove", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	texture = new Texture2D(L"./_Textures/Character/Crouch/LCrouchIdle.png");
 	animClips.push_back(new AnimationClip(L"LCrouchMove", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+	//Jump
+	texture = new Texture2D(L"./_Textures/Character/Jump/Upper/LJumpHandUpper.png");
+	animClips.push_back(new AnimationClip(L"LJumpHandUpper", texture, 6, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight()},true));//Jump
+	texture = new Texture2D(L"./_Textures/Character/Jump/Upper/RJumpHandUpper.png");
+	animClips.push_back(new AnimationClip(L"RJumpHandUpper", texture, 6, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight()}));
+	texture = new Texture2D(L"./_Textures/Character/Jump/Upper/LJumpHandRunUpper.png");
+	animClips.push_back(new AnimationClip(L"RJumpHandRunUpper", texture, 6, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));//Jump
+	texture = new Texture2D(L"./_Textures/Character/Jump/Upper/RJumpHandRunUpper.png");
+	animClips.push_back(new AnimationClip(L"RJumpHandRunUpper", texture, 6, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	animator = new Animator(animClips);
 }
 

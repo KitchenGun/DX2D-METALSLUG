@@ -31,6 +31,12 @@ void Player::Render()
 
 void Player::Input()
 {
+	if (Keyboard::Get()->Down('S'))
+	{
+		soldierState = SOLDIERSTATE::JUMP;
+		lowerBody->SetClip("Jump");
+		upperBody->SetClip("Jump");
+	}
 
 	if (Keyboard::Get()->Press(VK_DOWN))//아래키 입력
 	{
@@ -46,7 +52,6 @@ void Player::Input()
 		upperBody->SetClip("Idle");
 	}
 
-	cout << isCrouch << endl;
 	if (Keyboard::Get()->Press(VK_RIGHT))//우측 입력
 	{
 		dir = DIRECTION::RIGHT;
