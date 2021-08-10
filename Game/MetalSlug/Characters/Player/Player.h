@@ -47,6 +47,7 @@ public:
 	float GetSize() { return size; }
 	DIRECTION GetDir() { return dir; }
 	bool GetisCrouch() { return isCrouch; }
+	bool GetisMove() { return isMove; }
 protected:
 	HP PlayerHP = 0;
 	JUMPPOW PlayerJumpPow = 0;
@@ -58,7 +59,8 @@ private:
 	SoldierLower* lowerBody = nullptr;
 	SoldierUpper* upperBody = nullptr;
 
-	bool isCrouch = false;
+	bool isCrouch = false;//앉기 키를 누른경우
+	bool isMove = false;//움직이는 경우
 	Vector3 pos;
 	float size;
 	DIRECTION dir=DIRECTION::NONE;

@@ -63,18 +63,38 @@ void SoldierLower::SetClip(string name)
 	}
 	else if (name == "Jump")
 	{
-		SetSize(Vector3(21 * player->GetSize(), 24 * player->GetSize(), 1));
-		SetPos(player->GetPos());
-		animator->bLoop = false;
-		if (player->GetDir() == DIRECTION::RIGHT)
+		if (player->GetisMove())
 		{
-			texture = new Texture2D(L"./_Textures/Character/Jump/Lower/RJumpLower.png");
-			name = "RJumpLower";
+			SetSize(Vector3(33 * player->GetSize(), 21 * player->GetSize(), 1));
+			animator->bLoop = false;
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				SetPos(player->GetPos());
+				texture = new Texture2D(L"./_Textures/Character/Jump/Lower/RJumpMoveLower.png");
+				name = "RJumpMoveLower";
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				SetPos(player->GetPos());
+				texture = new Texture2D(L"./_Textures/Character/Jump/Lower/LJumpMoveLower.png");
+				name = "LJumpMoveLower";
+			}
 		}
-		else if (player->GetDir() == DIRECTION::LEFT)
+		else
 		{
-			texture = new Texture2D(L"./_Textures/Character/Jump/Lower/LJumpLower.png");
-			name = "LJumpLower";
+			SetSize(Vector3(21 * player->GetSize(), 24 * player->GetSize(), 1));
+			SetPos(player->GetPos());
+			animator->bLoop = false;
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				texture = new Texture2D(L"./_Textures/Character/Jump/Lower/RJumpLower.png");
+				name = "RJumpLower";
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				texture = new Texture2D(L"./_Textures/Character/Jump/Lower/LJumpLower.png");
+				name = "LJumpLower";
+			}
 		}
 	}
 	animator->SetCurrentAnimClip(String::ToWString(name));
@@ -99,7 +119,7 @@ void SoldierLower::SetAnimation()
 	animClips.push_back(new AnimationClip(L"RJumpLower", texture, 6, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 
 	texture = new Texture2D(L"./_Textures/Character/Jump/Lower/LJumpMoveLower.png");
-	animClips.push_back(new AnimationClip(L"LJumpMoveLower", texture, 6, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));//Jump
+	animClips.push_back(new AnimationClip(L"LJumpMoveLower", texture, 6, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() },true));//Jump
 	texture = new Texture2D(L"./_Textures/Character/Jump/Lower/RJumpMoveLower.png");
 	animClips.push_back(new AnimationClip(L"RJumpMoveLower", texture, 6, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	animator = new Animator(animClips);
