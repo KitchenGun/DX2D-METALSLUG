@@ -31,6 +31,38 @@ void SoldierUpper::Update()
 	{
 		SetPos(player->GetPos() + Vector3(-8 * player->GetSize(), 20 * player->GetSize(), 0));
 	}
+	else if (upperState == UPPERSTATE::HandUp)
+	{
+		switch (lowerAnimRect->GetlowerState())
+		{
+		case LOWERSTATE::IDLE:
+		{
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				SetPos(player->GetPos() + Vector3(-2 * player->GetSize(), 14 * player->GetSize(), 0));
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				SetPos(player->GetPos() + Vector3(-8 * player->GetSize(), 14 * player->GetSize(), 0));
+			}
+			break;
+		}
+		case LOWERSTATE::MOVE:
+		{
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				SetPos(player->GetPos() + Vector3(-2 * player->GetSize(), 16 * player->GetSize(), 0));
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				SetPos(player->GetPos() + Vector3(-10 * player->GetSize(), 16 * player->GetSize(), 0));
+			}
+			break;
+		}
+		default:
+			break;
+		}
+	}
 }
 
 void SoldierUpper::Render()
@@ -97,7 +129,25 @@ void SoldierUpper::SetClip(string name)
 		animator->bLoop = true;
 		texture = new Texture2D(L"./_Textures/Character/Crouch/LCrouchMove.png");
 	}
-	if (name == "Jump")
+	if (name == "Upside")
+	{
+		upperState = UPPERSTATE::HandUp;
+		SetSize(Vector3(30 * player->GetSize(), 27 * player->GetSize(), 1)); 
+		animator->bLoop = true;
+		if (player->GetDir() == DIRECTION::RIGHT)
+		{
+			SetPos(player->GetPos() + Vector3(-2*player->GetSize(), 14 * player->GetSize(), 0));
+			texture = new Texture2D(L"./_Textures/Character/Upside/RUpsideUpper.png");
+			name = "RUpsideUpper";
+		}
+		else if (player->GetDir() == DIRECTION::LEFT)
+		{
+			SetPos(player->GetPos() + Vector3(-8 * player->GetSize(), 14 * player->GetSize(), 0));
+			texture = new Texture2D(L"./_Textures/Character/Upside/LUpsideUpper.png");
+			name = "LUpsideUpper";
+		}
+	}
+	else if (name == "Jump")
 	{
 		
 		if (player->GetisCrouch())
@@ -192,6 +242,11 @@ void SoldierUpper::SetAnimation()
 	animClips.push_back(new AnimationClip(L"LCrouchJumpHandUpper", texture, 1, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));//crouchjump
 	texture = new Texture2D(L"./_Textures/Character/Jump/Upper/RCrouchJumpHandUpper.png");
 	animClips.push_back(new AnimationClip(L"RCrouchJumpHandUpper", texture, 1, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	//handUp
+	texture = new Texture2D(L"./_Textures/Character/Upside/LUpsideUpper.png");
+	animClips.push_back(new AnimationClip(L"LUpsideUpper", texture, 4, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));//crouchjump
+	texture = new Texture2D(L"./_Textures/Character/Upside/RUpsideUpper.png");
+	animClips.push_back(new AnimationClip(L"RUpsideUpper", texture, 4, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	animator = new Animator(animClips);
 }
 

@@ -12,6 +12,7 @@ Player::Player(Vector3 position, Vector3 size, float rotation)
 	upperBody = new SoldierUpper(position + Vector3(0, 8 * this->size.x, 0), Vector3(30 * this->size.x, 30 * this->size.x, 1), 0);
 	lowerBody->SetPlayer(this);
 	upperBody->SetPlayer(this);
+	upperBody->SetLowerAnimRect(lowerBody);
 }
 
 Player::~Player()
@@ -53,7 +54,16 @@ void Player::Input()
 		lowerBody->SetClip("Idle");
 		upperBody->SetClip("Idle");
 	}
-
+	if (Keyboard::Get()->Press(VK_UP))
+	{
+		isHandUp = true;
+		upperBody->SetClip("Upside");
+	}
+	else if (Keyboard::Get()->Up(VK_UP))
+	{
+		isHandUp = false; 
+		upperBody->SetClip("Idle");
+	}
 	if (Keyboard::Get()->Press(VK_RIGHT))//우측 입력
 	{
 		isMove = true;
@@ -61,7 +71,12 @@ void Player::Input()
 		Move(Vector3(PlayerSpeed, 0, 0));
 		if (soldierState != SOLDIERSTATE::JUMP)
 		{
-			if (isCrouch)
+			if (isHandUp)
+			{
+				lowerBody->SetClip("RMove");
+				upperBody->SetClip("Upside");
+			}
+			else if (isCrouch)
 			{
 				soldierState = SOLDIERSTATE::CROUCHMOVE;
 				upperBody->SetClip("RCrouchMove");
@@ -81,7 +96,12 @@ void Player::Input()
 		Move(Vector3(-PlayerSpeed, 0, 0));
 		if (soldierState != SOLDIERSTATE::JUMP)
 		{
-			if (isCrouch)
+			if (isHandUp)
+			{
+				lowerBody->SetClip("LMove");
+				upperBody->SetClip("Upside");
+			}
+			else if (isCrouch)
 			{
 				soldierState = SOLDIERSTATE::CROUCHMOVE;
 				upperBody->SetClip("LCrouchMove");

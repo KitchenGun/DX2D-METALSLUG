@@ -7,6 +7,7 @@ enum class UPPERSTATE
 	LJUMP,
 	RJUMP,
 	JUMPRUN,
+	HandUp
 };
 
 
@@ -23,7 +24,9 @@ public:
 	void SetSize(Vector3 tempSize);
 	void SetPos(Vector3 tempPos);
 	void SetPlayer(Player* player) { this->player = player; }
+	void SetLowerAnimRect(SoldierLower* val) { lowerAnimRect = val; }
 private:
 	Player* player;
 	UPPERSTATE upperState=UPPERSTATE::NONE;
+	SoldierLower* lowerAnimRect;
 };

@@ -59,7 +59,7 @@ void SoldierLower::SetClip(string name)
 	}
 	else if (name == "RMove")
 	{
-		lowerState == LOWERSTATE::MOVE;
+		lowerState = LOWERSTATE::MOVE;
 		SetSize(Vector3(26 * player->GetSize(), 20 * player->GetSize(), 1));
 		SetPos(player->GetPos() + Vector3(-4 * player->GetSize(), 0, 0));
 		animator->bLoop = true;

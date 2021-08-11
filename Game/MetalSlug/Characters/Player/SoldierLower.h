@@ -23,6 +23,7 @@ public:
 	void SetSize(Vector3 tempSize);
 	void SetPos(Vector3 tempPos);
 	void SetPlayer(Player* player) { this->player = player; }
+	LOWERSTATE GetlowerState() { return lowerState; }
 private:
 	Player* player;
 	LOWERSTATE lowerState;

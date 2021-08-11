@@ -64,6 +64,7 @@ private:
 	bool isGround = false;
 	bool isCrouch = false;//앉기 키를 누른경우
 	bool isMove = false;//움직이는 경우
+	bool isHandUp = false;
 	DIRECTION dir=DIRECTION::NONE;
 	SOLDIERSTATE soldierState = SOLDIERSTATE::NONE;
 };
