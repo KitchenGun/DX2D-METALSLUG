@@ -2,12 +2,14 @@
 #include "Player.h"
 
 Player::Player(Vector3 position, Vector3 size, float rotation)
+	:
+	AnimationRect(position,size,rotation)
 {
-	pos = position;
-	this->size = size.x;
+	this->position = position;
+	this->size = size;
 	dir = DIRECTION::RIGHT;
-	lowerBody = new SoldierLower(position, Vector3(21* this->size, 16 * this->size, 1), 0);
-	upperBody = new SoldierUpper(position + Vector3(0, 8 * this->size, 0), Vector3(30 * this->size, 30 * this->size, 1), 0);
+	lowerBody = new SoldierLower(position, Vector3(21* this->size.x, 16 * this->size.x, 1), 0);
+	upperBody = new SoldierUpper(position + Vector3(0, 8 * this->size.x, 0), Vector3(30 * this->size.x, 30 * this->size.x, 1), 0);
 	lowerBody->SetPlayer(this);
 	upperBody->SetPlayer(this);
 }
@@ -56,6 +58,7 @@ void Player::Input()
 	{
 		isMove = true;
 		dir = DIRECTION::RIGHT;
+		Move(Vector3(PlayerSpeed, 0, 0));
 		if (soldierState != SOLDIERSTATE::JUMP)
 		{
 			if (isCrouch)
@@ -75,6 +78,7 @@ void Player::Input()
 	{
 		isMove = true;
 		dir = DIRECTION::LEFT;
+		Move(Vector3(-PlayerSpeed, 0, 0));
 		if (soldierState != SOLDIERSTATE::JUMP)
 		{
 			if (isCrouch)
@@ -106,6 +110,22 @@ void Player::Input()
 			upperBody->SetClip("Idle");
 		}
 	}
+}
+
+void Player::Move(Vector3 tempPos)
+{
+	tempPos.x *= Time::Delta();
+	if (isCrouch)
+	{
+		tempPos.x /= 3;
+	}
+
+
+	this->position += tempPos;
+	D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
+
+	world = S * R * T;
+	WB->SetWorld(world);
 }
 
 

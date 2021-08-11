@@ -1,6 +1,15 @@
 #pragma once
 class Player;
 
+enum class LOWERSTATE
+{
+	NONE=0,
+	IDLE,
+	MOVE,
+	JUMP,
+	JUMPMOVE
+};
+
 class SoldierLower : public PlayerAnimationRect
 {
 public:
@@ -16,4 +25,5 @@ public:
 	void SetPlayer(Player* player) { this->player = player; }
 private:
 	Player* player;
+	LOWERSTATE lowerState;
 };

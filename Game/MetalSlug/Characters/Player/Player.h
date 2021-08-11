@@ -18,7 +18,7 @@ enum class SOLDIERSTATE
 	CROUCH,
 	CROUCHMOVE,
 	JUMP,
-	JUMPMOVE
+	CrouchJump
 };
 
 enum class SOLDIER
@@ -34,35 +34,36 @@ enum class DIRECTION
 	RIGHT
 };
 
-class Player
+class Player : public AnimationRect
 {
 public://생성자 소멸자 update render
 	Player(Vector3 position, Vector3 size, float rotation);
 	~Player();
-	void Update();
-	void Render();
+	void Update() override;
+	void Render() override;
 	void Input();
+	void Move(Vector3 tempPos);
+
 public:
-	Vector3 GetPos() { return pos; }
-	float GetSize() { return size; }
+	Vector3 GetPos() { return position; }
+	float GetSize() { return size.x; }
 	DIRECTION GetDir() { return dir; }
 	bool GetisCrouch() { return isCrouch; }
 	bool GetisMove() { return isMove; }
+	bool GetisGround() { return isGround; }
 protected:
 	HP PlayerHP = 0;
 	JUMPPOW PlayerJumpPow = 0;
-	MOVESPEED PlayerSpeed = 0;
+	MOVESPEED PlayerSpeed = 150.0f;
 	STATE PlayerState = STATE::NONE;
 	SOLDIER PlayerCharacter = SOLDIER::NONE;
 
 private:
 	SoldierLower* lowerBody = nullptr;
 	SoldierUpper* upperBody = nullptr;
-
+	bool isGround = false;
 	bool isCrouch = false;//앉기 키를 누른경우
 	bool isMove = false;//움직이는 경우
-	Vector3 pos;
-	float size;
 	DIRECTION dir=DIRECTION::NONE;
 	SOLDIERSTATE soldierState = SOLDIERSTATE::NONE;
 };

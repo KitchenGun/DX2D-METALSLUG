@@ -19,6 +19,14 @@ SoldierLower::~SoldierLower()
 void SoldierLower::Update()
 {
 	PlayerAnimationRect::Update();
+	if (lowerState == LOWERSTATE::JUMPMOVE)
+	{
+		SetPos(player->GetPos());
+	}
+	else if (lowerState == LOWERSTATE::JUMP)
+	{
+		SetPos(player->GetPos());
+	}
 }
 
 void SoldierLower::Render()
@@ -29,10 +37,12 @@ void SoldierLower::Render()
 	}
 }
 
+
 void SoldierLower::SetClip(string name)
 {
 	if (name == "Idle")
 	{
+		lowerState = LOWERSTATE::IDLE;
 		SetSize(Vector3(21 * player->GetSize(), 16 * player->GetSize(), 1));
 		SetPos(player->GetPos());
 		animator->bLoop = true;
@@ -49,6 +59,7 @@ void SoldierLower::SetClip(string name)
 	}
 	else if (name == "RMove")
 	{
+		lowerState == LOWERSTATE::MOVE;
 		SetSize(Vector3(26 * player->GetSize(), 20 * player->GetSize(), 1));
 		SetPos(player->GetPos() + Vector3(-4 * player->GetSize(), 0, 0));
 		animator->bLoop = true;
@@ -56,6 +67,7 @@ void SoldierLower::SetClip(string name)
 	}
 	else if (name == "LMove")
 	{
+		lowerState = LOWERSTATE::MOVE;
 		SetSize(Vector3(26 * player->GetSize(), 20 * player->GetSize(), 1));
 		SetPos(player->GetPos() + Vector3(-4 * player->GetSize(), 0, 0));
 		animator->bLoop = true;
@@ -63,8 +75,10 @@ void SoldierLower::SetClip(string name)
 	}
 	else if (name == "Jump")
 	{
+
 		if (player->GetisMove())
 		{
+			lowerState = LOWERSTATE::JUMPMOVE;
 			SetSize(Vector3(33 * player->GetSize(), 21 * player->GetSize(), 1));
 			animator->bLoop = false;
 			if (player->GetDir() == DIRECTION::RIGHT)
@@ -82,6 +96,7 @@ void SoldierLower::SetClip(string name)
 		}
 		else
 		{
+			lowerState = LOWERSTATE::JUMP;
 			SetSize(Vector3(21 * player->GetSize(), 24 * player->GetSize(), 1));
 			SetPos(player->GetPos());
 			animator->bLoop = false;

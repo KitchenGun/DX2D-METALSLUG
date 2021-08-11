@@ -1,4 +1,15 @@
 #pragma once
+enum class UPPERSTATE
+{
+	NONE=0,
+	IDLE,
+	CROUCH,
+	LJUMP,
+	RJUMP,
+	JUMPRUN,
+};
+
+
 class SoldierUpper : public PlayerAnimationRect//upper
 {
 public://持失切 社瑚切 update render
@@ -6,7 +17,6 @@ public://持失切 社瑚切 update render
 	~SoldierUpper();
 	void Update() override;
 	void Render() override;
-
 	void SetClip(string name);
 public:
 	void SetAnimation();
@@ -15,4 +25,5 @@ public:
 	void SetPlayer(Player* player) { this->player = player; }
 private:
 	Player* player;
+	UPPERSTATE upperState=UPPERSTATE::NONE;
 };
