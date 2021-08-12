@@ -19,14 +19,7 @@ SoldierLower::~SoldierLower()
 void SoldierLower::Update()
 {
 	PlayerAnimationRect::Update();
-	if (lowerState == LOWERSTATE::JUMPMOVE)
-	{
-		SetPos(player->GetPos());
-	}
-	else if (lowerState == LOWERSTATE::JUMP)
-	{
-		SetPos(player->GetPos());
-	}
+	SetPos(player->GetPosition());
 }
 
 void SoldierLower::Render()
@@ -44,7 +37,6 @@ void SoldierLower::SetClip(string name)
 	{
 		lowerState = LOWERSTATE::IDLE;
 		SetSize(Vector3(21 * player->GetSize(), 16 * player->GetSize(), 1));
-		SetPos(player->GetPos());
 		animator->bLoop = true;
 		if (player->GetDir() == DIRECTION::RIGHT)
 		{
@@ -61,7 +53,6 @@ void SoldierLower::SetClip(string name)
 	{
 		lowerState = LOWERSTATE::MOVE;
 		SetSize(Vector3(26 * player->GetSize(), 20 * player->GetSize(), 1));
-		SetPos(player->GetPos() + Vector3(-4 * player->GetSize(), 0, 0));
 		animator->bLoop = true;
 		texture = new Texture2D(L"./_Textures/Character/Move/RMove.png");
 	}
@@ -69,7 +60,6 @@ void SoldierLower::SetClip(string name)
 	{
 		lowerState = LOWERSTATE::MOVE;
 		SetSize(Vector3(26 * player->GetSize(), 20 * player->GetSize(), 1));
-		SetPos(player->GetPos() + Vector3(-4 * player->GetSize(), 0, 0));
 		animator->bLoop = true;
 		texture = new Texture2D(L"./_Textures/Character/Move/LMove.png");
 	}
@@ -83,13 +73,11 @@ void SoldierLower::SetClip(string name)
 			animator->bLoop = false;
 			if (player->GetDir() == DIRECTION::RIGHT)
 			{
-				SetPos(player->GetPos());
 				texture = new Texture2D(L"./_Textures/Character/Jump/Lower/RJumpMoveLower.png");
 				name = "RJumpMoveLower";
 			}
 			else if (player->GetDir() == DIRECTION::LEFT)
 			{
-				SetPos(player->GetPos());
 				texture = new Texture2D(L"./_Textures/Character/Jump/Lower/LJumpMoveLower.png");
 				name = "LJumpMoveLower";
 			}
@@ -98,7 +86,6 @@ void SoldierLower::SetClip(string name)
 		{
 			lowerState = LOWERSTATE::JUMP;
 			SetSize(Vector3(21 * player->GetSize(), 24 * player->GetSize(), 1));
-			SetPos(player->GetPos());
 			animator->bLoop = false;
 			if (player->GetDir() == DIRECTION::RIGHT)
 			{

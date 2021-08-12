@@ -11,13 +11,19 @@ Stage::~Stage()
 
 void Stage::Init()
 {
-	player = new Player(Vector3(100, 100, 0), Vector3(3, 3, 1), 0);
+	Map = new TextureRect(Vector3(4153*4 / 2, 306 * 4 / 2, 0), Vector3(4153 * 4, 306 *4, 1), 0);
+	Map->SetSRV(L"./_Textures/Map/Map.png");
+
+	ground = new Ground(Vector3(0,100,0),Vector3(100*4,100,1),0);
+	player = new Player(Vector3(100, 200, 0), Vector3(3, 3, 1), 0);
 }
 
 void Stage::Update()
 {
-	player->Update();
-	Camera::Get()->Move(Vector3(0, 0, 0));
+	player->SetisGround(Math::Intersect(player, ground));
+	player->Update(); 
+	ground->Update();
+	//Camera::Get()->Move(player->GetPosition()-Vector3(200,100,0));
 }
 
 void Stage::PreRender()
@@ -25,8 +31,10 @@ void Stage::PreRender()
 }
 
 void Stage::Render()
-{
+{//랜더 순서 명확하게하기
+	Map->Render();
 	player->Render();
+	ground->Render();
 }
 
 void Stage::PostRender()

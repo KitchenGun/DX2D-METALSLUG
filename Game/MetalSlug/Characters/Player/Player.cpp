@@ -24,6 +24,40 @@ void Player::Update()
 	Input();
 	lowerBody->Update();
 	upperBody->Update();
+	//jump
+	Jump();
+	if (isGround)
+	{
+		isJumpEnd = false;
+		nJumpCount = 0; 
+		if (lowerBody->GetlowerState() == LOWERSTATE::JUMP|| lowerBody->GetlowerState() == LOWERSTATE::JUMPMOVE)
+		{
+			if (!isMove)
+			{
+				lowerBody->SetClip("Idle");
+			}
+			else
+			{
+				if (dir == DIRECTION::RIGHT)
+				{
+					lowerBody->SetClip("RMove");
+				}
+				if (dir == DIRECTION::LEFT)
+				{
+					lowerBody->SetClip("LMove");
+				}
+			}
+			upperBody->SetClip("Idle");
+		}
+		
+	}
+	else
+	{
+		lowerBody->SetClip("Jump");
+		upperBody->SetClip("Jump");
+		Move({ 0,GravatiyPower,0 });
+	}
+
 }
 
 void Player::Render()
@@ -34,11 +68,15 @@ void Player::Render()
 
 void Player::Input()
 {
-	if (Keyboard::Get()->Down('S'))
+	if (isGround)
 	{
-		soldierState = SOLDIERSTATE::JUMP;
-		lowerBody->SetClip("Jump");
-		upperBody->SetClip("Jump");
+		if (Keyboard::Get()->Down('S'))
+		{
+			isJump = true;
+			soldierState = SOLDIERSTATE::JUMP;
+			lowerBody->SetClip("Jump");
+			upperBody->SetClip("Jump");
+		}
 	}
 
 	if (Keyboard::Get()->Press(VK_DOWN))//아래키 입력
@@ -140,12 +178,46 @@ void Player::Move(Vector3 tempPos)
 		tempPos.x /= 3;
 	}
 
-
 	this->position += tempPos;
 	D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
 
 	world = S * R * T;
 	WB->SetWorld(world);
+}
+
+void Player::Jump()
+{
+	static float fJumpTime = 0;
+	if (isJump)
+	{
+		//상승 상황 점프
+		if (fJumpPower <= fMaxJumpSpeed)
+		{
+			fJumpPower = fMaxJumpSpeed - Math::Lerpf(0, fMaxJumpSpeed, fJumpTime);
+			Move({ 0,fJumpPower,0 });
+		}
+
+
+		if (fJumpTime >= 1)
+		{
+			fJumpPower = 0;
+			isJump = false;
+			isJumpEnd = true;
+		}
+		fJumpTime += Time::Delta();
+	}
+	else
+	{
+		if (isJumpEnd == true)
+		{
+			GravatiyPower *= fJumpTime;
+		}
+		else
+		{
+			fJumpTime = 0;
+			GravatiyPower = -1.0f;
+		}
+	}
 }
 
 

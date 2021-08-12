@@ -159,6 +159,7 @@
     <ClCompile Include="Geometry\AnimationRect.cpp" />
     <ClCompile Include="Geometry\Circle.cpp" />
     <ClCompile Include="Geometry\FilledCircle.cpp" />
+    <ClCompile Include="Geometry\Ground.cpp" />
     <ClCompile Include="Geometry\Line.cpp" />
     <ClCompile Include="Geometry\PlayerAnimationRect.cpp" />
     <ClCompile Include="Geometry\Square.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="Geometry\AnimationRect.h" />
     <ClInclude Include="Geometry\Circle.h" />
     <ClInclude Include="Geometry\FilledCircle.h" />
+    <ClInclude Include="Geometry\Ground.h" />
     <ClInclude Include="Geometry\Line.h" />
     <ClInclude Include="Geometry\PlayerAnimationRect.h" />
     <ClInclude Include="Geometry\Square.h" />

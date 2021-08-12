@@ -10,6 +10,7 @@
 #include "Geometry/AnimationRect.h"
 #include "Geometry/PlayerAnimationRect.h"
 
+#include "Geometry/Ground.h"
 
 #include "Characters/Player/SoldierLower.h"
 #include "Characters/Player/SoldierUpper.h"

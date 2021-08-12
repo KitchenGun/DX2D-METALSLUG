@@ -22,6 +22,21 @@ bool Math::Intersect(Square *r1, Square *r2)
 	}
 }
 
+bool Math::Intersect(Player* p1, PlayerAnimationRect* r1)
+{
+	Vector3 pPos=p1->GetPosition();
+	RectEdges edge = r1->GetTransformedCoord();
+	if (pPos.x >= edge.LT.x && pPos.x <= edge.RB.x && pPos.y >= edge.RB.y && pPos.y <= edge.LT.y)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	return false;
+}
+
 bool Math::Intersect(AnimationRect* r1, AnimationRect* r2)
 {
 	RectEdges edge1 = r1->GetTransformedCoord();
@@ -59,5 +74,10 @@ Vector3 Math::absVec2(Vector3 val)
 	float y = abs(val.y);
 	float z = abs(val.z);
 	return Vector3(x, y, z);
+}
+
+float Math::Lerpf(float min, float max, float target)
+{
+	return min + target * (max - min);
 }
 

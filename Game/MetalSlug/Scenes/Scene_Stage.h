@@ -12,6 +12,8 @@ public:
 	void PostRender() override;
 
 private:
-	AnimationRect* Map = nullptr;
+	TextureRect* Map = nullptr;
 	Player* player = nullptr;
+	//지형 테스트
+	Ground* ground = nullptr;
 };
