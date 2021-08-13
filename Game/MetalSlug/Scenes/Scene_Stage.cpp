@@ -16,6 +16,7 @@ void Stage::Init()
 
 	ground = new Ground(Vector3(0,100,0),Vector3(1000*4,100,1),0);
 	player = new Player(Vector3(100, 200, 0), Vector3(3, 3, 1), 0);
+	temp = new EnemySoldier(Vector3(400, 200, 0), Vector3(3, 3, 1), 0, ENEMYTYPE::Grenadier);
 }
 
 void Stage::Update()
@@ -23,6 +24,7 @@ void Stage::Update()
 	player->SetisGround(Math::Intersect(player, ground));
 	player->Update(); 
 	ground->Update();
+	temp->Update();
 	//Camera::Get()->Move(player->GetPosition()-Vector3(200,100,0));
 }
 
@@ -35,10 +37,12 @@ void Stage::Render()
 	Map->Render();
 	player->Render();
 	ground->Render();
+	temp->Render();
 }
 
 void Stage::PostRender()
 {
+
 }
 
 

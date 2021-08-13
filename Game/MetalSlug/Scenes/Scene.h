@@ -9,13 +9,15 @@
 #include "Geometry/TextureRect.h"
 #include "Geometry/AnimationRect.h"
 #include "Geometry/PlayerAnimationRect.h"
-
 #include "Geometry/Ground.h"
 
+//플레이어
 #include "Characters/Player/SoldierLower.h"
 #include "Characters/Player/SoldierUpper.h"
-
 #include "Characters/Player/Player.h"
+//적
+#include "Characters/Enemy/Enemy.h"
+#include "Characters/Enemy/EnemySoldier.h"
 
 
 class Scene

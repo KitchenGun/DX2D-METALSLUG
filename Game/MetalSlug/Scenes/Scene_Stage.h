@@ -14,6 +14,7 @@ public:
 private:
 	TextureRect* Map = nullptr;
 	Player* player = nullptr;
+	EnemySoldier* temp = nullptr;
 	//지형 테스트
 	Ground* ground = nullptr;
 };
