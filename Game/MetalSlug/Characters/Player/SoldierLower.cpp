@@ -24,7 +24,7 @@ void SoldierLower::Update()
 
 void SoldierLower::Render()
 {
-	if (!player->GetisCrouch())
+	if (player->GetLowerState()!=SOLDIERSTATE::NONE)
 	{
 		PlayerAnimationRect::Render();
 	}
@@ -35,7 +35,6 @@ void SoldierLower::SetClip(string name)
 {
 	if (name == "Idle")
 	{
-		lowerState = LOWERSTATE::IDLE;
 		SetSize(Vector3(21 * player->GetSize(), 16 * player->GetSize(), 1));
 		animator->bLoop = true;
 		if (player->GetDir() == DIRECTION::RIGHT)
@@ -49,42 +48,25 @@ void SoldierLower::SetClip(string name)
 			name = "LIdle";
 		}
 	}
-	else if (name == "RMove")
+	else if (name == "Move")
 	{
-		lowerState = LOWERSTATE::MOVE;
 		SetSize(Vector3(26 * player->GetSize(), 20 * player->GetSize(), 1));
 		animator->bLoop = true;
-		texture = new Texture2D(L"./_Textures/Character/Move/RMove.png");
-	}
-	else if (name == "LMove")
-	{
-		lowerState = LOWERSTATE::MOVE;
-		SetSize(Vector3(26 * player->GetSize(), 20 * player->GetSize(), 1));
-		animator->bLoop = true;
-		texture = new Texture2D(L"./_Textures/Character/Move/LMove.png");
+		if (player->GetDir() == DIRECTION::RIGHT)
+		{
+			texture = new Texture2D(L"./_Textures/Character/Move/RMove.png");
+			name = "RMove";
+		}
+		else if (player->GetDir() == DIRECTION::LEFT)
+		{
+
+			animator->bLoop = true;
+			texture = new Texture2D(L"./_Textures/Character/Move/LMove.png");
+			name = "LMove";
+		}
 	}
 	else if (name == "Jump")
 	{
-
-		if (player->GetisMove())
-		{
-			lowerState = LOWERSTATE::JUMPMOVE;
-			SetSize(Vector3(33 * player->GetSize(), 21 * player->GetSize(), 1));
-			animator->bLoop = false;
-			if (player->GetDir() == DIRECTION::RIGHT)
-			{
-				texture = new Texture2D(L"./_Textures/Character/Jump/Lower/RJumpMoveLower.png");
-				name = "RJumpMoveLower";
-			}
-			else if (player->GetDir() == DIRECTION::LEFT)
-			{
-				texture = new Texture2D(L"./_Textures/Character/Jump/Lower/LJumpMoveLower.png");
-				name = "LJumpMoveLower";
-			}
-		}
-		else
-		{
-			lowerState = LOWERSTATE::JUMP;
 			SetSize(Vector3(21 * player->GetSize(), 24 * player->GetSize(), 1));
 			animator->bLoop = false;
 			if (player->GetDir() == DIRECTION::RIGHT)
@@ -97,6 +79,20 @@ void SoldierLower::SetClip(string name)
 				texture = new Texture2D(L"./_Textures/Character/Jump/Lower/LJumpLower.png");
 				name = "LJumpLower";
 			}
+	}
+	else if (name == "JumpMove")
+	{
+		SetSize(Vector3(33 * player->GetSize(), 21 * player->GetSize(), 1));
+		animator->bLoop = false;
+		if (player->GetDir() == DIRECTION::RIGHT)
+		{
+			texture = new Texture2D(L"./_Textures/Character/Jump/Lower/RJumpMoveLower.png");
+			name = "RJumpMoveLower";
+		}
+		else if (player->GetDir() == DIRECTION::LEFT)
+		{
+			texture = new Texture2D(L"./_Textures/Character/Jump/Lower/LJumpMoveLower.png");
+			name = "LJumpMoveLower";
 		}
 	}
 	animator->SetCurrentAnimClip(String::ToWString(name));

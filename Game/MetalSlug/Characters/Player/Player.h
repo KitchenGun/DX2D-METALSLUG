@@ -12,13 +12,18 @@ enum class STATE
 
 enum class SOLDIERSTATE
 {
+	//공통
 	NONE = 0,
 	IDLE,
-	MOVE,
-	CROUCH,
-	CROUCHMOVE,
 	JUMP,
-	CrouchJump
+	JUMPMOVE,
+	//상반신
+	CROUCHIDLE,
+	CROUCHMOVE,
+	CROUCHJUMP,
+	UPSIDE,
+	//하반신
+	MOVE
 };
 
 enum class SOLDIER
@@ -45,6 +50,8 @@ public://생성자 소멸자 update render
 	void Move(Vector3 tempPos);
 	void Jump();
 
+	void SetUpperAni();
+	void SetLowerAni();
 public:
 	//Vector3 GetPos() { return position; }
 	float GetSize() { return size.x; }
@@ -53,6 +60,9 @@ public:
 	bool GetisMove() { return isMove; }
 	bool GetisGround() { return isGround; }
 	void SetisGround(bool val) { isGround = val; }
+
+	SOLDIERSTATE GetLowerState() { return soldierLowerState; }
+	SOLDIERSTATE GetUpperState() { return soldierUpperState; }
 protected:
 	HP PlayerHP = 0;
 	JUMPPOW PlayerJumpPow = 0;
@@ -70,14 +80,15 @@ private:
 	bool isHandUp = false;//손을 위로 올린 경우
 	
 	DIRECTION dir=DIRECTION::NONE;
-	SOLDIERSTATE soldierState = SOLDIERSTATE::NONE;
 
+	SOLDIERSTATE soldierUpperState = SOLDIERSTATE::NONE;
+	SOLDIERSTATE soldierLowerState = SOLDIERSTATE::NONE;
 	//점프 수치
 	bool isJump = false;
 	bool isJumpEnd = false;
 	float fJumpPower = 0.0f;
-	const float fMaxJumpSpeed = 5.0f;
+	const float fMaxJumpSpeed = 3.5f;
 	int nJumpCount = 0;
 	const int nMaxJumpCount = 1;
-	float GravatiyPower = -1.0f;
+	float GravatiyPower = -2.5f;
 };
