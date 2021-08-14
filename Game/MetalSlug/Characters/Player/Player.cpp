@@ -46,6 +46,26 @@ void Player::Render()
 
 void Player::Input()
 {
+	//공격
+	if (Keyboard::Get()->Down('A'))
+	{
+		isAtk = true;
+	}
+	if (Keyboard::Get()->Up('A'))
+	{
+		isAtk = false;
+	}
+	//점프
+	if (isGround)
+	{
+		if (Keyboard::Get()->Down('S'))
+		{
+			isJump = true;
+		}
+	}
+	//수류탄
+
+
 	//상하
 	if (Keyboard::Get()->Press(VK_DOWN))//아래키 입력
 	{
@@ -64,50 +84,64 @@ void Player::Input()
 		isHandUp = false;
 	}
 	//좌우
-	if (Keyboard::Get()->Press(VK_RIGHT))//우측 입력
+	if (isCrouch && isAtk)
 	{
-		Move(Vector3(PlayerSpeed, 0, 0));
-		if (isGround)
-		{
-			dir = DIRECTION::RIGHT;
-			isMove = true;
-		}
-	}
-	else if(Keyboard::Get()->Press(VK_LEFT))//좌측 입력
-	{
-		Move(Vector3(-PlayerSpeed, 0, 0));
-		if (isGround)
-		{
-			dir = DIRECTION::LEFT;
-			isMove = true;
-		}
+		//앉아서 공격하는 상황에서는 이동을 처리안하기 위해서 사용함
 	}
 	else
 	{
-		isMove = false;
-	}
-	//공격
-	//점프
-	if (isGround)
-	{
-		if (Keyboard::Get()->Down('S'))
+		if (Keyboard::Get()->Press(VK_RIGHT))//우측 입력
 		{
-			isJump = true;
+			Move(Vector3(PlayerSpeed, 0, 0));
+			if (isGround)
+			{
+				dir = DIRECTION::RIGHT;
+				isMove = true;
+			}
+		}
+		else if (Keyboard::Get()->Press(VK_LEFT))//좌측 입력
+		{
+			Move(Vector3(-PlayerSpeed, 0, 0));
+			if (isGround)
+			{
+				dir = DIRECTION::LEFT;
+				isMove = true;
+			}
+		}
+		else
+		{
+			isMove = false;
 		}
 	}
-	//수류탄
-
 
 	//상반신 상태 지정
 	if (!isGround)
 	{
 		if (isCrouch)
 		{//하단사격자세 상태
-			soldierUpperState = SOLDIERSTATE::CROUCHJUMP;
+			if (isAtk)
+			{
+				soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
+			}
+			else
+			{
+				soldierUpperState = SOLDIERSTATE::CROUCHJUMP;
+			}
 		}
 		else
 		{
-			if (isMove)
+			if (isAtk)
+			{
+				if (isHandUp)
+				{
+					soldierUpperState = SOLDIERSTATE::UPSIDEATK;
+				}
+				else
+				{
+					soldierUpperState = SOLDIERSTATE::ATK;
+				}
+			}
+			else if (isMove)
 			{//점프 이동 상태
 				soldierUpperState = SOLDIERSTATE::JUMPMOVE;
 			}
@@ -119,7 +153,11 @@ void Player::Input()
 	}
 	else if (isCrouch)
 	{
-		if (isMove)
+		if (isAtk)
+		{
+			soldierUpperState = SOLDIERSTATE::CROUCHATK;
+		}
+		else if (isMove)
 		{//앉아서 움직이는 상태
 			soldierUpperState = SOLDIERSTATE::CROUCHMOVE;
 		}
@@ -237,14 +275,29 @@ void Player::SetUpperAni()
 			upperBody->SetClip("JumpMove");
 			break;
 		}
+		case SOLDIERSTATE::ATK:
+		{
+			upperBody->SetClip("ATK");
+			break;
+		}
 		case SOLDIERSTATE::CROUCHIDLE:
 		{
 			upperBody->SetClip("CrouchIdle");
 			break;
 		}
+		case SOLDIERSTATE::CROUCHATK:
+		{
+			upperBody->SetClip("CrouchATK");
+			break;
+		}
 		case SOLDIERSTATE::CROUCHJUMP:
 		{
 			upperBody->SetClip("CrouchJump");
+			break;
+		}
+		case SOLDIERSTATE::CROUCHJUMPATK:
+		{
+			upperBody->SetClip("CrouchJumpATK");
 			break;
 		}
 		case SOLDIERSTATE::CROUCHMOVE:
@@ -255,6 +308,11 @@ void Player::SetUpperAni()
 		case SOLDIERSTATE::UPSIDE:
 		{
 			upperBody->SetClip("Upside");
+			break;
+		}
+		case SOLDIERSTATE::UPSIDEATK:
+		{
+			upperBody->SetClip("UpsideATK");
 			break;
 		}
 		default:

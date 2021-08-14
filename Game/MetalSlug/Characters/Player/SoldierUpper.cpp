@@ -81,6 +81,23 @@ void SoldierUpper::SetClip(string name)
 			name = "LJumpHandRunUpper";
 		}
 	}
+	else if (name == "ATK")
+	{
+		SetSize(Vector3(53 * player->GetSize(), 29 * player->GetSize(), 1));
+		animator->bLoop = true;
+		if (player->GetDir() == DIRECTION::RIGHT)
+		{
+			SetPos(player->GetPosition() + Vector3(-8 * player->GetSize(), 20 * player->GetSize(), 0));
+			texture = new Texture2D(L"./_Textures/Character/Jump/Upper/RJumpHandUpper.png");
+			name = "RJumpHandUpper";
+		}
+		else if (player->GetDir() == DIRECTION::LEFT)
+		{
+			SetPos(player->GetPosition() + Vector3(-5 * player->GetSize(), 20 * player->GetSize(), 0));
+			texture = new Texture2D(L"./_Textures/Character/Jump/Upper/LJumpHandUpper.png");
+			name = "LJumpHandUpper";
+		}
+	}
 	else if (name == "CrouchJump")
 	{
 		SetSize(Vector3(20 * player->GetSize(), 35 * player->GetSize(), 1));
@@ -264,6 +281,23 @@ void SoldierUpper::SetAnimation()
 	animClips.push_back(new AnimationClip(L"RIdle", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	texture = new Texture2D(L"./_Textures/Character/Idle/LUpper.png");
 	animClips.push_back(new AnimationClip(L"LIdle", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+	//atk
+	texture = new Texture2D(L"./_Textures/Character/Fire/RFire.png");
+	animClips.push_back(new AnimationClip(L"RFire", texture, 10, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/Character/Fire/LFire.png");
+	animClips.push_back(new AnimationClip(L"LFire", texture, 10, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+	texture = new Texture2D(L"./_Textures/Character/Fire/RFireCrouch.png");
+	animClips.push_back(new AnimationClip(L"RFireCrouch", texture, 11, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/Character/Fire/LFireCrouch.png");
+	animClips.push_back(new AnimationClip(L"LFireCrouch", texture, 11, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+	texture = new Texture2D(L"./_Textures/Character/Fire/RFireCrouchJump.png");
+	animClips.push_back(new AnimationClip(L"RFireCrouchJump", texture, 7, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/Character/Fire/LFireCrouchJump.png");
+	animClips.push_back(new AnimationClip(L"LFireCrouchJump", texture, 7, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+	texture = new Texture2D(L"./_Textures/Character/Fire/RFireUpside.png");
+	animClips.push_back(new AnimationClip(L"RFireUpside", texture, 10, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/Character/Fire/LFireUpside.png");
+	animClips.push_back(new AnimationClip(L"LFireUpside", texture, 10, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
 	//crouch
 	texture = new Texture2D(L"./_Textures/Character/Crouch/RCrouchIdle.png");
 	animClips.push_back(new AnimationClip(L"RCrouchIdle", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
