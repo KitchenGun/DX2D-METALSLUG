@@ -168,11 +168,25 @@ void Player::Input()
 	}
 	else if (isHandUp)
 	{//상단 사격자세 상태
-		soldierUpperState = SOLDIERSTATE::UPSIDE;
+		if (isAtk)
+		{
+			soldierUpperState = SOLDIERSTATE::UPSIDEATK;
+		}
+		else
+		{
+			soldierUpperState = SOLDIERSTATE::UPSIDE;
+		}
 	}
 	else
 	{//idle 상태
-		soldierUpperState = SOLDIERSTATE::IDLE;
+		if (isAtk)
+		{
+			soldierUpperState = SOLDIERSTATE::ATK;
+		}
+		else
+		{
+			soldierUpperState = SOLDIERSTATE::IDLE;
+		}
 	}
 
 
