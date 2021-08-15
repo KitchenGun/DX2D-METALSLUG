@@ -16,4 +16,5 @@ public:
 	void SetPlayer(Player* player) { this->player = player; }
 private:
 	Player* player;
+	bool ChangeBlock=false;
 };

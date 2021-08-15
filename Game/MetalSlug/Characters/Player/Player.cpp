@@ -121,6 +121,7 @@ void Player::Input()
 		{//하단사격자세 상태
 			if (isAtk)
 			{
+				
 				soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
 			}
 			else
