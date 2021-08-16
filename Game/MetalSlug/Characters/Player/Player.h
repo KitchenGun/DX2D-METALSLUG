@@ -43,7 +43,7 @@ enum class DIRECTION
 	RIGHT
 };
 
-class Player : public AnimationRect
+class Player : public PlayerAnimationRect
 {
 public://생성자 소멸자 update render
 	Player(Vector3 position, Vector3 size, float rotation);
@@ -77,6 +77,8 @@ protected:
 private:
 	SoldierLower* lowerBody = nullptr;
 	SoldierUpper* upperBody = nullptr;
+	Animator* upperBodyAnimator = nullptr;
+
 
 	bool isGround = false;//지상 판정
 	bool isCrouch = false;//앉기 키를 누른경우

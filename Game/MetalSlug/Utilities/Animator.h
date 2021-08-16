@@ -43,19 +43,15 @@ public:
 	void AddAnimClip(AnimationClip* animClip);
 	void SetCurrentAnimClip(wstring clipName, bool Changeblock = false, bool GetCurIndex = false);
 
+	bool isFirstPlay = false;
 	bool bLoop = true;
-	float playRate = 1.0f / 10.0f;//파일들에 맞춰서 조절해야함 분모가 커지면 더 빠르게 재생이 된다
+	float playRate = 1.0f / 20.0f;//파일들에 맞춰서 조절해야함 분모가 커지면 더 빠르게 재생이 된다
 	bool bStop = false;
-
-	bool GetisFirstPlay() { return isFirstPlay; }
-
 private:
 	//자료구조 map과 다르게 중복 데이터 허용 안하고 map에 비하여 데이터가 많을때 월등한 탐색능력을 보여줌
 	unordered_map<wstring, AnimationClip*> animClips;
 	AnimationClip* currentAnimClip = nullptr;
 
-	bool changeBlock = false;
-	bool isFirstPlay = false;
 	float deltaTime = 0.0f;
 	int currentFrameIndex = 0;
 	Vector2 currentFrame = Vector2(0, 0);

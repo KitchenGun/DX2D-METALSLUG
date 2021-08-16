@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "Player.h"
+#include "Utilities/Animator.h"
 
 Player::Player(Vector3 position, Vector3 size, float rotation)
 	:
-	AnimationRect(position,size,rotation)
+	PlayerAnimationRect(position,size,rotation)
 {
 	this->position = position;
 	this->size = size;
@@ -12,6 +13,9 @@ Player::Player(Vector3 position, Vector3 size, float rotation)
 	upperBody = new SoldierUpper(position + Vector3(0, 8 * this->size.x, 0), Vector3(30 * this->size.x, 30 * this->size.x, 1), 0);
 	lowerBody->SetPlayer(this);
 	upperBody->SetPlayer(this);
+	upperBodyAnimator = upperBody->GetAnimator();
+	//test
+	texture = new Texture2D(L"./_Textures/TestBox.png");
 }
 
 Player::~Player()
@@ -34,12 +38,11 @@ void Player::Update()
 	{
 		Move({ 0,GravatiyPower,0 });
 	}
-	
-
 }
 
 void Player::Render()
 {
+	PlayerAnimationRect::Render();
 	lowerBody->Render();
 	upperBody->Render();
 }
@@ -47,14 +50,18 @@ void Player::Render()
 void Player::Input()
 {
 	//공격
-	if (Keyboard::Get()->Down('A'))
+	if (Keyboard::Get()->Press('A'))
 	{
 		isAtk = true;
 	}
-	if (Keyboard::Get()->Up('A'))
+	if (isAtk)
 	{
-		isAtk = false;
+		if (!upperBodyAnimator->isFirstPlay)
+		{
+			isAtk = false;
+		}
 	}
+	
 	//점프
 	if (isGround)
 	{
@@ -71,10 +78,6 @@ void Player::Input()
 	{
 		isCrouch = true;
 	}
-	else if (Keyboard::Get()->Up(VK_DOWN))
-	{
-		isCrouch = false;
-	}
 	else if (Keyboard::Get()->Press(VK_UP))
 	{
 		isHandUp = true;
@@ -82,6 +85,10 @@ void Player::Input()
 	else if (Keyboard::Get()->Up(VK_UP))
 	{
 		isHandUp = false;
+	}
+	else
+	{
+		isCrouch = false;
 	}
 	//좌우
 	if (isCrouch && isAtk)
@@ -115,13 +122,14 @@ void Player::Input()
 	}
 
 	//상반신 상태 지정
+	cout << isAtk << endl;
 	if (!isGround)
 	{
 		if (isCrouch)
 		{//하단사격자세 상태
 			if (isAtk)
 			{
-				
+
 				soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
 			}
 			else
@@ -219,6 +227,7 @@ void Player::Input()
 	//ani세팅
 	SetLowerAni();
 	SetUpperAni();
+	upperBody->SetisRestart(false);
 }
 
 void Player::Move(Vector3 tempPos)
@@ -270,6 +279,7 @@ void Player::Jump()
 		}
 	}
 }
+
 
 void Player::SetUpperAni()
 {

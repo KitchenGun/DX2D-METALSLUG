@@ -14,7 +14,9 @@ public:
 	void SetSize(Vector3 tempSize);
 	void SetPos(Vector3 tempPos);
 	void SetPlayer(Player* player) { this->player = player; }
+	Animator* GetAnimator() { return animator; }
+	void SetisRestart(bool val) { isRestart = val; }
 private:
 	Player* player;
-	bool ChangeBlock=false;
+	bool isRestart = false;
 };

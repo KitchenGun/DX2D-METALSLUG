@@ -63,26 +63,22 @@ void Animator::Update()
 {
 	if (bStop) return;
 	
-	//cout << deltaTime << " " << playRate << endl;
 	//프레임에서 프레임으로 넘어가는 시간
-	//cout << String::ToString(currentAnimClip->GetClipName()) <<" "<<currentFrameIndex << endl;
 	if (deltaTime > playRate)//일정 시간 마다 실행하여 그림 변경 함 
 	{
 		if (currentAnimClip->GetIsReverse() == false)//반전 여부 
 		{
 			currentFrameIndex++;
 			
+			
 			if (currentFrameIndex >= currentAnimClip->GetLastFrameIndex() && bLoop)//반복을 시킬 때 이미지를 반복한다
 			{
-				if (changeBlock == true)
-				{
-					isFirstPlay = false;
-				}
 				currentFrameIndex = 0;
 			}
 			else if (currentFrameIndex >= currentAnimClip->GetLastFrameIndex() && !bLoop)
 			{
 				currentFrameIndex = currentAnimClip->GetLastFrameIndex();
+				isFirstPlay = false;
 			}
 
 			currentFrame = currentAnimClip->GetKeyframe(currentFrameIndex);//가져온 좌표를 현재 프래임으로 만들겠다.
@@ -90,18 +86,16 @@ void Animator::Update()
 		else
 		{
 			currentFrameIndex--;
+			
 			//거꾸로 돌리는것
 			if (currentFrameIndex <= 0 && bLoop)
 			{
-				if (changeBlock == true)
-				{
-					isFirstPlay = false;
-				}
 				currentFrameIndex = currentAnimClip->GetLastFrameIndex();
 			}
 			else if (currentFrameIndex <= 0 && !bLoop)
 			{
 				currentFrameIndex = 0;
+				isFirstPlay = false;
 			}
 			currentFrame = currentAnimClip->GetKeyframe(currentFrameIndex);
 		}
@@ -121,9 +115,9 @@ void Animator::AddAnimClip(AnimationClip* animClip)
 	animClips.insert(make_pair(animClip->GetClipName(), animClip));
 }
 
-void Animator::SetCurrentAnimClip(wstring clipName,bool Changeblock,bool GetCurIndex)// 클립 이름에 맞게 세팅
+void Animator::SetCurrentAnimClip(wstring clipName,bool isRestart,bool GetCurIndex)// 클립 이름에 맞게 세팅
 {
-	if (Changeblock)
+	if (isRestart)
 	{
 		if (animClips.find(clipName) != animClips.end())
 		{
@@ -132,17 +126,10 @@ void Animator::SetCurrentAnimClip(wstring clipName,bool Changeblock,bool GetCurI
 			currentAnimClip = animClips.find(clipName)->second;
 			//동작을 처음부터 시작해야하기 때문에
 			deltaTime = 0.0f;
-			if (!GetCurIndex)
-			{
-				if (currentAnimClip->GetIsReverse())
-					currentFrameIndex = currentAnimClip->GetLastFrameIndex();
-				else
-					currentFrameIndex = 0;
-			}
 			currentFrame = currentAnimClip->GetKeyframe(currentFrameIndex);
 		}
 	}
-	else if(isFirstPlay==false)
+	else
 	{
 		//같은 클립일 경우
 		if (clipName == currentAnimClip->GetClipName()) return;
@@ -150,6 +137,7 @@ void Animator::SetCurrentAnimClip(wstring clipName,bool Changeblock,bool GetCurI
 		//같은 이름이 있을 경우만  바꿔준다
 		if (animClips.find(clipName) != animClips.end())
 		{
+			isFirstPlay = true;
 			//클립에는 객체가 있음
 			currentAnimClip = animClips.find(clipName)->second;
 			//동작을 처음부터 시작해야하기 때문에

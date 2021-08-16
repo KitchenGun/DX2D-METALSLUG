@@ -26,18 +26,14 @@ void SoldierUpper::Update()
 void SoldierUpper::Render()
 {
 	PlayerAnimationRect::Render();
-
 }
 
 
 void SoldierUpper::SetClip(string name)
 {
-	if (animator->GetisFirstPlay())
-	{
-		ChangeBlock = false;
-	}
 	if (name == "Idle")
 	{
+		isRestart = false;
 		SetSize(Vector3(30 * player->GetSize(), 30 * player->GetSize(), 1));
 		animator->bLoop = true;
 		if (player->GetDir() == DIRECTION::RIGHT)
@@ -53,6 +49,7 @@ void SoldierUpper::SetClip(string name)
 	}
 	else if (name == "Jump")
 	{
+		isRestart = false;
 		SetSize(Vector3(33 * player->GetSize(), 26 * player->GetSize(), 1));
 		animator->bLoop = false;
 		if (player->GetDir() == DIRECTION::RIGHT)
@@ -70,6 +67,7 @@ void SoldierUpper::SetClip(string name)
 	}
 	else if (name == "JumpMove")
 	{
+		isRestart = false;
 		SetSize(Vector3(29 * player->GetSize(), 35 * player->GetSize(), 1));
 		animator->bLoop = false;
 		if (player->GetDir() == DIRECTION::RIGHT)
@@ -87,6 +85,7 @@ void SoldierUpper::SetClip(string name)
 	}
 	else if (name == "CrouchJump")
 	{
+		isRestart = false;
 		SetSize(Vector3(20 * player->GetSize(), 35 * player->GetSize(), 1));
 		animator->bLoop = false;
 		if (player->GetDir() == DIRECTION::RIGHT)
@@ -104,6 +103,7 @@ void SoldierUpper::SetClip(string name)
 	}
 	else if (name == "CrouchIdle")
 	{
+		isRestart = false;
 		animator->bLoop = true;
 		if (player->GetDir() == DIRECTION::RIGHT)
 		{
@@ -124,6 +124,7 @@ void SoldierUpper::SetClip(string name)
 	}
 	else if (name == "CrouchMove")
 	{
+		isRestart = false;
 		SetSize(Vector3(37 * player->GetSize(), 24 * player->GetSize(), 1));
 		if (player->GetDir() == DIRECTION::RIGHT)
 		{
@@ -142,6 +143,7 @@ void SoldierUpper::SetClip(string name)
 	}
 	else if (name == "Upside")
 	{
+		isRestart = false;
 		SetSize(Vector3(30 * player->GetSize(), 27 * player->GetSize(), 1));
 		animator->bLoop = true;
 		if (player->GetDir() == DIRECTION::RIGHT)
@@ -157,28 +159,27 @@ void SoldierUpper::SetClip(string name)
 			name = "LUpsideUpper";
 		}
 	}
-
 	if (name == "ATK")
 	{
-		ChangeBlock = true;
 		SetSize(Vector3(53 * player->GetSize(), 29 * player->GetSize(), 1));
-		animator->bLoop = true;
+		animator->bLoop = false;
 		if (player->GetDir() == DIRECTION::RIGHT)
 		{
+			SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), 10 * player->GetSize(), 0));
 			texture = new Texture2D(L"./_Textures/Character/Fire/RFire.png");
 			name = "RFire";
 		}
 		else if (player->GetDir() == DIRECTION::LEFT)
 		{
+			SetPos(player->GetPosition() + Vector3(-32 * player->GetSize(), 10 * player->GetSize(), 0));
 			texture = new Texture2D(L"./_Textures/Character/Fire/LFire.png");
 			name = "LFire";
 		}
 	}
 	else if (name == "UpsideATK")
 	{
-		ChangeBlock = true;
-		SetSize(Vector3(30 * player->GetSize(), 27 * player->GetSize(), 1));
-		animator->bLoop = true;
+		SetSize(Vector3(28 * player->GetSize(), 66 * player->GetSize(), 1));
+		animator->bLoop = false;
 		if (player->GetDir() == DIRECTION::RIGHT)
 		{
 			texture = new Texture2D(L"./_Textures/Character/Fire/RFireUpside.png");
@@ -186,16 +187,14 @@ void SoldierUpper::SetClip(string name)
 		}
 		else if (player->GetDir() == DIRECTION::LEFT)
 		{
-			SetPos(player->GetPosition() + Vector3(-8 * player->GetSize(), 14 * player->GetSize(), 0));
 			texture = new Texture2D(L"./_Textures/Character/Fire/LFireUpside.png");
 			name = "LFireUpside";
 		}
 	}
 	else if (name == "CrouchJumpATK")
 	{
-		ChangeBlock = true;
-		SetSize(Vector3(53 * player->GetSize(), 54 * player->GetSize(), 1));
-		animator->bLoop = true;
+		SetSize(Vector3(23 * player->GetSize(), 54 * player->GetSize(), 1));
+		animator->bLoop = false;
 		if (player->GetDir() == DIRECTION::RIGHT)
 		{
 			texture = new Texture2D(L"./_Textures/Character/Fire/RFireCrouchJump.png");
@@ -209,9 +208,8 @@ void SoldierUpper::SetClip(string name)
 	}
 	else if (name == "CrouchATK")
 	{
-		ChangeBlock = true;
-		SetSize(Vector3(53 * player->GetSize(), 54 * player->GetSize(), 1));
-		animator->bLoop = true;
+		SetSize(Vector3(52 * player->GetSize(), 29 * player->GetSize(), 1));
+		animator->bLoop = false;
 		if (player->GetDir() == DIRECTION::RIGHT)
 		{
 			texture = new Texture2D(L"./_Textures/Character/Fire/RFireCrouch.png");
@@ -223,10 +221,7 @@ void SoldierUpper::SetClip(string name)
 			name = "LFireCrouch";
 		}
 	}
-	if (animator->GetisFirstPlay())
-	{
-		animator->SetCurrentAnimClip(String::ToWString(name), ChangeBlock);
-	}
+	animator->SetCurrentAnimClip(String::ToWString(name),isRestart);
 }
 
 void SoldierUpper::PivotUpdate()
@@ -330,7 +325,158 @@ void SoldierUpper::PivotUpdate()
 	}
 	else if (player->GetUpperState() == SOLDIERSTATE::ATK)
 	{
-
+		switch (player->GetLowerState())
+		{
+		case SOLDIERSTATE::IDLE:
+		{
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), 10 * player->GetSize(), 0));
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				SetPos(player->GetPosition() + Vector3(-32 * player->GetSize(), 10 * player->GetSize(), 0));
+			}
+			break;
+		}
+		case SOLDIERSTATE::MOVE:
+		{
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				SetPos(player->GetPosition() + Vector3(3 * player->GetSize(), 12 * player->GetSize(), 0));
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				SetPos(player->GetPosition() + Vector3(-32 * player->GetSize(), 12 * player->GetSize(), 0));
+			}
+			break;
+		}
+		case SOLDIERSTATE::JUMP:
+		{
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), 16 * player->GetSize(), 0));
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				SetPos(player->GetPosition() + Vector3(-30 * player->GetSize(), 16 * player->GetSize(), 0));
+			}
+			break;
+		}
+		case SOLDIERSTATE::JUMPMOVE:
+		{
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				SetPos(player->GetPosition() + Vector3(8 * player->GetSize(), 12 * player->GetSize(), 0));
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				SetPos(player->GetPosition() + Vector3(-30 * player->GetSize(), 12 * player->GetSize(), 0));
+			}
+			break;
+		}
+		default:
+			break;
+		}
+	}
+	else if (player->GetUpperState() == SOLDIERSTATE::UPSIDEATK)
+	{
+		switch (player->GetLowerState())
+		{
+		case SOLDIERSTATE::IDLE:
+		{
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				SetPos(player->GetPosition() + Vector3(-2 * player->GetSize(), 12 * player->GetSize(), 0));
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				SetPos(player->GetPosition() + Vector3(-5 * player->GetSize(), 12 * player->GetSize(), 0));
+			}
+			break;
+		}
+		case SOLDIERSTATE::MOVE:
+		{
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), 15 * player->GetSize(), 0));
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				SetPos(player->GetPosition() + Vector3(-5 * player->GetSize(), 15 * player->GetSize(), 0));
+			}
+			break;
+		}
+		case SOLDIERSTATE::JUMP:
+		{
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				SetPos(player->GetPosition() + Vector3(-2 * player->GetSize(), 20 * player->GetSize(), 0));
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				SetPos(player->GetPosition() + Vector3(-4 * player->GetSize(), 20 * player->GetSize(), 0));
+			}
+			break;
+		}
+		case SOLDIERSTATE::JUMPMOVE:
+		{
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				SetPos(player->GetPosition() + Vector3(8 * player->GetSize(), 16 * player->GetSize(), 0));
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				SetPos(player->GetPosition() + Vector3(-2 * player->GetSize(), 16 * player->GetSize(), 0));
+			}
+			break;
+		}
+		default:
+			break;
+		}
+	}
+	else if (player->GetUpperState() == SOLDIERSTATE::CROUCHATK)
+	{
+		if (player->GetDir() == DIRECTION::RIGHT)
+		{
+			SetPos(player->GetPosition() + Vector3(0, 0 * player->GetSize(), 0));
+		}
+		else if (player->GetDir() == DIRECTION::LEFT)
+		{
+			SetPos(player->GetPosition() + Vector3(-30 * player->GetSize(), 0 * player->GetSize(), 0));
+		}
+	}
+	else if (player->GetUpperState() == SOLDIERSTATE::CROUCHJUMPATK)
+	{
+	switch (player->GetLowerState())
+	{
+	case SOLDIERSTATE::JUMP:
+	{
+		if (player->GetDir() == DIRECTION::RIGHT)
+		{
+			SetPos(player->GetPosition() + Vector3(-2 * player->GetSize(), -12 * player->GetSize(), 0));
+		}
+		else if (player->GetDir() == DIRECTION::LEFT)
+		{
+			SetPos(player->GetPosition() + Vector3(-2 * player->GetSize(), -12 * player->GetSize(), 0));
+		}
+		break;
+	}
+	case SOLDIERSTATE::JUMPMOVE:
+	{
+		if (player->GetDir() == DIRECTION::RIGHT)
+		{
+			SetPos(player->GetPosition() + Vector3(8 * player->GetSize(), -15 * player->GetSize(), 0));
+		}
+		else if (player->GetDir() == DIRECTION::LEFT)
+		{
+			SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), -15 * player->GetSize(), 0));
+		}
+		break;
+	}
+	default:
+		break;
+	}
 	}
 }
 
