@@ -52,30 +52,26 @@ void Player::Input()
 	//공격
 	if (Keyboard::Get()->Down('A'))
 	{
+		cout << "input" << endl;
 		isAtk = true;
 
-		if (!isGround)
-		{
-			if (isCrouch)
-			{
-				upperBody->SetClip("CrouchJumpATK",true);
-				soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
-			}
-			else
-			{
-				upperBody->SetClip("ATK", true);
-				soldierUpperState = SOLDIERSTATE::ATK;
-			}
-		}
-		else if(isHandUp)
+		if(isHandUp)
 		{
 			upperBody->SetClip("UpsideATK", true);
 			soldierUpperState = SOLDIERSTATE::UPSIDEATK;
 		}
 		else if (isCrouch)
 		{
-			upperBody->SetClip("CrouchATK", true);
-			soldierUpperState = SOLDIERSTATE::CROUCHATK;
+			if (!isGround)
+			{
+				upperBody->SetClip("CrouchJumpATK", true);
+				soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
+			}
+			else
+			{
+				upperBody->SetClip("CrouchATK", true);
+				soldierUpperState = SOLDIERSTATE::CROUCHATK;
+			}
 		}
 		else
 		{
@@ -103,7 +99,10 @@ void Player::Input()
 		}
 		if (!upperBodyAnimator->isFirstPlay)
 		{
-			isAtk = false;
+			if (soldierUpperState != SOLDIERSTATE::CROUCHJUMP)
+			{
+				isAtk = false;
+			}
 		}
 	}
 
@@ -161,7 +160,6 @@ void Player::Input()
 			}
 			else
 			{
-				isAtk = false;
 				isMove = false;
 			}
 		}
@@ -191,8 +189,6 @@ void Player::Input()
 			isMove = false;
 		}
 	}
-
-	
 
 	//상반신 상태 지정
 	if (!isGround)
