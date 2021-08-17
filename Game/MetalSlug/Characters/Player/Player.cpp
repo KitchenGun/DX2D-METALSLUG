@@ -50,18 +50,63 @@ void Player::Render()
 void Player::Input()
 {
 	//공격
-	if (Keyboard::Get()->Press('A'))
+	if (Keyboard::Get()->Down('A'))
 	{
 		isAtk = true;
+
+		if (!isGround)
+		{
+			if (isCrouch)
+			{
+				upperBody->SetClip("CrouchJumpATK",true);
+				soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
+			}
+			else
+			{
+				upperBody->SetClip("ATK", true);
+				soldierUpperState = SOLDIERSTATE::ATK;
+			}
+		}
+		else if(isHandUp)
+		{
+			upperBody->SetClip("UpsideATK", true);
+			soldierUpperState = SOLDIERSTATE::UPSIDEATK;
+		}
+		else if (isCrouch)
+		{
+			upperBody->SetClip("CrouchATK", true);
+			soldierUpperState = SOLDIERSTATE::CROUCHATK;
+		}
+		else
+		{
+			upperBody->SetClip("ATK", true);
+			soldierUpperState = SOLDIERSTATE::ATK;
+		}
 	}
 	if (isAtk)
 	{
+		if (Keyboard::Get()->Down(VK_DOWN))
+		{
+			isAtk = false;
+		}
+		else if (Keyboard::Get()->Down(VK_UP))
+		{
+			isAtk = false;
+		}
+		else if (Keyboard::Get()->Down(VK_RIGHT))//우측 입력
+		{
+			isAtk = false;
+		}
+		else if (Keyboard::Get()->Down(VK_LEFT))//우측 입력
+		{
+			isAtk = false;
+		}
 		if (!upperBodyAnimator->isFirstPlay)
 		{
 			isAtk = false;
 		}
 	}
-	
+
 	//점프
 	if (isGround)
 	{
@@ -94,6 +139,32 @@ void Player::Input()
 	if (isCrouch && isAtk)
 	{
 		//앉아서 공격하는 상황에서는 이동을 처리안하기 위해서 사용함
+		if (!isGround)
+		{
+			if (Keyboard::Get()->Press(VK_RIGHT))//우측 입력
+			{
+				Move(Vector3(PlayerSpeed, 0, 0));
+				if (isGround)
+				{
+					dir = DIRECTION::RIGHT;
+					isMove = true;
+				}
+			}
+			else if (Keyboard::Get()->Press(VK_LEFT))//좌측 입력
+			{
+				Move(Vector3(-PlayerSpeed, 0, 0));
+				if (isGround)
+				{
+					dir = DIRECTION::LEFT;
+					isMove = true;
+				}
+			}
+			else
+			{
+				isAtk = false;
+				isMove = false;
+			}
+		}
 	}
 	else
 	{
@@ -121,15 +192,15 @@ void Player::Input()
 		}
 	}
 
+	
+
 	//상반신 상태 지정
-	cout << isAtk << endl;
 	if (!isGround)
 	{
 		if (isCrouch)
 		{//하단사격자세 상태
 			if (isAtk)
 			{
-
 				soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
 			}
 			else
@@ -227,7 +298,6 @@ void Player::Input()
 	//ani세팅
 	SetLowerAni();
 	SetUpperAni();
-	upperBody->SetisRestart(false);
 }
 
 void Player::Move(Vector3 tempPos)

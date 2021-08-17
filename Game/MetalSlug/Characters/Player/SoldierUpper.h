@@ -7,7 +7,7 @@ public://持失切 社瑚切 update render
 	~SoldierUpper();
 	void Update() override;
 	void Render() override;
-	void SetClip(string name);
+	void SetClip(string name, bool isRestart = false);
 	void PivotUpdate();
 public:
 	void SetAnimation();
@@ -15,8 +15,6 @@ public:
 	void SetPos(Vector3 tempPos);
 	void SetPlayer(Player* player) { this->player = player; }
 	Animator* GetAnimator() { return animator; }
-	void SetisRestart(bool val) { isRestart = val; }
 private:
 	Player* player;
-	bool isRestart = false;
 };

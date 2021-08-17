@@ -126,7 +126,10 @@ void Animator::SetCurrentAnimClip(wstring clipName,bool isRestart,bool GetCurInd
 			currentAnimClip = animClips.find(clipName)->second;
 			//동작을 처음부터 시작해야하기 때문에
 			deltaTime = 0.0f;
-			currentFrame = currentAnimClip->GetKeyframe(currentFrameIndex);
+			if (currentAnimClip->GetIsReverse())
+				currentFrameIndex = currentAnimClip->GetLastFrameIndex();
+			else
+				currentFrameIndex = 0;
 		}
 	}
 	else

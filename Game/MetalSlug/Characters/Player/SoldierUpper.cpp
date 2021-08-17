@@ -29,7 +29,7 @@ void SoldierUpper::Render()
 }
 
 
-void SoldierUpper::SetClip(string name)
+void SoldierUpper::SetClip(string name,bool isRestart)
 {
 	if (name == "Idle")
 	{
