@@ -158,6 +158,9 @@
     <ClCompile Include="Characters\Player\Player.cpp" />
     <ClCompile Include="Characters\Player\SoldierLower.cpp" />
     <ClCompile Include="Characters\Player\SoldierUpper.cpp" />
+    <ClCompile Include="Characters\Projectile\Bullet\Bullet.cpp" />
+    <ClCompile Include="Characters\Projectile\Manager\ProjectileManager.cpp" />
+    <ClCompile Include="Characters\Projectile\Projectile.cpp" />
     <ClCompile Include="Geometry\AnimationRect.cpp" />
     <ClCompile Include="Geometry\Circle.cpp" />
     <ClCompile Include="Geometry\FilledCircle.cpp" />
@@ -202,6 +205,9 @@
     <ClInclude Include="Characters\Player\Player.h" />
     <ClInclude Include="Characters\Player\SoldierLower.h" />
     <ClInclude Include="Characters\Player\SoldierUpper.h" />
+    <ClInclude Include="Characters\Projectile\Bullet\Bullet.h" />
+    <ClInclude Include="Characters\Projectile\Manager\ProjectileManager.h" />
+    <ClInclude Include="Characters\Projectile\Projectile.h" />
     <ClInclude Include="Geometry\AnimationRect.h" />
     <ClInclude Include="Geometry\Circle.h" />
     <ClInclude Include="Geometry\FilledCircle.h" />

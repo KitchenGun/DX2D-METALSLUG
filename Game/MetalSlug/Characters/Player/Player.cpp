@@ -352,60 +352,38 @@ void Player::SetUpperAni()
 	switch (soldierUpperState)
 	{
 		case SOLDIERSTATE::IDLE:
-		{
 			upperBody->SetClip("Idle");
 			break;
-		}
 		case SOLDIERSTATE::JUMP:
-		{
 			upperBody->SetClip("Jump");
 			break;
-		}
 		case SOLDIERSTATE::JUMPMOVE:
-		{
 			upperBody->SetClip("JumpMove");
 			break;
-		}
 		case SOLDIERSTATE::ATK:
-		{
 			upperBody->SetClip("ATK");
 			break;
-		}
 		case SOLDIERSTATE::CROUCHIDLE:
-		{
 			upperBody->SetClip("CrouchIdle");
 			break;
-		}
 		case SOLDIERSTATE::CROUCHATK:
-		{
 			upperBody->SetClip("CrouchATK");
 			break;
-		}
 		case SOLDIERSTATE::CROUCHJUMP:
-		{
 			upperBody->SetClip("CrouchJump");
 			break;
-		}
 		case SOLDIERSTATE::CROUCHJUMPATK:
-		{
 			upperBody->SetClip("CrouchJumpATK");
 			break;
-		}
 		case SOLDIERSTATE::CROUCHMOVE:
-		{
 			upperBody->SetClip("CrouchMove");
 			break;
-		}
 		case SOLDIERSTATE::UPSIDE:
-		{
 			upperBody->SetClip("Upside");
 			break;
-		}
 		case SOLDIERSTATE::UPSIDEATK:
-		{
 			upperBody->SetClip("UpsideATK");
 			break;
-		}
 		default:
 			break;
 	}
@@ -415,30 +393,20 @@ void Player::SetLowerAni()
 {
 	switch (soldierLowerState)
 	{
-		case SOLDIERSTATE::NONE:
-		{//출력안함
+		case SOLDIERSTATE::NONE://출력안함
 			break;
-		}
 		case SOLDIERSTATE::IDLE:
-		{
 			lowerBody->SetClip("Idle");
 			break;
-		}
 		case SOLDIERSTATE::MOVE:
-		{
 			lowerBody->SetClip("Move");
 			break;
-		}
 		case SOLDIERSTATE::JUMP:
-		{
 			lowerBody->SetClip("Jump");
 			break;
-		}
 		case SOLDIERSTATE::JUMPMOVE:
-		{
 			lowerBody->SetClip("JumpMove");
 			break;
-		}
 		default:
 			break;
 	}

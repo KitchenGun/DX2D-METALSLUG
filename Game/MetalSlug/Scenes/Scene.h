@@ -19,6 +19,13 @@
 #include "Characters/Enemy/Enemy.h"
 #include "Characters/Enemy/EnemySoldier.h"
 
+//투사체
+#include "Characters/Projectile/Projectile.h"
+#include "Characters/Projectile/Bullet/Bullet.h"
+
+//Manager
+#include "Characters/Projectile/Manager/ProjectileManager.h"
+
 
 class Scene
 {//순수 가상함수가 들어간 인터페이스 제작
