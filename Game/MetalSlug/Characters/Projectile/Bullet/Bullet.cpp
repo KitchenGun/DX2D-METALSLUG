@@ -6,13 +6,16 @@ Bullet::Bullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, BU
 	:Projectile(position, size, rotation,dir),
 	bt(BT)
 {
+	texture = new Texture2D(L"./_Textures/SFX/Weapon/NormalBullet.png");
+	animClips.push_back(new AnimationClip(L"NormalBullet", texture, 1, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	animator = new Animator(animClips);
 	switch (bt)
 	{
 	case BULLETTYPE::NONE:
 	break;
 	case BULLETTYPE::PISTOL:
-		texture = new Texture2D(L"./_Textures/SFX/Weapon/NormalBullet.png");
 		fSpeed = 500.0f;
+		animator->SetCurrentAnimClip(L"NormalBullet");
 	break;
 	case BULLETTYPE::HEAVY:
 		texture = new Texture2D(L"./_Textures/SFX/Weapon/NormalBullet.png");

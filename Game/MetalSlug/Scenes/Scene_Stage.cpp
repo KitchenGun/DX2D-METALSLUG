@@ -17,6 +17,13 @@ void Stage::Init()
 	ground = new Ground(Vector3(0,100,0),Vector3(1000*4,100,1),0);
 	player = new Player(Vector3(100, 200, 0), Vector3(3, 3, 1), 0);
 	temp = new EnemySoldier(Vector3(400, 200, 0), Vector3(3, 3, 1), 0, ENEMYTYPE::Grenadier);
+
+	//manager
+	PlayerPM = new ProjectileManager();
+
+
+	//
+	player->SetPM(PlayerPM);
 }
 
 void Stage::Update()
@@ -25,6 +32,9 @@ void Stage::Update()
 	player->Update(); 
 	ground->Update();
 	temp->Update();
+
+	//manager
+	PlayerPM->Update();
 	//Camera::Get()->Move(player->GetPosition()-Vector3(200,100,0));
 }
 
@@ -38,6 +48,9 @@ void Stage::Render()
 	player->Render();
 	ground->Render();
 	temp->Render();
+
+	//manager
+	PlayerPM->Render();
 }
 
 void Stage::PostRender()

@@ -78,6 +78,8 @@ void Player::Input()
 			upperBody->SetClip("ATK", true);
 			soldierUpperState = SOLDIERSTATE::ATK;
 		}
+
+		PM->AddBullet(position, Vector3(10, 5, 1),0, dir, BULLETTYPE::PISTOL);
 	}
 	if (isAtk)
 	{

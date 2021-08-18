@@ -17,4 +17,7 @@ private:
 	EnemySoldier* temp = nullptr;
 	//지형 테스트
 	Ground* ground = nullptr;
+	//manager
+	ProjectileManager* PlayerPM = nullptr;
+
 };

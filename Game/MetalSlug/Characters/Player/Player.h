@@ -2,6 +2,7 @@
 typedef int HP;
 typedef float JUMPPOW;
 typedef float MOVESPEED;
+class ProjectileManager;
 
 enum class STATE
 {
@@ -64,7 +65,7 @@ public:
 	bool GetisMove() { return isMove; }
 	bool GetisGround() { return isGround; }
 	void SetisGround(bool val) { isGround = val; }
-
+	void SetPM(ProjectileManager* val) { PM = val; }
 	SOLDIERSTATE GetLowerState() { return soldierLowerState; }
 	SOLDIERSTATE GetUpperState() { return soldierUpperState; }
 protected:
@@ -98,4 +99,6 @@ private:
 	int nJumpCount = 0;
 	const int nMaxJumpCount = 1;
 	float GravatiyPower = -2.5f;
+	//»ç°Ý 
+	ProjectileManager* PM = nullptr;
 };
