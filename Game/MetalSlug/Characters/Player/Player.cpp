@@ -24,7 +24,7 @@ Player::~Player()
 
 void Player::Update()
 {
-	Input();
+	Input(); 
 	lowerBody->Update();
 	upperBody->Update();
 	//jump
@@ -52,34 +52,7 @@ void Player::Input()
 	//АјАн
 	if (Keyboard::Get()->Down('A'))
 	{
-		cout << "input" << endl;
-		isAtk = true;
-
-		if(isHandUp)
-		{
-			upperBody->SetClip("UpsideATK", true);
-			soldierUpperState = SOLDIERSTATE::UPSIDEATK;
-		}
-		else if (isCrouch)
-		{
-			if (!isGround)
-			{
-				upperBody->SetClip("CrouchJumpATK", true);
-				soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
-			}
-			else
-			{
-				upperBody->SetClip("CrouchATK", true);
-				soldierUpperState = SOLDIERSTATE::CROUCHATK;
-			}
-		}
-		else
-		{
-			upperBody->SetClip("ATK", true);
-			soldierUpperState = SOLDIERSTATE::ATK;
-		}
-
-		PM->AddBullet(position, Vector3(10, 5, 1),0, dir, BULLETTYPE::PISTOL);
+		Fire();
 	}
 	if (isAtk)
 	{
@@ -313,6 +286,37 @@ void Player::Move(Vector3 tempPos)
 	WB->SetWorld(world);
 }
 
+void Player::Fire()
+{
+	isAtk = true;
+
+	if (isHandUp)
+	{
+		upperBody->SetClip("UpsideATK", true);
+		soldierUpperState = SOLDIERSTATE::UPSIDEATK;
+	}
+	else if (isCrouch)
+	{
+		if (!isGround)
+		{
+			upperBody->SetClip("CrouchJumpATK", true);
+			soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
+		}
+		else
+		{
+			upperBody->SetClip("CrouchATK", true);
+			soldierUpperState = SOLDIERSTATE::CROUCHATK;
+		}
+	}
+	else
+	{
+		upperBody->SetClip("ATK", true);
+		soldierUpperState = SOLDIERSTATE::ATK;
+	}
+	MoveFirePos();
+	PM->AddBullet(firePos.Pos, Vector3(17, 8, 1), firePos.Rotation, dir, BULLETTYPE::PISTOL);
+}
+
 void Player::Jump()
 {
 	static float fJumpTime = 0;
@@ -338,12 +342,69 @@ void Player::Jump()
 	{
 		if (isJumpEnd == true)
 		{
-			GravatiyPower *= fJumpTime;
+			GravatiyPower *= (fJumpTime);
 		}
 		else
 		{
 			fJumpTime = 0;
-			GravatiyPower = -1.0f;
+			GravatiyPower = -5;
+		}
+	}
+}
+
+void Player::MoveFirePos()
+{
+	if (isHandUp)
+	{
+		if (dir == DIRECTION::LEFT)
+		{
+			firePos.Pos = upperBody->GetPosition() + Vector3(15 * size.x, 37 * size.x, 0);
+			firePos.Rotation = 90.0f;
+		}
+		else if (dir == DIRECTION::RIGHT)
+		{
+			firePos.Pos = upperBody->GetPosition() + Vector3(12 * size.x, 37 * size.x, 0);
+			firePos.Rotation = 90.0f;
+		}
+	}
+	else if (isCrouch)
+	{
+		if (!isGround)
+		{
+			if (dir == DIRECTION::LEFT)
+			{
+				firePos.Pos = upperBody->GetPosition() + Vector3(11 * size.x, -0 * size.x, 0);
+				firePos.Rotation = -90.0f;
+			}
+			else if (dir == DIRECTION::RIGHT)
+			{
+				firePos.Pos = upperBody->GetPosition() + Vector3(12 * size.x, -0 * size.x, 0);
+				firePos.Rotation = -90.0f;
+			}
+		}
+		else
+		{
+			firePos.Rotation = 0.0f;
+			if (dir == DIRECTION::LEFT)
+			{
+				firePos.Pos = upperBody->GetPosition() + Vector3(19 * size.x, 17 * size.x, 0);
+			}
+			else if (dir == DIRECTION::RIGHT)
+			{
+				firePos.Pos = upperBody->GetPosition() + Vector3(38 * size.x, 17 * size.x, 0);
+			}
+		}
+	}
+	else
+	{
+		firePos.Rotation = 0.0f;
+		if (dir == DIRECTION::LEFT)
+		{
+			firePos.Pos = upperBody->GetPosition() + Vector3(19 * size.x, 17 * size.x, 0);
+		}
+		else if (dir == DIRECTION::RIGHT)
+		{
+			firePos.Pos = upperBody->GetPosition() + Vector3(38 * size.x, 17 * size.x, 0);
 		}
 	}
 }

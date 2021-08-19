@@ -15,7 +15,7 @@ void Stage::Init()
 	Map->SetSRV(L"./_Textures/Map/Map.png");
 
 	ground = new Ground(Vector3(0,100,0),Vector3(1000*4,100,1),0);
-	player = new Player(Vector3(100, 200, 0), Vector3(3, 3, 1), 0);
+	player = new Player(Vector3(100, 400, 0), Vector3(3, 3, 1), 0);
 	temp = new EnemySoldier(Vector3(400, 200, 0), Vector3(3, 3, 1), 0, ENEMYTYPE::Grenadier);
 
 	//manager
@@ -35,6 +35,7 @@ void Stage::Update()
 
 	//manager
 	PlayerPM->Update();
+
 	//Camera::Get()->Move(player->GetPosition()-Vector3(200,100,0));
 }
 

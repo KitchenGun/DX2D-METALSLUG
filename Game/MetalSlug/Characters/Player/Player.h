@@ -4,6 +4,12 @@ typedef float JUMPPOW;
 typedef float MOVESPEED;
 class ProjectileManager;
 
+struct FirePos
+{
+	Vector3 Pos=Vector3(0,0,0);
+	float Rotation = 0;
+};
+
 enum class STATE
 {
 	NONE=0,
@@ -53,7 +59,10 @@ public://생성자 소멸자 update render
 	void Render() override;
 	void Input();
 	void Move(Vector3 tempPos);
+	void Fire();
 	void Jump();
+	void MoveFirePos();
+
 
 	void SetUpperAni();
 	void SetLowerAni();
@@ -70,7 +79,6 @@ public:
 	SOLDIERSTATE GetUpperState() { return soldierUpperState; }
 protected:
 	HP PlayerHP = 0;
-	JUMPPOW PlayerJumpPow = 0;
 	MOVESPEED PlayerSpeed = 150.0f;
 	STATE PlayerState = STATE::NONE;
 	SOLDIER PlayerCharacter = SOLDIER::NONE;
@@ -92,13 +100,15 @@ private:
 	SOLDIERSTATE soldierUpperState = SOLDIERSTATE::NONE;
 	SOLDIERSTATE soldierLowerState = SOLDIERSTATE::NONE;
 	//점프 수치
+	JUMPPOW PlayerJumpPow = 0;
 	bool isJump = false;
 	bool isJumpEnd = false;
 	float fJumpPower = 0.0f;
-	const float fMaxJumpSpeed = 3.5f;
+	const float fMaxJumpSpeed = 10.0f;
 	int nJumpCount = 0;
 	const int nMaxJumpCount = 1;
-	float GravatiyPower = -2.5f;
+	float GravatiyPower = -5;
 	//사격 
 	ProjectileManager* PM = nullptr;
+	FirePos firePos;
 };
