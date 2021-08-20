@@ -24,7 +24,9 @@ public:
 	static bool Intersect(Square *rect, Vector3 position);
 	//Àý´ñ°ª ¹ÝÈ¯
 	static Vector2 absVec2(Vector2 val);
-	static Vector3 absVec2(Vector3 val);
+	static Vector3 absVec3(Vector3 val);
 	//lerp
 	static float Lerpf(float min, float max, float target);
+	//dist
+	static float Distance(Vector3 v1, Vector3 v2);
 };

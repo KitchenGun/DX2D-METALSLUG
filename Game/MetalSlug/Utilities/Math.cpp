@@ -68,7 +68,7 @@ Vector2 Math::absVec2(Vector2 val)
 	return Vector2(x, y);
 }
 
-Vector3 Math::absVec2(Vector3 val)
+Vector3 Math::absVec3(Vector3 val)
 {
 	float x = abs(val.x);
 	float y = abs(val.y);
@@ -79,5 +79,10 @@ Vector3 Math::absVec2(Vector3 val)
 float Math::Lerpf(float min, float max, float target)
 {
 	return min + target * (max - min);
+}
+
+float Math::Distance(Vector3 v1, Vector3 v2)
+{
+	return sqrtf(pow(v1.x - v2.x, 2) + pow(v1.y - v2.y, 2));
 }
 

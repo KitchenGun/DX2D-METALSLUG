@@ -314,6 +314,7 @@ void Player::Fire()
 		soldierUpperState = SOLDIERSTATE::ATK;
 	}
 	MoveFirePos();
+	//pistol
 	PM->AddBullet(firePos.Pos, Vector3(17, 8, 1), firePos.Rotation, dir, BULLETTYPE::PISTOL);
 }
 

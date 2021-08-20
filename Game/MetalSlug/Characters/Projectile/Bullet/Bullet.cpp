@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Bullet.h"
 #include "Utilities/Animator.h"
-
 Bullet::Bullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, BULLETTYPE BT)
 	:Projectile(position, size, rotation,dir),
 	bt(BT)
