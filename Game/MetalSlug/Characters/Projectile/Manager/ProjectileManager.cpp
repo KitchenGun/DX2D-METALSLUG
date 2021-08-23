@@ -15,16 +15,15 @@ ProjectileManager::~ProjectileManager()
 
 void ProjectileManager::Update()
 {
-	cout << projectileList.size() << endl;
 	for (Projectile* tempProjectile : projectileList)
 	{
 		if (tempProjectile != nullptr)
 		{
 			tempProjectile->Update();
-
 			if (Math::Distance(tempProjectile->GetStartPos(), tempProjectile->GetPosition()) > 2000.0f)//일정 거리 이상일 경우 삭제
 			{
 				RemoveProjectile(tempProjectile);
+				break;//삭제시 프로젝트 리스트가 변경되서 break걸고 다시 돌려야함
 			}
 		}
 	}
