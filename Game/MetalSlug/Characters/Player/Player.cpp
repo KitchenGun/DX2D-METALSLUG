@@ -7,10 +7,11 @@ Player::Player(Vector3 position, Vector3 size, float rotation)
 	PlayerAnimationRect(position,size,rotation)
 {
 	this->position = position;
+	this->IMGsize = 3;
 	this->size = size;
 	dir = DIRECTION::RIGHT;
-	lowerBody = new SoldierLower(position, Vector3(21* this->size.x, 16 * this->size.x, 1), 0);
-	upperBody = new SoldierUpper(position + Vector3(0, 8 * this->size.x, 0), Vector3(30 * this->size.x, 30 * this->size.x, 1), 0);
+	lowerBody = new SoldierLower(position, Vector3(21* IMGsize, 16 * IMGsize, 1), 0);
+	upperBody = new SoldierUpper(position + Vector3(0, 8 * IMGsize, 0), Vector3(30 * IMGsize, 30 * IMGsize, 1), 0);
 	lowerBody->SetPlayer(this);
 	upperBody->SetPlayer(this);
 	upperBodyAnimator = upperBody->GetAnimator();
@@ -284,6 +285,8 @@ void Player::Move(Vector3 tempPos)
 
 	world = S * R * T;
 	WB->SetWorld(world);
+
+	TransformVertices();
 }
 
 void Player::Fire()
@@ -359,12 +362,12 @@ void Player::MoveFirePos()
 	{
 		if (dir == DIRECTION::LEFT)
 		{
-			firePos.Pos = upperBody->GetPosition() + Vector3(15 * size.x, 37 * size.x, 0);
+			firePos.Pos = upperBody->GetPosition() + Vector3(15 * IMGsize, 37 * IMGsize, 0);
 			firePos.Rotation = 90.0f;
 		}
 		else if (dir == DIRECTION::RIGHT)
 		{
-			firePos.Pos = upperBody->GetPosition() + Vector3(12 * size.x, 37 * size.x, 0);
+			firePos.Pos = upperBody->GetPosition() + Vector3(12 * IMGsize, 37 * IMGsize, 0);
 			firePos.Rotation = 90.0f;
 		}
 	}
@@ -374,12 +377,12 @@ void Player::MoveFirePos()
 		{
 			if (dir == DIRECTION::LEFT)
 			{
-				firePos.Pos = upperBody->GetPosition() + Vector3(11 * size.x, -0 * size.x, 0);
+				firePos.Pos = upperBody->GetPosition() + Vector3(11 * IMGsize, -0 * IMGsize, 0);
 				firePos.Rotation = -90.0f;
 			}
 			else if (dir == DIRECTION::RIGHT)
 			{
-				firePos.Pos = upperBody->GetPosition() + Vector3(12 * size.x, -0 * size.x, 0);
+				firePos.Pos = upperBody->GetPosition() + Vector3(12 * IMGsize, -0 * IMGsize, 0);
 				firePos.Rotation = -90.0f;
 			}
 		}
@@ -388,11 +391,11 @@ void Player::MoveFirePos()
 			firePos.Rotation = 0.0f;
 			if (dir == DIRECTION::LEFT)
 			{
-				firePos.Pos = upperBody->GetPosition() + Vector3(19 * size.x, 17 * size.x, 0);
+				firePos.Pos = upperBody->GetPosition() + Vector3(19 * IMGsize, 17 * IMGsize, 0);
 			}
 			else if (dir == DIRECTION::RIGHT)
 			{
-				firePos.Pos = upperBody->GetPosition() + Vector3(38 * size.x, 17 * size.x, 0);
+				firePos.Pos = upperBody->GetPosition() + Vector3(38 * IMGsize, 17 * IMGsize, 0);
 			}
 		}
 	}
@@ -401,11 +404,11 @@ void Player::MoveFirePos()
 		firePos.Rotation = 0.0f;
 		if (dir == DIRECTION::LEFT)
 		{
-			firePos.Pos = upperBody->GetPosition() + Vector3(19 * size.x, 17 * size.x, 0);
+			firePos.Pos = upperBody->GetPosition() + Vector3(19 * IMGsize, 17 * IMGsize, 0);
 		}
 		else if (dir == DIRECTION::RIGHT)
 		{
-			firePos.Pos = upperBody->GetPosition() + Vector3(38 * size.x, 17 * size.x, 0);
+			firePos.Pos = upperBody->GetPosition() + Vector3(38 * IMGsize, 17 * IMGsize, 0);
 		}
 	}
 }

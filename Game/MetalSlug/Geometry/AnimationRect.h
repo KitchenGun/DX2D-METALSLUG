@@ -11,10 +11,20 @@ public:
 
 	virtual void Update();
 	virtual void Render();
-
 	virtual void Move(Vector3 position);
+	virtual void Rotation(float rotation);
+
 	Vector3 GetPosition() { return position; }
 	RectEdges GetTransformedCoord() { return r; }
+
+	Matrix GetSMatrix() { return S; }
+	Matrix GetRMatrix() { return R; }
+	Matrix GetTMatrix() { return T; }
+
+	Vector3 GetPointPos() { return position + (size / 2); }
+	Vector3 GetScale() { return size; }
+	Vector3 Right() { return right; }
+	Vector3 Up() { return up; }
 protected:
 	Animator* animator = nullptr;
 	vector<AnimationClip*> animClips;
@@ -37,7 +47,11 @@ protected:
 
 	ID3D11BlendState* BS;
 	ID3D11SamplerState* SS;
+
 	//충돌처리
 	void TransformVertices();
 	RectEdges r;
+
+	Vector3 right = Vector3(1.0f, 0.0f, 0.0f);
+	Vector3 up = Vector3(0.0f, 1.0f, 0.0f);
 };

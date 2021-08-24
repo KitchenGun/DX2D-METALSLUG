@@ -13,4 +13,7 @@ public:
 	void Update() override;
 	void Render() override;
 
+	bool GetisObb() { return isObb; }
+private:
+	bool isObb = true;
 };

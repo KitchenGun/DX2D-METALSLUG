@@ -13,8 +13,19 @@ public:
 	virtual void Render();
 
 	virtual void Move(Vector3 position);
+	void Rotation(float rotation);
+
 	Vector3 GetPosition() { return position; }
 	RectEdges GetTransformedCoord() { return r; }
+
+	Matrix GetSMatrix() { return S; }
+	Matrix GetRMatrix() { return R; }
+	Matrix GetTMatrix() { return T; }
+
+	Vector3 GetPointPos() {return position + Vector3(size.x/ 2,size.y/2,0); }
+	Vector3 GetScale() { return size; }
+	Vector3 Right() { return right; }
+	Vector3 Up() { return up; }
 protected:
 	Animator* animator = nullptr;
 	vector<AnimationClip*> animClips;
@@ -40,4 +51,8 @@ protected:
 	//충돌처리
 	void TransformVertices();
 	RectEdges r;
+
+
+	Vector3 right = Vector3(1.0f, 0.0f, 0.0f);
+	Vector3 up = Vector3(0.0f, 1.0f, 0.0f);
 };

@@ -106,7 +106,6 @@ PlayerAnimationRect::PlayerAnimationRect(Vector3 position, Vector3 size, float r
 		HRESULT hr = DEVICE->CreateSamplerState(&desc, &SS);
 		ASSERT(hr);
 	}
-
 }
 
 PlayerAnimationRect::~PlayerAnimationRect()
@@ -130,6 +129,9 @@ PlayerAnimationRect::~PlayerAnimationRect()
 void PlayerAnimationRect::Update()
 {
 	animator->Update();
+	
+	right = Vector3(R._11, R._12, R._13);
+	up = Vector3(R._21, R._22, R._23);
 
 	D3D11_MAPPED_SUBRESOURCE subResource;
 	DC->Map(VB->GetResource(), 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
@@ -188,6 +190,16 @@ void PlayerAnimationRect::Move(Vector3 position)
 	TransformVertices();
 }
 
+void PlayerAnimationRect::Rotation(float rotation)
+{
+	this->rotation = rotation;
+	D3DXMatrixRotationZ(&R, (float)D3DXToRadian(this->rotation));
+
+	world = S * R * T;
+	WB->SetWorld(world);
+	TransformVertices();
+}
+
 void PlayerAnimationRect::TransformVertices()
 {
 	//D3DXVec3TransformNormal() //벡터 이동   //지정된 행렬에 의해 3D 벡터 법선을 변환 한다.
@@ -196,6 +208,12 @@ void PlayerAnimationRect::TransformVertices()
 		&r.LT,						//반환할곳
 		&vertices[1].position,		//처리의 기본 정점정보
 		&world						//처리의 기본 매트릭스 정보
+	);
+	D3DXVec3TransformCoord//정점 이동
+	(
+		&r.Point,
+		&(vertices[0].position+Vector3(0.5f, 0.5f, 0)),
+		&world
 	);
 	D3DXVec3TransformCoord//정점 이동
 	(

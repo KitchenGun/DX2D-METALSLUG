@@ -12,6 +12,7 @@ Ground::Ground(Vector3 position, Vector3 size, float rotation)
 	animator->SetCurrentAnimClip(L"temp");
 	animator->bLoop = true;
 	TransformVertices();
+	cout << GetTransformedCoord().LT.x << endl;
 }
 
 Ground::~Ground()

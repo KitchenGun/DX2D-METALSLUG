@@ -67,8 +67,7 @@ public://생성자 소멸자 update render
 	void SetUpperAni();
 	void SetLowerAni();
 public:
-	//Vector3 GetPos() { return position; }
-	float GetSize() { return size.x; }
+	float GetSize() { return IMGsize; }
 	DIRECTION GetDir() { return dir; }
 	bool GetisCrouch() { return isCrouch; }
 	bool GetisMove() { return isMove; }
@@ -88,6 +87,7 @@ private:
 	SoldierUpper* upperBody = nullptr;
 	Animator* upperBodyAnimator = nullptr;
 
+	float IMGsize = 0;
 
 	bool isGround = false;//지상 판정
 	bool isCrouch = false;//앉기 키를 누른경우

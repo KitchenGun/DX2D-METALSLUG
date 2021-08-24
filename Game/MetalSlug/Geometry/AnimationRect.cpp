@@ -188,6 +188,15 @@ void AnimationRect::Move(Vector3 position)
 	TransformVertices();
 }
 
+void AnimationRect::Rotation(float rotation)
+{
+	this->rotation = rotation;
+	D3DXMatrixRotationZ(&R, (float)D3DXToRadian(this->rotation));
+
+	world = S * R * T;
+	WB->SetWorld(world);
+}
+
 void AnimationRect::TransformVertices()
 {
 	//D3DXVec3TransformNormal() //벡터 이동   //지정된 행렬에 의해 3D 벡터 법선을 변환 한다.
