@@ -4,6 +4,13 @@ typedef float JUMPPOW;
 typedef float MOVESPEED;
 class ProjectileManager;
 
+struct OBBInfo
+{
+	bool isObb = false;
+	float Gradient = 0;
+	float alphaVal = 0;
+};
+
 struct FirePos
 {
 	Vector3 Pos=Vector3(0,0,0);
@@ -59,21 +66,24 @@ public://생성자 소멸자 update render
 	void Render() override;
 	void Input();
 	void Move(Vector3 tempPos);
+	void ObbGroundMove(Vector3 tempPos);
+	
+	
 	void Fire();
 	void Jump();
 	void MoveFirePos();
-
-
+public://Get&Set
 	void SetUpperAni();
 	void SetLowerAni();
-public:
 	float GetSize() { return IMGsize; }
 	DIRECTION GetDir() { return dir; }
 	bool GetisCrouch() { return isCrouch; }
 	bool GetisMove() { return isMove; }
 	bool GetisGround() { return isGround; }
+	Vector3 GetRootPos() { return RootPos; }
 	void SetisGround(bool val) { isGround = val; }
 	void SetPM(ProjectileManager* val) { PM = val; }
+	OBBInfo* GetObbInfo() { return obbInfo; }
 	SOLDIERSTATE GetLowerState() { return soldierLowerState; }
 	SOLDIERSTATE GetUpperState() { return soldierUpperState; }
 protected:
@@ -108,6 +118,9 @@ private:
 	int nJumpCount = 0;
 	const int nMaxJumpCount = 1;
 	float GravatiyPower = -5;
+	//root
+	Vector3 RootPos;
+	OBBInfo* obbInfo;
 	//사격 
 	ProjectileManager* PM = nullptr;
 	FirePos firePos;

@@ -217,6 +217,12 @@ void PlayerAnimationRect::TransformVertices()
 	);
 	D3DXVec3TransformCoord//정점 이동
 	(
+		&r.RT,
+		&vertices[3].position,
+		&world
+	);
+	D3DXVec3TransformCoord//정점 이동
+	(
 		&r.RB,
 		&vertices[2].position,
 		&world

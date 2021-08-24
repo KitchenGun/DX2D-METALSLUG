@@ -4,6 +4,7 @@
 struct RectEdges //모서리 좌표
 {
 	Vector3 LT;
+	Vector3 RT;
 	Vector3 RB;
 	Vector3 Point;
 };

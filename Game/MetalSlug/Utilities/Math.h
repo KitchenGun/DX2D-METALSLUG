@@ -24,8 +24,10 @@ public:
 	static bool Intersect(AnimationRect* r1, AnimationRect* r2);
 	static bool Intersect(Square *rect, Vector3 position);
 	//바닥 충돌
-	static bool GroundIntersect(PlayerAnimationRect* p1, vector<Ground*> GL);//캐릭터 바닥 충돌
+	static bool GroundIntersect(Player* p1, vector<Ground*> GL);//캐릭터 바닥 충돌
 	static bool GroundIntersect(AnimationRect* r1, vector<Ground*> GL);//투사체 및 사물 바닥 충돌
+	//바닥 OBB 충돌
+	static bool GroundObbIntersect(Player* p1, Ground* g1);//캐릭터 바닥 충돌
 	static bool GroundObbIntersect(PlayerAnimationRect* p1, Ground* g1);//캐릭터 바닥 충돌
 	static bool GroundObbIntersect(AnimationRect* r1, Ground* g1);//투사체 및 사물 바닥 충돌
 	//절댓값 반환

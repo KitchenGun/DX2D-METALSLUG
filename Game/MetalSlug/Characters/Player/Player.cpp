@@ -15,6 +15,8 @@ Player::Player(Vector3 position, Vector3 size, float rotation)
 	lowerBody->SetPlayer(this);
 	upperBody->SetPlayer(this);
 	upperBodyAnimator = upperBody->GetAnimator();
+	//obb
+	obbInfo = new OBBInfo;
 	//test
 	texture = new Texture2D(L"./_Textures/TestBox.png");
 }
@@ -30,6 +32,7 @@ void Player::Update()
 	upperBody->Update();
 	//jump
 	Jump();
+
 	if (isGround)
 	{
 		isJumpEnd = false;
@@ -275,17 +278,38 @@ void Player::Input()
 void Player::Move(Vector3 tempPos)
 {
 	tempPos.x *= Time::Delta();
-	if (isCrouch&&isGround)
+	if (isCrouch && isGround)
 	{
 		tempPos.x /= 3;
 	}
+	if (obbInfo->isObb)
+	{
+		ObbGroundMove(tempPos);
+	}
+	else
+	{
+		this->position += tempPos;
+		D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
 
-	this->position += tempPos;
+		world = S * R * T;
+		WB->SetWorld(world);
+
+		RootPos = position + Vector3(size.x / 2, 0, 0);
+		TransformVertices();
+	}
+}
+
+void Player::ObbGroundMove(Vector3 tempPos)
+{
+	Vector3 pos = Vector3(position.x + tempPos.x, 0, 0);
+	pos = Vector3(pos.x, (obbInfo->Gradient * pos.x) + obbInfo->alphaVal, 0);
+	this->position = pos;
 	D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
 
 	world = S * R * T;
 	WB->SetWorld(world);
 
+	RootPos = position + Vector3(size.x / 2, 0, 0);
 	TransformVertices();
 }
 

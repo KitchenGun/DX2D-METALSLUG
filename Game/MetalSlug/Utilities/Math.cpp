@@ -76,7 +76,7 @@ bool Math::Intersect(Square * rect, Vector3 position)
 		return false;
 }
 
-bool Math::GroundIntersect(PlayerAnimationRect* p1, vector<Ground*> GL)
+bool Math::GroundIntersect(Player* p1, vector<Ground*> GL)
 {
 	for (Ground* tempGroundOBj : GL)
 	{
@@ -89,6 +89,7 @@ bool Math::GroundIntersect(PlayerAnimationRect* p1, vector<Ground*> GL)
 			}
 			else
 			{
+				p1->GetObbInfo()->isObb = false;
 				return Intersect(p1, tempGroundOBj);
 			}
 		}
@@ -117,11 +118,71 @@ bool Math::GroundIntersect(AnimationRect* r1, vector<Ground*> GL)
 	return false;
 }
 
+bool Math::GroundObbIntersect(Player* p1, Ground* g1)
+{
+	//땅 기울기
+	{
+		if (g1->GetTransformedCoord().RT.y < g1->GetTransformedCoord().LT.y)
+		{
+			Vector3 Range = g1->GetTransformedCoord().RT - g1->GetTransformedCoord().LT;
+		}
+		else
+		{
+			Vector3 Range = g1->GetTransformedCoord().LT- g1->GetTransformedCoord().RT;
+		}
+		{
+			if (p1->GetisGround())
+			{
+				p1->GetObbInfo()->isObb = true;
+			}
+			else
+			{
+				p1->GetObbInfo()->isObb = false;
+			}
+		}
+		p1->GetObbInfo()->Gradient = Range.y / Range.x;
+		p1->GetObbInfo()->alphaVal = g1->GetTransformedCoord().RT.y - (p1->GetObbInfo()->Gradient * (g1->GetTransformedCoord().RT.x - 30));
+	}
+
+
+	Vector3 dist = p1->GetRootPos() - g1->GetTransformedCoord().Point;
+	Vector3 r1Up = p1->Up() * 0.5f;
+	Vector3 r1Right = p1->Right() * 0.5f;
+
+	Vector3 r2Up = g1->Up() * g1->GetScale().y * 0.5f;
+	Vector3 r2Right = g1->Right() * g1->GetScale().x * 0.5f;
+
+	//첫번째 조건 : p1->Right()가 임의의 축
+	float c = fabs(Dot(dist, p1->Right()));
+	float a = fabs(Dot(r2Up, p1->Right())) + fabs((Dot(r2Right, p1->Right())));
+	float b = p1->GetScale().x * 0.5f;
+	if (c > a + b)
+		return false;
+	//두번재 조건 : p1->Up()가 임의의 축
+	c = fabs(Dot(dist, p1->Up()));
+	a = fabs(Dot(r2Up, p1->Up())) + fabs((Dot(r2Right, p1->Up())));
+	b = p1->GetScale().y * 0.5f;
+	if (c > a + b)
+		return false;
+	//세번째 조건 : g1->Right()가 임의의 축
+	c = fabs(Dot(dist, g1->Right()));
+	a = fabs(Dot(r1Up, g1->Right())) + fabs((Dot(r1Right, g1->Right())));
+	b = g1->GetScale().x * 0.5f;
+	if (c > a + b)
+		return false;
+	//네번째 조건 : g1->Up()가 임의의 축
+	c = fabs(Dot(dist, g1->Up()));
+	a = fabs(Dot(r1Up, g1->Up())) + fabs((Dot(r1Right, g1->Up())));
+	b = g1->GetScale().y * 0.5f;
+	if (c > a + b)
+		return false;
+
+	return true;
+}
+
 bool Math::GroundObbIntersect(PlayerAnimationRect* p1, Ground* g1)
 {
 	Vector3 dist = p1->GetTransformedCoord().Point - g1->GetTransformedCoord().Point;
-	cout << String::ToString(p1->GetTransformedCoord().Point) << endl;
-	cout << String::ToString(g1->GetTransformedCoord().Point) << endl;
 	Vector3 r1Up = p1->Up() * p1->GetScale().y * 0.5f;
 	Vector3 r1Right = p1->Right() * p1->GetScale().x * 0.5f;
 
