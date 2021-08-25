@@ -32,6 +32,19 @@ EnemySoldier::~EnemySoldier()
 
 void EnemySoldier::Update()
 {
+	//jump
+	Jump();
+
+	if (isGround)
+	{
+		isJumpEnd = false;
+		nJumpCount = 0;
+	}
+	else
+	{
+		Move({ 0,GravatiyPower,0 });
+	}
+
 	PlayerAnimationRect::Update();
 }
 
@@ -106,4 +119,39 @@ void EnemySoldier::SetSize(Vector3 tempSize)
 void EnemySoldier::Move(Vector3 pos)
 {
 	PlayerAnimationRect::Move(pos);
+}
+
+void EnemySoldier::Jump()
+{
+	static float fJumpTime = 0;
+	if (isJump)
+	{
+		//상승 상황 점프
+		if (fJumpPower <= fMaxJumpSpeed)
+		{
+			fJumpPower = fMaxJumpSpeed - Math::Lerpf(0, fMaxJumpSpeed, fJumpTime);
+			Move({ 0,fJumpPower,0 });
+		}
+
+
+		if (fJumpTime >= 1)
+		{
+			fJumpPower = 0;
+			isJump = false;
+			isJumpEnd = true;
+		}
+		fJumpTime += Time::Delta();
+	}
+	else
+	{
+		if (isJumpEnd == true)
+		{
+			GravatiyPower *= (fJumpTime);
+		}
+		else
+		{
+			fJumpTime = 0;
+			GravatiyPower = -5;
+		}
+	}
 }
