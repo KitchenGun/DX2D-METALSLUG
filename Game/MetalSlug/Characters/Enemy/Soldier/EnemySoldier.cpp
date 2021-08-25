@@ -32,6 +32,7 @@ EnemySoldier::~EnemySoldier()
 
 void EnemySoldier::Update()
 {
+	Enemy::Update();
 	//jump
 	Jump();
 
@@ -45,12 +46,11 @@ void EnemySoldier::Update()
 		Move({ 0,GravatiyPower,0 });
 	}
 
-	PlayerAnimationRect::Update();
 }
 
 void EnemySoldier::Render()
 {
-	PlayerAnimationRect::Render();
+	Enemy::Render();
 }
 
 
@@ -132,7 +132,7 @@ void EnemySoldier::Jump()
 			fJumpPower = fMaxJumpSpeed - Math::Lerpf(0, fMaxJumpSpeed, fJumpTime);
 			Move({ 0,fJumpPower,0 });
 		}
-
+		
 
 		if (fJumpTime >= 1)
 		{

@@ -17,7 +17,8 @@
 #include "Characters/Player/Player.h"
 //적
 #include "Characters/Enemy/Enemy.h"
-#include "Characters/Enemy/EnemySoldier.h"
+#include "Characters/Enemy/Soldier/EnemySoldier.h"
+#include "Characters/Enemy/Manager/EnemyManager.h"
 
 //투사체
 #include "Characters/Projectile/Projectile.h"

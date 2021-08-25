@@ -11,3 +11,14 @@ Enemy::~Enemy()
 {
 	PlayerAnimationRect::~PlayerAnimationRect();
 }
+
+void Enemy::Update()
+{
+	PlayerAnimationRect::Update();
+}
+
+void Enemy::Render()
+{
+	PlayerAnimationRect::Render();
+}
+

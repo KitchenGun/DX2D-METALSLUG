@@ -59,7 +59,7 @@ PlayerAnimationRect::PlayerAnimationRect(Vector3 position, Vector3 size, float r
 	world = S * R * T;
 
 	WB->SetWorld(world);
-	
+	TransformVertices();
 	//Create BlnedState//현재는 기능이 없음
 	{
 		D3D11_BLEND_DESC desc;

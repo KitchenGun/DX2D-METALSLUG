@@ -10,10 +10,8 @@ public:
 	Enemy(Vector3 position, Vector3 size, float rotation,ENEMYTYPE enemyType);
 	~Enemy();
 	
-	virtual void Update()=0;
-	virtual void Render() = 0;
-
-	virtual void Move(Vector3 pos)=0;
+	virtual void Update() override;
+	virtual void Render() override;
 
 protected:
 	ENEMYTYPE enemyType = ENEMYTYPE::NONE;
