@@ -121,25 +121,17 @@ bool Math::GroundIntersect(AnimationRect* r1, vector<Ground*> GL)
 bool Math::GroundObbIntersect(Player* p1, Ground* g1)
 {
 	//¶¥ ±â¿ï±â
-	{
-		if (g1->GetTransformedCoord().RT.y < g1->GetTransformedCoord().LT.y)
+	{	
+		Vector3 Range = g1->GetTransformedCoord().RT - g1->GetTransformedCoord().LT;
+		if (p1->GetisGround())
 		{
-			Vector3 Range = g1->GetTransformedCoord().RT - g1->GetTransformedCoord().LT;
+			p1->GetObbInfo()->isObb = true;
 		}
 		else
 		{
-			Vector3 Range = g1->GetTransformedCoord().LT- g1->GetTransformedCoord().RT;
+			p1->GetObbInfo()->isObb = false;
 		}
-		{
-			if (p1->GetisGround())
-			{
-				p1->GetObbInfo()->isObb = true;
-			}
-			else
-			{
-				p1->GetObbInfo()->isObb = false;
-			}
-		}
+		
 		p1->GetObbInfo()->Gradient = Range.y / Range.x;
 		p1->GetObbInfo()->alphaVal = g1->GetTransformedCoord().RT.y - (p1->GetObbInfo()->Gradient * (g1->GetTransformedCoord().RT.x - 30));
 	}

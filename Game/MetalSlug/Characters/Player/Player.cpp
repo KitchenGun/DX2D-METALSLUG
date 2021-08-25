@@ -23,6 +23,8 @@ Player::Player(Vector3 position, Vector3 size, float rotation)
 
 Player::~Player()
 {
+	SAFE_DELETE(PM);
+	SAFE_DELETE(obbInfo);
 }
 
 void Player::Update()
@@ -282,7 +284,7 @@ void Player::Move(Vector3 tempPos)
 	{
 		tempPos.x /= 3;
 	}
-	if (obbInfo->isObb)
+	if (obbInfo->isObb&&!isJump)
 	{
 		ObbGroundMove(tempPos);
 	}

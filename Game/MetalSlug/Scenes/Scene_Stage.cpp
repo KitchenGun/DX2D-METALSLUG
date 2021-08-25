@@ -14,7 +14,7 @@ void Stage::Init()
 	Map = new TextureRect(Vector3(4153*4 / 2, 306 * 4 / 2, 0), Vector3(4153 * 4, 306 *4, 1), 0);
 	Map->SetSRV(L"./_Textures/Map/Map.png");
 
-	ground = new Ground(Vector3(0, 100, 0), Vector3(1000 * 4, 100, 1), -10);
+	ground = new Ground(Vector3(0, 100, 0), Vector3(1000 * 4, 100, 1), 45);
 	player = new Player(Vector3(100, 400, 0), Vector3(30*3, 40*3, 1), 0);
 	temp = new EnemySoldier(Vector3(400, 200, 0), Vector3(3, 3, 1), 0, ENEMYTYPE::Grenadier);
 
