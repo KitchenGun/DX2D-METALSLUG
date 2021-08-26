@@ -194,6 +194,60 @@ bool Math::GroundObbIntersect(Player* p1, Ground* g1)
 	return true;
 }
 
+bool Math::GroundObbIntersect(Enemy* e1, Ground* g1)
+{
+	//땅 기울기
+	{
+		Vector3 Range = g1->GetTransformedCoord().RT - g1->GetTransformedCoord().LT;
+		if (e1->GetisGround())
+		{
+			e1->GetObbInfo()->isObb = true;
+		}
+		else
+		{
+			e1->GetObbInfo()->isObb = false;
+		}
+
+		e1->GetObbInfo()->Gradient = Range.y / Range.x;
+		e1->GetObbInfo()->alphaVal = g1->GetTransformedCoord().RT.y - (e1->GetObbInfo()->Gradient * (g1->GetTransformedCoord().RT.x - 30));
+	}
+
+
+	Vector3 dist = e1->GetRootPos() - g1->GetTransformedCoord().Point;
+	Vector3 r1Up = e1->Up() * 0.5f;
+	Vector3 r1Right = e1->Right() * 0.5f;
+
+	Vector3 r2Up = g1->Up() * g1->GetScale().y * 0.5f;
+	Vector3 r2Right = g1->Right() * g1->GetScale().x * 0.5f;
+
+	//첫번째 조건 : e1->Right()가 임의의 축
+	float c = fabs(Dot(dist, e1->Right()));
+	float a = fabs(Dot(r2Up, e1->Right())) + fabs((Dot(r2Right, e1->Right())));
+	float b = e1->GetScale().x * 0.5f;
+	if (c > a + b)
+		return false;
+	//두번재 조건 : e1->Up()가 임의의 축
+	c = fabs(Dot(dist, e1->Up()));
+	a = fabs(Dot(r2Up, e1->Up())) + fabs((Dot(r2Right, e1->Up())));
+	b = e1->GetScale().y * 0.5f;
+	if (c > a + b)
+		return false;
+	//세번째 조건 : g1->Right()가 임의의 축
+	c = fabs(Dot(dist, g1->Right()));
+	a = fabs(Dot(r1Up, g1->Right())) + fabs((Dot(r1Right, g1->Right())));
+	b = g1->GetScale().x * 0.5f;
+	if (c > a + b)
+		return false;
+	//네번째 조건 : g1->Up()가 임의의 축
+	c = fabs(Dot(dist, g1->Up()));
+	a = fabs(Dot(r1Up, g1->Up())) + fabs((Dot(r1Right, g1->Up())));
+	b = g1->GetScale().y * 0.5f;
+	if (c > a + b)
+		return false;
+
+	return true;
+}
+
 bool Math::GroundObbIntersect(PlayerAnimationRect* p1, Ground* g1)
 {
 	Vector3 dist = p1->GetTransformedCoord().Point - g1->GetTransformedCoord().Point;

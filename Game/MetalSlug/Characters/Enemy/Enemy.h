@@ -12,11 +12,31 @@ public:
 	
 	virtual void Update() override;
 	virtual void Render() override;
+	//이동
+	void Move(Vector3 tempPos) override;
+	void ObbGroundMove(Vector3 tempPos);
+	void Jump();
 
 	void SetisGround(bool val) { isGround = val; }
-
+	bool GetisGround() { return isGround; }
+	Vector3 GetRootPos() { return RootPos; }
+	OBBInfo* GetObbInfo() { return obbInfo; }
 protected:
 	bool isGround = false;//지상 판정
+	Vector3 RootPos;
+
+	//점프 수치
+	JUMPPOW PlayerJumpPow = 0;
+	bool isJump = false;
+	bool isJumpEnd = false;
+	float fJumpPower = 0.0f;
+	const float fMaxJumpSpeed = 10.0f;
+	int nJumpCount = 0;
+	const int nMaxJumpCount = 1;
+	float GravatiyPower = -5;
+	
+	//Obb충돌에 필요한 정보
+	OBBInfo* obbInfo;
 
 	ENEMYTYPE enemyType = ENEMYTYPE::NONE;
 };

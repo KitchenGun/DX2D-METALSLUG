@@ -7,6 +7,7 @@ EnemySoldier::EnemySoldier(Vector3 position, Vector3 size, float rotation, ENEMY
 {
 	this->enemyType = enemyType;
 	SetAnimation();
+	obbInfo = new OBBInfo;
 
 	switch (enemyType)
 	{
@@ -17,6 +18,7 @@ EnemySoldier::EnemySoldier(Vector3 position, Vector3 size, float rotation, ENEMY
 			//26*44크기
 			enemyState = ENEMYSOLDIERSTATE::IDLE;
 			SetSize(Vector3(26 * 3, 44 * 3, 1));
+			RootPos = Vector3(position.x + 13 * 3, position.y, 0);
 			SetClip();
 			break;
 		}
@@ -33,19 +35,6 @@ EnemySoldier::~EnemySoldier()
 void EnemySoldier::Update()
 {
 	Enemy::Update();
-	//jump
-	Jump();
-
-	if (isGround)
-	{
-		isJumpEnd = false;
-		nJumpCount = 0;
-	}
-	else
-	{
-		Move({ 0,GravatiyPower,0 });
-	}
-
 }
 
 void EnemySoldier::Render()
@@ -106,6 +95,7 @@ void EnemySoldier::SetClip()
 	}
 }
 
+
 void EnemySoldier::SetSize(Vector3 tempSize)
 {
 	this->size = tempSize;
@@ -114,44 +104,4 @@ void EnemySoldier::SetSize(Vector3 tempSize)
 	world = S * R * T;
 	WB->SetWorld(world);//내부에서 transpose해줌
 	TransformVertices();
-}
-
-void EnemySoldier::Move(Vector3 pos)
-{
-	PlayerAnimationRect::Move(pos);
-}
-
-void EnemySoldier::Jump()
-{
-	static float fJumpTime = 0;
-	if (isJump)
-	{
-		//상승 상황 점프
-		if (fJumpPower <= fMaxJumpSpeed)
-		{
-			fJumpPower = fMaxJumpSpeed - Math::Lerpf(0, fMaxJumpSpeed, fJumpTime);
-			Move({ 0,fJumpPower,0 });
-		}
-		
-
-		if (fJumpTime >= 1)
-		{
-			fJumpPower = 0;
-			isJump = false;
-			isJumpEnd = true;
-		}
-		fJumpTime += Time::Delta();
-	}
-	else
-	{
-		if (isJumpEnd == true)
-		{
-			GravatiyPower *= (fJumpTime);
-		}
-		else
-		{
-			fJumpTime = 0;
-			GravatiyPower = -5;
-		}
-	}
 }
