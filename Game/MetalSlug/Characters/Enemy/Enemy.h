@@ -13,6 +13,10 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+	void SetisGround(bool val) { isGround = val; }
+
 protected:
+	bool isGround = false;//지상 판정
+
 	ENEMYTYPE enemyType = ENEMYTYPE::NONE;
 };

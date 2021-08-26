@@ -28,7 +28,6 @@ private:
 	DIRECTION dir = DIRECTION::LEFT;
 	ENEMYSOLDIERSTATE enemyState = ENEMYSOLDIERSTATE::NONE;
 	//점프 수치
-	bool isGround = false;//지상 판정
 	JUMPPOW PlayerJumpPow = 0;
 	bool isJump = false;
 	bool isJumpEnd = false;

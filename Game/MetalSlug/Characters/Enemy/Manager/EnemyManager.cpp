@@ -19,6 +19,7 @@ void EnemyManager::Update()
 	{
 		if (tempEnemy != nullptr)
 		{
+			tempEnemy->SetisGround(Math::GroundIntersect(tempEnemy, GroundList));
 			tempEnemy->Update();
 		}
 	}
