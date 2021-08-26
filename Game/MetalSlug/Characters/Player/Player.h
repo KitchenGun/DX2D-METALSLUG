@@ -1,7 +1,4 @@
 #pragma once
-typedef int HP;
-typedef float JUMPPOW;
-typedef float MOVESPEED;
 class ProjectileManager;
 
 struct OBBInfo
@@ -86,8 +83,9 @@ public://Get&Set
 	OBBInfo* GetObbInfo() { return obbInfo; }
 	SOLDIERSTATE GetLowerState() { return soldierLowerState; }
 	SOLDIERSTATE GetUpperState() { return soldierUpperState; }
+
 protected:
-	HP PlayerHP = 0;
+	HP PlayerHP = 1;
 	MOVESPEED PlayerSpeed = 150.0f;
 	STATE PlayerState = STATE::NONE;
 	SOLDIER PlayerCharacter = SOLDIER::NONE;

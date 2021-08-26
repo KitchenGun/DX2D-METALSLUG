@@ -14,7 +14,8 @@ Bullet::Bullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, BU
 	case BULLETTYPE::NONE:
 	break;
 	case BULLETTYPE::PISTOL:
-		fSpeed = 900.0f;
+		Damage = 1;
+		Speed = 900.0f;
 		animator->SetCurrentAnimClip(L"NormalBullet");
 	break;
 	case BULLETTYPE::HEAVY:
@@ -34,12 +35,12 @@ void Bullet::Update()
 {
 	if (rotation != 0)
 	{
-		Move(fSpeed*Vector3(cosf(D3DXToRadian(rotation)), sinf(D3DXToRadian(rotation)), 0));
+		Move(Speed *Vector3(cosf(D3DXToRadian(rotation)), sinf(D3DXToRadian(rotation)), 0));
 	}
 	else if (Dir == DIRECTION::RIGHT)
-		Move(Vector3(fSpeed, 0, 0));
+		Move(Vector3(Speed, 0, 0));
 	else if(Dir==DIRECTION::LEFT)
-		Move(Vector3(- fSpeed, 0, 0));
+		Move(Vector3(-Speed, 0, 0));
 	Projectile::Update();
 }
 

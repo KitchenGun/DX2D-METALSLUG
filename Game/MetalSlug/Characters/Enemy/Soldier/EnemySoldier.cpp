@@ -15,11 +15,12 @@ EnemySoldier::EnemySoldier(Vector3 position, Vector3 size, float rotation, ENEMY
 		break;
 	case ENEMYTYPE::Grenadier:
 		{	
-			//26*44크기
 			enemyState = ENEMYSOLDIERSTATE::IDLE;
+			//26*44크기
 			SetSize(Vector3(26 * 3, 44 * 3, 1));
 			RootPos = Vector3(position.x + 13 * 3, position.y, 0);
 			SetClip();
+			EnemyHP = 1;
 			break;
 		}
 	default:
@@ -29,17 +30,26 @@ EnemySoldier::EnemySoldier(Vector3 position, Vector3 size, float rotation, ENEMY
 
 EnemySoldier::~EnemySoldier()
 {
-
+	Enemy::~Enemy();
 }
 
 void EnemySoldier::Update()
 {
+	if (EnemyHP <= 0)
+	{
+		Die();
+	}
 	Enemy::Update();
 }
 
 void EnemySoldier::Render()
 {
 	Enemy::Render();
+}
+
+void EnemySoldier::Die()
+{
+	enemyState = ENEMYSOLDIERSTATE::DIE;
 }
 
 
@@ -79,6 +89,7 @@ void EnemySoldier::SetClip()
 		}
 		case ENEMYSOLDIERSTATE::DIE:
 		{
+			animator->bLoop = false;
 			if (dir == DIRECTION::RIGHT)
 			{
 

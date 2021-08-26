@@ -83,6 +83,13 @@ typedef D3DXCOLOR Color;
 #define Magenta Color(1,0,1,1)//투명 처리를 위해서 마젠타 색
 #define Cyan	Color(0,1,1,1) // 청록색
 
+
+typedef float HP;
+typedef float JUMPPOW;
+typedef float MOVESPEED;
+typedef float DAMAGE;
+typedef float SPEED;
+
 //핸들러
 extern HWND handle;
 

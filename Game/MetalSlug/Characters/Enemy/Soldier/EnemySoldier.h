@@ -15,7 +15,9 @@ public:
 public:
 	void Update() override;
 	void Render() override;
-	
+
+	void Die() override;
+
 public://Animation
 	void SetAnimation();
 	void SetClip();

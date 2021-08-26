@@ -9,9 +9,11 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+	DAMAGE GetDamage() { return Damage; }
 	Vector3 GetStartPos() { return StartPos; }
 protected:
 	DIRECTION Dir = DIRECTION::NONE;
-	float fSpeed = 0.0f;
+	SPEED Speed = 0.0f;
 	Vector3 StartPos;
+	DAMAGE Damage = 0;
 };

@@ -1,4 +1,5 @@
 #pragma once
+
 enum class ENEMYTYPE
 {
 	NONE = 0,
@@ -16,7 +17,10 @@ public:
 	void Move(Vector3 tempPos) override;
 	void ObbGroundMove(Vector3 tempPos);
 	void Jump();
-
+	//사망&피격
+	virtual void Die();
+	void Hit(DAMAGE val);
+	//Get&Set
 	void SetisGround(bool val) { isGround = val; }
 	bool GetisGround() { return isGround; }
 	Vector3 GetRootPos() { return RootPos; }
@@ -37,6 +41,6 @@ protected:
 	
 	//Obb충돌에 필요한 정보
 	OBBInfo* obbInfo;
-
+	HP EnemyHP = 0;
 	ENEMYTYPE enemyType = ENEMYTYPE::NONE;
 };

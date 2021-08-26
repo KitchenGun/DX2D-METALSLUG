@@ -20,6 +20,7 @@ void EnemyManager::Update()
 		if (tempEnemy != nullptr)
 		{
 			tempEnemy->SetisGround(Math::GroundIntersect(tempEnemy, GroundList));
+			ProjectileCollisionCheck(tempEnemy);
 			tempEnemy->Update();
 		}
 	}
@@ -32,6 +33,21 @@ void EnemyManager::Render()
 		if (tempEnemy != nullptr)
 		{
 			tempEnemy->Render();
+		}
+	}
+}
+
+void EnemyManager::ProjectileCollisionCheck(Enemy* tempEnemy)
+{
+	//이부분에서 터짐 문제 해결 필요함 아마 총알이 없는데 충돌을 처리하기위해서 총알을 찾는 듯함
+	if (PPM->GetList().size() > 0)
+	{
+		for (Projectile* tempProj : PPM->GetList())
+		{
+			if (Math::Intersect(tempEnemy, tempProj))
+			{
+				tempEnemy->Hit(tempProj->GetDamage());
+			}
 		}
 	}
 }
@@ -61,3 +77,4 @@ void EnemyManager::RemoveEnemy(Enemy* tempEnemy)
 		}
 	}
 }
+

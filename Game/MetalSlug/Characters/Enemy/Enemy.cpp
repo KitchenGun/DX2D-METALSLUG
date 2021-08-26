@@ -9,6 +9,7 @@ Enemy::Enemy(Vector3 position, Vector3 size, float rotation, ENEMYTYPE enemyType
 
 Enemy::~Enemy()
 {
+	SAFE_DELETE(obbInfo);
 	PlayerAnimationRect::~PlayerAnimationRect();
 }
 
@@ -101,5 +102,15 @@ void Enemy::Jump()
 			GravatiyPower = -5;
 		}
 	}
+}
+
+void Enemy::Die()
+{
+	//자식 객체에서 정의
+}
+
+void Enemy::Hit(DAMAGE val)
+{
+	EnemyHP -= val;
 }
 

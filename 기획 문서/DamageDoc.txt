@@ -1,0 +1,65 @@
+//플레이어
+https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=win4778&logNo=20134806159
+https://blog.naver.com/win4778/20134805950
+//보스
+https://m.blog.naver.com/tutl57/70117104150
+//적
+https://m.blog.naver.com/tutl57/220251992970
+
+ An investigation of various weapon damage in MS3, excluding those cases where one shot simultaneously hits multiple hitboxes. Given that a pistol bullet deals damage by 1. Some weapons inflict additional splash hit(s) and damage.
+
+Knife: deals 3 per hit, each hit grants 500 points.
+
+Heavy machine gun: deals 1 per hit, identical to the pistol.
+
+Rocket launcher: deals 3 per hit. It also has 3 additional splash hits, inflicting 5 in total.
+
+Flame shot: deals 13 hits and damage by 31.4 in total. When used against Monoeyes or Partner's liquid jail, it inflicts 0.5 per hit. For zombies in Mission 2, it causes 1-hit KO.
+
+Shot gun: deals 20 per hit.
+
+Laser gun: deals 0.8 per hit. Its minimal ammo unit is actually 0.5 rather than 1. The relationship between consumed ammo and hit counts can be explained by the formula - "hit counts = (consumed ammo / 0.5) + 2".
+
+enemy Chaser: deals 3 per hit. It has an additional splash hit, dealing 1.
+
+Iron lizard: similar to R, but its total splash damage is 3.
+
+Drop shot: similar to C,  but its splash damage is 0.1.
+
+super Grenade: deals 10 per hit, it has an additional splash hit, dealing 5.
+
+Mobile Satellite: deals 1 per hit, identical to the pistol.
+
+Thunder cloud: deals 3 per hit, no splash hit is found.
+
+Grenade: deals 10 per hit. It has 2 additional splash hits, dealing 0.1, respectively.
+
+
+
+Vulcan: deals 1 per hit, identical to Heavy machine and the pistol.
+
+Runover(weak): deals 0.1 per hit. As far as I know, this can be done with some Slugs, including SV-Camel and Slug Flyer in MS2/X, Ostrich Slug in MS3, Bradley in MS4. Not sure if there are other examples.
+
+Runover(strong): deals 5 per hit. This works in most Slugs.
+
+Cannon(MS): deals 20 per hit. It has an additional splash hit, inflicting 5.
+
+Cannon(Slugnoid): deals 20 per hit. It has 3 additional splash hits, dealing 3 in total.
+
+Melee(LV armor): deals 3 per hit, but only 100 points are received from each hit.
+
+Laser gun(LV armor): The formula is slightly different from the human case - "hit counts = (consumed ammo / 0.5) + 1"
+
+Cannon(LV armor): deals 10 per hit. No splash hit is found.
+
+Cannon(Drill Slug): deals 1 per hit. A drill cannon brings about 30 hits in total. Direct drilling on moving has the same damage rate.
+
+Laser gun(Astro Slug):  "hit counts = (consumed ammo * 3.5) + 8"(Two side launchers intact);  "hit counts = (consumed ammo * 3.5)"(One side launcher intact). Since hit count must be an integer, the minimal ammo unit should be 2.
+
+Missile(Astro Slug): deals 10 per hit. No splash hit is found.
+
+Machinery Slug attack: deals 40 per hit. It has a splash hit, dealing 1.
+
+Piercing Slug/cannon: identical to the case where cannon or Slug explodes on the enemy, but this provides multiple hits, probably 1 hit per 2 frames until the final explosion occurs, like runover.
+
+Slug Copter's propeller: Logically, I can only say its damage per hit is 0.3 or lower, maybe 0.1. Compared with Runover, it has lower attack frequency, but each hit grants 500 points.﻿ 作者：BLazeKiller https://www.bilibili.com/read/cv4905427 出处：bilibili
