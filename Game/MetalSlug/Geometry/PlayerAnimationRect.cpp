@@ -106,10 +106,12 @@ PlayerAnimationRect::PlayerAnimationRect(Vector3 position, Vector3 size, float r
 		HRESULT hr = DEVICE->CreateSamplerState(&desc, &SS);
 		ASSERT(hr);
 	}
+	SB = new SelectBuffer();
 }
 
 PlayerAnimationRect::~PlayerAnimationRect()
 {
+	SAFE_DELETE(SB);
 	SAFE_RELEASE(SS);
 	SAFE_RELEASE(BS);
 
@@ -173,8 +175,8 @@ void PlayerAnimationRect::Render()
 		ID3D11ShaderResourceView* srv = texture->GetSRV();
 		DC->PSSetShaderResources(0, 1, &srv);
 	}
-
 	PS->SetShader();
+	SB->SetPSBuffer(0);
 	DC->PSSetSamplers(0, 1, &SS);
 	/////////////수정 부분 blendstate를 추가하여 투명 부분을 자연스럽게 변경
 	DC->OMSetBlendState(BS, nullptr, 0xFFFFFFF);

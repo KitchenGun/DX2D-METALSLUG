@@ -46,8 +46,11 @@ protected:
 	Vector3 position, size;
 	float rotation;
 
-	ID3D11BlendState* BS;
-	ID3D11SamplerState* SS;
+	ID3D11BlendState* BS=nullptr;
+	ID3D11SamplerState* SS=nullptr;
+
+	//gui
+	SelectBuffer* SB = nullptr;
 
 	//충돌처리
 	void TransformVertices();

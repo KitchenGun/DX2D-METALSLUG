@@ -45,18 +45,18 @@ void Gui::PrintFrame()//프레임 출력
 }
 
 //trVec texturerect의 집합 name은 창의 이름임
-void Gui::TextureRectGUIS(vector<class TextureRect*>& trVec, const char * name)//TextureRect의 gui 작업을 처리하는 함수
+void Gui::GroundGUIS(vector<class Ground*>& groundVec, const char * name)//ground의 gui 작업을 처리하는 함수
 {
-	if (trVec.size() <= 0)
+	if (groundVec.size() <= 0)
 	{
 		return;
 	}
 	bool temp = true;
 	if (ImGui::Begin(name), &temp)
 	{
-		for (UINT i = 0; i < trVec.size(); i++)
+		for (UINT i = 0; i < groundVec.size(); i++)
 		{
-			trVec[i]->GUI(i);
+			groundVec[i]->GUI(i);
 		}
 	}
 	ImGui::End();

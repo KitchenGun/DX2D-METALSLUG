@@ -12,6 +12,8 @@ public:
 
 	void Update() override;
 	void Render() override;
+	//guiÀÛ¾÷
+	void GUI(int ordinal);
 
 	bool GetisObb() { return isObb; }
 private:
