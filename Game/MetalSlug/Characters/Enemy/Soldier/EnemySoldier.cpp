@@ -38,6 +38,7 @@ void EnemySoldier::Update()
 	if (EnemyHP <= 0)
 	{
 		Die();
+		SetClip();
 	}
 	Enemy::Update();
 }
