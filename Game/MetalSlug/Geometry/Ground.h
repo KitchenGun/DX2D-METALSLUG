@@ -7,7 +7,7 @@ class Ground : public PlayerAnimationRect
 {
 public:
 
-	Ground(Vector3 position, Vector3 size, float rotation);
+	Ground(Vector3 position, Vector3 size, float rotation,bool isObb);
 	~Ground();
 
 	void Update() override;

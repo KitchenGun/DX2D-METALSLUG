@@ -81,7 +81,7 @@ bool Math::GroundIntersect(Player* p1, vector<Ground*> GL)
 	for (Ground* tempGroundOBj : GL)
 	{
 		//수정 필요 로컬 좌표가 이상함
-		if (p1->GetPosition().x > tempGroundOBj->GetTransformedCoord().LT.x &&p1->GetPosition().x<tempGroundOBj->GetTransformedCoord().RB.x)
+		if (p1->GetRootPos().x > tempGroundOBj->GetTransformedCoord().LT.x &&p1->GetRootPos().x<tempGroundOBj->GetTransformedCoord().RT.x)
 		{
 			if (tempGroundOBj->GetisObb())
 			{
@@ -92,6 +92,10 @@ bool Math::GroundIntersect(Player* p1, vector<Ground*> GL)
 				p1->GetObbInfo()->isObb = false;
 				return Intersect(p1, tempGroundOBj);
 			}
+		}
+		else
+		{
+			p1->GetObbInfo()->isObb = false;
 		}
 	}
 	//플레이어 좌표가 이상한 경우

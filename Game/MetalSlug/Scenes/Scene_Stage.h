@@ -11,7 +11,7 @@ public:
 	void Render() override;
 	void PostRender() override;
 
-	void GroundAdd(Ground* ground);
+	void SetGround();
 private:
 	TextureRect* Map = nullptr;
 	Player* player = nullptr;

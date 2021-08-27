@@ -86,7 +86,7 @@ public://Get&Set
 
 protected:
 	HP PlayerHP = 1;
-	MOVESPEED PlayerSpeed = 150.0f;
+	MOVESPEED PlayerSpeed = 550.0f;
 	STATE PlayerState = STATE::NONE;
 	SOLDIER PlayerCharacter = SOLDIER::NONE;
 
