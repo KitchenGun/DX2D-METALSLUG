@@ -16,6 +16,7 @@ Program::~Program()
 void Program::Init()
 {
 	sceneList.push_back(new Intro());
+	sceneList.push_back(new Editer());
 	sceneList.push_back(new Stage());
 	currentScene = sceneList[1];
 	currentScene->Init();

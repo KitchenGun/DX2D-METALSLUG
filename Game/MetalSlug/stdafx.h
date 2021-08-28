@@ -114,6 +114,7 @@ extern HWND handle;
 
 #include "Utilities/String.h"
 #include "Utilities/Path.h"
+#include "Utilities/FileStream.h"
 
 #include "Scenes/Scene.h"
 #include "Utilities/Math.h"

@@ -182,6 +182,7 @@
     <ClCompile Include="Renders\Shaders\IShader.cpp" />
     <ClCompile Include="Renders\Shaders\PixelShader.cpp" />
     <ClCompile Include="Renders\Shaders\VertexShader.cpp" />
+    <ClCompile Include="Scenes\Scene_Editer.cpp" />
     <ClCompile Include="Scenes\Scene_Intro.cpp" />
     <ClCompile Include="Scenes\Scene_Stage.cpp" />
     <ClCompile Include="System\Camera.cpp" />
@@ -194,6 +195,7 @@
     <ClCompile Include="TileMap\TileMap.cpp" />
     <ClCompile Include="TileMap\TileSet.cpp" />
     <ClCompile Include="Utilities\Animator.cpp" />
+    <ClCompile Include="Utilities\FileStream.cpp" />
     <ClCompile Include="Utilities\Math.cpp" />
     <ClCompile Include="Utilities\Path.cpp" />
     <ClCompile Include="Utilities\RenderTexture.cpp" />
@@ -233,6 +235,7 @@
     <ClInclude Include="Renders\Shaders\VertexShader.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\SceneList.h" />
+    <ClInclude Include="Scenes\Scene_Editer.h" />
     <ClInclude Include="Scenes\Scene_Intro.h" />
     <ClInclude Include="Scenes\Scene_Stage.h" />
     <ClInclude Include="stdafx.h" />
@@ -246,6 +249,7 @@
     <ClInclude Include="TileMap\TileMap.h" />
     <ClInclude Include="TileMap\TileSet.h" />
     <ClInclude Include="Utilities\Animator.h" />
+    <ClInclude Include="Utilities\FileStream.h" />
     <ClInclude Include="Utilities\Math.h" />
     <ClInclude Include="Utilities\Path.h" />
     <ClInclude Include="Utilities\RenderTexture.h" />

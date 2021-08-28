@@ -43,6 +43,7 @@ void Ground::GUI(int ordinal)
 		ImGui::InputFloat3("Translation", position,0);
 		ImGui::InputFloat3("Size", size, 1);
 		ImGui::SliderAngle("Rotation", &rotation);
+		ImGui::Checkbox("isOBB", &isObb);
 		//gui에서 변경값을 적용
 		D3DXMatrixScaling(&S, size.x, size.y, size.z);
 		D3DXMatrixRotationZ(&R, -rotation);
@@ -58,5 +59,48 @@ void Ground::GUI(int ordinal)
 	{
 		//선택시 외곽선 강조 해제
 		SB->SetOutline(false);
+	}
+}
+
+void Ground::SaveGroundTile(const wstring& path)
+{
+	if (path.length() < 1)
+	{
+		function<void(wstring)> func = bind(&Ground::SaveGroundTile, this, placeholders::_1);
+		Path::SaveFileDialog(L"", Path::GroundTileFilter, L"./", func, handle);
+	}
+	else
+	{
+		if (!groundInfo) return;
+		FileStream* out = new FileStream(String::ToString(path), FILE_STREAM_WRITE);
+	
+		out->Write(position);
+		out->Write(size);
+		out->Write(rotation);
+		out->Write(isObb);
+
+		SAFE_DELETE(out);
+	}
+}
+
+void Ground::LoadGroundTile(const wstring& path)
+{
+	if (path.length() < 1)
+	{
+		function<void(wstring)> func = bind(&Ground::LoadGroundTile, this, placeholders::_1);
+		Path::OpenFileDialog(L"", Path::GroundTileFilter, L"./", func, handle);
+	}
+	else
+	{
+		if (!groundInfo) return;
+
+		/*
+		width = in->Read<UINT>();
+		height = in->Read<UINT>();
+		*/
+
+		FileStream* in = new FileStream(String::ToString(path), FILE_STREAM_READ);
+
+		SAFE_DELETE(in);
 	}
 }

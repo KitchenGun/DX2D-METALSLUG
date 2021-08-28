@@ -129,6 +129,7 @@ const WCHAR* Path::ImageFilter = L"Image\0*.png;*.bmp;*.jpg";
 const WCHAR* Path::ShaderFilter = L"HLSL file\0*.hlsl";
 const WCHAR* Path::TextFilter = L"Text file\0*.txt";
 const WCHAR* Path::SoundFilter = L"Sound file\0*.wav;*.mp3;*.flac";
+const WCHAR* Path::GroundTileFilter = L"Ground file\0*.Data;";
 
 void Path::OpenFileDialog(wstring file, const WCHAR * filter, wstring folder, function<void(wstring)> func, HWND hwnd)
 {
