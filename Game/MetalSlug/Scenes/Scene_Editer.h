@@ -12,6 +12,10 @@ public:
 	void PostRender() override;
 
 	void InputGround();
+
+	//저장&불러오기
+	void SaveGroundTile(const wstring& path = L"");
+	void LoadGroundTile(const wstring& path = L"");
 private:
 	TextureRect* Map = nullptr;
 	Player* player = nullptr;

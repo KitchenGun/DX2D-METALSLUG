@@ -23,12 +23,29 @@ public:
 	//gui작업
 	void GUI(int ordinal);
 
-	//저장&불러오기
-	void SaveGroundTile(const wstring& path = L"");
-	void LoadGroundTile(const wstring& path = L"");
+	//Load Setting
+	void Load()
+	{
+		//gui에서 변경값을 적용
+		D3DXMatrixScaling(&S, size.x, size.y, size.z);
+		D3DXMatrixRotationZ(&R, -rotation);
+		D3DXMatrixTranslation(&T, position.x, position.y, position.z);
 
+		world = S * R * T;
+
+		WB->SetWorld(world);
+		TransformVertices();
+	}
+
+	void SetPos(Vector3 val) { position=val; }
+	void SetSize(Vector3 val) { size=val; }
+	void SetRotation(float val) { rotation=val; }
+	void SetisObb(bool val) { isObb=val; }
+
+	Vector3 GetPos() { return position; }
+	Vector3 GetSize() { return size; }
+	float GetRotation() { return rotation; }
 	bool GetisObb() { return isObb; }
 private:
-	GroundInfo** groundInfo;
 	bool isObb = true;
 };

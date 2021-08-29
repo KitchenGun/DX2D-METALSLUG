@@ -75,6 +75,16 @@ void Editer::Render()
 void Editer::PostRender()
 {
 	Gui::Get()->GroundGUIS(GroundList, "GroundList");
+	static bool bOpen = true;
+	if (ImGui::Begin("GroundList", &bOpen))
+	{
+		if (ImGui::Button("Save", ImVec2(50, 30)))
+			SaveGroundTile();
+
+		if (ImGui::Button("Load", ImVec2(50, 30)))
+			LoadGroundTile();
+	}
+	ImGui::End();
 }
 
 void Editer::InputGround()
@@ -82,6 +92,61 @@ void Editer::InputGround()
 	GroundList.push_back(new Ground(Vector3(0, 100, 0), Vector3(100 * 4, 100, 1), 0, false));
 }
 
+void Editer::SaveGroundTile(const wstring& path)
+{
+	if (path.length() < 1)
+	{
+		function<void(wstring)> func = bind(&Editer::SaveGroundTile, this, placeholders::_1);
+		Path::SaveFileDialog(L"", Path::GroundTileFilter, L"./", func, handle);
+	}
+	else
+	{
+		if (GroundList.empty()) return; 
+		FileStream* out = new FileStream(String::ToString(path), FILE_STREAM_WRITE);
+		
+		out->Write(GroundList.size());
+
+		for (Ground* tempground : GroundList)
+		{
+			out->Write(tempground->GetPos());
+			out->Write(tempground->GetSize());
+			out->Write(tempground->GetRotation());
+			out->Write(tempground->GetisObb());
+		}
+
+		SAFE_DELETE(out);
+	}
+}
+
+void Editer::LoadGroundTile(const wstring& path)
+{
+	if (path.length() < 1)
+	{
+		function<void(wstring)> func = bind(&Editer::LoadGroundTile, this, placeholders::_1);
+		Path::OpenFileDialog(L"", Path::GroundTileFilter, L"./", func, handle);
+	}
+	else
+	{
+		if (GroundList.empty()) return;
+		FileStream* in = new FileStream(String::ToString(path), FILE_STREAM_READ);
+		int size = in->Read<UINT>();
+		for (int i = 0; i < size - 1; i++)
+		{
+			InputGround();
+		}
+		for (Ground* tempground : GroundList)
+		{
+			tempground->SetPos(in->Read<Vector3>());
+			tempground->SetSize(in->Read<Vector3>());
+			tempground->SetRotation(in->Read<float>());
+			tempground->SetisObb(in->Read<bool>());
+
+			tempground->Load();
+		}
+
+		SAFE_DELETE(in);
+	}
+}
 
 
 

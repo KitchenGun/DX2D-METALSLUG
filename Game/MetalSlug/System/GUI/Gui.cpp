@@ -47,6 +47,7 @@ void Gui::PrintFrame()//프레임 출력
 //trVec texturerect의 집합 name은 창의 이름임
 void Gui::GroundGUIS(vector<class Ground*>& groundVec, const char * name)//ground의 gui 작업을 처리하는 함수
 {
+
 	if (groundVec.size() <= 0)
 	{
 		return;
