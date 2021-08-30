@@ -18,7 +18,7 @@ void Editer::Init()
 	Map = new TextureRect(Vector3(4153 * 4 / 2, 306 * 4 / 2, 0), Vector3(4153 * 4, 306 * 4, 1), 0);
 	Map->SetSRV(L"./_Textures/Map/Map.png");
 
-	player = new Player(Vector3(50 * 4, 400, 0), Vector3(30 * 3, 40 * 3, 1), 0);
+	player = new Player(Vector3(50 * 4, 500, 0), Vector3(30 * 3, 40 * 3, 1), 0);
 	//ground
 	InputGround();
 	//manager
