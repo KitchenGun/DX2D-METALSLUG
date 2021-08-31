@@ -21,7 +21,7 @@ void Editer::Init()
 	player = new Player(Vector3(50 * 4, 500, 0), Vector3(30 * 3, 40 * 3, 1), 0);
 	//ground
 	InputGround();
-	object = new Object(Vector3(300, 200, 0), Vector3(100 * 4, 100, 1),0);
+	object = new Rock1(Vector3(300, 150, 0), Vector3(64 * 4, 45 * 4, 1), 0);
 	object->SetTarget(player);
 	//manager
 	PlayerPM = new ProjectileManager();
@@ -30,7 +30,7 @@ void Editer::Init()
 	EnemyM = new EnemyManager();
 	EnemyM->SetGroundList(GroundList);
 	EnemyM->SetPPM(PlayerPM);
-	EnemyM->AddEnemy(Vector3(400, 400, 0), Vector3(30 * 3, 40 * 3, 1), 0, ENEMYTYPE::Grenadier);
+	EnemyM->AddEnemy(Vector3(200, 400, 0), Vector3(30 * 3, 40 * 3, 1), 0, ENEMYTYPE::Grenadier);
 }
 
 void Editer::Update()

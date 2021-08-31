@@ -23,7 +23,7 @@ private:
 	//지형 테스트
 	vector<Ground*> GroundList;
 	Ground* ground = nullptr;
-	Object* object = nullptr;
+	Rock1* object = nullptr;
 	//manager
 	ProjectileManager* PlayerPM = nullptr;
 	EnemyManager* EnemyM = nullptr;

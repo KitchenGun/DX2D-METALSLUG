@@ -26,6 +26,7 @@
 
 //object
 #include "Characters/Object/Object.h"
+#include "Characters/Object/Rock/Rock1.h"
 
 //Manager
 #include "Characters/Projectile/Manager/ProjectileManager.h"

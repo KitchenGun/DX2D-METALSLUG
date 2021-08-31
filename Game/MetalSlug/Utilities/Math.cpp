@@ -92,7 +92,7 @@ bool Math::GroundIntersect(Player* p1, vector<Ground*> GL)
 		{
 			p1->GetObbInfo()->isObb = false;
 			//return Intersect(p1, tempGroundOBj);
-			value = Intersect(p1, tempGroundOBj);
+			value = GroundIntersect(p1, tempGroundOBj);
 			if (value == true)
 				return true;
 		}
@@ -126,12 +126,12 @@ bool Math::GroundIntersect(Enemy* e1, vector<Ground*> GL)
 	return value;
 }
 
-bool Math::GroundIntersect(Player* p1, Object* o1)
+bool Math::GroundIntersect(Player* p1, PlayerAnimationRect* o1)
 {
 	Vector3 pos = p1->GetRootPos();
 	RectEdges edge2 = o1->GetTransformedCoord();
 
-	if (pos.x >= edge2.LT.x && pos.x <= edge2.RB.x && pos.y >= pos.y && pos.y <= edge2.LT.y)
+	if (pos.x >= edge2.LT.x && pos.x <= edge2.RB.x && pos.y >= edge2.RB.y && pos.y <= edge2.LT.y)
 	{
 		return true;
 	}
@@ -141,12 +141,12 @@ bool Math::GroundIntersect(Player* p1, Object* o1)
 	}
 }
 
-bool Math::GroundIntersect(Enemy* e1, Object* o1)
+bool Math::GroundIntersect(Enemy* e1, PlayerAnimationRect* o1)
 {
 	Vector3 pos = e1->GetRootPos();
 	RectEdges edge2 = o1->GetTransformedCoord();
 
-	if (pos.x >= edge2.LT.x && pos.x <= edge2.RB.x && pos.y >= pos.y && pos.y <= edge2.LT.y)
+	if (pos.x >= edge2.LT.x && pos.x <= edge2.RB.x && pos.y >= edge2.RB.y && pos.y <= edge2.LT.y)
 	{
 		return true;
 	}

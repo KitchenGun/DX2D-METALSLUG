@@ -47,6 +47,8 @@ void Player::Update()
 	{
 		Move({ 0,GravatiyPower,0 });
 	}
+
+	RootPos = position + Vector3(size.x / 2, 0, 0);
 }
 
 void Player::Render()
@@ -312,7 +314,6 @@ void Player::Move(Vector3 tempPos)
 		world = S * R * T;
 		WB->SetWorld(world);
 
-		RootPos = position + Vector3(size.x / 2, 0, 0);
 		TransformVertices();
 	}
 }
