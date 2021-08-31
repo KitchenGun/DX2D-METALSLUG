@@ -69,6 +69,8 @@ public://持失切 社瑚切 update render
 	void Fire();
 	void Jump();
 	void MoveFirePos();
+	void ColliderSizeChange(bool isSmall);
+
 
 public://Get&Set
 	void SetUpperAni();

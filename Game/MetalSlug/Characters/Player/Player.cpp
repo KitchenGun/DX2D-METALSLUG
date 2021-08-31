@@ -9,6 +9,7 @@ Player::Player(Vector3 position, Vector3 size, float rotation)
 	this->position = position;
 	this->IMGsize = 3;
 	this->size = size;
+	cout << String::ToString(size) << endl;
 	dir = DIRECTION::RIGHT;
 	lowerBody = new SoldierLower(position, Vector3(21* IMGsize, 16 * IMGsize, 1), 0);
 	upperBody = new SoldierUpper(position + Vector3(0, 8 * IMGsize, 0), Vector3(30 * IMGsize, 30 * IMGsize, 1), 0);
@@ -47,8 +48,6 @@ void Player::Update()
 	{
 		Move({ 0,GravatiyPower,0 });
 	}
-
-	RootPos = position + Vector3(size.x / 2, 0, 0);
 }
 
 void Player::Render()
@@ -107,6 +106,15 @@ void Player::Input()
 	if (Keyboard::Get()->Press(VK_DOWN))//아래키 입력
 	{
 		isCrouch = true;
+		//collider 크기 조절
+		if (!isGround)
+		{
+			ColliderSizeChange(false);
+		}
+		else
+		{
+			ColliderSizeChange(true);
+		}
 	}
 	else if (Keyboard::Get()->Press(VK_UP))
 	{
@@ -119,7 +127,11 @@ void Player::Input()
 	else
 	{
 		isCrouch = false;
+		ColliderSizeChange(false);
 	}
+
+
+
 	//좌우
 	if (isCrouch && isAtk)
 	{
@@ -313,7 +325,7 @@ void Player::Move(Vector3 tempPos)
 
 		world = S * R * T;
 		WB->SetWorld(world);
-
+		RootPos = position + Vector3(size.x / 2, 0, 0);
 		TransformVertices();
 	}
 }
@@ -454,6 +466,24 @@ void Player::MoveFirePos()
 			firePos.Pos = upperBody->GetPosition() + Vector3(38 * IMGsize, 17 * IMGsize, 0);
 		}
 	}
+}
+
+void Player::ColliderSizeChange(bool isSmall)
+{
+	if (isSmall)
+	{
+		this->size = Vector3(90, 25 * 3, 1);
+	}
+	else
+	{
+		this->size = Vector3(90, 40 * 3, 1);
+	}
+
+	D3DXMatrixScaling(&S, this->size.x, this->size.y, this->size.z);
+
+	world = S * R * T;
+	WB->SetWorld(world);
+	TransformVertices();
 }
 
 
