@@ -309,6 +309,7 @@ void Player::Input()
 void Player::Move(Vector3 tempPos)
 {
 	tempPos.x *= Time::Delta();
+	tempPos.y *= Time::Delta();
 	if (isCrouch && isGround)
 	{
 		tempPos.x /= 3;
@@ -406,7 +407,7 @@ void Player::Jump()
 		else
 		{
 			fJumpTime = 0;
-			GravatiyPower = -5;
+			GravatiyPower = -600;
 		}
 	}
 }

@@ -91,7 +91,7 @@ public://Get&Set
 
 protected:
 	HP PlayerHP = 1;
-	MOVESPEED PlayerSpeed = 550.0f;
+	MOVESPEED PlayerSpeed = 350.0f;
 	STATE PlayerState = STATE::NONE;
 	SOLDIER PlayerCharacter = SOLDIER::NONE;
 
@@ -118,10 +118,10 @@ private:
 	bool isJump = false;
 	bool isJumpEnd = false;
 	float fJumpPower = 0.0f;
-	const float fMaxJumpSpeed = 10.0f;
+	const float fMaxJumpSpeed = 1500.0f;
 	int nJumpCount = 0;
 	const int nMaxJumpCount = 1;
-	float GravatiyPower = -5;
+	float GravatiyPower = -600;
 	//root
 	Vector3 RootPos;
 	OBBInfo* obbInfo;
