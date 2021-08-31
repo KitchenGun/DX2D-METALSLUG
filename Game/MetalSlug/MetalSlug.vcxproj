@@ -156,6 +156,7 @@
     <ClCompile Include="Characters\Enemy\Enemy.cpp" />
     <ClCompile Include="Characters\Enemy\Manager\EnemyManager.cpp" />
     <ClCompile Include="Characters\Enemy\Soldier\EnemySoldier.cpp" />
+    <ClCompile Include="Characters\Object\Object.cpp" />
     <ClCompile Include="Characters\Player\Player.cpp" />
     <ClCompile Include="Characters\Player\SoldierLower.cpp" />
     <ClCompile Include="Characters\Player\SoldierUpper.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="Characters\Enemy\Enemy.h" />
     <ClInclude Include="Characters\Enemy\Manager\EnemyManager.h" />
     <ClInclude Include="Characters\Enemy\Soldier\EnemySoldier.h" />
+    <ClInclude Include="Characters\Object\Object.h" />
     <ClInclude Include="Characters\Player\Player.h" />
     <ClInclude Include="Characters\Player\SoldierLower.h" />
     <ClInclude Include="Characters\Player\SoldierUpper.h" />

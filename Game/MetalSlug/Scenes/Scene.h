@@ -24,6 +24,9 @@
 #include "Characters/Projectile/Projectile.h"
 #include "Characters/Projectile/Bullet/Bullet.h"
 
+//object
+#include "Characters/Object/Object.h"
+
 //Manager
 #include "Characters/Projectile/Manager/ProjectileManager.h"
 

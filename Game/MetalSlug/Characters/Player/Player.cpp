@@ -19,12 +19,15 @@ Player::Player(Vector3 position, Vector3 size, float rotation)
 	obbInfo = new OBBInfo;
 	//test
 	texture = new Texture2D(L"./_Textures/TestBox.png");
+
+	TransformVertices();
 }
 
 Player::~Player()
 {
 	SAFE_DELETE(PM);
 	SAFE_DELETE(obbInfo);
+	PlayerAnimationRect::~PlayerAnimationRect();
 }
 
 void Player::Update()
@@ -123,7 +126,10 @@ void Player::Input()
 		{
 			if (Keyboard::Get()->Press(VK_RIGHT))//우측 입력
 			{
-				Move(Vector3(PlayerSpeed, 0, 0));
+				if (BlockDir != DIRECTION::RIGHT)
+				{
+					Move(Vector3(PlayerSpeed, 0, 0));
+				}
 				if (isGround)
 				{
 					dir = DIRECTION::RIGHT;
@@ -132,7 +138,10 @@ void Player::Input()
 			}
 			else if (Keyboard::Get()->Press(VK_LEFT))//좌측 입력
 			{
-				Move(Vector3(-PlayerSpeed, 0, 0));
+				if (BlockDir != DIRECTION::LEFT)
+				{
+					Move(Vector3(-PlayerSpeed, 0, 0));
+				}
 				if (isGround)
 				{
 					dir = DIRECTION::LEFT;
@@ -149,7 +158,10 @@ void Player::Input()
 	{
 		if (Keyboard::Get()->Press(VK_RIGHT))//우측 입력
 		{
-			Move(Vector3(PlayerSpeed, 0, 0));
+			if (BlockDir != DIRECTION::RIGHT)
+			{
+				Move(Vector3(PlayerSpeed, 0, 0));
+			}
 			if (isGround)
 			{
 				dir = DIRECTION::RIGHT;
@@ -158,7 +170,10 @@ void Player::Input()
 		}
 		else if (Keyboard::Get()->Press(VK_LEFT))//좌측 입력
 		{
-			Move(Vector3(-PlayerSpeed, 0, 0));
+			if (BlockDir != DIRECTION::LEFT)
+			{
+				Move(Vector3(-PlayerSpeed, 0, 0));
+			}
 			if (isGround)
 			{
 				dir = DIRECTION::LEFT;
@@ -286,6 +301,7 @@ void Player::Move(Vector3 tempPos)
 	}
 	if (obbInfo->isObb&&!isJump)
 	{
+		tempPos.x /= sqrtf(2);
 		ObbGroundMove(tempPos);
 	}
 	else

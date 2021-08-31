@@ -21,6 +21,8 @@ void Editer::Init()
 	player = new Player(Vector3(50 * 4, 500, 0), Vector3(30 * 3, 40 * 3, 1), 0);
 	//ground
 	InputGround();
+	object = new Object(Vector3(300, 200, 0), Vector3(100 * 4, 100, 1),0);
+	object->SetTarget(player);
 	//manager
 	PlayerPM = new ProjectileManager();
 	player->SetPM(PlayerPM);
@@ -40,6 +42,7 @@ void Editer::Update()
 	//이동
 	player->SetisGround(Math::GroundIntersect(player, GroundList));
 	//player->SetisGround(true);
+	object->Update();
 
 	player->Update();
 	for (Ground* tempGround : GroundList)
@@ -61,6 +64,7 @@ void Editer::Render()
 {//랜더 순서 명확하게하기
 
 	Map->Render();
+	object->Render();
 	//manager
 	PlayerPM->Render();
 	EnemyM->Render();
@@ -89,7 +93,7 @@ void Editer::PostRender()
 
 void Editer::InputGround()
 {
-	GroundList.push_back(new Ground(Vector3(0, 100, 0), Vector3(100 * 4, 100, 1), 0, false));
+	GroundList.push_back(new Ground(Vector3(0, 100, 0), Vector3(200 * 4, 100, 1), 0, false));
 }
 
 void Editer::SaveGroundTile(const wstring& path)
@@ -137,10 +141,13 @@ void Editer::LoadGroundTile(const wstring& path)
 		for (Ground* tempground : GroundList)
 		{
 			tempground->SetPos(in->Read<Vector3>());
+			//cout <<String::ToString(tempground->GetPos()) <<endl;
 			tempground->SetSize(in->Read<Vector3>());
+			//cout << String::ToString(tempground->GetSize()) <<endl;
 			tempground->SetRotation(in->Read<float>());
+			//cout << tempground->GetRotation() <<endl;
 			tempground->SetisObb(in->Read<bool>());
-
+			//cout << tempground->GetisObb() <<endl;
 			tempground->Load();
 		}
 

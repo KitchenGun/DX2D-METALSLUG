@@ -78,32 +78,32 @@ bool Math::Intersect(Square * rect, Vector3 position)
 
 bool Math::GroundIntersect(Player* p1, vector<Ground*> GL)
 {
+	static bool value = false;
 	for (Ground* tempGroundOBj : GL)
 	{
-		//수정 필요 로컬 좌표가 이상함
-		if (p1->GetRootPos().x > tempGroundOBj->GetTransformedCoord().LT.x &&p1->GetRootPos().x<tempGroundOBj->GetTransformedCoord().RT.x)
+		if (tempGroundOBj->GetisObb())
 		{
-			if (tempGroundOBj->GetisObb())
-			{
-				return GroundObbIntersect(p1, tempGroundOBj);
-			}
-			else
-			{
-				p1->GetObbInfo()->isObb = false;
-				return Intersect(p1, tempGroundOBj);
-			}
+			//return GroundObbIntersect(p1, tempGroundOBj);
+			value = GroundObbIntersect(p1, tempGroundOBj);
+			if (value == true)
+				return true;
 		}
 		else
 		{
 			p1->GetObbInfo()->isObb = false;
+			//return Intersect(p1, tempGroundOBj);
+			value = Intersect(p1, tempGroundOBj);
+			if (value == true)
+				return true;
 		}
+		p1->GetObbInfo()->isObb = false;
 	}
-	//플레이어 좌표가 이상한 경우
-	return false;
+	return value;
 }
 
 bool Math::GroundIntersect(Enemy* e1, vector<Ground*> GL)
 {
+	static bool value = false;
 	for (Ground* tempGroundOBj : GL)
 	{
 		//수정 필요 로컬 좌표가 이상함
@@ -111,19 +111,50 @@ bool Math::GroundIntersect(Enemy* e1, vector<Ground*> GL)
 		{
 			if (tempGroundOBj->GetisObb())
 			{
-				return GroundObbIntersect(e1, tempGroundOBj);
+				value = GroundObbIntersect(e1, tempGroundOBj);
+				if (value == true)
+					return true;
 			}
 			else
 			{
 				//e1->GetObbInfo()->isObb = false;
-				return Intersect(e1, tempGroundOBj);
+				value = Intersect(e1, tempGroundOBj);
 			}
 		}
 	}
 	//플레이어 좌표가 이상한 경우
-	return false;
+	return value;
 }
 
+bool Math::GroundIntersect(Player* p1, Object* o1)
+{
+	Vector3 pos = p1->GetRootPos();
+	RectEdges edge2 = o1->GetTransformedCoord();
+
+	if (pos.x >= edge2.LT.x && pos.x <= edge2.RB.x && pos.y >= pos.y && pos.y <= edge2.LT.y)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Math::GroundIntersect(Enemy* e1, Object* o1)
+{
+	Vector3 pos = e1->GetRootPos();
+	RectEdges edge2 = o1->GetTransformedCoord();
+
+	if (pos.x >= edge2.LT.x && pos.x <= edge2.RB.x && pos.y >= pos.y && pos.y <= edge2.LT.y)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
 bool Math::GroundIntersect(AnimationRect* r1, vector<Ground*> GL)
 {
 	for (Ground* tempGroundOBj : GL)

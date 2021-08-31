@@ -58,7 +58,7 @@ class Player : public PlayerAnimationRect
 {
 public://생성자 소멸자 update render
 	Player(Vector3 position, Vector3 size, float rotation);
-	~Player();
+	~Player() override;
 	void Update() override;
 	void Render() override;
 	void Input();
@@ -69,11 +69,14 @@ public://생성자 소멸자 update render
 	void Fire();
 	void Jump();
 	void MoveFirePos();
+
 public://Get&Set
 	void SetUpperAni();
 	void SetLowerAni();
 	float GetSize() { return IMGsize; }
 	DIRECTION GetDir() { return dir; }
+	DIRECTION GetBlockDir() { return BlockDir; }
+	void SetBlockDir(DIRECTION val) { BlockDir = val; }
 	bool GetisCrouch() { return isCrouch; }
 	bool GetisMove() { return isMove; }
 	bool GetisGround() { return isGround; }
@@ -104,6 +107,7 @@ private:
 	bool isAtk = false;//공격 상태
 
 	DIRECTION dir=DIRECTION::NONE;
+	DIRECTION BlockDir = DIRECTION::NONE;
 
 	SOLDIERSTATE soldierUpperState = SOLDIERSTATE::NONE;
 	SOLDIERSTATE soldierLowerState = SOLDIERSTATE::NONE;
