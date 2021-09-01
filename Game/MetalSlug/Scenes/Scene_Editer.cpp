@@ -41,7 +41,7 @@ void Editer::Update()
 	{
 		InputGround();
 	}
-	//이동
+	//충돌 처리
 	if (!player->GetisJump())
 	{
 		player->SetisGround(Math::GroundIntersect(player, GroundList));
