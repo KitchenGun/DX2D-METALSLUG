@@ -15,6 +15,8 @@ Player::Player(Vector3 position, Vector3 size, float rotation)
 	upperBody = new SoldierUpper(position + Vector3(0, 8 * IMGsize, 0), Vector3(30 * IMGsize, 30 * IMGsize, 1), 0);
 	lowerBody->SetPlayer(this);
 	upperBody->SetPlayer(this);
+	//권총 상태 지정
+	upperBody->SetisPistol(true);
 	upperBodyAnimator = upperBody->GetAnimator();
 	//obb
 	obbInfo = new OBBInfo;
@@ -33,6 +35,12 @@ Player::~Player()
 
 void Player::Update()
 {
+	/*임시*/
+	if (Keyboard::Get()->Down('1'))
+	{
+		upperBody->SetisPistol(false);
+	}
+
 	Input(); 
 	lowerBody->Update();
 	upperBody->Update();
@@ -97,6 +105,7 @@ void Player::Input()
 		if (Keyboard::Get()->Down('S'))
 		{
 			isJump = true;
+			isGround = false;
 		}
 	}
 	//수류탄
@@ -390,10 +399,13 @@ void Player::Jump()
 		}
 
 
+		if (fJumpTime >= 0.8f)
+		{
+			isJump = false;
+		}
 		if (fJumpTime >= 1)
 		{
 			fJumpPower = 0;
-			isJump = false;
 			isJumpEnd = true;
 		}
 		fJumpTime += Time::Delta();

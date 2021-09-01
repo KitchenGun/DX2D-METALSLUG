@@ -82,6 +82,7 @@ public://Get&Set
 	bool GetisCrouch() { return isCrouch; }
 	bool GetisMove() { return isMove; }
 	bool GetisGround() { return isGround; }
+	bool GetisJump() { return isJump; }
 	Vector3 GetRootPos() { return RootPos; }
 	void SetisGround(bool val) { isGround = val; }
 	void SetPM(ProjectileManager* val) { PM = val; }
@@ -107,7 +108,7 @@ private:
 	bool isMove = false;//움직이는 경우
 	bool isHandUp = false;//손을 위로 올린 경우
 	bool isAtk = false;//공격 상태
-
+	
 	DIRECTION dir=DIRECTION::NONE;
 	DIRECTION BlockDir = DIRECTION::NONE;
 

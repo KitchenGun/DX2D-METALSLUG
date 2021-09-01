@@ -42,8 +42,10 @@ void Editer::Update()
 		InputGround();
 	}
 	//ÀÌµ¿
-	player->SetisGround(Math::GroundIntersect(player, GroundList));
-	//player->SetisGround(true);
+	if (!player->GetisJump())
+	{
+		player->SetisGround(Math::GroundIntersect(player, GroundList));
+	}
 	object->Update();
 
 	player->Update();
