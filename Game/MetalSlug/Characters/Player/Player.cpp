@@ -426,6 +426,7 @@ void Player::Jump()
 
 void Player::MoveFirePos()
 {
+	static float Radius = 12 * IMGsize;
 	if (isHandUp)
 	{
 		if (dir == DIRECTION::LEFT)
@@ -445,7 +446,7 @@ void Player::MoveFirePos()
 		{
 			if (dir == DIRECTION::LEFT)
 			{
-				firePos.Pos = upperBody->GetPosition() + Vector3(11 * IMGsize, -0 * IMGsize, 0);
+				firePos.Pos = upperBody->GetPosition() + Vector3(15 * IMGsize, -10 * IMGsize, 0);
 				firePos.Rotation = -90.0f;
 			}
 			else if (dir == DIRECTION::RIGHT)
