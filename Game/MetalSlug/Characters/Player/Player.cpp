@@ -151,7 +151,7 @@ void Player::Input()
 			{
 				if (BlockDir != DIRECTION::RIGHT)
 				{
-					Move(Vector3(PlayerSpeed, 0, 0));
+					//Move(Vector3(PlayerSpeed, 0, 0));
 				}
 				if (isGround)
 				{
@@ -163,7 +163,7 @@ void Player::Input()
 			{
 				if (BlockDir != DIRECTION::LEFT)
 				{
-					Move(Vector3(-PlayerSpeed, 0, 0));
+					//Move(Vector3(-PlayerSpeed, 0, 0));
 				}
 				if (isGround)
 				{
@@ -183,7 +183,7 @@ void Player::Input()
 		{
 			if (BlockDir != DIRECTION::RIGHT)
 			{
-				Move(Vector3(PlayerSpeed, 0, 0));
+				//Move(Vector3(PlayerSpeed, 0, 0));
 			}
 			if (isGround)
 			{
@@ -195,7 +195,7 @@ void Player::Input()
 		{
 			if (BlockDir != DIRECTION::LEFT)
 			{
-				Move(Vector3(-PlayerSpeed, 0, 0));
+				//Move(Vector3(-PlayerSpeed, 0, 0));
 			}
 			if (isGround)
 			{
@@ -426,17 +426,16 @@ void Player::Jump()
 
 void Player::MoveFirePos()
 {
-	static float Radius = 12 * IMGsize;
 	if (isHandUp)
 	{
 		if (dir == DIRECTION::LEFT)
 		{
-			firePos.Pos = upperBody->GetPosition() + Vector3(15 * IMGsize, 37 * IMGsize, 0);
+			firePos.Pos = position + Vector3(11 * IMGsize, 43 * IMGsize, 0);
 			firePos.Rotation = 90.0f;
 		}
 		else if (dir == DIRECTION::RIGHT)
 		{
-			firePos.Pos = upperBody->GetPosition() + Vector3(12 * IMGsize, 37 * IMGsize, 0);
+			firePos.Pos = position + Vector3(12 * IMGsize, 43 * IMGsize, 0);
 			firePos.Rotation = 90.0f;
 		}
 	}
@@ -446,12 +445,12 @@ void Player::MoveFirePos()
 		{
 			if (dir == DIRECTION::LEFT)
 			{
-				firePos.Pos = upperBody->GetPosition() + Vector3(15 * IMGsize, -10 * IMGsize, 0);
+				firePos.Pos = position + Vector3(10 * IMGsize, 20 * IMGsize, 0);
 				firePos.Rotation = -90.0f;
 			}
 			else if (dir == DIRECTION::RIGHT)
 			{
-				firePos.Pos = upperBody->GetPosition() + Vector3(12 * IMGsize, -0 * IMGsize, 0);
+				firePos.Pos = position + Vector3(12 * IMGsize, 19 * IMGsize, 0);
 				firePos.Rotation = -90.0f;
 			}
 		}
@@ -460,11 +459,11 @@ void Player::MoveFirePos()
 			firePos.Rotation = 0.0f;
 			if (dir == DIRECTION::LEFT)
 			{
-				firePos.Pos = upperBody->GetPosition() + Vector3(19 * IMGsize, 17 * IMGsize, 0);
+				firePos.Pos = position + Vector3(16 * IMGsize, 17 * IMGsize, 0);
 			}
 			else if (dir == DIRECTION::RIGHT)
 			{
-				firePos.Pos = upperBody->GetPosition() + Vector3(38 * IMGsize, 17 * IMGsize, 0);
+				firePos.Pos = position + Vector3(16 * IMGsize, 17 * IMGsize, 0);
 			}
 		}
 	}
@@ -473,13 +472,16 @@ void Player::MoveFirePos()
 		firePos.Rotation = 0.0f;
 		if (dir == DIRECTION::LEFT)
 		{
-			firePos.Pos = upperBody->GetPosition() + Vector3(19 * IMGsize, 17 * IMGsize, 0);
+			firePos.Pos = position + Vector3(16 * IMGsize, 28 * IMGsize, 0);
 		}
 		else if (dir == DIRECTION::RIGHT)
 		{
-			firePos.Pos = upperBody->GetPosition() + Vector3(38 * IMGsize, 17 * IMGsize, 0);
+			firePos.Pos = position + Vector3(16 * IMGsize, 28 * IMGsize, 0);
 		}
 	}
+
+
+	cout << String::ToString(firePos.Pos) << endl;
 }
 
 void Player::ColliderSizeChange(bool isSmall)

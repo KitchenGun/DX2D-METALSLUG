@@ -27,10 +27,10 @@ void Editer::Init()
 	PlayerPM = new ProjectileManager();
 	player->SetPM(PlayerPM);
 
-	EnemyM = new EnemyManager();
-	EnemyM->SetGroundList(GroundList);
-	EnemyM->SetPPM(PlayerPM);
-	EnemyM->AddEnemy(Vector3(200, 400, 0), Vector3(30 * 3, 40 * 3, 1), 0, ENEMYTYPE::Grenadier);
+//	EnemyM = new EnemyManager();
+	//EnemyM->SetGroundList(GroundList);
+	//EnemyM->SetPPM(PlayerPM);
+	//EnemyM->AddEnemy(Vector3(200, 400, 0), Vector3(30 * 3, 40 * 3, 1), 0, ENEMYTYPE::Grenadier);
 
 	Camera::Get()->Move(player->GetPosition() - Vector3(200, 400, 0));
 }
@@ -55,7 +55,7 @@ void Editer::Update()
 	}
 	//manager
 	PlayerPM->Update();
-	EnemyM->Update();
+	//EnemyM->Update();
 
 	Camera::Get()->Move(player->GetPosition() - Vector3(200, 100, 0));
 }
@@ -71,7 +71,7 @@ void Editer::Render()
 	object->Render();
 	//manager
 	PlayerPM->Render();
-	EnemyM->Render();
+	//EnemyM->Render();
 	//player
 	player->Render();
 	for (Ground* tempGround : GroundList)

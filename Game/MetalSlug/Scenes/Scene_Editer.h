@@ -19,12 +19,11 @@ public:
 private:
 	TextureRect* Map = nullptr;
 	Player* player = nullptr;
-	EnemySoldier* temp = nullptr;
 	//지형 테스트
 	vector<Ground*> GroundList;
 	Ground* ground = nullptr;
 	Rock1* object = nullptr;
 	//manager
 	ProjectileManager* PlayerPM = nullptr;
-	EnemyManager* EnemyM = nullptr;
+	//EnemyManager* EnemyM = nullptr;
 };
