@@ -14,6 +14,7 @@ public:
 	void SetSize(Vector3 tempSize);
 	void SetPos(Vector3 tempPos);
 	void SetPlayer(Player* player) { this->player = player; }
+	bool GetisPistol() { return isPistol; }
 	void SetisPistol(bool val) { isPistol = val; }
 	Animator* GetAnimator() { return animator; }
 private:

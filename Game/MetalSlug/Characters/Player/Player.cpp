@@ -111,6 +111,14 @@ void Player::Input()
 
 
 	//상하
+	static bool isFirstHandUp = false;
+	if (isFirstHandUp)
+	{
+		if (!upperBodyAnimator->isFirstPlay)
+		{
+			isFirstHandUp = false;
+		}
+	}
 	if (Keyboard::Get()->Press(VK_DOWN))//아래키 입력
 	{
 		isCrouch = true;
@@ -128,16 +136,21 @@ void Player::Input()
 	{
 		isHandUp = true;
 	}
+	else if(Keyboard::Get()->Down(VK_UP))
+	{
+		isHandUp = true;
+		isFirstHandUp = true;
+	}
 	else if (Keyboard::Get()->Up(VK_UP))
 	{
 		isHandUp = false;
+		isFirstHandUp = false;
 	}
 	else
 	{
 		isCrouch = false;
 		ColliderSizeChange(false);
 	}
-
 
 
 	//좌우
@@ -268,7 +281,21 @@ void Player::Input()
 		}
 		else
 		{
-			soldierUpperState = SOLDIERSTATE::UPSIDE;
+			if (!upperBody->GetisPistol())
+			{
+				if (isFirstHandUp)
+				{
+					soldierUpperState = SOLDIERSTATE::UPSIDESTART;
+				}
+				else
+				{
+					soldierUpperState = SOLDIERSTATE::UPSIDE;
+				}
+			}
+			else
+			{
+				soldierUpperState = SOLDIERSTATE::UPSIDE;
+			}
 		}
 	}
 	else
@@ -312,6 +339,7 @@ void Player::Input()
 	//ani세팅
 	SetLowerAni();
 	SetUpperAni();
+	cout << (int)soldierUpperState << endl;
 }
 
 void Player::Move(Vector3 tempPos)
@@ -533,6 +561,9 @@ void Player::SetUpperAni()
 			break;
 		case SOLDIERSTATE::UPSIDE:
 			upperBody->SetClip("Upside");
+			break;
+		case SOLDIERSTATE::UPSIDESTART:
+			upperBody->SetClip("UpsideStart");
 			break;
 		case SOLDIERSTATE::UPSIDEATK:
 			upperBody->SetClip("UpsideATK");

@@ -520,6 +520,47 @@ void SoldierUpper::SetClip(string name,bool isRestart)
 				name = "LUpsideMachineUpper";
 			}
 		}
+		else if (name == "UpsideStart")
+		{
+			isRestart = false;
+			SetSize(Vector3(41 * player->GetSize(), 34 * player->GetSize(), 1));
+			animator->bLoop = false;
+			switch (player->GetLowerState())
+			{
+			case SOLDIERSTATE::IDLE:
+				if (player->GetDir() == DIRECTION::RIGHT)
+				{
+					SetPos(player->GetPosition() + Vector3(-2 * player->GetSize(), 9 * player->GetSize(), 0));
+				}
+				else if (player->GetDir() == DIRECTION::LEFT)
+				{
+					SetPos(player->GetPosition() + Vector3(-18 * player->GetSize(), 9 * player->GetSize(), 0));
+				}
+				break;
+			case SOLDIERSTATE::MOVE:
+				if (player->GetDir() == DIRECTION::RIGHT)
+				{
+					SetPos(player->GetPosition() + Vector3(2 * player->GetSize(), 10 * player->GetSize(), 0));
+				}
+				else if (player->GetDir() == DIRECTION::LEFT)
+				{
+					SetPos(player->GetPosition() + Vector3(-18 * player->GetSize(), 10 * player->GetSize(), 0));
+				}
+				break;
+			default:
+				break;
+			}
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				texture = new Texture2D(L"./_Textures/Character/Upside/RUpsideMachineUpperStart.png");
+				name = "RUpsideMachineUpperStart";
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				texture = new Texture2D(L"./_Textures/Character/Upside/LUpsideMachineUpperStart.png");
+				name = "LUpsideMachineUpperStart";
+			}
+		}
 		if (name == "ATK")
 		{
 			SetSize(Vector3(63 * player->GetSize(), 29 * player->GetSize(), 1));
@@ -939,6 +980,34 @@ void SoldierUpper::PivotUpdate()
 				break;
 			}
 		}
+		else if (player->GetUpperState() == SOLDIERSTATE::UPSIDESTART)
+		{
+			switch (player->GetLowerState())
+			{
+			case SOLDIERSTATE::IDLE:
+				if (player->GetDir() == DIRECTION::RIGHT)
+				{
+					SetPos(player->GetPosition() + Vector3(-2 * player->GetSize(), 9 * player->GetSize(), 0));
+				}
+				else if (player->GetDir() == DIRECTION::LEFT)
+				{
+					SetPos(player->GetPosition() + Vector3(-18 * player->GetSize(), 9 * player->GetSize(), 0));
+				}
+				break;
+			case SOLDIERSTATE::MOVE:
+				if (player->GetDir() == DIRECTION::RIGHT)
+				{
+					SetPos(player->GetPosition() + Vector3(2 * player->GetSize(), 10 * player->GetSize(), 0));
+				}
+				else if (player->GetDir() == DIRECTION::LEFT)
+				{
+					SetPos(player->GetPosition() + Vector3(-18 * player->GetSize(), 10 * player->GetSize(), 0));
+				}
+				break;
+			default:
+				break;
+			}
+		}
 		else if (player->GetUpperState() == SOLDIERSTATE::CROUCHJUMP)
 		{
 			switch (player->GetLowerState())
@@ -1195,12 +1264,18 @@ void SoldierUpper::SetAnimation()
 	animClips.push_back(new AnimationClip(L"LUpsideUpper", texture, 4, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	texture = new Texture2D(L"./_Textures/Character/Upside/RUpsideUpper.png");
 	animClips.push_back(new AnimationClip(L"RUpsideUpper", texture, 4, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
-	animator = new Animator(animClips);
+
 	//Machine Gun handUp
 	texture = new Texture2D(L"./_Textures/Character/Upside/LUpsideMachineUpper.png");
 	animClips.push_back(new AnimationClip(L"LUpsideMachineUpper", texture, 7, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	texture = new Texture2D(L"./_Textures/Character/Upside/RUpsideMachineUpper.png");
 	animClips.push_back(new AnimationClip(L"RUpsideMachineUpper", texture, 7, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+
+	texture = new Texture2D(L"./_Textures/Character/Upside/LUpsideMachineUpperStart.png");
+	animClips.push_back(new AnimationClip(L"LUpsideMachineUpperStart", texture, 2, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() },true));
+	texture = new Texture2D(L"./_Textures/Character/Upside/RUpsideMachineUpperStart.png");
+	animClips.push_back(new AnimationClip(L"RUpsideMachineUpperStart", texture, 2, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	
 	animator = new Animator(animClips);
 }
 
