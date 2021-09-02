@@ -349,6 +349,32 @@ void SoldierUpper::SetClip(string name,bool isRestart)
 			isRestart = false;
 			SetSize(Vector3(40 * player->GetSize(), 30 * player->GetSize(), 1));
 			animator->bLoop = true;
+			switch (player->GetLowerState())
+			{
+			case SOLDIERSTATE::IDLE:
+				if (player->GetDir() == DIRECTION::RIGHT)
+				{
+					SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), 8 * player->GetSize(), 0));
+				}
+				else if (player->GetDir() == DIRECTION::LEFT)
+				{
+					SetPos(player->GetPosition() + Vector3(-20 * player->GetSize(), 8 * player->GetSize(), 0));
+				}
+				break;
+			case SOLDIERSTATE::MOVE:
+				if (player->GetDir() == DIRECTION::RIGHT)
+				{
+					SetPos(player->GetPosition() + Vector3(3 * player->GetSize(), 10 * player->GetSize(), 0));
+				}
+				else if (player->GetDir() == DIRECTION::LEFT)
+				{
+					SetPos(player->GetPosition() + Vector3(-18 * player->GetSize(), 10 * player->GetSize(), 0));
+				}
+				break;
+			default:
+				break;
+			}
+
 			if (player->GetDir() == DIRECTION::RIGHT)
 			{
 				texture = new Texture2D(L"./_Textures/Character/Idle/RUpperMachine.png");
@@ -553,6 +579,9 @@ void SoldierUpper::SetClip(string name,bool isRestart)
 				texture = new Texture2D(L"./_Textures/Character/Fire/LMachineFire.png");
 				name = "LMachineFire";
 			}
+			//사격 동안 애니메이션 텍스쳐만 교체되고 애니메이션 클립이 교체 안되는 문제가 있어서 바로 뒤에 배치
+			animator->SetCurrentAnimClip(String::ToWString(name), isRestart);
+			return;
 		}
 		else if (name == "UpsideATK")
 		{
@@ -1109,9 +1138,9 @@ void SoldierUpper::SetAnimation()
 	animClips.push_back(new AnimationClip(L"LKnife", texture, 6, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
 	//Machine Gun atk
 	texture = new Texture2D(L"./_Textures/Character/Fire/RMachineFire.png");
-	animClips.push_back(new AnimationClip(L"RMachineFire", texture, 4, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+	animClips.push_back(new AnimationClip(L"RMachineFire", texture, 4, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	texture = new Texture2D(L"./_Textures/Character/Fire/LMachineFire.png");
-	animClips.push_back(new AnimationClip(L"LMachineFire", texture, 4, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+	animClips.push_back(new AnimationClip(L"LMachineFire", texture, 4, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	//crouch
 	texture = new Texture2D(L"./_Textures/Character/Crouch/RCrouchIdle.png");
 	animClips.push_back(new AnimationClip(L"RCrouchIdle", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
@@ -1157,9 +1186,9 @@ void SoldierUpper::SetAnimation()
 	animClips.push_back(new AnimationClip(L"RJumpMachineRunUpper", texture, 6, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 
 	texture = new Texture2D(L"./_Textures/Character/Jump/Upper/LCrouchJumpMachineUpper.png");
-	animClips.push_back(new AnimationClip(L"LCrouchJumpMachineUpper", texture, 1, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));//crouchjump
+	animClips.push_back(new AnimationClip(L"LCrouchJumpMachineUpper", texture, 7, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));//crouchjump
 	texture = new Texture2D(L"./_Textures/Character/Jump/Upper/RCrouchJumpMachineUpper.png");
-	animClips.push_back(new AnimationClip(L"RCrouchJumpMachineUpper", texture, 1, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	animClips.push_back(new AnimationClip(L"RCrouchJumpMachineUpper", texture, 7, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() },true));
 
 	//handUp
 	texture = new Texture2D(L"./_Textures/Character/Upside/LUpsideUpper.png");

@@ -26,6 +26,7 @@ public:
 	Vector3 GetScale() { return size; }
 	Vector3 Right() { return right; }
 	Vector3 Up() { return up; }
+
 protected:
 	Animator* animator = nullptr;
 	vector<AnimationClip*> animClips;

@@ -9,7 +9,6 @@ Player::Player(Vector3 position, Vector3 size, float rotation)
 	this->position = position;
 	this->IMGsize = 3;
 	this->size = size;
-	cout << String::ToString(size) << endl;
 	dir = DIRECTION::RIGHT;
 	lowerBody = new SoldierLower(position, Vector3(21* IMGsize, 16 * IMGsize, 1), 0);
 	upperBody = new SoldierUpper(position + Vector3(0, 8 * IMGsize, 0), Vector3(30 * IMGsize, 30 * IMGsize, 1), 0);
@@ -480,8 +479,6 @@ void Player::MoveFirePos()
 		}
 	}
 
-
-	cout << String::ToString(firePos.Pos) << endl;
 }
 
 void Player::ColliderSizeChange(bool isSmall)
