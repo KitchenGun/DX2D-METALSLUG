@@ -339,7 +339,6 @@ void Player::Input()
 	//ani¼¼ÆÃ
 	SetLowerAni();
 	SetUpperAni();
-	cout << (int)soldierUpperState << endl;
 }
 
 void Player::Move(Vector3 tempPos)
