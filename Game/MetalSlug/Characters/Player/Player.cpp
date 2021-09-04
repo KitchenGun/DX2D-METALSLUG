@@ -69,11 +69,6 @@ void Player::Input()
 	static bool isFirstHandUp = false;
 	static bool isFirstCrouchJump = false;
 	//공격
-	if (Keyboard::Get()->Down('A'))
-	{
-		Fire(isFirstHandUp, isFirstCrouchJump);
-	}
-
 	if (isAtk)
 	{
 		if (upperBody->GetisPistol())
@@ -95,7 +90,7 @@ void Player::Input()
 		{
 			isAtk = false;
 		}
-		if (!upperBodyAnimator->isFirstPlay)
+		else if (!upperBodyAnimator->isFirstPlay)
 		{
 			if (soldierUpperState != SOLDIERSTATE::CROUCHJUMP)
 			{
@@ -103,6 +98,151 @@ void Player::Input()
 			}
 		}
 	}
+	static float deltaTime = 0.0f;
+	if (Keyboard::Get()->Down('A'))
+	{
+		if (deltaTime > fireRate)//일정 시간 마다 실행하여 그림 변경 함 
+		{
+			Fire(isFirstHandUp, isFirstCrouchJump);
+			//상반신 상태 지정
+			if (!isGround)
+			{
+				if (isCrouch)
+				{//하단사격자세 상태
+
+					if (isAtk)
+					{
+						if (!upperBody->GetisPistol())
+						{
+							if (isFirstCrouchJump)
+							{
+								soldierUpperState = SOLDIERSTATE::CROUCHJUMPATKSTART;
+							}
+							else
+							{
+								soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
+							}
+						}
+						else
+						{
+							soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
+						}
+					}
+				}
+				else
+				{
+					if (isAtk)
+					{
+						if (isHandUp)
+						{
+							if (!upperBody->GetisPistol())
+							{
+								if (isFirstHandUp)
+								{
+									soldierUpperState = SOLDIERSTATE::UPSIDEATKSTART;
+								}
+								else
+								{
+									soldierUpperState = SOLDIERSTATE::UPSIDEATK;
+								}
+							}
+							else
+							{
+								soldierUpperState = SOLDIERSTATE::UPSIDEATK;
+							}
+						}
+						else
+						{
+							soldierUpperState = SOLDIERSTATE::ATK;
+						}
+					}
+					else if (isMove)
+					{//점프 이동 상태
+						soldierUpperState = SOLDIERSTATE::JUMPMOVE;
+					}
+					else
+					{//기본 점프 상태
+						soldierUpperState = SOLDIERSTATE::JUMP;
+					}
+				}
+			}
+			else if (isCrouch)
+			{
+				if (isAtk)
+				{
+					soldierUpperState = SOLDIERSTATE::CROUCHATK;
+				}
+			}
+			else if (isHandUp)
+			{//상단 사격자세 상태
+				if (isAtk)
+				{
+					if (upperBody->GetisPistol())
+					{
+						if (isFirstHandUp)
+						{
+							soldierUpperState = SOLDIERSTATE::UPSIDEATKSTART;
+						}
+						else
+						{
+							soldierUpperState = SOLDIERSTATE::UPSIDEATK;
+						}
+					}
+					soldierUpperState = SOLDIERSTATE::UPSIDEATK;
+				}
+			}
+			else
+			{//idle 상태
+				if (isAtk)
+				{
+					soldierUpperState = SOLDIERSTATE::ATK;
+				}
+			}
+			switch (soldierUpperState)
+			{
+			case SOLDIERSTATE::ATK:
+				upperBody->SetClip("ATK");
+				break;
+			case SOLDIERSTATE::CROUCHATK:
+				upperBody->SetClip("CrouchATK");
+				break;
+			case SOLDIERSTATE::CROUCHJUMPSTART:
+				if (isAtk)
+					upperBody->SetClip("CrouchJumpATKStart");
+				else
+					upperBody->SetClip("CrouchJumpStart");
+				break;
+			case SOLDIERSTATE::CROUCHJUMPATK:
+				upperBody->SetClip("CrouchJumpATK");
+				break;
+			case SOLDIERSTATE::CROUCHJUMPATKSTART:
+				upperBody->SetClip("CrouchJumpATKStart");
+				break;
+			case SOLDIERSTATE::CROUCHMOVE:
+				upperBody->SetClip("CrouchMove");
+				break;
+			case SOLDIERSTATE::UPSIDESTART:
+				if (isAtk)
+					upperBody->SetClip("UpsideATKStart");
+				else
+					upperBody->SetClip("UpsideStart");
+				break;
+			case SOLDIERSTATE::UPSIDEATK:
+				upperBody->SetClip("UpsideATK");
+				break;
+			case SOLDIERSTATE::UPSIDEATKSTART:
+				upperBody->SetClip("UpsideATKStart");
+				break;
+			default:
+				break;
+			}
+			deltaTime = 0;
+		}
+	}
+	else//작동환경과 상관없이 일정하게 맞춰준다
+		deltaTime += Time::Delta();
+
+	
 	//점프
 	if (isGround)
 	{
@@ -325,7 +465,11 @@ void Player::Input()
 	}
 	else if (isCrouch)
 	{
-		if (isMove)
+		if (isAtk)
+		{
+			soldierUpperState = SOLDIERSTATE::CROUCHATK;
+		}
+		else if (isMove)
 		{//앉아서 움직이는 상태
 			soldierUpperState = SOLDIERSTATE::CROUCHMOVE;
 		}

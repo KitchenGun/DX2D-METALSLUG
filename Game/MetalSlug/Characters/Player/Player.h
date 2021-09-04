@@ -133,4 +133,5 @@ private:
 	//»ç°Ý 
 	ProjectileManager* PM = nullptr;
 	FirePos firePos;
+	float fireRate = 1 / 1000.0f;
 };
