@@ -34,10 +34,13 @@ enum class SOLDIERSTATE
 	CROUCHATK,
 	CROUCHMOVE,
 	CROUCHJUMP,
+	CROUCHJUMPSTART,
 	CROUCHJUMPATK,
+	CROUCHJUMPATKSTART,
 	UPSIDE,
 	UPSIDESTART,
 	UPSIDEATK,
+	UPSIDEATKSTART,
 	//馬鋼重
 	MOVE
 };
@@ -67,7 +70,7 @@ public://持失切 社瑚切 update render
 	void ObbGroundMove(Vector3 tempPos);
 	
 	
-	void Fire();
+	void Fire(bool isFirstHandUp, bool isFirstCrouchJump);
 	void Jump();
 	void MoveFirePos();
 	void ColliderSizeChange(bool isSmall);

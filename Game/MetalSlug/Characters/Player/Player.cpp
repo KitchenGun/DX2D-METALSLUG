@@ -66,22 +66,28 @@ void Player::Render()
 
 void Player::Input()
 {
+	static bool isFirstHandUp = false;
+	static bool isFirstCrouchJump = false;
 	//공격
 	if (Keyboard::Get()->Down('A'))
 	{
-		Fire();
+		Fire(isFirstHandUp, isFirstCrouchJump);
 	}
+
 	if (isAtk)
 	{
-		if (Keyboard::Get()->Down(VK_DOWN))
+		if (upperBody->GetisPistol())
 		{
-			isAtk = false;
+			if (Keyboard::Get()->Down(VK_DOWN))
+			{
+				isAtk = false;
+			}
+			else if (Keyboard::Get()->Down(VK_UP))
+			{
+				isAtk = false;
+			}
 		}
-		else if (Keyboard::Get()->Down(VK_UP))
-		{
-			isAtk = false;
-		}
-		else if (Keyboard::Get()->Down(VK_RIGHT))//우측 입력
+		if (Keyboard::Get()->Down(VK_RIGHT))//우측 입력
 		{
 			isAtk = false;
 		}
@@ -97,7 +103,6 @@ void Player::Input()
 			}
 		}
 	}
-
 	//점프
 	if (isGround)
 	{
@@ -111,7 +116,6 @@ void Player::Input()
 
 
 	//상하
-	static bool isFirstHandUp = false;
 	if (isFirstHandUp)
 	{
 		if (!upperBodyAnimator->isFirstPlay)
@@ -119,6 +123,14 @@ void Player::Input()
 			isFirstHandUp = false;
 		}
 	}
+	if (isFirstCrouchJump)
+	{
+		if (!upperBodyAnimator->isFirstPlay)
+		{
+			isFirstCrouchJump = false;
+		}
+	}
+
 	if (Keyboard::Get()->Press(VK_DOWN))//아래키 입력
 	{
 		isCrouch = true;
@@ -131,6 +143,16 @@ void Player::Input()
 		{
 			ColliderSizeChange(true);
 		}
+	}
+	else if (Keyboard::Get()->Down(VK_DOWN))
+	{
+		isCrouch = true;
+		isFirstCrouchJump = true;
+	}
+	else if (Keyboard::Get()->Up(VK_DOWN))
+	{
+		isCrouch = false;
+		isFirstCrouchJump = false;
 	}
 	else if (Keyboard::Get()->Press(VK_UP))
 	{
@@ -226,13 +248,42 @@ void Player::Input()
 	{
 		if (isCrouch)
 		{//하단사격자세 상태
+
 			if (isAtk)
 			{
-				soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
+				if (!upperBody->GetisPistol())
+				{
+					if (isFirstCrouchJump)
+					{
+						soldierUpperState = SOLDIERSTATE::CROUCHJUMPATKSTART;
+					}
+					else
+					{
+						soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
+					}
+				}
+				else
+				{
+					soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
+				}
 			}
 			else
 			{
-				soldierUpperState = SOLDIERSTATE::CROUCHJUMP;
+				if (!upperBody->GetisPistol())
+				{
+					if (isFirstCrouchJump)
+					{
+						soldierUpperState = SOLDIERSTATE::CROUCHJUMPSTART;
+					}
+					else
+					{
+						soldierUpperState = SOLDIERSTATE::CROUCHJUMP;
+					}
+				}
+				else
+				{
+					soldierUpperState = SOLDIERSTATE::CROUCHJUMP;
+				}
 			}
 		}
 		else
@@ -241,7 +292,21 @@ void Player::Input()
 			{
 				if (isHandUp)
 				{
-					soldierUpperState = SOLDIERSTATE::UPSIDEATK;
+					if (!upperBody->GetisPistol())
+					{
+						if (isFirstHandUp)
+						{
+							soldierUpperState = SOLDIERSTATE::UPSIDEATKSTART;
+						}
+						else
+						{
+							soldierUpperState = SOLDIERSTATE::UPSIDEATK;
+						}
+					}
+					else
+					{
+						soldierUpperState = SOLDIERSTATE::UPSIDEATK;
+					}
 				}
 				else
 				{
@@ -260,11 +325,7 @@ void Player::Input()
 	}
 	else if (isCrouch)
 	{
-		if (isAtk)
-		{
-			soldierUpperState = SOLDIERSTATE::CROUCHATK;
-		}
-		else if (isMove)
+		if (isMove)
 		{//앉아서 움직이는 상태
 			soldierUpperState = SOLDIERSTATE::CROUCHMOVE;
 		}
@@ -277,6 +338,17 @@ void Player::Input()
 	{//상단 사격자세 상태
 		if (isAtk)
 		{
+			if (upperBody->GetisPistol())
+			{
+				if (isFirstHandUp)
+				{
+					soldierUpperState = SOLDIERSTATE::UPSIDEATKSTART;
+				}
+				else
+				{
+					soldierUpperState = SOLDIERSTATE::UPSIDEATK;
+				}
+			}
 			soldierUpperState = SOLDIERSTATE::UPSIDEATK;
 		}
 		else
@@ -380,21 +452,43 @@ void Player::ObbGroundMove(Vector3 tempPos)
 	TransformVertices();
 }
 
-void Player::Fire()
+void Player::Fire(bool isFirstHandUp,bool isFirstCrouchJump)
 {
 	isAtk = true;
 
 	if (isHandUp)
 	{
-		upperBody->SetClip("UpsideATK", true);
-		soldierUpperState = SOLDIERSTATE::UPSIDEATK;
+		if (upperBody->GetisPistol())
+		{
+			upperBody->SetClip("UpsideATK", true);
+			soldierUpperState = SOLDIERSTATE::UPSIDEATK;
+		}
+		else
+		{
+			if (isFirstHandUp)
+			{
+				upperBody->SetClip("UpsideATKStart", true);
+				soldierUpperState = SOLDIERSTATE::UPSIDEATKSTART;
+			}
+		}
 	}
 	else if (isCrouch)
 	{
 		if (!isGround)
 		{
-			upperBody->SetClip("CrouchJumpATK", true);
-			soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
+			if (upperBody->GetisPistol())
+			{
+				upperBody->SetClip("CrouchJumpATK", true);
+				soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
+			}
+			else
+			{
+				if (isFirstCrouchJump)
+				{
+					upperBody->SetClip("CrouchJumpATK", true);
+					soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
+				}
+			}
 		}
 		else
 		{
@@ -552,8 +646,17 @@ void Player::SetUpperAni()
 		case SOLDIERSTATE::CROUCHJUMP:
 			upperBody->SetClip("CrouchJump");
 			break;
+		case SOLDIERSTATE::CROUCHJUMPSTART:
+			if (isAtk)
+				upperBody->SetClip("CrouchJumpATKStart");
+			else
+				upperBody->SetClip("CrouchJumpStart");
+			break;
 		case SOLDIERSTATE::CROUCHJUMPATK:
 			upperBody->SetClip("CrouchJumpATK");
+			break;
+		case SOLDIERSTATE::CROUCHJUMPATKSTART:
+			upperBody->SetClip("CrouchJumpATKStart");
 			break;
 		case SOLDIERSTATE::CROUCHMOVE:
 			upperBody->SetClip("CrouchMove");
@@ -562,10 +665,16 @@ void Player::SetUpperAni()
 			upperBody->SetClip("Upside");
 			break;
 		case SOLDIERSTATE::UPSIDESTART:
-			upperBody->SetClip("UpsideStart");
+			if (isAtk)
+				upperBody->SetClip("UpsideATKStart");
+			else
+				upperBody->SetClip("UpsideStart");
 			break;
 		case SOLDIERSTATE::UPSIDEATK:
 			upperBody->SetClip("UpsideATK");
+			break;
+		case SOLDIERSTATE::UPSIDEATKSTART:
+			upperBody->SetClip("UpsideATKStart");
 			break;
 		default:
 			break;
