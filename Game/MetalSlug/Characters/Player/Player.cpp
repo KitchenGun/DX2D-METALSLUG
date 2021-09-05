@@ -104,100 +104,6 @@ void Player::Input()
 		if (deltaTime > fireRate)//일정 시간 마다 실행하여 그림 변경 함 
 		{
 			Fire(isFirstHandUp, isFirstCrouchJump);
-			//상반신 상태 지정
-			if (!isGround)
-			{
-				if (isCrouch)
-				{//하단사격자세 상태
-
-					if (isAtk)
-					{
-						if (!upperBody->GetisPistol())
-						{
-							if (isFirstCrouchJump)
-							{
-								soldierUpperState = SOLDIERSTATE::CROUCHJUMPATKSTART;
-							}
-							else
-							{
-								soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
-							}
-						}
-						else
-						{
-							soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
-						}
-					}
-				}
-				else
-				{
-					if (isAtk)
-					{
-						if (isHandUp)
-						{
-							if (!upperBody->GetisPistol())
-							{
-								if (isFirstHandUp)
-								{
-									soldierUpperState = SOLDIERSTATE::UPSIDEATKSTART;
-								}
-								else
-								{
-									soldierUpperState = SOLDIERSTATE::UPSIDEATK;
-								}
-							}
-							else
-							{
-								soldierUpperState = SOLDIERSTATE::UPSIDEATK;
-							}
-						}
-						else
-						{
-							soldierUpperState = SOLDIERSTATE::ATK;
-						}
-					}
-					else if (isMove)
-					{//점프 이동 상태
-						soldierUpperState = SOLDIERSTATE::JUMPMOVE;
-					}
-					else
-					{//기본 점프 상태
-						soldierUpperState = SOLDIERSTATE::JUMP;
-					}
-				}
-			}
-			else if (isCrouch)
-			{
-				if (isAtk)
-				{
-					soldierUpperState = SOLDIERSTATE::CROUCHATK;
-				}
-			}
-			else if (isHandUp)
-			{//상단 사격자세 상태
-				if (isAtk)
-				{
-					if (upperBody->GetisPistol())
-					{
-						if (isFirstHandUp)
-						{
-							soldierUpperState = SOLDIERSTATE::UPSIDEATKSTART;
-						}
-						else
-						{
-							soldierUpperState = SOLDIERSTATE::UPSIDEATK;
-						}
-					}
-					soldierUpperState = SOLDIERSTATE::UPSIDEATK;
-				}
-			}
-			else
-			{//idle 상태
-				if (isAtk)
-				{
-					soldierUpperState = SOLDIERSTATE::ATK;
-				}
-			}
 			switch (soldierUpperState)
 			{
 			case SOLDIERSTATE::ATK:
@@ -599,53 +505,75 @@ void Player::ObbGroundMove(Vector3 tempPos)
 void Player::Fire(bool isFirstHandUp,bool isFirstCrouchJump)
 {
 	isAtk = true;
-
-	if (isHandUp)
+	if (upperBody->GetisPistol())
 	{
-		if (upperBody->GetisPistol())
+		if (isHandUp)
 		{
 			upperBody->SetClip("UpsideATK", true);
 			soldierUpperState = SOLDIERSTATE::UPSIDEATK;
 		}
-		else
+		else if (isCrouch)
 		{
-			if (isFirstHandUp)
-			{
-				upperBody->SetClip("UpsideATKStart", true);
-				soldierUpperState = SOLDIERSTATE::UPSIDEATKSTART;
-			}
-		}
-	}
-	else if (isCrouch)
-	{
-		if (!isGround)
-		{
-			if (upperBody->GetisPistol())
+			if (!isGround)
 			{
 				upperBody->SetClip("CrouchJumpATK", true);
 				soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
 			}
 			else
 			{
+				upperBody->SetClip("CrouchATK", true);
+				soldierUpperState = SOLDIERSTATE::CROUCHATK;
+			}
+		}
+		else
+		{
+			upperBody->SetClip("ATK", true);
+			soldierUpperState = SOLDIERSTATE::ATK;
+		}
+	}
+	else
+	{
+		if (isHandUp)
+		{	
+			if (isFirstHandUp)
+			{
+				upperBody->SetClip("UpsideATKStart", true);
+				soldierUpperState = SOLDIERSTATE::UPSIDEATKSTART;
+			}
+			else
+			{
+				upperBody->SetClip("UpsideATK", true);
+				soldierUpperState = SOLDIERSTATE::UPSIDEATK;
+			}
+		}
+		else if (isCrouch)
+		{
+			if (!isGround)
+			{
 				if (isFirstCrouchJump)
+				{
+					upperBody->SetClip("CrouchJumpATK", true);
+					soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
+				} 
+				else 
 				{
 					upperBody->SetClip("CrouchJumpATK", true);
 					soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
 				}
 			}
+			else
+			{
+				upperBody->SetClip("CrouchATK", true);
+				soldierUpperState = SOLDIERSTATE::CROUCHATK;
+			}
 		}
 		else
 		{
-			upperBody->SetClip("CrouchATK", true);
-			soldierUpperState = SOLDIERSTATE::CROUCHATK;
+			upperBody->SetClip("ATK", true);
+			soldierUpperState = SOLDIERSTATE::ATK;
 		}
 	}
-	else
-	{
-		upperBody->SetClip("ATK", true);
-		soldierUpperState = SOLDIERSTATE::ATK;
-	}
-	MoveFirePos();
+	MoveFirePos(isFirstHandUp,isFirstCrouchJump);
 	//pistol
 	PM->AddBullet(firePos.Pos, Vector3(17, 8, 1), firePos.Rotation, dir, BULLETTYPE::PISTOL);
 }
@@ -688,34 +616,49 @@ void Player::Jump()
 	}
 }
 
-void Player::MoveFirePos()
+void Player::MoveFirePos(bool isFirstHandUp, bool isFirstCrouchJump)
 {
-	if (isHandUp)
+	if (upperBody->GetisPistol())
 	{
-		if (dir == DIRECTION::LEFT)
-		{
-			firePos.Pos = position + Vector3(11 * IMGsize, 43 * IMGsize, 0);
-			firePos.Rotation = 90.0f;
-		}
-		else if (dir == DIRECTION::RIGHT)
-		{
-			firePos.Pos = position + Vector3(12 * IMGsize, 43 * IMGsize, 0);
-			firePos.Rotation = 90.0f;
-		}
-	}
-	else if (isCrouch)
-	{
-		if (!isGround)
+		if (isHandUp)
 		{
 			if (dir == DIRECTION::LEFT)
 			{
-				firePos.Pos = position + Vector3(10 * IMGsize, 20 * IMGsize, 0);
-				firePos.Rotation = -90.0f;
+				firePos.Pos = position + Vector3(11 * IMGsize, 43 * IMGsize, 0);
+				firePos.Rotation = 90.0f;
 			}
 			else if (dir == DIRECTION::RIGHT)
 			{
-				firePos.Pos = position + Vector3(12 * IMGsize, 19 * IMGsize, 0);
-				firePos.Rotation = -90.0f;
+				firePos.Pos = position + Vector3(12 * IMGsize, 43 * IMGsize, 0);
+				firePos.Rotation = 90.0f;
+			}
+		}
+		else if (isCrouch)
+		{
+			if (!isGround)
+			{
+				if (dir == DIRECTION::LEFT)
+				{
+					firePos.Pos = position + Vector3(10 * IMGsize, 20 * IMGsize, 0);
+					firePos.Rotation = -90.0f;
+				}
+				else if (dir == DIRECTION::RIGHT)
+				{
+					firePos.Pos = position + Vector3(12 * IMGsize, 19 * IMGsize, 0);
+					firePos.Rotation = -90.0f;
+				}
+			}
+			else
+			{
+				firePos.Rotation = 0.0f;
+				if (dir == DIRECTION::LEFT)
+				{
+					firePos.Pos = position + Vector3(16 * IMGsize, 17 * IMGsize, 0);
+				}
+				else if (dir == DIRECTION::RIGHT)
+				{
+					firePos.Pos = position + Vector3(16 * IMGsize, 17 * IMGsize, 0);
+				}
 			}
 		}
 		else
@@ -723,27 +666,57 @@ void Player::MoveFirePos()
 			firePos.Rotation = 0.0f;
 			if (dir == DIRECTION::LEFT)
 			{
-				firePos.Pos = position + Vector3(16 * IMGsize, 17 * IMGsize, 0);
+				firePos.Pos = position + Vector3(16 * IMGsize, 28 * IMGsize, 0);
 			}
 			else if (dir == DIRECTION::RIGHT)
 			{
-				firePos.Pos = position + Vector3(16 * IMGsize, 17 * IMGsize, 0);
+				firePos.Pos = position + Vector3(16 * IMGsize, 28 * IMGsize, 0);
 			}
 		}
 	}
 	else
 	{
-		firePos.Rotation = 0.0f;
-		if (dir == DIRECTION::LEFT)
+
+		if (isHandUp)
 		{
-			firePos.Pos = position + Vector3(16 * IMGsize, 28 * IMGsize, 0);
+			if (isFirstHandUp)
+			{
+				upperBody->SetClip("UpsideATKStart", true);
+				soldierUpperState = SOLDIERSTATE::UPSIDEATKSTART;
+			}
+			else
+			{
+				upperBody->SetClip("UpsideATK", true);
+				soldierUpperState = SOLDIERSTATE::UPSIDEATK;
+			}
 		}
-		else if (dir == DIRECTION::RIGHT)
+		else if (isCrouch)
 		{
-			firePos.Pos = position + Vector3(16 * IMGsize, 28 * IMGsize, 0);
+			if (!isGround)
+			{
+				if (isFirstCrouchJump)
+				{
+					upperBody->SetClip("CrouchJumpATK", true);
+					soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
+				}
+				else
+				{
+					upperBody->SetClip("CrouchJumpATK", true);
+					soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
+				}
+			}
+			else
+			{
+				upperBody->SetClip("CrouchATK", true);
+				soldierUpperState = SOLDIERSTATE::CROUCHATK;
+			}
+		}
+		else
+		{
+			upperBody->SetClip("ATK", true);
+			soldierUpperState = SOLDIERSTATE::ATK;
 		}
 	}
-
 }
 
 void Player::ColliderSizeChange(bool isSmall)

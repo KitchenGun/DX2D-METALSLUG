@@ -72,7 +72,7 @@ public://持失切 社瑚切 update render
 	
 	void Fire(bool isFirstHandUp, bool isFirstCrouchJump);
 	void Jump();
-	void MoveFirePos();
+	void MoveFirePos(bool isFirstHandUp, bool isFirstCrouchJump);
 	void ColliderSizeChange(bool isSmall);
 
 
