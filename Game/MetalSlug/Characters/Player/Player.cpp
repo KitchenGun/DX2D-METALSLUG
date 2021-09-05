@@ -53,7 +53,7 @@ void Player::Update()
 	}
 	else
 	{
-		Move({ 0,GravatiyPower,0 });
+		//Move({ 0,GravatiyPower,0 });
 	}
 }
 
@@ -99,7 +99,7 @@ void Player::Input()
 		}
 	}
 	static float deltaTime = 0.0f;
-	if (Keyboard::Get()->Down('A'))
+	if (Keyboard::Get()->Press('A'))
 	{
 		if (deltaTime > fireRate)//일정 시간 마다 실행하여 그림 변경 함 
 		{
@@ -231,7 +231,7 @@ void Player::Input()
 			{
 				if (BlockDir != DIRECTION::RIGHT)
 				{
-					//Move(Vector3(PlayerSpeed, 0, 0));
+					Move(Vector3(PlayerSpeed, 0, 0));
 				}
 				if (isGround)
 				{
@@ -243,7 +243,7 @@ void Player::Input()
 			{
 				if (BlockDir != DIRECTION::LEFT)
 				{
-					//Move(Vector3(-PlayerSpeed, 0, 0));
+					Move(Vector3(-PlayerSpeed, 0, 0));
 				}
 				if (isGround)
 				{
@@ -263,7 +263,7 @@ void Player::Input()
 		{
 			if (BlockDir != DIRECTION::RIGHT)
 			{
-				//Move(Vector3(PlayerSpeed, 0, 0));
+				Move(Vector3(PlayerSpeed, 0, 0));
 			}
 			if (isGround)
 			{
@@ -275,7 +275,7 @@ void Player::Input()
 		{
 			if (BlockDir != DIRECTION::LEFT)
 			{
-				//Move(Vector3(-PlayerSpeed, 0, 0));
+				Move(Vector3(-PlayerSpeed, 0, 0));
 			}
 			if (isGround)
 			{
@@ -458,6 +458,9 @@ void Player::Input()
 		soldierLowerState = SOLDIERSTATE::IDLE;
 	}
 
+	//firepos세팅
+	MoveFirePos(isFirstHandUp, isFirstCrouchJump);
+	cout << firePos.Rotation << endl;
 	//ani세팅
 	SetLowerAni();
 	SetUpperAni();
@@ -552,9 +555,9 @@ void Player::Fire(bool isFirstHandUp,bool isFirstCrouchJump)
 			{
 				if (isFirstCrouchJump)
 				{
-					upperBody->SetClip("CrouchJumpATK", true);
-					soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
-				} 
+					upperBody->SetClip("CrouchJumpATKStart", true);
+					soldierUpperState = SOLDIERSTATE::CROUCHJUMPATKSTART;
+				}
 				else 
 				{
 					upperBody->SetClip("CrouchJumpATK", true);
@@ -624,12 +627,12 @@ void Player::MoveFirePos(bool isFirstHandUp, bool isFirstCrouchJump)
 		{
 			if (dir == DIRECTION::LEFT)
 			{
-				firePos.Pos = position + Vector3(11 * IMGsize, 43 * IMGsize, 0);
+				firePos.Pos = position + Vector3(11 * IMGsize, 55 * IMGsize, 0);
 				firePos.Rotation = 90.0f;
 			}
 			else if (dir == DIRECTION::RIGHT)
 			{
-				firePos.Pos = position + Vector3(12 * IMGsize, 43 * IMGsize, 0);
+				firePos.Pos = position + Vector3(12 * IMGsize, 55 * IMGsize, 0);
 				firePos.Rotation = 90.0f;
 			}
 		}
@@ -639,82 +642,180 @@ void Player::MoveFirePos(bool isFirstHandUp, bool isFirstCrouchJump)
 			{
 				if (dir == DIRECTION::LEFT)
 				{
-					firePos.Pos = position + Vector3(10 * IMGsize, 20 * IMGsize, 0);
+					firePos.Pos = position + Vector3(10 * IMGsize, 6 * IMGsize, 0);
 					firePos.Rotation = -90.0f;
 				}
 				else if (dir == DIRECTION::RIGHT)
 				{
-					firePos.Pos = position + Vector3(12 * IMGsize, 19 * IMGsize, 0);
+					firePos.Pos = position + Vector3(12 * IMGsize, 6 * IMGsize, 0);
 					firePos.Rotation = -90.0f;
 				}
 			}
 			else
 			{
-				firePos.Rotation = 0.0f;
 				if (dir == DIRECTION::LEFT)
 				{
-					firePos.Pos = position + Vector3(16 * IMGsize, 17 * IMGsize, 0);
+					firePos.Rotation = 180.0f;
+					firePos.Pos = position + Vector3(-10 * IMGsize, 17 * IMGsize, 0);
 				}
 				else if (dir == DIRECTION::RIGHT)
 				{
-					firePos.Pos = position + Vector3(16 * IMGsize, 17 * IMGsize, 0);
+					firePos.Rotation = 0.0f;
+					firePos.Pos = position + Vector3(37 * IMGsize, 17 * IMGsize, 0);
 				}
 			}
 		}
 		else
 		{
-			firePos.Rotation = 0.0f;
 			if (dir == DIRECTION::LEFT)
 			{
-				firePos.Pos = position + Vector3(16 * IMGsize, 28 * IMGsize, 0);
+				firePos.Rotation = 180.0f;
+				firePos.Pos = position + Vector3(-10 * IMGsize, 27 * IMGsize, 0);
 			}
 			else if (dir == DIRECTION::RIGHT)
 			{
-				firePos.Pos = position + Vector3(16 * IMGsize, 28 * IMGsize, 0);
+				firePos.Rotation = 0.0f;
+				firePos.Pos = position + Vector3(37 * IMGsize, 27 * IMGsize, 0);
 			}
 		}
 	}
 	else
 	{
-
-		if (isHandUp)
+		switch (soldierUpperState)
 		{
-			if (isFirstHandUp)
+		case SOLDIERSTATE::UPSIDEATKSTART:
+			if (dir == DIRECTION::LEFT)
 			{
-				upperBody->SetClip("UpsideATKStart", true);
-				soldierUpperState = SOLDIERSTATE::UPSIDEATKSTART;
-			}
-			else
-			{
-				upperBody->SetClip("UpsideATK", true);
-				soldierUpperState = SOLDIERSTATE::UPSIDEATK;
-			}
-		}
-		else if (isCrouch)
-		{
-			if (!isGround)
-			{
-				if (isFirstCrouchJump)
+				cout << upperBodyAnimator->GetIndex() << endl;
+				switch (upperBodyAnimator->GetIndex())
 				{
-					upperBody->SetClip("CrouchJumpATK", true);
-					soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
-				}
-				else
-				{
-					upperBody->SetClip("CrouchJumpATK", true);
-					soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
+				case 2:
+					firePos.Rotation = 120;
+					firePos.Pos = position + Vector3(-12 * IMGsize, 30 * IMGsize, 0);
+					break;
+				case 1:
+					firePos.Rotation = 135;
+					firePos.Pos = position + Vector3(-6 * IMGsize, 40 * IMGsize, 0);
+					break;
+				case 0:
+					firePos.Rotation = 150;
+					firePos.Pos = position + Vector3(0 * IMGsize, 50 * IMGsize, 0);
+					break;
+				default:
+					break;
 				}
 			}
-			else
+			else if (dir == DIRECTION::RIGHT)
 			{
-				upperBody->SetClip("CrouchATK", true);
-				soldierUpperState = SOLDIERSTATE::CROUCHATK;
+				switch (upperBodyAnimator->GetIndex())
+				{
+				case 0:
+					firePos.Rotation = 30;
+					firePos.Pos = position + Vector3(36 * IMGsize, 30 * IMGsize, 0);
+					break;
+				case 1:
+					firePos.Rotation = 45;
+					firePos.Pos = position + Vector3(30 * IMGsize, 40 * IMGsize, 0);
+					break;
+				case 2:
+					firePos.Rotation = 60;
+					firePos.Pos = position + Vector3(25 * IMGsize, 50 * IMGsize, 0);
+					break;
+				default:
+					break;
+				}
 			}
-		}
-		else
-		{
-			upperBody->SetClip("ATK", true);
-			soldierUpperState = SOLDIERSTATE::ATK;
+			break;
+		case SOLDIERSTATE::UPSIDEATK:
+			firePos.Rotation = 90.0f;
+			if (dir == DIRECTION::LEFT)
+			{
+				firePos.Pos = position + Vector3(9 * IMGsize, 60 * IMGsize, 0);
+			}
+			else if (dir == DIRECTION::RIGHT)
+			{
+				firePos.Pos = position + Vector3(9 * IMGsize, 60 * IMGsize, 0);
+			}
+			break;
+		case SOLDIERSTATE::CROUCHJUMPATK:
+			firePos.Rotation = -90.0f;
+			if (dir == DIRECTION::LEFT)
+			{
+				firePos.Pos = position + Vector3(12 * IMGsize, 0 * IMGsize, 0);
+			}
+			else if (dir == DIRECTION::RIGHT)
+			{
+				firePos.Pos = position + Vector3(12 * IMGsize, 0 * IMGsize, 0);
+			}
+			break;
+		case SOLDIERSTATE::CROUCHJUMPATKSTART:
+			if (dir == DIRECTION::LEFT)
+			{
+				switch (upperBodyAnimator->GetIndex())
+				{
+				case 2:
+					firePos.Rotation = -120;
+					firePos.Pos = position + Vector3(-10 * IMGsize, 20 * IMGsize, 0);
+					break;
+				case 1:
+					firePos.Rotation = -135;
+					firePos.Pos = position + Vector3(0 * IMGsize, 10 * IMGsize, 0);
+					break;
+				case 0:
+					firePos.Rotation = -150;
+					firePos.Pos = position + Vector3(6 * IMGsize, 0 * IMGsize, 0);
+					break;
+				default:
+					break;
+				}
+			}
+			else if (dir == DIRECTION::RIGHT)
+			{
+				switch (upperBodyAnimator->GetIndex())
+				{
+				case 0:
+					firePos.Rotation = -30;
+					firePos.Pos = position + Vector3(36 * IMGsize, 20 * IMGsize, 0);
+					break;
+				case 1:
+					firePos.Rotation = -45;
+					firePos.Pos = position + Vector3(30 * IMGsize, 10 * IMGsize, 0);
+					break;
+				case 2:
+					firePos.Rotation = -60;
+					firePos.Pos = position + Vector3(18 * IMGsize, 0 * IMGsize, 0);
+					break;
+				default:
+					break;
+				}
+			}
+			break;
+		case SOLDIERSTATE::CROUCHATK:
+			if (dir == DIRECTION::LEFT)
+			{
+				firePos.Rotation = 180.0f;
+				firePos.Pos = position + Vector3(-15 * IMGsize, 17 * IMGsize, 0);
+			}
+			else if (dir == DIRECTION::RIGHT)
+			{
+				firePos.Rotation = 0.0f;
+				firePos.Pos = position + Vector3(45 * IMGsize, 17 * IMGsize, 0);
+			}
+			break;
+		case SOLDIERSTATE::ATK:
+			if (dir == DIRECTION::LEFT)
+			{
+				firePos.Rotation = 180.0f;
+				firePos.Pos = position + Vector3(-15 * IMGsize, 19 * IMGsize, 0);
+			}
+			else if (dir == DIRECTION::RIGHT)
+			{
+				firePos.Rotation = 0.0f;
+				firePos.Pos = position + Vector3(38 * IMGsize, 19 * IMGsize, 0);
+			}
+			break;
+		default:
+			break;
 		}
 	}
 }

@@ -1358,7 +1358,7 @@ void SoldierUpper::PivotUpdate()
 			}
 			else if (player->GetDir() == DIRECTION::LEFT)
 			{
-				SetPos(player->GetPosition() + Vector3(-50 * player->GetSize(), 0 * player->GetSize(), 0));
+				SetPos(player->GetPosition() + Vector3(-40 * player->GetSize(), 0 * player->GetSize(), 0));
 			}
 		}
 		else if (player->GetUpperState() == SOLDIERSTATE::CROUCHJUMPATK)
