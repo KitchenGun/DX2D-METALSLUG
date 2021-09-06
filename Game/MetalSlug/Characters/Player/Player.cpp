@@ -37,6 +37,7 @@ void Player::Update()
 	/*임시*/
 	if (Keyboard::Get()->Down('1'))
 	{
+		PlayerBulletType = BULLETTYPE::HEAVY;
 		upperBody->SetisPistol(false);
 	}
 
@@ -53,7 +54,7 @@ void Player::Update()
 	}
 	else
 	{
-		//Move({ 0,GravatiyPower,0 });
+		Move({ 0,GravatiyPower,0 });
 	}
 }
 
@@ -99,7 +100,7 @@ void Player::Input()
 		}
 	}
 	static float deltaTime = 0.0f;
-	if (Keyboard::Get()->Press('A'))
+	if (Keyboard::Get()->Down('A'))
 	{
 		if (deltaTime > fireRate)//일정 시간 마다 실행하여 그림 변경 함 
 		{
@@ -460,7 +461,7 @@ void Player::Input()
 
 	//firepos세팅
 	MoveFirePos(isFirstHandUp, isFirstCrouchJump);
-	cout << firePos.Rotation << endl;
+	HeavyFire();
 	//ani세팅
 	SetLowerAni();
 	SetUpperAni();
@@ -577,8 +578,21 @@ void Player::Fire(bool isFirstHandUp,bool isFirstCrouchJump)
 		}
 	}
 	MoveFirePos(isFirstHandUp,isFirstCrouchJump);
+	switch (PlayerBulletType)
+	{
+	case BULLETTYPE::PISTOL:
 	//pistol
-	PM->AddBullet(firePos.Pos, Vector3(17, 8, 1), firePos.Rotation, dir, BULLETTYPE::PISTOL);
+		PM->AddBullet(firePos.Pos, Vector3(17, 2*IMGsize, 1), firePos.Rotation, dir, PlayerBulletType);
+		break;
+	case BULLETTYPE::HEAVY:
+	//Heavy
+		//PM->AddBullet(firePos.Pos, Vector3(24 * IMGsize, 4 * IMGsize, 1), firePos.Rotation, dir, PlayerBulletType);
+		isHeavyFire = true;
+		HeavyFireCount = 6;
+		break;
+	default:
+		break;
+	}
 }
 
 void Player::Jump()
@@ -686,20 +700,19 @@ void Player::MoveFirePos(bool isFirstHandUp, bool isFirstCrouchJump)
 		case SOLDIERSTATE::UPSIDEATKSTART:
 			if (dir == DIRECTION::LEFT)
 			{
-				cout << upperBodyAnimator->GetIndex() << endl;
 				switch (upperBodyAnimator->GetIndex())
 				{
 				case 2:
-					firePos.Rotation = 120;
-					firePos.Pos = position + Vector3(-12 * IMGsize, 30 * IMGsize, 0);
+					firePos.Rotation = 150;
+					firePos.Pos = position + Vector3((-12.5f*sqrtf(3)-9) * IMGsize, (-12.5f-9)* IMGsize, 0);
 					break;
 				case 1:
 					firePos.Rotation = 135;
-					firePos.Pos = position + Vector3(-6 * IMGsize, 40 * IMGsize, 0);
+					firePos.Pos = position + Vector3((-12.5f * sqrtf(2) - 9) * IMGsize, (-12.5f * sqrtf(2) - 9) * IMGsize, 0);
 					break;
 				case 0:
-					firePos.Rotation = 150;
-					firePos.Pos = position + Vector3(0 * IMGsize, 50 * IMGsize, 0);
+					firePos.Rotation = 120;
+					firePos.Pos = position + Vector3((-12.5f - 9) * IMGsize, (-12.5f * sqrtf(3) - 9) * IMGsize, 0);
 					break;
 				default:
 					break;
@@ -711,15 +724,15 @@ void Player::MoveFirePos(bool isFirstHandUp, bool isFirstCrouchJump)
 				{
 				case 0:
 					firePos.Rotation = 30;
-					firePos.Pos = position + Vector3(36 * IMGsize, 30 * IMGsize, 0);
+					firePos.Pos = position + Vector3((15*sqrtf(3)+9) * IMGsize, (15+9) * IMGsize, 0);
 					break;
 				case 1:
 					firePos.Rotation = 45;
-					firePos.Pos = position + Vector3(30 * IMGsize, 40 * IMGsize, 0);
+					firePos.Pos = position + Vector3((15 * sqrtf(2)+9) * IMGsize, (15+9) * sqrtf(2)* IMGsize, 0);
 					break;
 				case 2:
 					firePos.Rotation = 60;
-					firePos.Pos = position + Vector3(25 * IMGsize, 50 * IMGsize, 0);
+					firePos.Pos = position + Vector3((15+9) * IMGsize, (15 * sqrtf(3)+9) * IMGsize, 0);
 					break;
 				default:
 					break;
@@ -837,6 +850,23 @@ void Player::ColliderSizeChange(bool isSmall)
 	WB->SetWorld(world);
 	TransformVertices();
 }
+
+void Player::HeavyFire()
+{
+	if (isHeavyFire)
+	{
+		static float deltaTime = 0.0f;
+		if (deltaTime > HeavyfireRate&&HeavyFireCount>0)
+		{
+			PM->AddBullet(firePos.Pos+Vector3(0,(HeavyFireCount%3)*2*IMGsize,0), Vector3(24 * IMGsize, 4 * IMGsize, 1), firePos.Rotation, dir, PlayerBulletType);
+			deltaTime = 0.0f;
+			HeavyFireCount--;
+		}
+		else
+			deltaTime += Time::Delta();
+	}
+}
+
 
 
 void Player::SetUpperAni()

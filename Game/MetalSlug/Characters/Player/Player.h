@@ -1,6 +1,13 @@
 #pragma once
 class ProjectileManager;
 
+enum class BULLETTYPE
+{
+	NONE = 0,
+	PISTOL,
+	HEAVY
+};
+
 struct OBBInfo
 {
 	bool isObb = false;
@@ -75,6 +82,7 @@ public://생성자 소멸자 update render
 	void MoveFirePos(bool isFirstHandUp, bool isFirstCrouchJump);
 	void ColliderSizeChange(bool isSmall);
 
+	void HeavyFire();
 
 public://Get&Set
 	void SetUpperAni();
@@ -93,7 +101,7 @@ public://Get&Set
 	OBBInfo* GetObbInfo() { return obbInfo; }
 	SOLDIERSTATE GetLowerState() { return soldierLowerState; }
 	SOLDIERSTATE GetUpperState() { return soldierUpperState; }
-
+	BULLETTYPE GetBulletType() { return PlayerBulletType; }
 protected:
 	HP PlayerHP = 1;
 	MOVESPEED PlayerSpeed = 350.0f;
@@ -131,7 +139,12 @@ private:
 	Vector3 RootPos;
 	OBBInfo* obbInfo;
 	//사격 
+	BULLETTYPE PlayerBulletType = BULLETTYPE::PISTOL;
+	bool isHeavyFire = false;
+	int Ammo = 0;
+	int HeavyFireCount = 0;
 	ProjectileManager* PM = nullptr;
 	FirePos firePos;
-	float fireRate = 1 / 1000.0f;
+	float fireRate = 1 / 100.0f;
+	float HeavyfireRate = 1 / 30.0f;
 };

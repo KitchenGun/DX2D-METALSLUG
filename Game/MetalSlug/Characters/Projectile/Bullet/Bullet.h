@@ -1,10 +1,4 @@
 #pragma once
-enum class BULLETTYPE
-{
-	NONE=0,
-	PISTOL,
-	HEAVY
-};
 
 class Bullet : public Projectile
 {
