@@ -147,4 +147,6 @@ private:
 	FirePos firePos;
 	float fireRate = 1 / 100.0f;
 	float HeavyfireRate = 1 / 30.0f;
+	float DownPressTime = 0;
+	float UpPressTime = 0;
 };

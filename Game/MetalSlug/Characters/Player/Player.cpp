@@ -190,6 +190,10 @@ void Player::Input()
 		{
 			ColliderSizeChange(true);
 		}
+		if (!upperBody->GetisPistol())
+		{
+			DownPressTime += Time::Delta();
+		}
 	}
 	else if (Keyboard::Get()->Down(VK_DOWN))
 	{
@@ -200,10 +204,15 @@ void Player::Input()
 	{
 		isCrouch = false;
 		isFirstCrouchJump = false;
+		DownPressTime = 0;
 	}
 	else if (Keyboard::Get()->Press(VK_UP))
 	{
 		isHandUp = true;
+		if (!upperBody->GetisPistol())
+		{
+			UpPressTime += Time::Delta();
+		}
 	}
 	else if(Keyboard::Get()->Down(VK_UP))
 	{
@@ -214,6 +223,7 @@ void Player::Input()
 	{
 		isHandUp = false;
 		isFirstHandUp = false;
+		UpPressTime = 0;
 	}
 	else
 	{
@@ -586,7 +596,6 @@ void Player::Fire(bool isFirstHandUp,bool isFirstCrouchJump)
 		break;
 	case BULLETTYPE::HEAVY:
 	//Heavy
-		//PM->AddBullet(firePos.Pos, Vector3(24 * IMGsize, 4 * IMGsize, 1), firePos.Rotation, dir, PlayerBulletType);
 		isHeavyFire = true;
 		HeavyFireCount = 6;
 		break;
@@ -698,45 +707,28 @@ void Player::MoveFirePos(bool isFirstHandUp, bool isFirstCrouchJump)
 		switch (soldierUpperState)
 		{
 		case SOLDIERSTATE::UPSIDEATKSTART:
+			firePos.Rotation = Math::Lerpf(0, 90, UpPressTime * 10);
+			if (firePos.Rotation >= 90)
+			{
+				firePos.Rotation = 90; 
+				if (dir == DIRECTION::LEFT)
+				{
+					firePos.Pos = position + Vector3(9 * IMGsize, 60 * IMGsize, 0);
+				}
+				else if (dir == DIRECTION::RIGHT)
+				{
+					firePos.Pos = position + Vector3(9 * IMGsize, 60 * IMGsize, 0);
+				}
+				break;
+			}
 			if (dir == DIRECTION::LEFT)
 			{
-				switch (upperBodyAnimator->GetIndex())
-				{
-				case 2:
-					firePos.Rotation = 150;
-					firePos.Pos = position + Vector3((-12.5f*sqrtf(3)-9) * IMGsize, (-12.5f-9)* IMGsize, 0);
-					break;
-				case 1:
-					firePos.Rotation = 135;
-					firePos.Pos = position + Vector3((-12.5f * sqrtf(2) - 9) * IMGsize, (-12.5f * sqrtf(2) - 9) * IMGsize, 0);
-					break;
-				case 0:
-					firePos.Rotation = 120;
-					firePos.Pos = position + Vector3((-12.5f - 9) * IMGsize, (-12.5f * sqrtf(3) - 9) * IMGsize, 0);
-					break;
-				default:
-					break;
-				}
+				firePos.Rotation = 180 - firePos.Rotation;
+				firePos.Pos = r.Point;
 			}
 			else if (dir == DIRECTION::RIGHT)
 			{
-				switch (upperBodyAnimator->GetIndex())
-				{
-				case 0:
-					firePos.Rotation = 30;
-					firePos.Pos = position + Vector3((15*sqrtf(3)+9) * IMGsize, (15+9) * IMGsize, 0);
-					break;
-				case 1:
-					firePos.Rotation = 45;
-					firePos.Pos = position + Vector3((15 * sqrtf(2)+9) * IMGsize, (15+9) * sqrtf(2)* IMGsize, 0);
-					break;
-				case 2:
-					firePos.Rotation = 60;
-					firePos.Pos = position + Vector3((15+9) * IMGsize, (15 * sqrtf(3)+9) * IMGsize, 0);
-					break;
-				default:
-					break;
-				}
+				firePos.Pos = r.Point;
 			}
 			break;
 		case SOLDIERSTATE::UPSIDEATK:
@@ -750,57 +742,41 @@ void Player::MoveFirePos(bool isFirstHandUp, bool isFirstCrouchJump)
 				firePos.Pos = position + Vector3(9 * IMGsize, 60 * IMGsize, 0);
 			}
 			break;
+		case SOLDIERSTATE::CROUCHJUMPATKSTART:
+			firePos.Rotation = Math::Lerpf(0, 90, DownPressTime * 10);
+			if (firePos.Rotation >= 90)
+			{
+				firePos.Rotation = -90;
+				if (dir == DIRECTION::LEFT)
+				{
+					firePos.Pos = position + Vector3(18 * IMGsize, 0 * IMGsize, 0);
+				}
+				else if (dir == DIRECTION::RIGHT)
+				{
+					firePos.Pos = position + Vector3(6 * IMGsize, 0 * IMGsize, 0);
+				}
+				break;
+			}
+			if (dir == DIRECTION::LEFT)
+			{
+				firePos.Rotation = -(180 - firePos.Rotation);
+				firePos.Pos = r.Point + Vector3(0, 10, 0);
+			}
+			else if (dir == DIRECTION::RIGHT)
+			{
+				firePos.Rotation = - firePos.Rotation;
+				firePos.Pos = r.Point + Vector3(0, 10, 0);
+			}
+			break;
 		case SOLDIERSTATE::CROUCHJUMPATK:
 			firePos.Rotation = -90.0f;
 			if (dir == DIRECTION::LEFT)
 			{
-				firePos.Pos = position + Vector3(12 * IMGsize, 0 * IMGsize, 0);
+				firePos.Pos = position + Vector3(18 * IMGsize, 0 * IMGsize, 0);
 			}
 			else if (dir == DIRECTION::RIGHT)
 			{
-				firePos.Pos = position + Vector3(12 * IMGsize, 0 * IMGsize, 0);
-			}
-			break;
-		case SOLDIERSTATE::CROUCHJUMPATKSTART:
-			if (dir == DIRECTION::LEFT)
-			{
-				switch (upperBodyAnimator->GetIndex())
-				{
-				case 2:
-					firePos.Rotation = -120;
-					firePos.Pos = position + Vector3(-10 * IMGsize, 20 * IMGsize, 0);
-					break;
-				case 1:
-					firePos.Rotation = -135;
-					firePos.Pos = position + Vector3(0 * IMGsize, 10 * IMGsize, 0);
-					break;
-				case 0:
-					firePos.Rotation = -150;
-					firePos.Pos = position + Vector3(6 * IMGsize, 0 * IMGsize, 0);
-					break;
-				default:
-					break;
-				}
-			}
-			else if (dir == DIRECTION::RIGHT)
-			{
-				switch (upperBodyAnimator->GetIndex())
-				{
-				case 0:
-					firePos.Rotation = -30;
-					firePos.Pos = position + Vector3(36 * IMGsize, 20 * IMGsize, 0);
-					break;
-				case 1:
-					firePos.Rotation = -45;
-					firePos.Pos = position + Vector3(30 * IMGsize, 10 * IMGsize, 0);
-					break;
-				case 2:
-					firePos.Rotation = -60;
-					firePos.Pos = position + Vector3(18 * IMGsize, 0 * IMGsize, 0);
-					break;
-				default:
-					break;
-				}
+				firePos.Pos = position + Vector3(6 * IMGsize, 0 * IMGsize, 0);
 			}
 			break;
 		case SOLDIERSTATE::CROUCHATK:
@@ -861,6 +837,10 @@ void Player::HeavyFire()
 			PM->AddBullet(firePos.Pos+Vector3(0,(HeavyFireCount%3)*2*IMGsize,0), Vector3(24 * IMGsize, 4 * IMGsize, 1), firePos.Rotation, dir, PlayerBulletType);
 			deltaTime = 0.0f;
 			HeavyFireCount--;
+			if (HeavyFireCount == 0)
+			{
+				isHeavyFire = false;
+			}
 		}
 		else
 			deltaTime += Time::Delta();

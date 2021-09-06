@@ -32,7 +32,7 @@ void Editer::Init()
 	//EnemyM->SetPPM(PlayerPM);
 	//EnemyM->AddEnemy(Vector3(200, 400, 0), Vector3(30 * 3, 40 * 3, 1), 0, ENEMYTYPE::Grenadier);
 
-	Camera::Get()->Move(player->GetPosition() - Vector3(200, 400, 0));
+	//Camera::Get()->Move(player->GetPosition() - Vector3(200, 400, 0));
 }
 
 void Editer::Update()
@@ -58,7 +58,7 @@ void Editer::Update()
 	PlayerPM->Update();
 	//EnemyM->Update();
 
-	Camera::Get()->Move(player->GetPosition() - Vector3(200, 100, 0));
+	//Camera::Get()->Move(player->GetPosition() - Vector3(200, 100, 0));
 }
 
 void Editer::PreRender()
