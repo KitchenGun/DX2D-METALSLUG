@@ -1,5 +1,6 @@
 #pragma once
 class ProjectileManager;
+class EnemyManager;
 
 enum class BULLETTYPE
 {
@@ -37,8 +38,10 @@ enum class SOLDIERSTATE
 	JUMPMOVE,
 	//상반신
 	ATK,
+	KNIFEATK,
 	CROUCHIDLE,
 	CROUCHATK,
+	CROUCHKNIFEATK,
 	CROUCHMOVE,
 	CROUCHJUMP,
 	CROUCHJUMPSTART,
@@ -76,7 +79,7 @@ public://생성자 소멸자 update render
 	void Move(Vector3 tempPos);
 	void ObbGroundMove(Vector3 tempPos);
 	
-	
+	void Knife();
 	void Fire(bool isFirstHandUp, bool isFirstCrouchJump);
 	void Jump();
 	void MoveFirePos(bool isFirstHandUp, bool isFirstCrouchJump);
@@ -98,6 +101,7 @@ public://Get&Set
 	Vector3 GetRootPos() { return RootPos; }
 	void SetisGround(bool val) { isGround = val; }
 	void SetPM(ProjectileManager* val) { PM = val; }
+	void SetEM(EnemyManager* val) { EM = val; }
 	OBBInfo* GetObbInfo() { return obbInfo; }
 	SOLDIERSTATE GetLowerState() { return soldierLowerState; }
 	SOLDIERSTATE GetUpperState() { return soldierUpperState; }
@@ -113,7 +117,7 @@ private:
 	SoldierUpper* upperBody = nullptr;
 	Animator* upperBodyAnimator = nullptr;
 
-	float IMGsize = 0;
+	float IMGsize = 3;
 
 	bool isGround = false;//지상 판정
 	bool isCrouch = false;//앉기 키를 누른경우
@@ -135,9 +139,11 @@ private:
 	int nJumpCount = 0;
 	const int nMaxJumpCount = 1;
 	float GravatiyPower = -600;
+
 	//root
 	Vector3 RootPos;
 	OBBInfo* obbInfo;
+
 	//사격 
 	BULLETTYPE PlayerBulletType = BULLETTYPE::PISTOL;
 	bool isHeavyFire = false;
@@ -149,4 +155,8 @@ private:
 	float HeavyfireRate = 1 / 30.0f;
 	float DownPressTime = 0;
 	float UpPressTime = 0;
+	//칼질
+	EnemyManager* EM;
+	const float KnifeRange = 45 * IMGsize;
+	bool isKnife = false;
 };

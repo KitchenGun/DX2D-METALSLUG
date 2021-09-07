@@ -25,5 +25,5 @@ private:
 	Rock1* object = nullptr;
 	//manager
 	ProjectileManager* PlayerPM = nullptr;
-	//EnemyManager* EnemyM = nullptr;
+	EnemyManager* EnemyM = nullptr;
 };

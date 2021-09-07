@@ -341,6 +341,36 @@ void SoldierUpper::SetClip(string name,bool isRestart)
 				name = "LFireCrouch";
 			}
 		}
+		else if (name == "KnifeATK")
+		{
+			SetSize(Vector3(48 * player->GetSize(), 33 * player->GetSize(), 1));
+			animator->bLoop = false;
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				texture = new Texture2D(L"./_Textures/Character/Fire/RKnife.png");
+				name = "RKnife";
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				texture = new Texture2D(L"./_Textures/Character/Fire/LKnife.png");
+				name = "LKnife";
+			}
+		}
+		else if (name == "CrouchKnifeATK")
+		{
+			SetSize(Vector3(48 * player->GetSize(), 33 * player->GetSize(), 1));
+			animator->bLoop = false;
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				texture = new Texture2D(L"./_Textures/Character/Fire/RKnifeCrouch.png");
+				name = "RKnifeCrouch";
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				texture = new Texture2D(L"./_Textures/Character/Fire/LKnifeCrouch.png");
+				name = "LKnifeCrouch";
+			}
+		}
 	}
 	else
 	{
@@ -968,6 +998,54 @@ void SoldierUpper::PivotUpdate()
 				break;
 			}
 		}
+		else if (player->GetUpperState() == SOLDIERSTATE::KNIFEATK)
+		{
+			switch (player->GetLowerState())
+			{
+			case SOLDIERSTATE::IDLE:
+				if (player->GetDir() == DIRECTION::RIGHT)
+				{
+					SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), 10 * player->GetSize(), 0));
+				}
+				else if (player->GetDir() == DIRECTION::LEFT)
+				{
+					SetPos(player->GetPosition() + Vector3(-32 * player->GetSize(), 10 * player->GetSize(), 0));
+				}
+				break;
+			case SOLDIERSTATE::MOVE:
+				if (player->GetDir() == DIRECTION::RIGHT)
+				{
+					SetPos(player->GetPosition() + Vector3(3 * player->GetSize(), 12 * player->GetSize(), 0));
+				}
+				else if (player->GetDir() == DIRECTION::LEFT)
+				{
+					SetPos(player->GetPosition() + Vector3(-32 * player->GetSize(), 12 * player->GetSize(), 0));
+				}
+				break;
+			case SOLDIERSTATE::JUMP:
+				if (player->GetDir() == DIRECTION::RIGHT)
+				{
+					SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), 16 * player->GetSize(), 0));
+				}
+				else if (player->GetDir() == DIRECTION::LEFT)
+				{
+					SetPos(player->GetPosition() + Vector3(-30 * player->GetSize(), 16 * player->GetSize(), 0));
+				}
+				break;
+			case SOLDIERSTATE::JUMPMOVE:
+				if (player->GetDir() == DIRECTION::RIGHT)
+				{
+					SetPos(player->GetPosition() + Vector3(8 * player->GetSize(), 12 * player->GetSize(), 0));
+				}
+				else if (player->GetDir() == DIRECTION::LEFT)
+				{
+					SetPos(player->GetPosition() + Vector3(-30 * player->GetSize(), 12 * player->GetSize(), 0));
+				}
+				break;
+			default:
+				break;
+			}
+		}
 		else if (player->GetUpperState() == SOLDIERSTATE::UPSIDEATK)
 		{
 			switch (player->GetLowerState())
@@ -1450,9 +1528,13 @@ void SoldierUpper::SetAnimation()
 	texture = new Texture2D(L"./_Textures/Character/Fire/LFireUpside.png");
 	animClips.push_back(new AnimationClip(L"LFireUpside", texture, 10, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
 	texture = new Texture2D(L"./_Textures/Character/Fire/RKnife.png");
-	animClips.push_back(new AnimationClip(L"RKnife", texture, 6, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+	animClips.push_back(new AnimationClip(L"RKnife", texture, 6, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	texture = new Texture2D(L"./_Textures/Character/Fire/LKnife.png");
 	animClips.push_back(new AnimationClip(L"LKnife", texture, 6, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+	texture = new Texture2D(L"./_Textures/Character/Fire/RKnifeCrouch.png");
+	animClips.push_back(new AnimationClip(L"RKnifeCrouch", texture, 6, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/Character/Fire/LKnifeCrouch.png");
+	animClips.push_back(new AnimationClip(L"LKnifeCrouch", texture, 6, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
 	//Machine Gun atk
 	texture = new Texture2D(L"./_Textures/Character/Fire/RMachineFire.png");
 	animClips.push_back(new AnimationClip(L"RMachineFire", texture, 4, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));

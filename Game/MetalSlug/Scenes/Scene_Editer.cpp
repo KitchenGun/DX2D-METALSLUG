@@ -27,11 +27,11 @@ void Editer::Init()
 	PlayerPM = new ProjectileManager();
 	player->SetPM(PlayerPM);
 
-//	EnemyM = new EnemyManager();
-	//EnemyM->SetGroundList(GroundList);
-	//EnemyM->SetPPM(PlayerPM);
-	//EnemyM->AddEnemy(Vector3(200, 400, 0), Vector3(30 * 3, 40 * 3, 1), 0, ENEMYTYPE::Grenadier);
-
+	EnemyM = new EnemyManager();
+	EnemyM->SetGroundList(GroundList);
+	EnemyM->SetPPM(PlayerPM);
+	EnemyM->AddEnemy(Vector3(200, 400, 0), Vector3(30 * 3, 40 * 3, 1), 0, ENEMYTYPE::Grenadier);
+	player->SetEM(EnemyM);
 	//Camera::Get()->Move(player->GetPosition() - Vector3(200, 400, 0));
 }
 
@@ -56,7 +56,7 @@ void Editer::Update()
 	}
 	//manager
 	PlayerPM->Update();
-	//EnemyM->Update();
+	EnemyM->Update();
 
 	//Camera::Get()->Move(player->GetPosition() - Vector3(200, 100, 0));
 }
@@ -72,7 +72,7 @@ void Editer::Render()
 	object->Render();
 	//manager
 	PlayerPM->Render();
-	//EnemyM->Render();
+	EnemyM->Render();
 	//player
 	player->Render();
 	for (Ground* tempGround : GroundList)
@@ -146,13 +146,9 @@ void Editer::LoadGroundTile(const wstring& path)
 		for (Ground* tempground : GroundList)
 		{
 			tempground->SetPos(in->Read<Vector3>());
-			//cout <<String::ToString(tempground->GetPos()) <<endl;
 			tempground->SetSize(in->Read<Vector3>());
-			//cout << String::ToString(tempground->GetSize()) <<endl;
 			tempground->SetRotation(in->Read<float>());
-			//cout << tempground->GetRotation() <<endl;
 			tempground->SetisObb(in->Read<bool>());
-			//cout << tempground->GetisObb() <<endl;
 			tempground->Load();
 		}
 

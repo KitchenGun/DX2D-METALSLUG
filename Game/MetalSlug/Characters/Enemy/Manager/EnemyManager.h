@@ -15,6 +15,7 @@ public:
 
 	void SetGroundList(vector<Ground*> val) { GroundList = val; }
 	void SetPPM(ProjectileManager* val) { PPM = val; }
+	list<Enemy*> GetEnemyList() { return enemyList; }
 private:
 	list<Enemy*> enemyList;
 	list<Enemy*>::iterator iter;

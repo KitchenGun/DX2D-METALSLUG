@@ -7,7 +7,6 @@ Player::Player(Vector3 position, Vector3 size, float rotation)
 	PlayerAnimationRect(position,size,rotation)
 {
 	this->position = position;
-	this->IMGsize = 3;
 	this->size = size;
 	dir = DIRECTION::RIGHT;
 	lowerBody = new SoldierLower(position, Vector3(21* IMGsize, 16 * IMGsize, 1), 0);
@@ -77,73 +76,83 @@ void Player::Input()
 			if (Keyboard::Get()->Down(VK_DOWN))
 			{
 				isAtk = false;
+				isKnife = false;
 			}
 			else if (Keyboard::Get()->Down(VK_UP))
 			{
 				isAtk = false;
+				isKnife = false;
 			}
 		}
 		if (Keyboard::Get()->Down(VK_RIGHT))//우측 입력
 		{
 			isAtk = false;
+			isKnife = false;
 		}
 		else if (Keyboard::Get()->Down(VK_LEFT))//우측 입력
 		{
 			isAtk = false;
+			isKnife = false;
 		}
 		else if (!upperBodyAnimator->isFirstPlay)
 		{
 			if (soldierUpperState != SOLDIERSTATE::CROUCHJUMP)
 			{
 				isAtk = false;
+				isKnife = false;
 			}
 		}
 	}
 	static float deltaTime = 0.0f;
 	if (Keyboard::Get()->Down('A'))
 	{
-		if (deltaTime > fireRate)//일정 시간 마다 실행하여 그림 변경 함 
+		//KNIFE공격 처리
+		Knife();
+		if (!isKnife)
 		{
-			Fire(isFirstHandUp, isFirstCrouchJump);
-			switch (soldierUpperState)
+			if (deltaTime > fireRate)//일정 시간 마다 실행하여 그림 변경 함 
 			{
-			case SOLDIERSTATE::ATK:
-				upperBody->SetClip("ATK");
-				break;
-			case SOLDIERSTATE::CROUCHATK:
-				upperBody->SetClip("CrouchATK");
-				break;
-			case SOLDIERSTATE::CROUCHJUMPSTART:
-				if (isAtk)
+				Fire(isFirstHandUp, isFirstCrouchJump);
+				switch (soldierUpperState)
+				{
+				case SOLDIERSTATE::ATK:
+					upperBody->SetClip("ATK");
+					break;
+				case SOLDIERSTATE::CROUCHATK:
+					upperBody->SetClip("CrouchATK");
+					break;
+				case SOLDIERSTATE::CROUCHJUMPSTART:
+					if (isAtk)
+						upperBody->SetClip("CrouchJumpATKStart");
+					else
+						upperBody->SetClip("CrouchJumpStart");
+					break;
+				case SOLDIERSTATE::CROUCHJUMPATK:
+					upperBody->SetClip("CrouchJumpATK");
+					break;
+				case SOLDIERSTATE::CROUCHJUMPATKSTART:
 					upperBody->SetClip("CrouchJumpATKStart");
-				else
-					upperBody->SetClip("CrouchJumpStart");
-				break;
-			case SOLDIERSTATE::CROUCHJUMPATK:
-				upperBody->SetClip("CrouchJumpATK");
-				break;
-			case SOLDIERSTATE::CROUCHJUMPATKSTART:
-				upperBody->SetClip("CrouchJumpATKStart");
-				break;
-			case SOLDIERSTATE::CROUCHMOVE:
-				upperBody->SetClip("CrouchMove");
-				break;
-			case SOLDIERSTATE::UPSIDESTART:
-				if (isAtk)
+					break;
+				case SOLDIERSTATE::CROUCHMOVE:
+					upperBody->SetClip("CrouchMove");
+					break;
+				case SOLDIERSTATE::UPSIDESTART:
+					if (isAtk)
+						upperBody->SetClip("UpsideATKStart");
+					else
+						upperBody->SetClip("UpsideStart");
+					break;
+				case SOLDIERSTATE::UPSIDEATK:
+					upperBody->SetClip("UpsideATK");
+					break;
+				case SOLDIERSTATE::UPSIDEATKSTART:
 					upperBody->SetClip("UpsideATKStart");
-				else
-					upperBody->SetClip("UpsideStart");
-				break;
-			case SOLDIERSTATE::UPSIDEATK:
-				upperBody->SetClip("UpsideATK");
-				break;
-			case SOLDIERSTATE::UPSIDEATKSTART:
-				upperBody->SetClip("UpsideATKStart");
-				break;
-			default:
-				break;
+					break;
+				default:
+					break;
+				}
+				deltaTime = 0;
 			}
-			deltaTime = 0;
 		}
 	}
 	else//작동환경과 상관없이 일정하게 맞춰준다
@@ -230,6 +239,10 @@ void Player::Input()
 		isCrouch = false;
 		ColliderSizeChange(false);
 	}
+
+	//firepos세팅
+	MoveFirePos(isFirstHandUp, isFirstCrouchJump);
+	HeavyFire();
 
 
 	//좌우
@@ -323,6 +336,7 @@ void Player::Input()
 				{
 					soldierUpperState = SOLDIERSTATE::CROUCHJUMPATK;
 				}
+
 			}
 			else
 			{
@@ -369,6 +383,11 @@ void Player::Input()
 				{
 					soldierUpperState = SOLDIERSTATE::ATK;
 				}
+				
+				if (isKnife)
+				{
+					soldierUpperState = SOLDIERSTATE::KNIFEATK;
+				}
 			}
 			else if (isMove)
 			{//점프 이동 상태
@@ -384,7 +403,14 @@ void Player::Input()
 	{
 		if (isAtk)
 		{
-			soldierUpperState = SOLDIERSTATE::CROUCHATK;
+			if (isKnife)
+			{
+				soldierUpperState = SOLDIERSTATE::CROUCHKNIFEATK;
+			}
+			else
+			{
+				soldierUpperState = SOLDIERSTATE::CROUCHATK;
+			}
 		}
 		else if (isMove)
 		{//앉아서 움직이는 상태
@@ -435,7 +461,14 @@ void Player::Input()
 	{//idle 상태
 		if (isAtk)
 		{
-			soldierUpperState = SOLDIERSTATE::ATK;
+			if (isKnife)
+			{
+				soldierUpperState = SOLDIERSTATE::KNIFEATK;
+			}
+			else
+			{
+				soldierUpperState = SOLDIERSTATE::ATK;
+			}
 		}
 		else
 		{
@@ -443,6 +476,7 @@ void Player::Input()
 		}
 	}
 
+	
 
 	//하반신 상태 지정
 	if (!isGround)
@@ -469,9 +503,6 @@ void Player::Input()
 		soldierLowerState = SOLDIERSTATE::IDLE;
 	}
 
-	//firepos세팅
-	MoveFirePos(isFirstHandUp, isFirstCrouchJump);
-	HeavyFire();
 	//ani세팅
 	SetLowerAni();
 	SetUpperAni();
@@ -514,6 +545,60 @@ void Player::ObbGroundMove(Vector3 tempPos)
 
 	RootPos = position + Vector3(size.x / 2, 0, 0);
 	TransformVertices();
+}
+
+void Player::Knife()
+{
+	if (dir == DIRECTION::RIGHT)
+	{
+		for (Enemy* temp : EM->GetEnemyList())
+		{
+			if (temp->GetTransformedCoord().Point.x > r.Point.x)
+			{
+				cout << Math::Distance(temp->GetTransformedCoord().Point, this->r.Point) << endl;
+				if (Math::Distance(temp->GetTransformedCoord().Point, this->r.Point) <= KnifeRange)
+				{
+					isKnife = true;
+					isAtk = true;
+					if (isCrouch)
+					{
+						upperBody->SetClip("CrouchKnifeATK");
+						soldierUpperState = SOLDIERSTATE::CROUCHKNIFEATK;
+					}
+					else
+					{
+						upperBody->SetClip("KnifeATK");
+						soldierUpperState = SOLDIERSTATE::KNIFEATK;
+					}
+				}
+
+			}
+		}
+	}
+	else if(dir == DIRECTION::LEFT)
+	{
+		for (Enemy* temp : EM->GetEnemyList())
+		{
+			if (temp->GetTransformedCoord().Point.x < r.Point.x)
+			{
+				if (Math::Distance(temp->GetTransformedCoord().Point, this->r.Point) < KnifeRange)
+				{
+					isKnife = true;
+					if (isCrouch)
+					{
+						upperBody->SetClip("CrouchKnifeATK", true);
+						soldierUpperState = SOLDIERSTATE::CROUCHKNIFEATK;
+					}
+					else
+					{
+						upperBody->SetClip("KnifeATK", true);
+						soldierUpperState = SOLDIERSTATE::KNIFEATK;
+					}
+				}
+
+			}
+		}
+	}
 }
 
 void Player::Fire(bool isFirstHandUp,bool isFirstCrouchJump)
@@ -865,11 +950,17 @@ void Player::SetUpperAni()
 		case SOLDIERSTATE::ATK:
 			upperBody->SetClip("ATK");
 			break;
+		case SOLDIERSTATE::KNIFEATK:
+			upperBody->SetClip("KnifeATK");
+			break;
 		case SOLDIERSTATE::CROUCHIDLE:
 			upperBody->SetClip("CrouchIdle");
 			break;
 		case SOLDIERSTATE::CROUCHATK:
 			upperBody->SetClip("CrouchATK");
+			break;
+		case SOLDIERSTATE::CROUCHKNIFEATK:
+			upperBody->SetClip("CrouchKnifeATK");
 			break;
 		case SOLDIERSTATE::CROUCHJUMP:
 			upperBody->SetClip("CrouchJump");
