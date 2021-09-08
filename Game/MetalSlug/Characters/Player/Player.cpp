@@ -141,11 +141,14 @@ void Player::Input()
 	static float deltaTime = 0.0f;
 	if (Keyboard::Get()->Down('A'))
 	{
-		//KNIFE공격 처리
-		Knife();
-		if (!isKnife)
+
+		if(deltaTime > fireRate)//일정 시간 마다 실행하여 그림 변경 함 
 		{
-			if (deltaTime > fireRate)//일정 시간 마다 실행하여 그림 변경 함 
+			if (!isKnife)
+			{
+				Knife();
+			}
+			if (!isKnife)
 			{
 				Fire(isFirstHandUp, isFirstCrouchJump);
 				switch (soldierUpperState)

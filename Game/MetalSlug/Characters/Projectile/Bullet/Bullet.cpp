@@ -44,7 +44,7 @@ Bullet::~Bullet()
 
 void Bullet::Update()
 {
-	if (rotation != 0)
+	if (rotation != 0|| rotation!=180||rotation)
 	{
 		Move(Speed *Vector3(cosf(D3DXToRadian(rotation)), sinf(D3DXToRadian(rotation)), 0));
 	}
