@@ -50,3 +50,31 @@ void Object::PlayerBlock()
 		target->SetBlockDir(DIRECTION::NONE);
 	}
 }
+
+void Object::EnemyBlock()
+{
+	if (Math::Intersect(this, target))
+	{
+		if (Math::GroundIntersect(target, this))
+		{//오브젝트로 인한 바닥으로 충돌이 되는 경우
+			target->SetisGround(true);
+			return;
+		}
+		else if (target->GetBlockDir() == DIRECTION::NONE)
+		{
+			if (this->GetTransformedCoord().LT.x > target->GetTransformedCoord().LT.x && this->GetTransformedCoord().LT.x < target->GetTransformedCoord().RB.x)
+			{
+				target->SetBlockDir(DIRECTION::RIGHT);
+			}
+			else if (this->GetTransformedCoord().RB.x > target->GetTransformedCoord().LT.x && this->GetTransformedCoord().RB.x < target->GetTransformedCoord().RB.x)
+			{
+				target->SetBlockDir(DIRECTION::LEFT);
+			}
+		}
+	}
+	else
+	{
+		target->SetBlockDir(DIRECTION::NONE);
+	}
+}
+

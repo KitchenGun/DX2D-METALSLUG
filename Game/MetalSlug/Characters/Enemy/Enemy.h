@@ -1,4 +1,5 @@
 #pragma once
+class Projectile;
 
 enum class ENEMYTYPE
 {
@@ -19,7 +20,7 @@ public:
 	void Jump();
 	//»ç¸Á&ÇÇ°Ý
 	virtual void Die();
-	void Hit(DAMAGE val);
+	void Hit(DAMAGE val, Projectile* tempProjectile=nullptr);
 	//Get&Set
 	void SetisGround(bool val) { isGround = val; }
 	bool GetisGround() { return isGround; }

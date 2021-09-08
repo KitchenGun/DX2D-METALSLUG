@@ -2,9 +2,10 @@
 class ProjectileManager;
 class EnemyManager;
 
-enum class BULLETTYPE
+enum class PROJECTILETYPE
 {
 	NONE = 0,
+	KNIFE,
 	PISTOL,
 	HEAVY
 };
@@ -105,7 +106,7 @@ public://Get&Set
 	OBBInfo* GetObbInfo() { return obbInfo; }
 	SOLDIERSTATE GetLowerState() { return soldierLowerState; }
 	SOLDIERSTATE GetUpperState() { return soldierUpperState; }
-	BULLETTYPE GetBulletType() { return PlayerBulletType; }
+	PROJECTILETYPE GetProjectileType() { return PlayerProjectileType; }
 protected:
 	HP PlayerHP = 1;
 	MOVESPEED PlayerSpeed = 350.0f;
@@ -145,7 +146,7 @@ private:
 	OBBInfo* obbInfo;
 
 	//»ç°Ý 
-	BULLETTYPE PlayerBulletType = BULLETTYPE::PISTOL;
+	PROJECTILETYPE PlayerProjectileType = PROJECTILETYPE::PISTOL;
 	bool isHeavyFire = false;
 	int Ammo = 0;
 	int HeavyFireCount = 0;

@@ -9,7 +9,7 @@ public:
 	void Update();
 	void Render();
 
-	void AddBullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, BULLETTYPE BT);
+	void AddBullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT);
 	void RemoveProjectile(Projectile* tempProjectile);
 
 	list<Projectile*> GetList() {return projectileList;}

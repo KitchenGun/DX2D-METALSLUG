@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "Projectile.h"
 
-Projectile::Projectile(Vector3 position, Vector3 size, float rotation, DIRECTION dir)
+Projectile::Projectile(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE PT)
 	:AnimationRect(position, size, rotation),
-	Dir(dir)
+	Dir(dir),
+	pt(PT)
 {
 	StartPos = position;
 }

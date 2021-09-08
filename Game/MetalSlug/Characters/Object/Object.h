@@ -1,4 +1,5 @@
 #pragma once
+class EnemyManager;
 
 class Object:public PlayerAnimationRect
 {
@@ -10,8 +11,10 @@ public:
 	void Render() override;
 
 	void PlayerBlock();
-
+	void EnemyBlock();
 	void SetTarget(Player* val) { target = val; }
+
 private:
+	EnemyManager* EM;
 	Player* target;
 };

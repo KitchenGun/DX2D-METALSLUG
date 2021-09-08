@@ -20,7 +20,7 @@ EnemySoldier::EnemySoldier(Vector3 position, Vector3 size, float rotation, ENEMY
 			SetSize(Vector3(26 * 3, 44 * 3, 1));
 			RootPos = Vector3(position.x + 13 * 3, position.y, 0);
 			SetClip();
-			EnemyHP = 1;
+			EnemyHP = 10;
 			break;
 		}
 	default:

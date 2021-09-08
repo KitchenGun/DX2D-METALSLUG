@@ -30,7 +30,7 @@ void Editer::Init()
 	EnemyM = new EnemyManager();
 	EnemyM->SetGroundList(GroundList);
 	EnemyM->SetPPM(PlayerPM);
-	EnemyM->AddEnemy(Vector3(200, 400, 0), Vector3(30 * 3, 40 * 3, 1), 0, ENEMYTYPE::Grenadier);
+	EnemyM->AddEnemy(Vector3(500, 400, 0), Vector3(30 * 3, 40 * 3, 1), 0, ENEMYTYPE::Grenadier);
 	player->SetEM(EnemyM);
 	//Camera::Get()->Move(player->GetPosition() - Vector3(200, 400, 0));
 }

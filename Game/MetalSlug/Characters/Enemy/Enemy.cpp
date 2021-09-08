@@ -109,8 +109,23 @@ void Enemy::Die()
 	//자식 객체에서 정의
 }
 
-void Enemy::Hit(DAMAGE val)
+void Enemy::Hit(DAMAGE val,Projectile* tempProjectile)
 {
-	EnemyHP -= val;
+	if (tempProjectile == nullptr)
+	{
+		EnemyHP -= val;
+		return;
+	}
+
+	static Projectile *PrevTemp;
+	Projectile *NowTemp;
+	NowTemp = tempProjectile;
+	if (NowTemp!=PrevTemp)
+	{
+		EnemyHP -= val;
+		cout << EnemyHP << endl;
+	}
+	PrevTemp = NowTemp;
+	
 }
 

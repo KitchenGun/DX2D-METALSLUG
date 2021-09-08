@@ -36,7 +36,7 @@ void Player::Update()
 	/*임시*/
 	if (Keyboard::Get()->Down('1'))
 	{
-		PlayerBulletType = BULLETTYPE::HEAVY;
+		PlayerProjectileType = PROJECTILETYPE::HEAVY;
 		upperBody->SetisPistol(false);
 	}
 
@@ -77,22 +77,50 @@ void Player::Input()
 			{
 				isAtk = false;
 				isKnife = false;
+				for (Projectile* temp : PM->GetList())
+				{
+					if (temp->GetPT() == PROJECTILETYPE::KNIFE)
+					{
+						PM->RemoveProjectile(temp);
+					}
+				}
 			}
 			else if (Keyboard::Get()->Down(VK_UP))
 			{
 				isAtk = false;
 				isKnife = false;
+				for (Projectile* temp : PM->GetList())
+				{
+					if (temp->GetPT() == PROJECTILETYPE::KNIFE)
+					{
+						PM->RemoveProjectile(temp);
+					}
+				}
 			}
 		}
 		if (Keyboard::Get()->Down(VK_RIGHT))//우측 입력
 		{
 			isAtk = false;
 			isKnife = false;
+			for (Projectile* temp : PM->GetList())
+			{
+				if (temp->GetPT() == PROJECTILETYPE::KNIFE)
+				{
+					PM->RemoveProjectile(temp);
+				}
+			}
 		}
 		else if (Keyboard::Get()->Down(VK_LEFT))//우측 입력
 		{
 			isAtk = false;
 			isKnife = false;
+			for (Projectile* temp : PM->GetList())
+			{
+				if (temp->GetPT() == PROJECTILETYPE::KNIFE)
+				{
+					PM->RemoveProjectile(temp);
+				}
+			}
 		}
 		else if (!upperBodyAnimator->isFirstPlay)
 		{
@@ -100,6 +128,13 @@ void Player::Input()
 			{
 				isAtk = false;
 				isKnife = false;
+				for (Projectile* temp : PM->GetList())
+				{
+					if (temp->GetPT() == PROJECTILETYPE::KNIFE)
+					{
+						PM->RemoveProjectile(temp);
+					}
+				}
 			}
 		}
 	}
@@ -555,7 +590,6 @@ void Player::Knife()
 		{
 			if (temp->GetTransformedCoord().Point.x > r.Point.x)
 			{
-				cout << Math::Distance(temp->GetTransformedCoord().Point, this->r.Point) << endl;
 				if (Math::Distance(temp->GetTransformedCoord().Point, this->r.Point) <= KnifeRange)
 				{
 					isKnife = true;
@@ -567,11 +601,11 @@ void Player::Knife()
 					}
 					else
 					{
+						PM->AddBullet(r.Point, Vector3(KnifeRange, 5 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::KNIFE);
 						upperBody->SetClip("KnifeATK");
 						soldierUpperState = SOLDIERSTATE::KNIFEATK;
 					}
 				}
-
 			}
 		}
 	}
@@ -584,14 +618,16 @@ void Player::Knife()
 				if (Math::Distance(temp->GetTransformedCoord().Point, this->r.Point) < KnifeRange)
 				{
 					isKnife = true;
+					isAtk = true;
 					if (isCrouch)
 					{
-						upperBody->SetClip("CrouchKnifeATK", true);
+						upperBody->SetClip("CrouchKnifeATK");
 						soldierUpperState = SOLDIERSTATE::CROUCHKNIFEATK;
 					}
 					else
 					{
-						upperBody->SetClip("KnifeATK", true);
+						PM->AddBullet(r.Point, Vector3(-KnifeRange, 5 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::KNIFE);
+						upperBody->SetClip("KnifeATK");
 						soldierUpperState = SOLDIERSTATE::KNIFEATK;
 					}
 				}
@@ -673,13 +709,13 @@ void Player::Fire(bool isFirstHandUp,bool isFirstCrouchJump)
 		}
 	}
 	MoveFirePos(isFirstHandUp,isFirstCrouchJump);
-	switch (PlayerBulletType)
+	switch (PlayerProjectileType)
 	{
-	case BULLETTYPE::PISTOL:
+	case PROJECTILETYPE::PISTOL:
 	//pistol
-		PM->AddBullet(firePos.Pos, Vector3(17, 2*IMGsize, 1), firePos.Rotation, dir, PlayerBulletType);
+		PM->AddBullet(firePos.Pos, Vector3(17, 2*IMGsize, 1), firePos.Rotation, dir, PlayerProjectileType);
 		break;
-	case BULLETTYPE::HEAVY:
+	case PROJECTILETYPE::HEAVY:
 	//Heavy
 		isHeavyFire = true;
 		HeavyFireCount = 6;
@@ -919,7 +955,7 @@ void Player::HeavyFire()
 		static float deltaTime = 0.0f;
 		if (deltaTime > HeavyfireRate&&HeavyFireCount>0)
 		{
-			PM->AddBullet(firePos.Pos+Vector3(0,(HeavyFireCount%3)*2*IMGsize,0), Vector3(24 * IMGsize, 4 * IMGsize, 1), firePos.Rotation, dir, PlayerBulletType);
+			PM->AddBullet(firePos.Pos+Vector3(0,(HeavyFireCount%3)*2*IMGsize,0), Vector3(24 * IMGsize, 4 * IMGsize, 1), firePos.Rotation, dir, PlayerProjectileType);
 			deltaTime = 0.0f;
 			HeavyFireCount--;
 			if (HeavyFireCount == 0)

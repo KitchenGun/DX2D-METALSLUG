@@ -41,7 +41,7 @@ void ProjectileManager::Render()
 }
 
 
-void ProjectileManager::AddBullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, BULLETTYPE BT)
+void ProjectileManager::AddBullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT)
 {
 	Bullet* tempBullet = new Bullet(position, size, rotation, dir, BT);
 	

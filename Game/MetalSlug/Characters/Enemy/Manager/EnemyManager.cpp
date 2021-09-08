@@ -44,8 +44,15 @@ void EnemyManager::ProjectileCollisionCheck(Enemy* tempEnemy)
 	{
 		if (Math::Intersect(tempEnemy, tempProj))
 		{
-			tempEnemy->Hit(tempProj->GetDamage());
-			PPM->RemoveProjectile(tempProj);
+			if (tempProj->GetPT() == PROJECTILETYPE::KNIFE)
+			{
+				tempEnemy->Hit(tempProj->GetDamage(),tempProj);
+			}
+			else
+			{
+				tempEnemy->Hit(tempProj->GetDamage());
+				PPM->RemoveProjectile(tempProj);
+			}
 		}
 	}
 }
