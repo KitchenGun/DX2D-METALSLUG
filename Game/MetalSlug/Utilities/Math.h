@@ -23,6 +23,8 @@ public:
 	static bool Intersect(PlayerAnimationRect* r1, AnimationRect* r2);
 	static bool Intersect(AnimationRect* r1, AnimationRect* r2);
 	static bool Intersect(Square *rect, Vector3 position);
+	//OBB 충돌
+	static bool OBBIntersect(PlayerAnimationRect* r1, AnimationRect* r2);
 	//바닥 충돌
 	static bool GroundIntersect(Player* p1, vector<Ground*> GL);//캐릭터 바닥 충돌
 	static bool GroundIntersect(Enemy* e1, vector<Ground*> GL);//캐릭터 바닥 충돌

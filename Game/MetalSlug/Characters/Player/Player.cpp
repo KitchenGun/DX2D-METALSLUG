@@ -98,6 +98,31 @@ void Player::Input()
 				}
 			}
 		}
+		else
+		{
+			if (Keyboard::Get()->Down(VK_DOWN))
+			{
+				isKnife = false;
+				for (Projectile* temp : PM->GetList())
+				{
+					if (temp->GetPT() == PROJECTILETYPE::KNIFE)
+					{
+						PM->RemoveProjectile(temp);
+					}
+				}
+			}
+			else if (Keyboard::Get()->Down(VK_UP))
+			{
+				isKnife = false;
+				for (Projectile* temp : PM->GetList())
+				{
+					if (temp->GetPT() == PROJECTILETYPE::KNIFE)
+					{
+						PM->RemoveProjectile(temp);
+					}
+				}
+			}
+		}
 		if (Keyboard::Get()->Down(VK_RIGHT))//우측 입력
 		{
 			isAtk = false;
@@ -141,13 +166,14 @@ void Player::Input()
 	static float deltaTime = 0.0f;
 	if (Keyboard::Get()->Down('A'))
 	{
-
 		if(deltaTime > fireRate)//일정 시간 마다 실행하여 그림 변경 함 
 		{
+			//칼질
 			if (!isKnife)
 			{
 				Knife();
 			}
+			//사격
 			if (!isKnife)
 			{
 				Fire(isFirstHandUp, isFirstCrouchJump);
@@ -595,16 +621,18 @@ void Player::Knife()
 			{
 				if (Math::Distance(temp->GetTransformedCoord().Point, this->r.Point) <= KnifeRange)
 				{
+					firePos.Rotation = 0;
 					isKnife = true;
 					isAtk = true;
 					if (isCrouch)
 					{
+						PM->AddBullet(r.Point + Vector3(KnifeRange / 2, 0, 0), Vector3(KnifeRange, 5 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::KNIFE);
 						upperBody->SetClip("CrouchKnifeATK");
 						soldierUpperState = SOLDIERSTATE::CROUCHKNIFEATK;
 					}
 					else
 					{
-						PM->AddBullet(r.Point, Vector3(KnifeRange, 5 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::KNIFE);
+						PM->AddBullet(r.Point+Vector3(KnifeRange/2,0,0), Vector3(KnifeRange, 5 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::KNIFE);
 						upperBody->SetClip("KnifeATK");
 						soldierUpperState = SOLDIERSTATE::KNIFEATK;
 					}
@@ -620,16 +648,18 @@ void Player::Knife()
 			{
 				if (Math::Distance(temp->GetTransformedCoord().Point, this->r.Point) < KnifeRange)
 				{
+					firePos.Rotation = 0;
 					isKnife = true;
 					isAtk = true;
 					if (isCrouch)
 					{
+						PM->AddBullet(r.Point - Vector3(KnifeRange / 2, 0, 0), Vector3(KnifeRange, 5 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::KNIFE);
 						upperBody->SetClip("CrouchKnifeATK");
 						soldierUpperState = SOLDIERSTATE::CROUCHKNIFEATK;
 					}
 					else
 					{
-						PM->AddBullet(r.Point, Vector3(-KnifeRange, 5 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::KNIFE);
+						PM->AddBullet(r.Point - Vector3(KnifeRange / 2, 0, 0), Vector3(KnifeRange, 5 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::KNIFE);
 						upperBody->SetClip("KnifeATK");
 						soldierUpperState = SOLDIERSTATE::KNIFEATK;
 					}
@@ -716,7 +746,7 @@ void Player::Fire(bool isFirstHandUp,bool isFirstCrouchJump)
 	{
 	case PROJECTILETYPE::PISTOL:
 	//pistol
-		PM->AddBullet(firePos.Pos, Vector3(17, 2*IMGsize, 1), firePos.Rotation, dir, PlayerProjectileType);
+		PM->AddBullet(firePos.Pos, Vector3(17, 3*IMGsize, 1), firePos.Rotation, dir, PlayerProjectileType);
 		break;
 	case PROJECTILETYPE::HEAVY:
 	//Heavy

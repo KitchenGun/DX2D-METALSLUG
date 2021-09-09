@@ -40,8 +40,9 @@ protected:
 	const int nMaxJumpCount = 1;
 	float GravatiyPower = -5;
 	
-	//Obb충돌에 필요한 정보
+	//Obb 지면 충돌에 필요한 정보
 	OBBInfo* obbInfo;
 	HP EnemyHP = 0;
 	ENEMYTYPE enemyType = ENEMYTYPE::NONE;
+	
 };

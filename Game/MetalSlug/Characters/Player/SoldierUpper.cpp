@@ -855,6 +855,36 @@ void SoldierUpper::SetClip(string name,bool isRestart)
 				name = "LMachineFireCrouch";
 			}
 		}
+		else if (name == "KnifeATK")
+		{
+		SetSize(Vector3(55 * player->GetSize(), 42 * player->GetSize(), 1));
+		animator->bLoop = false;
+		if (player->GetDir() == DIRECTION::RIGHT)
+		{
+			texture = new Texture2D(L"./_Textures/Character/Fire/RMachineKnife.png");
+			name = "RMachineKnife";
+		}
+		else if (player->GetDir() == DIRECTION::LEFT)
+		{
+			texture = new Texture2D(L"./_Textures/Character/Fire/LMachineKnife.png");
+			name = "LMachineKnife";
+		}
+		}
+		else if (name == "CrouchKnifeATK")
+		{
+		SetSize(Vector3(61 * player->GetSize(), 33 * player->GetSize(), 1));
+		animator->bLoop = false;
+		if (player->GetDir() == DIRECTION::RIGHT)
+		{
+			texture = new Texture2D(L"./_Textures/Character/Fire/RMachineKnifeCrouch.png");
+			name = "RMachineKnifeCrouch";
+		}
+		else if (player->GetDir() == DIRECTION::LEFT)
+		{
+			texture = new Texture2D(L"./_Textures/Character/Fire/LMachineKnifeCrouch.png");
+			name = "LMachineKnifeCrouch";
+		}
+		}
 	}
 	animator->SetCurrentAnimClip(String::ToWString(name), isRestart);
 }
@@ -1105,6 +1135,17 @@ void SoldierUpper::PivotUpdate()
 				SetPos(player->GetPosition() + Vector3(-30 * player->GetSize(), 0 * player->GetSize(), 0));
 			}
 		}
+		else if (player->GetUpperState() == SOLDIERSTATE::CROUCHKNIFEATK)
+		{
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				SetPos(player->GetPosition() + Vector3(2*player->GetSize(), 0 * player->GetSize(), 0));
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				SetPos(player->GetPosition() + Vector3(-30 * player->GetSize(), 0 * player->GetSize(), 0));
+			}
+		}
 		else if (player->GetUpperState() == SOLDIERSTATE::CROUCHJUMPATK)
 		{
 			switch (player->GetLowerState())
@@ -1270,29 +1311,29 @@ void SoldierUpper::PivotUpdate()
 		}
 		else if (player->GetUpperState() == SOLDIERSTATE::CROUCHJUMPSTART)
 		{
-		switch (player->GetLowerState())
-		{
-		case SOLDIERSTATE::JUMP:
-			if (player->GetDir() == DIRECTION::RIGHT)
+			switch (player->GetLowerState())
 			{
-				SetPos(player->GetPosition() + Vector3(-5 * player->GetSize(), 0 * player->GetSize(), 0));
+			case SOLDIERSTATE::JUMP:
+				if (player->GetDir() == DIRECTION::RIGHT)
+				{
+					SetPos(player->GetPosition() + Vector3(-5 * player->GetSize(), 0 * player->GetSize(), 0));
+				}
+				else if (player->GetDir() == DIRECTION::LEFT)
+				{
+					SetPos(player->GetPosition() + Vector3(-8 * player->GetSize(), 0 * player->GetSize(), 0));
+				}
+				break;
+			case SOLDIERSTATE::JUMPMOVE:
+				if (player->GetDir() == DIRECTION::RIGHT)
+				{
+					SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), -5 * player->GetSize(), 0));
+				}
+				else if (player->GetDir() == DIRECTION::LEFT)
+				{
+					SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), -5 * player->GetSize(), 0));
+				}
+				break;
 			}
-			else if (player->GetDir() == DIRECTION::LEFT)
-			{
-				SetPos(player->GetPosition() + Vector3(-8 * player->GetSize(), 0 * player->GetSize(), 0));
-			}
-			break;
-		case SOLDIERSTATE::JUMPMOVE:
-			if (player->GetDir() == DIRECTION::RIGHT)
-			{
-				SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), -5 * player->GetSize(), 0));
-			}
-			else if (player->GetDir() == DIRECTION::LEFT)
-			{
-				SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), -5 * player->GetSize(), 0));
-			}
-			break;
-		}
 		}
 		else if (player->GetUpperState() == SOLDIERSTATE::ATK)
 		{
@@ -1341,6 +1382,54 @@ void SoldierUpper::PivotUpdate()
 		default:
 			break;
 		}
+		}
+		else if (player->GetUpperState() == SOLDIERSTATE::KNIFEATK)
+		{
+			switch (player->GetLowerState())
+			{
+			case SOLDIERSTATE::IDLE:
+				if (player->GetDir() == DIRECTION::RIGHT)
+				{
+					SetPos(player->GetPosition() + Vector3(-7 * player->GetSize(), 0 * player->GetSize(), 0));
+				}
+				else if (player->GetDir() == DIRECTION::LEFT)
+				{
+					SetPos(player->GetPosition() + Vector3(-26 * player->GetSize(), 0 * player->GetSize(), 0));
+				}
+				break;
+			case SOLDIERSTATE::MOVE:
+				if (player->GetDir() == DIRECTION::RIGHT)
+				{
+					SetPos(player->GetPosition() + Vector3(-7 * player->GetSize(), 2 * player->GetSize(), 0));
+				}
+				else if (player->GetDir() == DIRECTION::LEFT)
+				{
+					SetPos(player->GetPosition() + Vector3(-26 * player->GetSize(), 2 * player->GetSize(), 0));
+				}
+				break;
+			case SOLDIERSTATE::JUMP:
+				if (player->GetDir() == DIRECTION::RIGHT)
+				{
+					SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), 16 * player->GetSize(), 0));
+				}
+				else if (player->GetDir() == DIRECTION::LEFT)
+				{
+					SetPos(player->GetPosition() + Vector3(-28 * player->GetSize(), 10 * player->GetSize(), 0));
+				}
+				break;
+			case SOLDIERSTATE::JUMPMOVE:
+				if (player->GetDir() == DIRECTION::RIGHT)
+				{
+					SetPos(player->GetPosition() + Vector3(8 * player->GetSize(), 12 * player->GetSize(), 0));
+				}
+				else if (player->GetDir() == DIRECTION::LEFT)
+				{
+					SetPos(player->GetPosition() + Vector3(-30 * player->GetSize(), 12 * player->GetSize(), 0));
+				}
+				break;
+			default:
+				break;
+			}
 		}
 		else if (player->GetUpperState() == SOLDIERSTATE::UPSIDEATK)
 		{
@@ -1437,6 +1526,17 @@ void SoldierUpper::PivotUpdate()
 			else if (player->GetDir() == DIRECTION::LEFT)
 			{
 				SetPos(player->GetPosition() + Vector3(-40 * player->GetSize(), 0 * player->GetSize(), 0));
+			}
+		}
+		else if (player->GetUpperState() == SOLDIERSTATE::CROUCHKNIFEATK)
+		{
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				SetPos(player->GetPosition() + Vector3(-12 * player->GetSize(), 0 * player->GetSize(), 0));
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				SetPos(player->GetPosition() + Vector3(-16.5f * player->GetSize(), 0 * player->GetSize(), 0));
 			}
 		}
 		else if (player->GetUpperState() == SOLDIERSTATE::CROUCHJUMPATK)
@@ -1560,6 +1660,14 @@ void SoldierUpper::SetAnimation()
 	animClips.push_back(new AnimationClip(L"RMachineFireCrouchJump", texture, 4, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	texture = new Texture2D(L"./_Textures/Character/Fire/LMachineFireCrouchJump.png");
 	animClips.push_back(new AnimationClip(L"LMachineFireCrouchJump", texture, 4, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+	texture = new Texture2D(L"./_Textures/Character/Fire/RMachineKnife.png");
+	animClips.push_back(new AnimationClip(L"RMachineKnife", texture, 6, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/Character/Fire/LMachineKnife.png");
+	animClips.push_back(new AnimationClip(L"LMachineKnife", texture, 6, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+	texture = new Texture2D(L"./_Textures/Character/Fire/RMachineKnifeCrouch.png");
+	animClips.push_back(new AnimationClip(L"RMachineKnifeCrouch", texture, 6, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/Character/Fire/LMachineKnifeCrouch.png");
+	animClips.push_back(new AnimationClip(L"LMachineKnifeCrouch", texture, 6, { 0,0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
 
 	//crouch
 	texture = new Texture2D(L"./_Textures/Character/Crouch/RCrouchIdle.png");

@@ -25,6 +25,11 @@ void ProjectileManager::Update()
 				RemoveProjectile(tempProjectile);
 				break;//삭제시 프로젝트 리스트가 변경되서 break걸고 다시 돌려야함
 			}
+			if (tempProjectile->GetIsNeedDestroy())
+			{
+				RemoveProjectile(tempProjectile);
+				break;//삭제시 프로젝트 리스트가 변경되서 break걸고 다시 돌려야함
+			}
 		}
 	}
 }
@@ -43,8 +48,7 @@ void ProjectileManager::Render()
 
 void ProjectileManager::AddBullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT)
 {
-	Bullet* tempBullet = new Bullet(position, size, rotation, dir, BT);
-	
+	Bullet* tempBullet = new Bullet(position, size, rotation, dir, BT, EM);
 	projectileList.push_back(tempBullet);
 }
 
