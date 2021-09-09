@@ -29,39 +29,35 @@ void Projectile::ProjectileCollisionCheck()
 {
 	for (Enemy* tempE : EM->GetEnemyList())
 	{
-		if (Math::Distance(tempE->GetTransformedCoord().Point, this->GetPointPos()) < 100)
+		if (Math::Distance(tempE->GetTransformedCoord().Point, this->GetPosition()) < 20*4)
 		{
-			//aabb
-			if (Math::Intersect(tempE, this))
+			//obb
+			if (Math::OBBIntersect(tempE, this))
 			{
 				if (this->GetPT() == PROJECTILETYPE::KNIFE)
 				{
 					tempE->Hit(this->GetDamage(), this);
-					break;
 				}
 				else
 				{
 					tempE->Hit(this->GetDamage());
 					isNeedDestroy = true;
-					break;
 				}
 			}
-			//obb
-			else
+			//aabb
+			else if (Math::Intersect(tempE, this))
 			{
-				if (Math::OBBIntersect(tempE, this))
+				if (this->GetPT() == PROJECTILETYPE::KNIFE)
 				{
-					if (this->GetPT() == PROJECTILETYPE::KNIFE)
-					{
-						tempE->Hit(this->GetDamage(), this);
-					}
-					else
-					{
-						tempE->Hit(this->GetDamage());
-						isNeedDestroy = true;
-					}
+					tempE->Hit(this->GetDamage(), this);
+				}
+				else
+				{
+					tempE->Hit(this->GetDamage());
+					isNeedDestroy = true;
 				}
 			}
 		}
+
 	}
 }

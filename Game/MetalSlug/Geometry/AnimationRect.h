@@ -21,7 +21,6 @@ public:
 	Matrix GetRMatrix() { return R; }
 	Matrix GetTMatrix() { return T; }
 
-	Vector3 GetPointPos() { return position + (size / 2); }
 	Vector3 GetScale() { return size; }
 	Vector3 Right() { return right; }
 	Vector3 Up() { return up; }

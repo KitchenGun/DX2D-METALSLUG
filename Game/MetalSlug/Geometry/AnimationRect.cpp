@@ -107,6 +107,7 @@ AnimationRect::AnimationRect(Vector3 position, Vector3 size, float rotation)
 		ASSERT(hr);
 	}
 
+	TransformVertices();
 }
 
 AnimationRect::~AnimationRect()
@@ -131,6 +132,9 @@ void AnimationRect::Update()
 {
 	animator->Update();
 
+	right = Vector3((int)R._11, (int)R._12, (int)R._13);
+	up = Vector3((int)R._21, (int)R._22, (int)R._23);
+
 	D3D11_MAPPED_SUBRESOURCE subResource;
 	DC->Map(VB->GetResource(), 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
 	{
@@ -148,9 +152,9 @@ void AnimationRect::Update()
 		memcpy(subResource.pData, vertices.data(), sizeof(VertexTexture) * vertices.size());
 		/*
 			cout <<" X:" << animator->GetCurrentFrame().x<<" Y:"<< animator->GetCurrentFrame().y << endl;
-			를 통해서 uv 값의 변화 
+			를 통해서 uv 값의 변화
 			정방향일때 uv = 0 반대 일때 uv = 0.5
-			x값은 0~1사이로 계속 변화함 
+			x값은 0~1사이로 계속 변화함
 			animator->GetTexelFrameSize() == 출력할 이미지 한장당 클래스의 변화 비율을 가지고 있음 ex)0.1이런식의 값을 가지고 있음
 		*/
 	}
@@ -195,6 +199,7 @@ void AnimationRect::Rotation(float rotation)
 
 	world = S * R * T;
 	WB->SetWorld(world);
+	TransformVertices();
 }
 
 void AnimationRect::TransformVertices()
@@ -210,6 +215,12 @@ void AnimationRect::TransformVertices()
 	(
 		&r.RB,
 		&vertices[2].position,
+		&world
+	);
+	D3DXVec3TransformCoord//정점 이동
+	(
+		&r.Point,
+		&(vertices[0].position + Vector3(0.5f, 0.5f, 0)),
 		&world
 	);
 }

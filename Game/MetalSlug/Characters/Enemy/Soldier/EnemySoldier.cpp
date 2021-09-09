@@ -60,10 +60,10 @@ void EnemySoldier::SetAnimation()
 	if (enemyType == ENEMYTYPE::Grenadier)
 	{
 		//IDLE
-		texture = new Texture2D(L"./_Textures/EnemySoldier/Idle/LIdle.png");
+		texture = new Texture2D(L"./_Textures/TestBox.png");///"Idle/LIdle.png");
 		animClips.push_back(new AnimationClip(L"LIdle", texture, 4, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 		//»ç¸Á
-		texture = new Texture2D(L"./_Textures/EnemySoldier/Die/LDie.png");
+		texture = new Texture2D(L"./_Textures/TestBox.png");//(L"./_Textures/EnemySoldier/Die/LDie.png");
 		animClips.push_back(new AnimationClip(L"LDie", texture, 11, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	}
 
@@ -83,7 +83,7 @@ void EnemySoldier::SetClip()
 			}
 			else if(dir == DIRECTION::LEFT)
 			{
-				texture = new Texture2D(L"./_Textures/EnemySoldier/Idle/LIdle.png");
+				texture = new Texture2D(L"./_Textures/TestBox.png");//new Texture2D(L"./_Textures/EnemySoldier/Idle/LIdle.png");
 				animator->SetCurrentAnimClip(L"LIdle");
 			}
 			break;
@@ -97,7 +97,7 @@ void EnemySoldier::SetClip()
 			}
 			else if (dir == DIRECTION::LEFT)
 			{
-				texture = new Texture2D(L"./_Textures/EnemySoldier/Die/LDie.png");
+				texture = new Texture2D(L"./_Textures/TestBox.png"); //new Texture2D(L"./_Textures/EnemySoldier/Die/LDie.png");
 				animator->SetCurrentAnimClip(L"LDie");
 			}
 			break;

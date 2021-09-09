@@ -162,6 +162,7 @@
     <ClCompile Include="Characters\Player\SoldierLower.cpp" />
     <ClCompile Include="Characters\Player\SoldierUpper.cpp" />
     <ClCompile Include="Characters\Projectile\Bullet\Bullet.cpp" />
+    <ClCompile Include="Characters\Projectile\Grenade\Grenade.cpp" />
     <ClCompile Include="Characters\Projectile\Manager\ProjectileManager.cpp" />
     <ClCompile Include="Characters\Projectile\Projectile.cpp" />
     <ClCompile Include="Geometry\AnimationRect.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="Characters\Player\SoldierLower.h" />
     <ClInclude Include="Characters\Player\SoldierUpper.h" />
     <ClInclude Include="Characters\Projectile\Bullet\Bullet.h" />
+    <ClInclude Include="Characters\Projectile\Grenade\Grenade.h" />
     <ClInclude Include="Characters\Projectile\Manager\ProjectileManager.h" />
     <ClInclude Include="Characters\Projectile\Projectile.h" />
     <ClInclude Include="Geometry\AnimationRect.h" />

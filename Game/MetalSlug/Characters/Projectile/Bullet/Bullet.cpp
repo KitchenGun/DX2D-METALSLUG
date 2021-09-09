@@ -29,8 +29,8 @@ Bullet::Bullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PR
 	break;
 	case PROJECTILETYPE::HEAVY:
 		Damage = 1;
-		Speed = 1500;
-		texture = new Texture2D(L"./_Textures/SFX/Weapon/NormalBullet.png");
+		Speed = 100000;
+		texture = new Texture2D(L"./_Textures/TestBox.png");//new Texture2D(L"./_Textures/SFX/Weapon/NormalBullet.png");
 		animator->SetCurrentAnimClip(L"NormalBullet");
 		break;
 	default:
@@ -45,15 +45,16 @@ Bullet::~Bullet()
 
 void Bullet::Update()
 {
-	Projectile::Update();
-	if (rotation != 0|| rotation!=180||rotation)
+	if (rotation != 0 || rotation != 180)
 	{
-		Move(Speed *Vector3(cosf(D3DXToRadian(rotation)), sinf(D3DXToRadian(rotation)), 0));
+		Move(Speed * Vector3(cosf(D3DXToRadian(rotation)) * Time::Delta(), sinf(D3DXToRadian(rotation)) * Time::Delta(), 0));
 	}
 	else if (Dir == DIRECTION::RIGHT)
-		Move(Vector3(Speed, 0, 0));
+		Move(Vector3(Speed * Time::Delta(), 0, 0));
 	else if(Dir==DIRECTION::LEFT)
-		Move(Vector3(-Speed, 0, 0));
+		Move(Vector3(-Speed * Time::Delta(), 0, 0));
+
+	Projectile::Update();
 }
 
 void Bullet::Render()

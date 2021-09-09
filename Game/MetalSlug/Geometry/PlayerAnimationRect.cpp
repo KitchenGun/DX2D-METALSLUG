@@ -57,9 +57,7 @@ PlayerAnimationRect::PlayerAnimationRect(Vector3 position, Vector3 size, float r
 	D3DXMatrixTranslation(&T, position.x, position.y, position.z);
 
 	world = S * R * T;
-
 	WB->SetWorld(world);
-	TransformVertices();
 	//Create BlnedState//현재는 기능이 없음
 	{
 		D3D11_BLEND_DESC desc;
@@ -83,6 +81,7 @@ PlayerAnimationRect::PlayerAnimationRect(Vector3 position, Vector3 size, float r
 		//색상결정에 대한 계산식 float4 color =(src*srcblend) Blend op (des*destblend)
 		HRESULT hr = DEVICE->CreateBlendState(&desc, &BS);
 		ASSERT(hr);
+		TransformVertices();
 	}
 
 	//Create SamplerState//텍스쳐를 uv에 맞게 바꾸는 과정
@@ -134,7 +133,7 @@ void PlayerAnimationRect::Update()
 	
 	right = Vector3(R._11, R._12, R._13);
 	up = Vector3(R._21, R._22, R._23);
-
+	
 	D3D11_MAPPED_SUBRESOURCE subResource;
 	DC->Map(VB->GetResource(), 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
 	{

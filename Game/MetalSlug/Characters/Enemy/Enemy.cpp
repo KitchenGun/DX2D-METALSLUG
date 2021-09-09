@@ -114,7 +114,6 @@ void Enemy::Hit(DAMAGE val,Projectile* tempProjectile)
 	static Projectile *PrevTemp;
 	Projectile *NowTemp;
 	NowTemp = tempProjectile;
-	cout << EnemyHP << endl;
 	
 	if (tempProjectile == nullptr)
 	{
@@ -125,7 +124,6 @@ void Enemy::Hit(DAMAGE val,Projectile* tempProjectile)
 	if (NowTemp!=PrevTemp)
 	{
 		EnemyHP -= val;
-		cout << EnemyHP << endl;
 	}
 	PrevTemp = NowTemp;
 	
