@@ -5,22 +5,25 @@
 Grenade::Grenade(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT, EnemyManager* EnemyM)
 	:Projectile(position,size,rotation,dir,BT)
 {
+	SetEM(EnemyM);
+	texture = new Texture2D(L"./_Textures/SFX/Weapon/RGrenade.png");
+	animClips.push_back(new AnimationClip(L"RGrenade", texture, 16, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/SFX/Weapon/LGrenade.png");
+	animClips.push_back(new AnimationClip(L"LGrenade", texture, 16, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	animator = new Animator(animClips);
+	StartPos = position;
 	if (Dir == DIRECTION::RIGHT)
 	{
-		Angle = D3DXToRadian(45);
+		Angle = (float)D3DXToRadian(45);
+		texture = new Texture2D(L"./_Textures/SFX/Weapon/RGrenade.png");
+		animator->SetCurrentAnimClip(L"RGrenade",false);
 	}
 	else if (Dir == DIRECTION::LEFT)
 	{
-		Angle = D3DXToRadian(135);
+		Angle = (float)D3DXToRadian(135);
+		texture = new Texture2D(L"./_Textures/SFX/Weapon/LGrenade.png");
+		animator->SetCurrentAnimClip(L"LGrenade", false);
 	}
-	SetEM(EnemyM);
-	texture = new Texture2D(L"./_Textures/SFX/Weapon/RGrenade.png");
-	animClips.push_back(new AnimationClip(L"NormalBullet", texture, 16, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
-	texture = new Texture2D(L"./_Textures/SFX/Weapon/LGrenade.png");
-	animClips.push_back(new AnimationClip(L"TestBox", texture, 16, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
-	animator = new Animator(animClips);
-	animator->playRate = animationRate;
-	StartPos = position;
 }
 
 Grenade::~Grenade()
@@ -33,6 +36,15 @@ void Grenade::Update()
 	ThrowingTime += Time::Delta();
 	Projectile::Update();
 	Move();
+	if (GroundList.size() > 0)
+	{
+		if (Math::GroundIntersect(this, GroundList))
+		{
+			StartPos = position;
+			Speed -= 60;
+			ThrowingTime = 0;
+		}
+	}
 }
 
 void Grenade::Render()

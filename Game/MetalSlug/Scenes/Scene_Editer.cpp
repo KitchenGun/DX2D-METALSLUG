@@ -21,10 +21,11 @@ void Editer::Init()
 	player = new Player(Vector3(50 * 4, 500, 0), Vector3(30 * 3, 40 * 3, 1), 0);
 	//ground
 	InputGround();
-	object = new Rock1(Vector3(300, 150, 0), Vector3(64 * 4, 45 * 4, 1), 0);
-	object->SetTarget(player);
+	//object = new Rock1(Vector3(300, 150, 0), Vector3(64 * 4, 45 * 4, 1), 0);
+	//object->SetTarget(player);
 	//manager
 	PlayerPM = new ProjectileManager();
+	PlayerPM->SetGroundList(GroundList);
 	player->SetPM(PlayerPM);
 	EnemyM = new EnemyManager();
 	EnemyM->SetGroundList(GroundList);
@@ -46,7 +47,7 @@ void Editer::Update()
 		//player->SetisGround(false);
 		player->SetisGround(Math::GroundIntersect(player, GroundList));
 	}
-	object->Update();
+	//object->Update();
 
 	player->Update();
 	for (Ground* tempGround : GroundList)
@@ -68,7 +69,7 @@ void Editer::Render()
 {//랜더 순서 명확하게하기
 
 	Map->Render();
-	object->Render();
+	//object->Render();
 	//manager
 	PlayerPM->Render();
 	EnemyM->Render();
