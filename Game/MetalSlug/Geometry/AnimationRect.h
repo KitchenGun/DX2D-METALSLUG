@@ -7,7 +7,7 @@ class AnimationRect
 {
 public:
 	AnimationRect(Vector3 position, Vector3 size, float rotation);
-	~AnimationRect();
+	virtual ~AnimationRect();
 
 	virtual void Update();
 	virtual void Render();

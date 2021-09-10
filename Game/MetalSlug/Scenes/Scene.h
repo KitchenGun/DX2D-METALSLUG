@@ -23,6 +23,7 @@
 //≈ıªÁ√º
 #include "Characters/Projectile/Projectile.h"
 #include "Characters/Projectile/Bullet/Bullet.h"
+#include "Characters/Projectile/Grenade/Grenade.h"
 
 //object
 #include "Characters/Object/Object.h"

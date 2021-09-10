@@ -12,6 +12,7 @@ Projectile::Projectile(Vector3 position, Vector3 size, float rotation, DIRECTION
 Projectile::~Projectile()
 {
 	AnimationRect::~AnimationRect();
+	SAFE_DELETE(EM);
 }
 
 void Projectile::Update()

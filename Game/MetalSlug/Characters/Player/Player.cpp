@@ -163,10 +163,11 @@ void Player::Input()
 			}
 		}
 	}
-	static float deltaTime = 0.0f;
+	static float fireDeltaTime = 0.0f;
+	static float ThrowDeltaTime = 0.0f;
 	if (Keyboard::Get()->Down('A'))
 	{
-		if(deltaTime > fireRate)//일정 시간 마다 실행하여 그림 변경 함 
+		if(fireDeltaTime > fireRate)//일정 시간 마다 실행하여 
 		{
 			//칼질
 			if (!isKnife)
@@ -215,12 +216,12 @@ void Player::Input()
 				default:
 					break;
 				}
-				deltaTime = 0;
+				fireDeltaTime = 0;
 			}
 		}
 	}
 	else//작동환경과 상관없이 일정하게 맞춰준다
-		deltaTime += Time::Delta();
+		fireDeltaTime += Time::Delta();
 
 	
 	//점프
@@ -233,7 +234,16 @@ void Player::Input()
 		}
 	}
 	//수류탄
-
+	if (Keyboard::Get()->Down('D'))
+	{
+		if (fireDeltaTime > fireRate)//일정 시간 마다 실행하여 //fireRate를 사용해서 연속 던지기 구현
+		{
+			ThrowCount++;
+			Grenade();
+		}
+		else
+			ThrowDeltaTime += Time::Delta();
+	}
 
 	//상하
 	if (isFirstHandUp)
@@ -756,6 +766,11 @@ void Player::Fire(bool isFirstHandUp,bool isFirstCrouchJump)
 	default:
 		break;
 	}
+}
+
+void Player::Grenade()
+{
+	PM->AddGrenade(firePos.Pos, Vector3(19 * IMGsize, 19 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::Grenade);
 }
 
 void Player::Jump()

@@ -7,6 +7,7 @@ ProjectileManager::ProjectileManager()
 
 ProjectileManager::~ProjectileManager()
 {
+	SAFE_DELETE(EM);
 	for (Projectile* tempProjectile : projectileList)
 	{
 		SAFE_DELETE(tempProjectile);
@@ -51,6 +52,13 @@ void ProjectileManager::AddBullet(Vector3 position, Vector3 size, float rotation
 	Bullet* tempBullet = new Bullet(position, size, rotation, dir, BT, EM);
 	projectileList.push_back(tempBullet);
 }
+
+void ProjectileManager::AddGrenade(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT)
+{
+	Grenade* tempGrenade = new Grenade(position, size, rotation, dir, BT, EM);
+	projectileList.push_back(tempGrenade);
+}
+
 
 void ProjectileManager::RemoveProjectile(Projectile* Target)
 {

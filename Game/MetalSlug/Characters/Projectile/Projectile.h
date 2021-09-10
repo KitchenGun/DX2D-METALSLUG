@@ -4,7 +4,7 @@ class Projectile : public AnimationRect
 {
 public:
 	Projectile(Vector3 position, Vector3 size, float rotation, DIRECTION dir,PROJECTILETYPE BT);
-	~Projectile();
+	virtual ~Projectile();
 public:
 	virtual void Update() override;
 	virtual void Render() override;

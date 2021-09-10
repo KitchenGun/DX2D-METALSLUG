@@ -7,7 +7,8 @@ enum class PROJECTILETYPE
 	NONE = 0,
 	KNIFE,
 	PISTOL,
-	HEAVY
+	HEAVY,
+	Grenade
 };
 
 struct OBBInfo
@@ -82,6 +83,7 @@ public://»ý¼ºÀÚ ¼Ò¸êÀÚ update render
 	
 	void Knife();
 	void Fire(bool isFirstHandUp, bool isFirstCrouchJump);
+	void Grenade();
 	void Jump();
 	void MoveFirePos(bool isFirstHandUp, bool isFirstCrouchJump);
 	void ColliderSizeChange(bool isSmall);
@@ -160,4 +162,10 @@ private:
 	EnemyManager* EM;
 	const float KnifeRange = 45 * IMGsize;
 	bool isKnife = false;
+	//¼ö·ùÅº
+	bool isThrow = false;
+	int ThrowCount = 0;
+	float ThrowRate = 1 / 10.0f;
+	bool isCoolTime = false;
+
 };
