@@ -234,6 +234,13 @@ void Player::Input()
 		}
 	}
 	//수류탄
+	if (isThrow)
+	{
+		if (!upperBodyAnimator->isFirstPlay)
+		{
+			isThrow = false;
+		}
+	}
 	if (Keyboard::Get()->Down('D'))
 	{
 		if (fireDeltaTime > fireRate)//일정 시간 마다 실행하여 //fireRate를 사용해서 연속 던지기 구현
@@ -321,6 +328,42 @@ void Player::Input()
 
 	//좌우
 	if (isCrouch && isAtk)
+	{
+		
+		//앉아서 공격하는 상황에서는 이동을 처리안하기 위해서 사용함
+		if (!isGround)
+			{
+				if (Keyboard::Get()->Press(VK_RIGHT))//우측 입력
+				{
+					if (BlockDir != DIRECTION::RIGHT)
+					{
+						Move(Vector3(PlayerSpeed, 0, 0));
+					}
+					if (isGround)
+					{
+						dir = DIRECTION::RIGHT;
+						isMove = true;
+					}
+				}
+				else if (Keyboard::Get()->Press(VK_LEFT))//좌측 입력
+				{
+					if (BlockDir != DIRECTION::LEFT)
+					{
+						Move(Vector3(-PlayerSpeed, 0, 0));
+					}
+					if (isGround)
+					{
+						dir = DIRECTION::LEFT;
+						isMove = true;
+					}
+				}
+				else
+				{
+					isMove = false;
+				}
+			}
+	}
+	else if (isCrouch && isThrow)
 	{
 		//앉아서 공격하는 상황에서는 이동을 처리안하기 위해서 사용함
 		if (!isGround)
@@ -486,6 +529,10 @@ void Player::Input()
 				soldierUpperState = SOLDIERSTATE::CROUCHATK;
 			}
 		}
+		else if (isThrow)
+		{//앉아서 움직이는 상태
+			soldierUpperState = SOLDIERSTATE::CROUCHTHROW;
+		}
 		else if (isMove)
 		{//앉아서 움직이는 상태
 			soldierUpperState = SOLDIERSTATE::CROUCHMOVE;
@@ -529,6 +576,27 @@ void Player::Input()
 			{
 				soldierUpperState = SOLDIERSTATE::UPSIDE;
 			}
+		}
+	}
+	else if (isThrow)
+	{
+		if (isCrouch)
+		{
+			if (!isGround)
+			{
+				upperBody->SetClip("CrouchThrow");
+				soldierUpperState = SOLDIERSTATE::CROUCHTHROW;
+			}
+			else
+			{
+				upperBody->SetClip("Throw");
+				soldierUpperState = SOLDIERSTATE::THROW;
+			}
+		}
+		else
+		{
+			upperBody->SetClip("Throw");
+			soldierUpperState = SOLDIERSTATE::THROW;
 		}
 	}
 	else
@@ -770,6 +838,50 @@ void Player::Fire(bool isFirstHandUp,bool isFirstCrouchJump)
 
 void Player::Grenade()
 {
+	isThrow = true;
+	if (upperBody->GetisPistol())
+	{
+		if (isCrouch)
+		{
+			if (!isGround)
+			{
+				upperBody->SetClip("Throw", true);
+				soldierUpperState = SOLDIERSTATE::THROW;
+			}
+			else
+			{
+				upperBody->SetClip("CrouchThrow", true);
+				soldierUpperState = SOLDIERSTATE::CROUCHTHROW;
+			}
+		}
+		else
+		{
+			upperBody->SetClip("Throw", true);
+			soldierUpperState = SOLDIERSTATE::THROW;
+		}
+	}
+	else
+	{
+		if (isCrouch)
+		{
+			if (!isGround)
+			{
+				upperBody->SetClip("Throw", true);
+				soldierUpperState = SOLDIERSTATE::THROW;
+			}
+			else
+			{
+				upperBody->SetClip("CrouchThrow", true);
+				soldierUpperState = SOLDIERSTATE::CROUCHTHROW;
+			}
+		}
+		else
+		{
+			upperBody->SetClip("Throw", true);
+			soldierUpperState = SOLDIERSTATE::THROW;
+		}
+		
+	}
 	PM->AddGrenade(firePos.Pos, Vector3(19 * IMGsize, 19 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::Grenade);
 }
 
@@ -873,6 +985,63 @@ void Player::MoveFirePos(bool isFirstHandUp, bool isFirstCrouchJump)
 	}
 	else
 	{
+		//투척 관련
+		if (isHandUp)
+		{
+			if (dir == DIRECTION::LEFT)
+			{
+				firePos.Pos = position + Vector3(11 * IMGsize, 55 * IMGsize, 0);
+				firePos.Rotation = 90.0f;
+			}
+			else if (dir == DIRECTION::RIGHT)
+			{
+				firePos.Pos = position + Vector3(12 * IMGsize, 55 * IMGsize, 0);
+				firePos.Rotation = 90.0f;
+			}
+		}
+		else if (isCrouch)
+		{
+			if (!isGround)
+			{
+				if (dir == DIRECTION::LEFT)
+				{
+					firePos.Pos = position + Vector3(10 * IMGsize, 6 * IMGsize, 0);
+					firePos.Rotation = -90.0f;
+				}
+				else if (dir == DIRECTION::RIGHT)
+				{
+					firePos.Pos = position + Vector3(12 * IMGsize, 6 * IMGsize, 0);
+					firePos.Rotation = -90.0f;
+				}
+			}
+			else
+			{
+				if (dir == DIRECTION::LEFT)
+				{
+					firePos.Rotation = 180.0f;
+					firePos.Pos = position + Vector3(-10 * IMGsize, 17 * IMGsize, 0);
+				}
+				else if (dir == DIRECTION::RIGHT)
+				{
+					firePos.Rotation = 0.0f;
+					firePos.Pos = position + Vector3(37 * IMGsize, 17 * IMGsize, 0);
+				}
+			}
+		}
+		else
+		{
+			if (dir == DIRECTION::LEFT)
+			{
+				firePos.Rotation = 180.0f;
+				firePos.Pos = position + Vector3(-10 * IMGsize, 27 * IMGsize, 0);
+			}
+			else if (dir == DIRECTION::RIGHT)
+			{
+				firePos.Rotation = 0.0f;
+				firePos.Pos = position + Vector3(37 * IMGsize, 27 * IMGsize, 0);
+			}
+		}
+		//사격 관련
 		switch (soldierUpperState)
 		{
 		case SOLDIERSTATE::UPSIDEATKSTART:
@@ -972,6 +1141,18 @@ void Player::MoveFirePos(bool isFirstHandUp, bool isFirstCrouchJump)
 				firePos.Pos = position + Vector3(38 * IMGsize, 19 * IMGsize, 0);
 			}
 			break;
+		case SOLDIERSTATE::IDLE:
+			if (dir == DIRECTION::LEFT)
+			{
+				firePos.Rotation = 180.0f;
+				firePos.Pos = position + Vector3(-15 * IMGsize, 19 * IMGsize, 0);
+			}
+			else if (dir == DIRECTION::RIGHT)
+			{
+				firePos.Rotation = 0.0f;
+				firePos.Pos = position + Vector3(38 * IMGsize, 19 * IMGsize, 0);
+			}
+			break;
 		default:
 			break;
 		}
@@ -1037,6 +1218,9 @@ void Player::SetUpperAni()
 		case SOLDIERSTATE::KNIFEATK:
 			upperBody->SetClip("KnifeATK");
 			break;
+		case SOLDIERSTATE::THROW:
+			upperBody->SetClip("Throw");
+			break;
 		case SOLDIERSTATE::CROUCHIDLE:
 			upperBody->SetClip("CrouchIdle");
 			break;
@@ -1045,6 +1229,9 @@ void Player::SetUpperAni()
 			break;
 		case SOLDIERSTATE::CROUCHKNIFEATK:
 			upperBody->SetClip("CrouchKnifeATK");
+			break;
+		case SOLDIERSTATE::CROUCHTHROW:
+			upperBody->SetClip("CrouchThrow");
 			break;
 		case SOLDIERSTATE::CROUCHJUMP:
 			upperBody->SetClip("CrouchJump");

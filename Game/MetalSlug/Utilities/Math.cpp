@@ -92,7 +92,6 @@ bool Math::OBBIntersect(PlayerAnimationRect* r1, AnimationRect* r2)
 	float b = r1->GetScale().x * 0.5f;
 	if (c > a + b)
 	{
-		cout << "1" << endl;
 		return false;
 	}
 	//두번재 조건 : r1->Up()가 임의의 축
@@ -101,7 +100,6 @@ bool Math::OBBIntersect(PlayerAnimationRect* r1, AnimationRect* r2)
 	b = r1->GetScale().y * 0.5f;
 	if (c > a + b)
 	{
-		cout << "2" << endl;
 		return false;
 	}
 	//세번째 조건 : r2->Right()가 임의의 축
@@ -110,7 +108,6 @@ bool Math::OBBIntersect(PlayerAnimationRect* r1, AnimationRect* r2)
 	b = r2->GetScale().x * 0.5f;
 	if (c > a + b) 
 	{
-		cout << "3" << endl;
 		return false;
 	}
 	//네번째 조건 : r2->Up()가 임의의 축
@@ -119,7 +116,6 @@ bool Math::OBBIntersect(PlayerAnimationRect* r1, AnimationRect* r2)
 	b = r2->GetScale().y * 0.5f;
 	if (c > a + b)
 	{
-		cout << "4" << endl;
 		return false;
 	}
 

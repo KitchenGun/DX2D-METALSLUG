@@ -19,5 +19,8 @@ private:
 	float Gravity = 2300.0f;
 	float animationRate = 1 / 10.0f;
 	Vector3 StartPos;
+	bool isHit = false;
+	//Áö¸é
+	int GroundIntersectCount = 0;
 	vector<Ground*> GroundList;
 };

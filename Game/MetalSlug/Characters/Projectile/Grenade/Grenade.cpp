@@ -40,9 +40,14 @@ void Grenade::Update()
 	{
 		if (Math::GroundIntersect(this, GroundList))
 		{
+			GroundIntersectCount++;
 			StartPos = position;
 			Speed -= 60;
 			ThrowingTime = 0;
+			if (GroundIntersectCount == 2)
+			{
+				isHit = true;
+			}
 		}
 	}
 }
