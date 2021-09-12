@@ -917,7 +917,7 @@ void SoldierUpper::SetClip(string name,bool isRestart)
 		}
 		else if (name == "Throw")
 		{
-			SetSize(Vector3(34 * player->GetSize(), 30 * player->GetSize(), 1));
+			SetSize(Vector3(45 * player->GetSize(), 30 * player->GetSize(), 1));
 			animator->bLoop = false;
 			if (player->GetDir() == DIRECTION::RIGHT)
 			{
@@ -932,7 +932,7 @@ void SoldierUpper::SetClip(string name,bool isRestart)
 		}
 		else if (name == "CrouchThrow")
 		{
-			SetSize(Vector3(44 * player->GetSize(), 28 * player->GetSize(), 1));
+			SetSize(Vector3(44 * player->GetSize(), 36 * player->GetSize(), 1));
 			animator->bLoop = false;
 			if (player->GetDir() == DIRECTION::RIGHT)
 			{
@@ -1109,7 +1109,7 @@ void SoldierUpper::PivotUpdate()
 				}
 				else if (player->GetDir() == DIRECTION::LEFT)
 				{
-					SetPos(player->GetPosition() + Vector3(-26 * player->GetSize(), 10 * player->GetSize(), 0));
+					SetPos(player->GetPosition() + Vector3(-26 * player->GetSize(), 12 * player->GetSize(), 0));
 				}
 				break;
 			case SOLDIERSTATE::JUMP:
@@ -1119,7 +1119,7 @@ void SoldierUpper::PivotUpdate()
 				}
 				else if (player->GetDir() == DIRECTION::LEFT)
 				{
-					SetPos(player->GetPosition() + Vector3(-28 * player->GetSize(), 10 * player->GetSize(), 0));
+					SetPos(player->GetPosition() + Vector3(-28 * player->GetSize(), 16 * player->GetSize(), 0));
 				}
 				break;
 			case SOLDIERSTATE::JUMPMOVE:
@@ -1129,7 +1129,7 @@ void SoldierUpper::PivotUpdate()
 				}
 				else if (player->GetDir() == DIRECTION::LEFT)
 				{
-					SetPos(player->GetPosition() + Vector3(-30 * player->GetSize(), 12 * player->GetSize(), 0));
+					SetPos(player->GetPosition() + Vector3(-26 * player->GetSize(), 12 * player->GetSize(), 0));
 				}
 				break;
 			default:
@@ -1138,16 +1138,16 @@ void SoldierUpper::PivotUpdate()
 		}
 		else if (player->GetUpperState() == SOLDIERSTATE::THROW)
 		{
-		switch (player->GetLowerState())
+			switch (player->GetLowerState())
 		{
 		case SOLDIERSTATE::IDLE:
 			if (player->GetDir() == DIRECTION::RIGHT)
 			{
-				SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), 10 * player->GetSize(), 0));
+				SetPos(player->GetPosition() + Vector3(-2 * player->GetSize(), 10 * player->GetSize(), 0));
 			}
 			else if (player->GetDir() == DIRECTION::LEFT)
 			{
-				SetPos(player->GetPosition() + Vector3(-28 * player->GetSize(), 10 * player->GetSize(), 0));
+				SetPos(player->GetPosition() + Vector3(-10 * player->GetSize(), 10 * player->GetSize(), 0));
 			}
 			break;
 		case SOLDIERSTATE::MOVE:
@@ -1157,7 +1157,7 @@ void SoldierUpper::PivotUpdate()
 			}
 			else if (player->GetDir() == DIRECTION::LEFT)
 			{
-				SetPos(player->GetPosition() + Vector3(-26 * player->GetSize(), 10 * player->GetSize(), 0));
+				SetPos(player->GetPosition() + Vector3(-10 * player->GetSize(), 12 * player->GetSize(), 0));
 			}
 			break;
 		case SOLDIERSTATE::JUMP:
@@ -1167,7 +1167,7 @@ void SoldierUpper::PivotUpdate()
 			}
 			else if (player->GetDir() == DIRECTION::LEFT)
 			{
-				SetPos(player->GetPosition() + Vector3(-28 * player->GetSize(), 10 * player->GetSize(), 0));
+				SetPos(player->GetPosition() + Vector3(-10 * player->GetSize(), 16 * player->GetSize(), 0));
 			}
 			break;
 		case SOLDIERSTATE::JUMPMOVE:
@@ -1177,7 +1177,7 @@ void SoldierUpper::PivotUpdate()
 			}
 			else if (player->GetDir() == DIRECTION::LEFT)
 			{
-				SetPos(player->GetPosition() + Vector3(-30 * player->GetSize(), 12 * player->GetSize(), 0));
+				SetPos(player->GetPosition() + Vector3(-10 * player->GetSize(), 12 * player->GetSize(), 0));
 			}
 			break;
 		default:
@@ -1284,14 +1284,14 @@ void SoldierUpper::PivotUpdate()
 		}
 		else if (player->GetUpperState() == SOLDIERSTATE::CROUCHTHROW)
 		{
-		if (player->GetDir() == DIRECTION::RIGHT)
-		{
-			SetPos(player->GetPosition() + Vector3(2 * player->GetSize(), 0 * player->GetSize(), 0));
-		}
-		else if (player->GetDir() == DIRECTION::LEFT)
-		{
-			SetPos(player->GetPosition() + Vector3(-30 * player->GetSize(), 0 * player->GetSize(), 0));
-		}
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				SetPos(player->GetPosition() + Vector3(-1 * player->GetSize(), 0 * player->GetSize(), 0));
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				SetPos(player->GetPosition() + Vector3(-20 * player->GetSize(), 0 * player->GetSize(), 0));
+			}
 		}
 	}
 	else
@@ -1529,7 +1529,7 @@ void SoldierUpper::PivotUpdate()
 			case SOLDIERSTATE::JUMP:
 				if (player->GetDir() == DIRECTION::RIGHT)
 				{
-					SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), 16 * player->GetSize(), 0));
+					SetPos(player->GetPosition() + Vector3(-7 * player->GetSize(), 10 * player->GetSize(), 0));
 				}
 				else if (player->GetDir() == DIRECTION::LEFT)
 				{
@@ -1539,11 +1539,11 @@ void SoldierUpper::PivotUpdate()
 			case SOLDIERSTATE::JUMPMOVE:
 				if (player->GetDir() == DIRECTION::RIGHT)
 				{
-					SetPos(player->GetPosition() + Vector3(8 * player->GetSize(), 12 * player->GetSize(), 0));
+					SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), 5 * player->GetSize(), 0));
 				}
 				else if (player->GetDir() == DIRECTION::LEFT)
 				{
-					SetPos(player->GetPosition() + Vector3(-30 * player->GetSize(), 12 * player->GetSize(), 0));
+					SetPos(player->GetPosition() + Vector3(-26 * player->GetSize(), 5 * player->GetSize(), 0));
 				}
 				break;
 			default:
@@ -1561,7 +1561,7 @@ void SoldierUpper::PivotUpdate()
 				}
 				else if (player->GetDir() == DIRECTION::LEFT)
 				{
-					SetPos(player->GetPosition() + Vector3(-28 * player->GetSize(), 10 * player->GetSize(), 0));
+					SetPos(player->GetPosition() + Vector3(-25 * player->GetSize(), 10 * player->GetSize(), 0));
 				}
 				break;
 			case SOLDIERSTATE::MOVE:
@@ -1571,7 +1571,7 @@ void SoldierUpper::PivotUpdate()
 				}
 				else if (player->GetDir() == DIRECTION::LEFT)
 				{
-					SetPos(player->GetPosition() + Vector3(-26 * player->GetSize(), 10 * player->GetSize(), 0));
+					SetPos(player->GetPosition() + Vector3(-22 * player->GetSize(), 12 * player->GetSize(), 0));
 				}
 				break;
 			case SOLDIERSTATE::JUMP:
@@ -1581,17 +1581,17 @@ void SoldierUpper::PivotUpdate()
 				}
 				else if (player->GetDir() == DIRECTION::LEFT)
 				{
-					SetPos(player->GetPosition() + Vector3(-28 * player->GetSize(), 10 * player->GetSize(), 0));
+					SetPos(player->GetPosition() + Vector3(-22 * player->GetSize(), 16 * player->GetSize(), 0));
 				}
 				break;
 			case SOLDIERSTATE::JUMPMOVE:
 				if (player->GetDir() == DIRECTION::RIGHT)
 				{
-					SetPos(player->GetPosition() + Vector3(8 * player->GetSize(), 12 * player->GetSize(), 0));
+					SetPos(player->GetPosition() + Vector3(8 * player->GetSize(), 15 * player->GetSize(), 0));
 				}
 				else if (player->GetDir() == DIRECTION::LEFT)
 				{
-					SetPos(player->GetPosition() + Vector3(-30 * player->GetSize(), 12 * player->GetSize(), 0));
+					SetPos(player->GetPosition() + Vector3(-20 * player->GetSize(), 15 * player->GetSize(), 0));
 				}
 				break;
 			default:
@@ -1766,11 +1766,11 @@ void SoldierUpper::PivotUpdate()
 		{
 		if (player->GetDir() == DIRECTION::RIGHT)
 		{
-			SetPos(player->GetPosition() + Vector3(2 * player->GetSize(), 0 * player->GetSize(), 0));
+			SetPos(player->GetPosition() + Vector3(-2 * player->GetSize(), 0 * player->GetSize(), 0));
 		}
 		else if (player->GetDir() == DIRECTION::LEFT)
 		{
-			SetPos(player->GetPosition() + Vector3(-30 * player->GetSize(), 0 * player->GetSize(), 0));
+			SetPos(player->GetPosition() + Vector3(-8 * player->GetSize(), 0 * player->GetSize(), 0));
 		}
 		}
 	}

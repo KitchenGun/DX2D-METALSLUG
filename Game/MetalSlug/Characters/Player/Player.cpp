@@ -240,17 +240,24 @@ void Player::Input()
 		{
 			isThrow = false;
 		}
-	}
-	if (Keyboard::Get()->Down('D'))
-	{
-		if (fireDeltaTime > fireRate)//일정 시간 마다 실행하여 //fireRate를 사용해서 연속 던지기 구현
+		if (isAtk)
 		{
-			ThrowCount++;
-			Grenade();
+			isThrow = false;
 		}
-		else
-			ThrowDeltaTime += Time::Delta();
 	}
+	else if (Keyboard::Get()->Down('D'))
+	{
+		if (!isAtk)
+		{
+			if (ThrowDeltaTime > ThrowRate)//일정 시간 마다 실행하여 //fireRate를 사용해서 연속 던지기 구현
+			{
+				ThrowCount++;
+				Grenade();
+			}
+		}
+	}
+	else
+		ThrowDeltaTime += Time::Delta();
 
 	//상하
 	if (isFirstHandUp)
@@ -578,27 +585,6 @@ void Player::Input()
 			}
 		}
 	}
-	else if (isThrow)
-	{
-		if (isCrouch)
-		{
-			if (!isGround)
-			{
-				upperBody->SetClip("CrouchThrow");
-				soldierUpperState = SOLDIERSTATE::CROUCHTHROW;
-			}
-			else
-			{
-				upperBody->SetClip("Throw");
-				soldierUpperState = SOLDIERSTATE::THROW;
-			}
-		}
-		else
-		{
-			upperBody->SetClip("Throw");
-			soldierUpperState = SOLDIERSTATE::THROW;
-		}
-	}
 	else
 	{//idle 상태
 		if (isAtk)
@@ -617,7 +603,27 @@ void Player::Input()
 			soldierUpperState = SOLDIERSTATE::IDLE;
 		}
 	}
-
+	if (isThrow)
+	{
+		if (isCrouch)
+		{
+			if (!isGround)
+			{
+				upperBody->SetClip("Throw");
+				soldierUpperState = SOLDIERSTATE::THROW;
+			}
+			else
+			{
+				upperBody->SetClip("CrouchThrow");
+				soldierUpperState = SOLDIERSTATE::CROUCHTHROW;
+			}
+		}
+		else
+		{
+			upperBody->SetClip("Throw");
+			soldierUpperState = SOLDIERSTATE::THROW;
+		}
+	}
 	
 
 	//하반신 상태 지정
