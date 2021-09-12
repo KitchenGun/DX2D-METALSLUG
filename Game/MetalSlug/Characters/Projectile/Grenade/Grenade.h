@@ -10,6 +10,9 @@ public:
 	void Render() override;
 	void Move();
 
+	void Explosion();
+	bool GetIsHit() { return isHit; }
+	void SetIsHit(bool val) { isHit = val; }
 	void SetGroundList(vector<Ground*> val) { GroundList = val; }
 private:
 	float ThrowingTime = 0;//던지고 경과한 시간

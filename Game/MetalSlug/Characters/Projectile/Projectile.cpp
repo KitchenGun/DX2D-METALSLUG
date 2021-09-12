@@ -30,14 +30,27 @@ void Projectile::ProjectileCollisionCheck()
 {
 	for (Enemy* tempE : EM->GetEnemyList())
 	{
-		if (Math::Distance(tempE->GetTransformedCoord().Point, this->GetPosition()) < 20*4)
+		if (Math::Distance(tempE->GetTransformedCoord().Point, this->GetPosition()) < 50*4)
 		{
 			//obb
 			if (Math::OBBIntersect(tempE, this))
 			{
-				if (this->GetPT() == PROJECTILETYPE::KNIFE)
+
+				if (this->GetPT() == PROJECTILETYPE::KNIFE||this->GetPT()==PROJECTILETYPE::Grenade)
 				{
-					tempE->Hit(this->GetDamage(), this);
+					if (this->GetPT() == PROJECTILETYPE::Grenade)
+					{
+						if (!dynamic_cast<Grenade*>(this)->GetIsHit())
+						{
+							this->HitPos = this->position;
+						}
+						dynamic_cast<Grenade*>(this)->SetIsHit(true);
+						tempE->Hit(this->GetDamage(), this);
+					}
+					else
+					{
+						tempE->Hit(this->GetDamage(), this);
+					}
 				}
 				else
 				{
@@ -48,9 +61,21 @@ void Projectile::ProjectileCollisionCheck()
 			//aabb
 			else if (Math::Intersect(tempE, this))
 			{
-				if (this->GetPT() == PROJECTILETYPE::KNIFE)
+				if (this->GetPT() == PROJECTILETYPE::KNIFE || this->GetPT() == PROJECTILETYPE::Grenade)
 				{
-					tempE->Hit(this->GetDamage(), this);
+					if (this->GetPT() == PROJECTILETYPE::Grenade)
+					{
+						if (!dynamic_cast<Grenade*>(this)->GetIsHit())
+						{
+							this->HitPos = this->position;
+						}
+						dynamic_cast<Grenade*>(this)->SetIsHit(true);
+						tempE->Hit(this->GetDamage(), this);
+					}
+					else
+					{
+						tempE->Hit(this->GetDamage(), this);
+					}
 				}
 				else
 				{

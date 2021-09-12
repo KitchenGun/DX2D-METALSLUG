@@ -3,13 +3,16 @@
 #include "Utilities/Animator.h"
 
 Grenade::Grenade(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT, EnemyManager* EnemyM)
-	:Projectile(position,size,rotation,dir,BT)
+	:Projectile(position,size,0,dir,BT)
 {
+	Damage = 10;
 	SetEM(EnemyM);
 	texture = new Texture2D(L"./_Textures/SFX/Weapon/RGrenade.png");
 	animClips.push_back(new AnimationClip(L"RGrenade", texture, 16, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	texture = new Texture2D(L"./_Textures/SFX/Weapon/LGrenade.png");
 	animClips.push_back(new AnimationClip(L"LGrenade", texture, 16, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/SFX/Explosion/GrenadeExplosion.png");
+	animClips.push_back(new AnimationClip(L"GrenadeExplosion", texture, 27, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	animator = new Animator(animClips);
 	StartPos = position;
 	if (Dir == DIRECTION::RIGHT)
@@ -33,23 +36,38 @@ Grenade::~Grenade()
 
 void Grenade::Update()
 {
-	ThrowingTime += Time::Delta();
-	Projectile::Update();
-	Move();
-	if (GroundList.size() > 0)
+	if (!isHit)
 	{
-		if (Math::GroundIntersect(this, GroundList))
+		ThrowingTime += Time::Delta();
+		Move();
+		if (GroundList.size() > 0)
 		{
-			GroundIntersectCount++;
-			StartPos = position;
-			Speed -= 60;
-			ThrowingTime = 0;
-			if (GroundIntersectCount == 2)
+			if (ThrowingTime > 0.1f)
 			{
-				isHit = true;
+				if (Math::GroundIntersect(this, GroundList))
+				{
+					GroundIntersectCount++;
+					StartPos = position;
+					Speed -= 60;
+					ThrowingTime = 0;
+					if (GroundIntersectCount == 2)
+					{
+						isHit = true;
+						HitPos = this->position;
+					}
+				}
 			}
 		}
 	}
+	else
+	{
+		Explosion();
+		if (!animator->isFirstPlay)
+		{
+			isNeedDestroy = true;
+		}
+	}
+	Projectile::Update();
 }
 
 void Grenade::Render()
@@ -65,4 +83,18 @@ void Grenade::Move()
 	world = S * R * T;
 	WB->SetWorld(world);
 	TransformVertices();
+}
+
+void Grenade::Explosion()
+{
+	this->size = Vector3(50*4, 107*4, 1);
+	D3DXMatrixScaling(&S, this->size.x, this->size.y, this->size.z);
+	this->position = HitPos + Vector3(0, 47*4, 0);
+	D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
+	world = S * R * T;
+	WB->SetWorld(world);
+	TransformVertices();
+	animator->bLoop=false;
+	texture = new Texture2D(L"./_Textures/SFX/Explosion/GrenadeExplosion.png");
+	animator->SetCurrentAnimClip(L"GrenadeExplosion", false);
 }

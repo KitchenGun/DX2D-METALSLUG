@@ -20,6 +20,7 @@ protected:
 	DIRECTION Dir = DIRECTION::NONE;
 	SPEED Speed = 0.0f;
 	Vector3 StartPos;
+	Vector3 HitPos;
 	DAMAGE Damage = 0;
 	PROJECTILETYPE pt = PROJECTILETYPE::NONE;
 	EnemyManager* EM = nullptr;
