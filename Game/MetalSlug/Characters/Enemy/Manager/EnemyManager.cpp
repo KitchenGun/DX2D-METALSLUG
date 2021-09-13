@@ -36,17 +36,18 @@ void EnemyManager::Render()
 	}
 }
 
-void EnemyManager::AddEnemy(Vector3 position, Vector3 size, float rotation, ENEMYTYPE enemyType)
+void EnemyManager::AddEnemy(Vector3 position, ENEMYTYPE enemyType)
 {
 	Enemy* tempEnemy = nullptr;
 	switch (enemyType)
 	{
 	case ENEMYTYPE::Grenadier:
-		tempEnemy = new EnemySoldier(position, size, rotation, enemyType);
+		tempEnemy = new EnemySoldier(position, Vector3(30 * 3, 40 * 3, 1), 0, enemyType);
 		break;
 	default:
 		break;
 	}
+	tempEnemy->SetPM(PM);
 	enemyList.push_back(tempEnemy);
 }
 

@@ -21,11 +21,13 @@ public:
 	//사망&피격
 	virtual void Die();
 	void Hit(DAMAGE val, Projectile* tempProjectile=nullptr);
+
 	//Get&Set
 	void SetisGround(bool val) { isGround = val; }
 	bool GetisGround() { return isGround; }
 	Vector3 GetRootPos() { return RootPos; }
 	OBBInfo* GetObbInfo() { return obbInfo; }
+	void SetPM(PlayerManager* val) { pm = val; }
 protected:
 	bool isGround = false;//지상 판정
 	Vector3 RootPos;
@@ -45,4 +47,7 @@ protected:
 	HP EnemyHP = 0;
 	ENEMYTYPE enemyType = ENEMYTYPE::NONE;
 	
+	//playermanager
+	PlayerManager* pm;
+
 };

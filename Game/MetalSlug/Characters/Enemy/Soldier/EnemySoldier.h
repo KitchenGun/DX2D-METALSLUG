@@ -5,6 +5,8 @@ enum class ENEMYSOLDIERSTATE
 	IDLE,
 	THROW,
 	KNIFE,
+	WALK,
+	RUN,
 	SURPRISE,
 	DIE
 };
@@ -32,6 +34,9 @@ public://S*R*T
 	void SetSize(Vector3 tempSize);
 private:
 	DIRECTION dir = DIRECTION::LEFT;
-	ENEMYSOLDIERSTATE enemyState = ENEMYSOLDIERSTATE::NONE;
+	ENEMYSOLDIERSTATE enemyState = ENEMYSOLDIERSTATE::NONE; 
+	ENEMYSOLDIERSTATE nextEnemyState = ENEMYSOLDIERSTATE::NONE;
+	ENEMYSOLDIERSTATE beforeEnemyState = ENEMYSOLDIERSTATE::NONE;
 	GrenadierAni* grenadierAni = nullptr;
+	Animator* EnemyAnimator = nullptr;
 };

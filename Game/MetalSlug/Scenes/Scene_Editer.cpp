@@ -27,10 +27,12 @@ void Editer::Init()
 	EnemyM = new EnemyManager();
 	PlayerPM->SetEM(EnemyM);
 	EnemyM->SetGroundList(GroundList);
-	EnemyM->AddEnemy(Vector3(100, 400, 0), Vector3(30 * 3, 40 * 3, 1), 0, ENEMYTYPE::Grenadier);
 	PlayerM = new PlayerManager(PlayerPM,EnemyM);
 	PlayerM->AddPlayer(Vector3(200, 500, 0));
 	PlayerM->SetGroundList(GroundList);
+	EnemyM->SetPM(PlayerM);
+	EnemyM->AddEnemy(Vector3(100, 400, 0), ENEMYTYPE::Grenadier);
+
 	//Camera::Get()->Move(player->GetPosition() - Vector3(200, 400, 0));
 }
 

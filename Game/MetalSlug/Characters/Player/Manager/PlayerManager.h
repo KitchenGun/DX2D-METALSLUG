@@ -13,6 +13,7 @@ public:
 
 	void SetGroundList(vector<Ground*> val) { GroundList = val; }
 	list<Player*> GetPlayerList() { return playerList; }
+
 private:
 	list<Player*> playerList;
 	list<Player*>::iterator iter;

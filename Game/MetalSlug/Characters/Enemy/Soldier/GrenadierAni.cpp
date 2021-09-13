@@ -20,8 +20,8 @@ GrenadierAni::~GrenadierAni()
 
 void GrenadierAni::Update()
 {
-	PivotUpdate();
 	ValueUpdate();
+	PivotUpdate();
 	PlayerAnimationRect::Update();
 }
 
@@ -76,7 +76,26 @@ void GrenadierAni::PivotUpdate()
 	switch (enemy->GetState())
 	{
 	case ENEMYSOLDIERSTATE::IDLE:
-		SetSize(Vector3(27 * IMGsize, 44 * IMGsize, 1));
+		if (dir == DIRECTION::RIGHT)
+		{
+			SetPos(position + Vector3(0 * IMGsize, 0 * IMGsize, 0));
+		}
+		else if (dir == DIRECTION::LEFT)
+		{
+			SetPos(position + Vector3(0 * IMGsize, 0 * IMGsize, 0));
+		}
+		break;
+	case ENEMYSOLDIERSTATE::SURPRISE:
+		if (dir == DIRECTION::RIGHT)
+		{
+			SetPos(position + Vector3(0 * IMGsize, 0 * IMGsize, 0));
+		}
+		else if (dir == DIRECTION::LEFT)
+		{
+			SetPos(position + Vector3(0 * IMGsize, 0 * IMGsize, 0));
+		}
+		break;
+	case ENEMYSOLDIERSTATE::WALK:
 		if (dir == DIRECTION::RIGHT)
 		{
 			SetPos(position + Vector3(0 * IMGsize, 0 * IMGsize, 0));
@@ -114,6 +133,7 @@ void GrenadierAni::SetAnimation()
 	switch (enemy->GetState())
 	{
 	case ENEMYSOLDIERSTATE::IDLE:
+		SetSize(Vector3(27 * IMGsize, 44 * IMGsize, 1));
 		if (dir == DIRECTION::RIGHT)
 		{
 			texture = new Texture2D(L"./_Textures/EnemySoldier/Idle/LIdle.png");
@@ -125,7 +145,36 @@ void GrenadierAni::SetAnimation()
 			animator->SetCurrentAnimClip(L"LIdle");
 		}
 		break;
+	case ENEMYSOLDIERSTATE::SURPRISE:
+		SetSize(Vector3(43 * IMGsize, 43 * IMGsize, 1));
+		animator->bLoop = false;
+		if (dir == DIRECTION::RIGHT)
+		{
+			texture = new Texture2D(L"./_Textures/EnemySoldier/Idle/RSurprise.png");
+			animator->SetCurrentAnimClip(L"RSurprise");
+		}
+		else if (dir == DIRECTION::LEFT)
+		{
+			texture = new Texture2D(L"./_Textures/EnemySoldier/Idle/LSurprise.png");
+			animator->SetCurrentAnimClip(L"LSurprise");
+		}
+		break;
+	case ENEMYSOLDIERSTATE::WALK:
+		SetSize(Vector3(26 * IMGsize, 41 * IMGsize, 1));
+		animator->bLoop = true;
+		if (dir == DIRECTION::RIGHT)
+		{
+			texture = new Texture2D(L"./_Textures/EnemySoldier/Move/RWalk.png");
+			animator->SetCurrentAnimClip(L"RWalk");
+		}
+		else if (dir == DIRECTION::LEFT)
+		{
+			texture = new Texture2D(L"./_Textures/EnemySoldier/Move/LWalk.png");
+			animator->SetCurrentAnimClip(L"LWalk");
+		}
+		break;
 	case ENEMYSOLDIERSTATE::DIE:
+		SetSize(Vector3(28 * IMGsize, 37 * IMGsize, 1));
 		animator->bLoop = false;
 		if (dir == DIRECTION::RIGHT)
 		{

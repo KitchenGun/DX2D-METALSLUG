@@ -13,6 +13,7 @@ public:
 	void SetAnimation();
 	void SetSize(Vector3 tempSize);
 	void SetPos(Vector3 tempPos);
+	Animator* GetAnimator() { return animator; }
 private:
 	void ValueUpdate();
 	void PivotUpdate();
