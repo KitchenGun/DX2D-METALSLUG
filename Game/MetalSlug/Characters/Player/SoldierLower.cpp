@@ -14,6 +14,7 @@ SoldierLower::SoldierLower(Vector3 position, Vector3 size, float rotation)
 SoldierLower::~SoldierLower()
 {
 	PlayerAnimationRect::~PlayerAnimationRect();
+	SAFE_DELETE(player);
 }
 
 void SoldierLower::Update()

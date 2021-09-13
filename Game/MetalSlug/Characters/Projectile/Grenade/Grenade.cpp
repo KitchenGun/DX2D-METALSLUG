@@ -87,9 +87,9 @@ void Grenade::Move()
 
 void Grenade::Explosion()
 {
-	this->size = Vector3(50*4, 107*4, 1);
+	this->size = Vector3(50*3, 107*3, 1);
 	D3DXMatrixScaling(&S, this->size.x, this->size.y, this->size.z);
-	this->position = HitPos + Vector3(0, 47*4, 0);
+	this->position = HitPos + Vector3(0, 47*3, 0);
 	D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
 	world = S * R * T;
 	WB->SetWorld(world);

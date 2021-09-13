@@ -17,6 +17,7 @@
 #include "Characters/Player/Player.h"
 //Àû
 #include "Characters/Enemy/Enemy.h"
+#include "Characters/Enemy/Soldier/GrenadierAni.h"
 #include "Characters/Enemy/Soldier/EnemySoldier.h"
 #include "Characters/Enemy/Manager/EnemyManager.h"
 

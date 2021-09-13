@@ -6,8 +6,14 @@ EnemySoldier::EnemySoldier(Vector3 position, Vector3 size, float rotation, ENEMY
 	:Enemy(position, size, rotation, enemyType)
 {
 	this->enemyType = enemyType;
-	SetAnimation();
 	obbInfo = new OBBInfo;
+
+	//temp
+	texture = new Texture2D(L"./_Textures/TestBox.png");
+	animClips.push_back(new AnimationClip(L"TestBox", texture, 1, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	animator = new Animator(animClips);
+	animator->SetCurrentAnimClip(L"TestBox");
+	//temp
 
 	switch (enemyType)
 	{
@@ -16,10 +22,10 @@ EnemySoldier::EnemySoldier(Vector3 position, Vector3 size, float rotation, ENEMY
 	case ENEMYTYPE::Grenadier:
 		{	
 			enemyState = ENEMYSOLDIERSTATE::IDLE;
-			//26*44크기
+			dir = DIRECTION::LEFT;
 			SetSize(Vector3(26 * 3, 44 * 3, 1));
 			RootPos = Vector3(position.x + 13 * 3, position.y, 0);
-			SetClip();
+			grenadierAni = new GrenadierAni(position,size,rotation,this);
 			EnemyHP = 10;
 			break;
 		}
@@ -30,22 +36,44 @@ EnemySoldier::EnemySoldier(Vector3 position, Vector3 size, float rotation, ENEMY
 
 EnemySoldier::~EnemySoldier()
 {
+	SAFE_DELETE(grenadierAni);
 	Enemy::~Enemy();
 }
 
 void EnemySoldier::Update()
 {
-	if (EnemyHP <= 0)
-	{
-		Die();
-		SetClip();
-	}
 	Enemy::Update();
+	switch (enemyType)
+	{
+	case ENEMYTYPE::Grenadier:
+		grenadierAni->Update();
+		break;
+	default:
+		break;
+	}
+	//가장 중요
+	HPCheck();
 }
 
 void EnemySoldier::Render()
 {
 	Enemy::Render();
+	switch (enemyType)
+	{
+	case ENEMYTYPE::Grenadier:
+		grenadierAni->Render();
+		break;
+	default:
+		break;
+	}
+}
+
+void EnemySoldier::HPCheck()
+{
+	if (EnemyHP <= 0)
+	{
+		Die();
+	}
 }
 
 void EnemySoldier::Die()
@@ -53,60 +81,9 @@ void EnemySoldier::Die()
 	enemyState = ENEMYSOLDIERSTATE::DIE;
 }
 
-
-
-void EnemySoldier::SetAnimation()
+void EnemySoldier::ScoutRangeCheck()
 {
-	if (enemyType == ENEMYTYPE::Grenadier)
-	{
-		//IDLE
-		texture = new Texture2D(L"./_Textures/TestBox.png");///"Idle/LIdle.png");
-		animClips.push_back(new AnimationClip(L"LIdle", texture, 4, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
-		//사망
-		texture = new Texture2D(L"./_Textures/TestBox.png");//(L"./_Textures/EnemySoldier/Die/LDie.png");
-		animClips.push_back(new AnimationClip(L"LDie", texture, 11, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
-	}
-
-	animator = new Animator(animClips);
-
 }
-
-void EnemySoldier::SetClip()
-{
-	switch (enemyState)
-	{
-		case ENEMYSOLDIERSTATE::IDLE:
-		{
-			if (dir == DIRECTION::RIGHT)
-			{
-
-			}
-			else if(dir == DIRECTION::LEFT)
-			{
-				texture = new Texture2D(L"./_Textures/TestBox.png");//new Texture2D(L"./_Textures/EnemySoldier/Idle/LIdle.png");
-				animator->SetCurrentAnimClip(L"LIdle");
-			}
-			break;
-		}
-		case ENEMYSOLDIERSTATE::DIE:
-		{
-			animator->bLoop = false;
-			if (dir == DIRECTION::RIGHT)
-			{
-
-			}
-			else if (dir == DIRECTION::LEFT)
-			{
-				texture = new Texture2D(L"./_Textures/TestBox.png"); //new Texture2D(L"./_Textures/EnemySoldier/Die/LDie.png");
-				animator->SetCurrentAnimClip(L"LDie");
-			}
-			break;
-		}
-		default:
-			break;
-	}
-}
-
 
 void EnemySoldier::SetSize(Vector3 tempSize)
 {
