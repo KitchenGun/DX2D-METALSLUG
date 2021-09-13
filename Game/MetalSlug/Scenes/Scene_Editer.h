@@ -18,7 +18,7 @@ public:
 	void LoadGroundTile(const wstring& path = L"");
 private:
 	TextureRect* Map = nullptr;
-	Player* player = nullptr;
+	PlayerManager* PlayerM = nullptr;
 	//지형 테스트
 	vector<Ground*> GroundList;
 	Ground* ground = nullptr;

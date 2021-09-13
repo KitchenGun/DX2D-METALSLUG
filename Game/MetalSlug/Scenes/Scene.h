@@ -15,6 +15,8 @@
 #include "Characters/Player/SoldierLower.h"
 #include "Characters/Player/SoldierUpper.h"
 #include "Characters/Player/Player.h"
+#include "Characters/Player/Manager/PlayerManager.h"
+
 //Àû
 #include "Characters/Enemy/Enemy.h"
 #include "Characters/Enemy/Soldier/GrenadierAni.h"

@@ -17,8 +17,6 @@ void Editer::Init()
 {
 	Map = new TextureRect(Vector3(4153 * 4 / 2, 306 * 4 / 2, 0), Vector3(4153 * 4, 306 * 4, 1), 0);
 	Map->SetSRV(L"./_Textures/Map/Map.png");
-
-	player = new Player(Vector3(50 * 4, 500, 0), Vector3(30 * 3, 40 * 3, 1), 0);
 	//ground
 	InputGround();
 	//object = new Rock1(Vector3(300, 150, 0), Vector3(64 * 4, 45 * 4, 1), 0);
@@ -26,12 +24,13 @@ void Editer::Init()
 	//manager
 	PlayerPM = new ProjectileManager();
 	PlayerPM->SetGroundList(GroundList);
-	player->SetPM(PlayerPM);
 	EnemyM = new EnemyManager();
+	PlayerPM->SetEM(EnemyM);
 	EnemyM->SetGroundList(GroundList);
 	EnemyM->AddEnemy(Vector3(100, 400, 0), Vector3(30 * 3, 40 * 3, 1), 0, ENEMYTYPE::Grenadier);
-	PlayerPM->SetEM(EnemyM);
-	player->SetEM(EnemyM);
+	PlayerM = new PlayerManager(PlayerPM,EnemyM);
+	PlayerM->AddPlayer(Vector3(200, 500, 0));
+	PlayerM->SetGroundList(GroundList);
 	//Camera::Get()->Move(player->GetPosition() - Vector3(200, 400, 0));
 }
 
@@ -42,14 +41,8 @@ void Editer::Update()
 		InputGround();
 	}
 	//충돌 처리
-	if (!player->GetisJump())
-	{
-		//player->SetisGround(false);
-		player->SetisGround(Math::GroundIntersect(player, GroundList));
-	}
 	//object->Update();
 
-	player->Update();
 	for (Ground* tempGround : GroundList)
 	{
 		tempGround->Update();
@@ -57,6 +50,7 @@ void Editer::Update()
 	//manager
 	PlayerPM->Update();
 	EnemyM->Update();
+	PlayerM->Update();
 
 	//Camera::Get()->Move(player->GetPosition() - Vector3(200, 100, 0));
 }
@@ -73,8 +67,8 @@ void Editer::Render()
 	//manager
 	PlayerPM->Render();
 	EnemyM->Render();
-	//player
-	player->Render();
+	PlayerM->Render();
+	//ground
 	for (Ground* tempGround : GroundList)
 	{
 		tempGround->Render();
