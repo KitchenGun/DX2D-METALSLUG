@@ -102,7 +102,7 @@ void Projectile::ProjectileCollisionCheck()
 
 					if (this->GetPT() == PROJECTILETYPE::KNIFE || this->GetPT() == PROJECTILETYPE::EnemyGrenade)
 					{
-						if (this->GetPT() == PROJECTILETYPE::Grenade)
+						if (this->GetPT() == PROJECTILETYPE::EnemyGrenade)
 						{
 							if (!dynamic_cast<Grenade*>(this)->GetIsHit())
 							{

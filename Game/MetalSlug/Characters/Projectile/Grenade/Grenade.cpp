@@ -22,8 +22,8 @@ Grenade::Grenade(Vector3 position, Vector3 size, float rotation, DIRECTION dir, 
 		animClips.push_back(new AnimationClip(L"REnemyGrenade", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 		texture = new Texture2D(L"./_Textures/SFX/Weapon/LEnemyGrenade.png");
 		animClips.push_back(new AnimationClip(L"LEnemyGrenade", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
-		texture = new Texture2D(L"./_Textures/SFX/Explosion/GrenadeExplosion.png");
-		animClips.push_back(new AnimationClip(L"GrenadeExplosion", texture, 27, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+		texture = new Texture2D(L"./_Textures/SFX/Explosion/EnemyGrenadeExplosion.png");
+		animClips.push_back(new AnimationClip(L"EnemyGrenadeExplosion", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	}
 	animator = new Animator(animClips);
 	StartPos = position;
@@ -112,15 +112,8 @@ void Grenade::Update()
 				{
 					if (Math::GroundIntersect(this, GroundList))
 					{
-						GroundIntersectCount++;
-						StartPos = position;
-						Speed -= 60;
-						ThrowingTime = 0;
-						if (GroundIntersectCount == 2)
-						{
-							isHit = true;
-							HitPos = this->position;
-						}
+						isHit = true;
+						HitPos = this->position;
 					}
 				}
 			}
@@ -166,5 +159,18 @@ void Grenade::Explosion()
 		animator->bLoop = false;
 		texture = new Texture2D(L"./_Textures/SFX/Explosion/GrenadeExplosion.png");
 		animator->SetCurrentAnimClip(L"GrenadeExplosion", false);
+	}
+	else if (pt == PROJECTILETYPE::EnemyGrenade)
+	{
+		this->size = Vector3(32 * 3, 32 * 3, 1);
+		D3DXMatrixScaling(&S, this->size.x, this->size.y, this->size.z);
+		this->position = HitPos + Vector3(0, 0 * 3, 0);
+		D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
+		world = S * R * T;
+		WB->SetWorld(world);
+		TransformVertices();
+		animator->bLoop = false;
+		texture = new Texture2D(L"./_Textures/SFX/Explosion/EnemyGrenadeExplosion.png");
+		animator->SetCurrentAnimClip(L"EnemyGrenadeExplosion", false);
 	}
 }

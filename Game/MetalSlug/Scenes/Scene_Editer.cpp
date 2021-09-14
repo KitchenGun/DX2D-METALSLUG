@@ -28,6 +28,7 @@ void Editer::Init()
 	PlayerM = new PlayerManager(PlayerPM,EnemyM);
 	EnemyM->SetPM(PlayerM);
 	PlayerPM->SetGroundList(GroundList);
+	EnemyPM->SetGroundList(GroundList);
 	EnemyM->SetGroundList(GroundList);
 	PlayerPM->SetTargetM(EnemyM);
 	EnemyPM->SetTargetM(PlayerM);
