@@ -38,6 +38,7 @@ public: //SET&GET
 public://S*R*T
 	void SetSize(Vector3 tempSize);
 private:
+	bool isFirstCreateProjectile = false;
 	ENEMYSOLDIERSTATE enemyState = ENEMYSOLDIERSTATE::NONE; 
 	ENEMYSOLDIERSTATE nextEnemyState = ENEMYSOLDIERSTATE::NONE;
 	ENEMYSOLDIERSTATE beforeEnemyState = ENEMYSOLDIERSTATE::NONE;

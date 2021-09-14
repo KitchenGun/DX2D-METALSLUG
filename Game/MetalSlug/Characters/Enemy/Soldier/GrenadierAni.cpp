@@ -185,7 +185,8 @@ void GrenadierAni::SetAnimation()
 	switch (enemy->GetState())
 	{
 	case ENEMYSOLDIERSTATE::IDLE:
-		SetSize(Vector3(27 * IMGsize, 44 * IMGsize, 1));
+		SetSize(Vector3(27 * IMGsize, 44 * IMGsize, 1)); 
+		animator->bLoop = true;
 		if (dir == DIRECTION::RIGHT)
 		{
 			texture = new Texture2D(L"./_Textures/EnemySoldier/Idle/LIdle.png");
