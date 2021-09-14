@@ -44,7 +44,7 @@ void Enemy::Move(Vector3 tempPos)
 	}
 	else
 	{
-		this->position += tempPos;
+		this->position += tempPos * Time::Delta();
 		D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
 
 		world = S * R * T;
@@ -58,7 +58,7 @@ void Enemy::Move(Vector3 tempPos)
 void Enemy::ObbGroundMove(Vector3 tempPos)
 {
 	Vector3 pos = Vector3(position.x + tempPos.x, 0, 0);
-	pos = Vector3(pos.x, (obbInfo->Gradient * pos.x) + obbInfo->alphaVal, 0);
+	pos = Vector3(pos.x, (obbInfo->Gradient * pos.x) + obbInfo->alphaVal, 0) * Time::Delta();
 	this->position = pos;
 	D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
 
@@ -99,7 +99,7 @@ void Enemy::Jump()
 		else
 		{
 			fJumpTime = 0;
-			GravatiyPower = -5;
+			GravatiyPower = -600;
 		}
 	}
 }

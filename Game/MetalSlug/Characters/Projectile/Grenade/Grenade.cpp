@@ -2,30 +2,60 @@
 #include "Grenade.h"
 #include "Utilities/Animator.h"
 
-Grenade::Grenade(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT, EnemyManager* EnemyM)
-	:Projectile(position,size,0,dir,BT)
+Grenade::Grenade(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE PT, bool bisPPM)
+	:Projectile(position,size,0,dir,PT,bisPPM)
 {
-	Damage = 10;
-	SetEM(EnemyM);
-	texture = new Texture2D(L"./_Textures/SFX/Weapon/RGrenade.png");
-	animClips.push_back(new AnimationClip(L"RGrenade", texture, 16, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
-	texture = new Texture2D(L"./_Textures/SFX/Weapon/LGrenade.png");
-	animClips.push_back(new AnimationClip(L"LGrenade", texture, 16, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
-	texture = new Texture2D(L"./_Textures/SFX/Explosion/GrenadeExplosion.png");
-	animClips.push_back(new AnimationClip(L"GrenadeExplosion", texture, 27, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	if (pt == PROJECTILETYPE::Grenade)
+	{
+		Damage = 10;
+		texture = new Texture2D(L"./_Textures/SFX/Weapon/RGrenade.png");
+		animClips.push_back(new AnimationClip(L"RGrenade", texture, 16, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+		texture = new Texture2D(L"./_Textures/SFX/Weapon/LGrenade.png");
+		animClips.push_back(new AnimationClip(L"LGrenade", texture, 16, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+		texture = new Texture2D(L"./_Textures/SFX/Explosion/GrenadeExplosion.png");
+		animClips.push_back(new AnimationClip(L"GrenadeExplosion", texture, 27, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	}
+	else if (pt == PROJECTILETYPE::EnemyGrenade)
+	{
+		Damage = 1;
+		texture = new Texture2D(L"./_Textures/SFX/Weapon/REnemyGrenade.png");
+		animClips.push_back(new AnimationClip(L"REnemyGrenade", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+		texture = new Texture2D(L"./_Textures/SFX/Weapon/LEnemyGrenade.png");
+		animClips.push_back(new AnimationClip(L"LEnemyGrenade", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+		texture = new Texture2D(L"./_Textures/SFX/Explosion/GrenadeExplosion.png");
+		animClips.push_back(new AnimationClip(L"GrenadeExplosion", texture, 27, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	}
 	animator = new Animator(animClips);
 	StartPos = position;
-	if (Dir == DIRECTION::RIGHT)
+	if (pt == PROJECTILETYPE::Grenade)
 	{
-		Angle = (float)D3DXToRadian(45);
-		texture = new Texture2D(L"./_Textures/SFX/Weapon/RGrenade.png");
-		animator->SetCurrentAnimClip(L"RGrenade",false);
+		if (Dir == DIRECTION::RIGHT)
+		{
+			Angle = (float)D3DXToRadian(45);
+			texture = new Texture2D(L"./_Textures/SFX/Weapon/RGrenade.png");
+			animator->SetCurrentAnimClip(L"RGrenade",false);
+		}
+		else if (Dir == DIRECTION::LEFT)
+		{
+			Angle = (float)D3DXToRadian(135);
+			texture = new Texture2D(L"./_Textures/SFX/Weapon/LGrenade.png");
+			animator->SetCurrentAnimClip(L"LGrenade", false);
+		}
 	}
-	else if (Dir == DIRECTION::LEFT)
+	else if (pt == PROJECTILETYPE::EnemyGrenade)
 	{
-		Angle = (float)D3DXToRadian(135);
-		texture = new Texture2D(L"./_Textures/SFX/Weapon/LGrenade.png");
-		animator->SetCurrentAnimClip(L"LGrenade", false);
+		if (Dir == DIRECTION::RIGHT)
+		{
+			Angle = (float)D3DXToRadian(45);
+			texture = new Texture2D(L"./_Textures/SFX/Weapon/REnemyGrenade.png");
+			animator->SetCurrentAnimClip(L"REnemyGrenade", false);
+		}
+		else if (Dir == DIRECTION::LEFT)
+		{
+			Angle = (float)D3DXToRadian(135);
+			texture = new Texture2D(L"./_Textures/SFX/Weapon/LEnemyGrenade.png");
+			animator->SetCurrentAnimClip(L"LEnemyGrenade", false);
+		}
 	}
 }
 
@@ -36,35 +66,72 @@ Grenade::~Grenade()
 
 void Grenade::Update()
 {
-	if (!isHit)
+	if (pt == PROJECTILETYPE::Grenade)
 	{
-		ThrowingTime += Time::Delta();
-		Move();
-		if (GroundList.size() > 0)
+		if (!isHit)
 		{
-			if (ThrowingTime > 0.1f)
+			ThrowingTime += Time::Delta();
+			Move();
+			if (GroundList.size() > 0)
 			{
-				if (Math::GroundIntersect(this, GroundList))
+				if (ThrowingTime > 0.1f)
 				{
-					GroundIntersectCount++;
-					StartPos = position;
-					Speed -= 60;
-					ThrowingTime = 0;
-					if (GroundIntersectCount == 2)
+					if (Math::GroundIntersect(this, GroundList))
 					{
-						isHit = true;
-						HitPos = this->position;
+						GroundIntersectCount++;
+						StartPos = position;
+						Speed -= 60;
+						ThrowingTime = 0;
+						if (GroundIntersectCount == 2)
+						{
+							isHit = true;
+							HitPos = this->position;
+						}
 					}
 				}
 			}
 		}
-	}
-	else
-	{
-		Explosion();
-		if (!animator->isFirstPlay)
+		else
 		{
-			isNeedDestroy = true;
+			Explosion();
+			if (!animator->isFirstPlay)
+			{
+				isNeedDestroy = true;
+			}
+		}
+	}
+	else if(pt == PROJECTILETYPE::EnemyGrenade)
+	{
+		if (!isHit)
+		{
+			ThrowingTime += Time::Delta();
+			Move();
+			if (GroundList.size() > 0)
+			{
+				if (ThrowingTime > 0.1f)
+				{
+					if (Math::GroundIntersect(this, GroundList))
+					{
+						GroundIntersectCount++;
+						StartPos = position;
+						Speed -= 60;
+						ThrowingTime = 0;
+						if (GroundIntersectCount == 2)
+						{
+							isHit = true;
+							HitPos = this->position;
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			Explosion();
+			if (!animator->isFirstPlay)
+			{
+				isNeedDestroy = true;
+			}
 		}
 	}
 	Projectile::Update();
@@ -87,14 +154,17 @@ void Grenade::Move()
 
 void Grenade::Explosion()
 {
-	this->size = Vector3(50*3, 107*3, 1);
-	D3DXMatrixScaling(&S, this->size.x, this->size.y, this->size.z);
-	this->position = HitPos + Vector3(0, 47*3, 0);
-	D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
-	world = S * R * T;
-	WB->SetWorld(world);
-	TransformVertices();
-	animator->bLoop=false;
-	texture = new Texture2D(L"./_Textures/SFX/Explosion/GrenadeExplosion.png");
-	animator->SetCurrentAnimClip(L"GrenadeExplosion", false);
+	if (pt == PROJECTILETYPE::Grenade)
+	{
+		this->size = Vector3(50 * 3, 107 * 3, 1);
+		D3DXMatrixScaling(&S, this->size.x, this->size.y, this->size.z);
+		this->position = HitPos + Vector3(0, 47 * 3, 0);
+		D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
+		world = S * R * T;
+		WB->SetWorld(world);
+		TransformVertices();
+		animator->bLoop = false;
+		texture = new Texture2D(L"./_Textures/SFX/Explosion/GrenadeExplosion.png");
+		animator->SetCurrentAnimClip(L"GrenadeExplosion", false);
+	}
 }

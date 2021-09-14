@@ -53,6 +53,18 @@ void GrenadierAni::SetClip()
 	texture = new Texture2D(L"./_Textures/EnemySoldier/Move/RWalk.png");
 	animClips.push_back(new AnimationClip(L"RWalk", texture, 12, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
 
+	//run
+	texture = new Texture2D(L"./_Textures/EnemySoldier/Move/LRun.png");
+	animClips.push_back(new AnimationClip(L"LRun", texture, 12, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/EnemySoldier/Move/RRun.png");
+	animClips.push_back(new AnimationClip(L"RRun", texture, 12, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+
+	//Jump
+	texture = new Texture2D(L"./_Textures/EnemySoldier/Jump/LJump.png");
+	animClips.push_back(new AnimationClip(L"LJump", texture, 7, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/EnemySoldier/Jump/RJump.png");
+	animClips.push_back(new AnimationClip(L"RJump", texture, 7, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+
 	//ATK
 	texture = new Texture2D(L"./_Textures/EnemySoldier/ATK/LThrow.png");//¼ö·ùÅº ÅõÃ´
 	animClips.push_back(new AnimationClip(L"LThrow", texture, 17, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
@@ -96,6 +108,46 @@ void GrenadierAni::PivotUpdate()
 		}
 		break;
 	case ENEMYSOLDIERSTATE::WALK:
+		if (dir == DIRECTION::RIGHT)
+		{
+			SetPos(position + Vector3(0 * IMGsize, 0 * IMGsize, 0));
+		}
+		else if (dir == DIRECTION::LEFT)
+		{
+			SetPos(position + Vector3(0 * IMGsize, 0 * IMGsize, 0));
+		}
+		break;
+	case ENEMYSOLDIERSTATE::RUN:
+		if (dir == DIRECTION::RIGHT)
+		{
+			SetPos(position + Vector3(0 * IMGsize, 0 * IMGsize, 0));
+		}
+		else if (dir == DIRECTION::LEFT)
+		{
+			SetPos(position + Vector3(0 * IMGsize, 0 * IMGsize, 0));
+		}
+		break;
+	case ENEMYSOLDIERSTATE::JUMP:
+		if (dir == DIRECTION::RIGHT)
+		{
+			SetPos(position + Vector3(0 * IMGsize, 0 * IMGsize, 0));
+		}
+		else if (dir == DIRECTION::LEFT)
+		{
+			SetPos(position + Vector3(0 * IMGsize, 0 * IMGsize, 0));
+		}
+		break;
+	case ENEMYSOLDIERSTATE::KNIFE:
+		if (dir == DIRECTION::RIGHT)
+		{
+			SetPos(position + Vector3(0 * IMGsize, 0 * IMGsize, 0));
+		}
+		else if (dir == DIRECTION::LEFT)
+		{
+			SetPos(position + Vector3(0 * IMGsize, 0 * IMGsize, 0));
+		}
+		break;
+	case ENEMYSOLDIERSTATE::THROW:
 		if (dir == DIRECTION::RIGHT)
 		{
 			SetPos(position + Vector3(0 * IMGsize, 0 * IMGsize, 0));
@@ -171,6 +223,62 @@ void GrenadierAni::SetAnimation()
 		{
 			texture = new Texture2D(L"./_Textures/EnemySoldier/Move/LWalk.png");
 			animator->SetCurrentAnimClip(L"LWalk");
+		}
+		break;
+	case ENEMYSOLDIERSTATE::RUN:
+		SetSize(Vector3(34 * IMGsize, 39 * IMGsize, 1));
+		animator->bLoop = true;
+		if (dir == DIRECTION::RIGHT)
+		{
+			texture = new Texture2D(L"./_Textures/EnemySoldier/Move/RRun.png");
+			animator->SetCurrentAnimClip(L"RRun");
+		}
+		else if (dir == DIRECTION::LEFT)
+		{
+			texture = new Texture2D(L"./_Textures/EnemySoldier/Move/LRun.png");
+			animator->SetCurrentAnimClip(L"LRun");
+		}
+		break;
+	case ENEMYSOLDIERSTATE::JUMP:
+		SetSize(Vector3(30 * IMGsize, 44 * IMGsize, 1));
+		animator->bLoop = false;
+		if (dir == DIRECTION::RIGHT)
+		{
+			texture = new Texture2D(L"./_Textures/EnemySoldier/Jump/RJump.png");
+			animator->SetCurrentAnimClip(L"RJump");
+		}
+		else if (dir == DIRECTION::LEFT)
+		{
+			texture = new Texture2D(L"./_Textures/EnemySoldier/Jump/LJump.png");
+			animator->SetCurrentAnimClip(L"LJump");
+		}
+		break;
+	case ENEMYSOLDIERSTATE::KNIFE:
+		SetSize(Vector3(51 * IMGsize, 37 * IMGsize, 1));
+		animator->bLoop = false;
+		if (dir == DIRECTION::RIGHT)
+		{
+			texture = new Texture2D(L"./_Textures/EnemySoldier/ATK/RKnife.png");
+			animator->SetCurrentAnimClip(L"RKnife");
+		}
+		else if (dir == DIRECTION::LEFT)
+		{
+			texture = new Texture2D(L"./_Textures/EnemySoldier/ATK/LKnife.png");
+			animator->SetCurrentAnimClip(L"LKnife");
+		}
+		break;
+	case ENEMYSOLDIERSTATE::THROW:
+		SetSize(Vector3(43 * IMGsize, 42 * IMGsize, 1));
+		animator->bLoop = false;
+		if (dir == DIRECTION::RIGHT)
+		{
+			texture = new Texture2D(L"./_Textures/EnemySoldier/ATK/RThrow.png");
+			animator->SetCurrentAnimClip(L"RThrow");
+		}
+		else if (dir == DIRECTION::LEFT)
+		{
+			texture = new Texture2D(L"./_Textures/EnemySoldier/ATK/LThrow.png");
+			animator->SetCurrentAnimClip(L"LThrow");
 		}
 		break;
 	case ENEMYSOLDIERSTATE::DIE:

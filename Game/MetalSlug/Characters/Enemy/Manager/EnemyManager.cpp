@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "EnemyManager.h"
 
-EnemyManager::EnemyManager()
+EnemyManager::EnemyManager(ProjectileManager* epm)
+	:EPM(epm)
 {
 }
 
@@ -48,6 +49,7 @@ void EnemyManager::AddEnemy(Vector3 position, ENEMYTYPE enemyType)
 		break;
 	}
 	tempEnemy->SetPM(PM);
+	tempEnemy->SetEPM(EPM);
 	enemyList.push_back(tempEnemy);
 }
 

@@ -27,7 +27,9 @@ public:
 	bool GetisGround() { return isGround; }
 	Vector3 GetRootPos() { return RootPos; }
 	OBBInfo* GetObbInfo() { return obbInfo; }
-	void SetPM(PlayerManager* val) { pm = val; }
+	void SetPM(PlayerManager* val) { ppm = val; }
+	void SetEPM(ProjectileManager* val) { epm = val; }
+	DIRECTION GetDir() { return dir; }
 protected:
 	bool isGround = false;//지상 판정
 	Vector3 RootPos;
@@ -37,17 +39,26 @@ protected:
 	bool isJump = false;
 	bool isJumpEnd = false;
 	float fJumpPower = 0.0f;
-	const float fMaxJumpSpeed = 10.0f;
+	const float fMaxJumpSpeed = 1500.0f;
 	int nJumpCount = 0;
 	const int nMaxJumpCount = 1;
-	float GravatiyPower = -5;
+	float GravatiyPower = -10;
 	
 	//Obb 지면 충돌에 필요한 정보
 	OBBInfo* obbInfo;
 	HP EnemyHP = 0;
 	ENEMYTYPE enemyType = ENEMYTYPE::NONE;
-	
+	//이동 속도
+	SPEED walkSpeed=0;
+	SPEED runSpeed=0;
+
+	//방향
+	FirePos firePos;
+	DIRECTION dir = DIRECTION::LEFT;
+
 	//playermanager
-	PlayerManager* pm;
+	PlayerManager* ppm;
+	//enemyprojectileManager
+	ProjectileManager* epm;
 
 };

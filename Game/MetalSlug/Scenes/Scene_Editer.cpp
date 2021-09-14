@@ -23,15 +23,18 @@ void Editer::Init()
 	//object->SetTarget(player);
 	//manager
 	PlayerPM = new ProjectileManager();
-	PlayerPM->SetGroundList(GroundList);
-	EnemyM = new EnemyManager();
-	PlayerPM->SetEM(EnemyM);
-	EnemyM->SetGroundList(GroundList);
+	EnemyPM = new ProjectileManager(false);
+	EnemyM = new EnemyManager(EnemyPM);
 	PlayerM = new PlayerManager(PlayerPM,EnemyM);
+	EnemyM->SetPM(PlayerM);
+	PlayerPM->SetGroundList(GroundList);
+	EnemyM->SetGroundList(GroundList);
+	PlayerPM->SetTargetM(EnemyM);
+	EnemyPM->SetTargetM(PlayerM);
 	PlayerM->AddPlayer(Vector3(200, 500, 0));
 	PlayerM->SetGroundList(GroundList);
-	EnemyM->SetPM(PlayerM);
-	EnemyM->AddEnemy(Vector3(100, 400, 0), ENEMYTYPE::Grenadier);
+
+	EnemyM->AddEnemy(Vector3(600, 400, 0), ENEMYTYPE::Grenadier);
 
 	//Camera::Get()->Move(player->GetPosition() - Vector3(200, 400, 0));
 }
@@ -51,8 +54,9 @@ void Editer::Update()
 	}
 	//manager
 	PlayerPM->Update();
+	EnemyPM->Update();
 	EnemyM->Update();
-	PlayerM->Update();
+	PlayerM->Update(); 
 
 	//Camera::Get()->Move(player->GetPosition() - Vector3(200, 100, 0));
 }
@@ -68,6 +72,7 @@ void Editer::Render()
 	//object->Render();
 	//manager
 	PlayerPM->Render();
+	EnemyPM->Render();
 	EnemyM->Render();
 	PlayerM->Render();
 	//ground

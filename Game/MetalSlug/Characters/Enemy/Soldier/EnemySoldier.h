@@ -7,6 +7,7 @@ enum class ENEMYSOLDIERSTATE
 	KNIFE,
 	WALK,
 	RUN,
+	JUMP,
 	SURPRISE,
 	DIE
 };
@@ -21,19 +22,22 @@ public:
 	void Update() override;
 	void Render() override;
 	void HPCheck();
+
+	void GroundCheck();
+	void Move();
 	void Die() override;
+	void ATK();
+	void MoveFirePos();
+
 public:
 	//Grenadier
 	void ScoutRangeCheck();
 
-
 public: //SET&GET
 	ENEMYSOLDIERSTATE GetState() { return enemyState; }
-	DIRECTION GetDir() { return dir; }
 public://S*R*T
 	void SetSize(Vector3 tempSize);
 private:
-	DIRECTION dir = DIRECTION::LEFT;
 	ENEMYSOLDIERSTATE enemyState = ENEMYSOLDIERSTATE::NONE; 
 	ENEMYSOLDIERSTATE nextEnemyState = ENEMYSOLDIERSTATE::NONE;
 	ENEMYSOLDIERSTATE beforeEnemyState = ENEMYSOLDIERSTATE::NONE;

@@ -1,8 +1,10 @@
 #include"stdafx.h"
 #include "ProjectileManager.h"
 
-ProjectileManager::ProjectileManager()
+ProjectileManager::ProjectileManager(bool isPM)
+	:bIsPM(isPM)
 {
+	cout << bIsPM << endl;
 }
 
 ProjectileManager::~ProjectileManager()
@@ -21,7 +23,7 @@ void ProjectileManager::Update()
 		if (tempProjectile != nullptr)
 		{
 			tempProjectile->Update();
-			if (Math::Distance(tempProjectile->GetStartPos(), tempProjectile->GetPosition()) > 2000.0f)//일정 거리 이상일 경우 삭제
+			if (Math::Distance(tempProjectile->GetStartPos(), tempProjectile->GetPosition()) > 1500.0f)//일정 거리 이상일 경우 삭제
 			{
 				RemoveProjectile(tempProjectile);
 				break;//삭제시 프로젝트 리스트가 변경되서 break걸고 다시 돌려야함
@@ -49,14 +51,35 @@ void ProjectileManager::Render()
 
 void ProjectileManager::AddBullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT)
 {
-	Bullet* tempBullet = new Bullet(position, size, rotation, dir, BT, EM);
+	Bullet* tempBullet=nullptr;
+	if (bIsPM)
+	{
+		tempBullet	= new Bullet(position, size, rotation, dir, BT);
+		tempBullet->SetEM(EM);
+	}
+	else
+	{
+		tempBullet = new Bullet(position, size, rotation, dir, BT,false);
+		tempBullet->SetPM(PM);
+	}
 	projectileList.push_back(tempBullet);
 }
 
 void ProjectileManager::AddGrenade(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT)
 {
-	Grenade* tempGrenade = new Grenade(position, size, rotation, dir, BT, EM);
-	tempGrenade->SetGroundList(GroundList);
+	Grenade* tempGrenade = nullptr;
+	if (bIsPM)
+	{
+		tempGrenade = new Grenade(position, size, rotation, dir, BT);
+		tempGrenade->SetGroundList(GroundList);
+		tempGrenade->SetEM(EM);
+	}
+	else
+	{
+		tempGrenade = new Grenade(position, size, rotation, dir, BT, false);
+		tempGrenade->SetGroundList(GroundList);
+		tempGrenade->SetPM(PM);
+	}
 	projectileList.push_back(tempGrenade);
 }
 

@@ -25,7 +25,7 @@ void Stage::Init()
 	PlayerPM = new ProjectileManager();
 	player->SetPM(PlayerPM);
 
-	EnemyM = new EnemyManager();
+	EnemyM = new EnemyManager(PlayerPM);
 	EnemyM->SetGroundList(GroundList);
 	EnemyM->AddEnemy(Vector3(400, 400, 0), ENEMYTYPE::Grenadier);
 }

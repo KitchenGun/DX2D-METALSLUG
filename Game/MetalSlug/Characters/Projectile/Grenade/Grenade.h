@@ -3,7 +3,7 @@
 class Grenade : public Projectile
 {
 public:
-	Grenade(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT, EnemyManager* EnemyM);
+	Grenade(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE PT, bool bisPPM=true);
 	~Grenade();
 public:
 	void Update() override;

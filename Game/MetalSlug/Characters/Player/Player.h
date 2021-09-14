@@ -8,7 +8,8 @@ enum class PROJECTILETYPE
 	KNIFE,
 	PISTOL,
 	HEAVY,
-	Grenade
+	Grenade,
+	EnemyGrenade
 };
 
 struct OBBInfo
