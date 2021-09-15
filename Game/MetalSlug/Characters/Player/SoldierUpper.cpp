@@ -401,6 +401,36 @@ void SoldierUpper::SetClip(string name,bool isRestart)
 				name = "LThrowCrouch";
 			}
 		}
+		else if (name == "KnifeDie")
+		{
+			SetSize(Vector3(38 * player->GetSize(), 36 * player->GetSize(), 1));
+			animator->bLoop = false;
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				texture = new Texture2D(L"./_Textures/Character/Die/RKnifeDie.png");
+				name = "RKnifeDie";
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				texture = new Texture2D(L"./_Textures/Character/Die/LKnifeDie.png");
+				name = "LKnifeDie";
+			}
+		}
+		else if (name == "Die")
+		{
+			SetSize(Vector3(49 * player->GetSize(), 44 * player->GetSize(), 1));
+			animator->bLoop = false;
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				texture = new Texture2D(L"./_Textures/Character/Die/RDie.png");
+				name = "RDie";
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				texture = new Texture2D(L"./_Textures/Character/Die/LDie.png");
+				name = "LDie";
+			}
+		}
 	}
 	else
 	{
@@ -945,6 +975,36 @@ void SoldierUpper::SetClip(string name,bool isRestart)
 				name = "LMachineThrowCrouch";
 			}
 		}
+		else if (name == "KnifeDie")
+		{
+			SetSize(Vector3(38 * player->GetSize(), 44 * player->GetSize(), 1));
+			animator->bLoop = false;
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				texture = new Texture2D(L"./_Textures/Character/Die/RKnifeDie.png");
+				name = "RKnifeDie";
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				texture = new Texture2D(L"./_Textures/Character/Die/LKnifeDie.png");
+				name = "LKnifeDie";
+			}
+		}
+		else if (name == "Die")
+		{
+			SetSize(Vector3(49 * player->GetSize(), 44 * player->GetSize(), 1));
+			animator->bLoop = false;
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				texture = new Texture2D(L"./_Textures/Character/Die/RDie.png");
+				name = "RDie";
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				texture = new Texture2D(L"./_Textures/Character/Die/LDie.png");
+				name = "LDie";
+			}
+		}
 	}
 	animator->SetCurrentAnimClip(String::ToWString(name), isRestart);
 }
@@ -1283,6 +1343,17 @@ void SoldierUpper::PivotUpdate()
 			}
 		}
 		else if (player->GetUpperState() == SOLDIERSTATE::CROUCHTHROW)
+		{
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				SetPos(player->GetPosition() + Vector3(-1 * player->GetSize(), 0 * player->GetSize(), 0));
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				SetPos(player->GetPosition() + Vector3(-20 * player->GetSize(), 0 * player->GetSize(), 0));
+			}
+		}
+		else if (player->GetUpperState() == SOLDIERSTATE::DIE)
 		{
 			if (player->GetDir() == DIRECTION::RIGHT)
 			{
@@ -1773,6 +1844,17 @@ void SoldierUpper::PivotUpdate()
 			SetPos(player->GetPosition() + Vector3(-8 * player->GetSize(), 0 * player->GetSize(), 0));
 		}
 		}
+		else if (player->GetUpperState() == SOLDIERSTATE::DIE)
+		{
+			if (player->GetDir() == DIRECTION::RIGHT)
+			{
+				SetPos(player->GetPosition() + Vector3(-1 * player->GetSize(), 0 * player->GetSize(), 0));
+			}
+			else if (player->GetDir() == DIRECTION::LEFT)
+			{
+				SetPos(player->GetPosition() + Vector3(-20 * player->GetSize(), 0 * player->GetSize(), 0));
+			}
+		}
 	}
 }
 
@@ -1927,12 +2009,21 @@ void SoldierUpper::SetAnimation()
 	animClips.push_back(new AnimationClip(L"LUpsideMachineUpper", texture, 7, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	texture = new Texture2D(L"./_Textures/Character/Upside/RUpsideMachineUpper.png");
 	animClips.push_back(new AnimationClip(L"RUpsideMachineUpper", texture, 7, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
-
 	texture = new Texture2D(L"./_Textures/Character/Upside/LUpsideMachineUpperStart.png");
 	animClips.push_back(new AnimationClip(L"LUpsideMachineUpperStart", texture, 2, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() },true));
 	texture = new Texture2D(L"./_Textures/Character/Upside/RUpsideMachineUpperStart.png");
 	animClips.push_back(new AnimationClip(L"RUpsideMachineUpperStart", texture, 2, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	
+	//die
+	texture = new Texture2D(L"./_Textures/Character/Die/LKnifeDie.png");
+	animClips.push_back(new AnimationClip(L"LKnifeDie", texture, 19, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+	texture = new Texture2D(L"./_Textures/Character/Die/RKnifeDie.png");
+	animClips.push_back(new AnimationClip(L"RKnifeDie", texture, 19, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/Character/Die/LDie.png");
+	animClips.push_back(new AnimationClip(L"LDie", texture, 10, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
+	texture = new Texture2D(L"./_Textures/Character/Die/RDie.png");
+	animClips.push_back(new AnimationClip(L"RDie", texture, 10, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+
 	animator = new Animator(animClips);
 }
 

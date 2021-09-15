@@ -114,7 +114,7 @@ void Enemy::Hit(DAMAGE val,Projectile* tempProjectile)
 	static Projectile *PrevTemp;
 	Projectile *NowTemp;
 	NowTemp = tempProjectile;
-	
+	HitBy = NowTemp->GetPT();
 	if (tempProjectile == nullptr)
 	{
 		EnemyHP -= val;

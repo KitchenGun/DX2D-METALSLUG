@@ -1,6 +1,7 @@
 #pragma once
 class ProjectileManager;
 class EnemyManager;
+class Projectile;
 
 enum class PROJECTILETYPE
 {
@@ -56,6 +57,7 @@ enum class SOLDIERSTATE
 	UPSIDESTART,
 	UPSIDEATK,
 	UPSIDEATKSTART,
+	DIE,
 	//하반신
 	MOVE
 };
@@ -71,6 +73,13 @@ enum class DIRECTION
 	NONE=0,
 	LEFT,
 	RIGHT
+};
+
+enum class COLLIDER
+{
+	NONE = 0,
+	SMALL,
+	BIG
 };
 
 class Player : public PlayerAnimationRect
@@ -89,10 +98,12 @@ public://생성자 소멸자 update render
 	void Grenade();
 	void Jump();
 	void MoveFirePos(bool isFirstHandUp, bool isFirstCrouchJump);
-	void ColliderSizeChange(bool isSmall);
+	void ColliderSizeChange(COLLIDER val);
 
 	void HeavyFire();
-
+	void Hit(DAMAGE val, Projectile* tempProjectile = nullptr);
+	void HPCheck();
+	void Die();
 public://Get&Set
 	void SetUpperAni();
 	void SetLowerAni();
@@ -113,6 +124,7 @@ public://Get&Set
 	SOLDIERSTATE GetUpperState() { return soldierUpperState; }
 	PROJECTILETYPE GetProjectileType() { return PlayerProjectileType; }
 protected:
+	PROJECTILETYPE HitBy=PROJECTILETYPE::NONE;
 	HP PlayerHP = 1;
 	MOVESPEED PlayerSpeed = 350.0f;
 	STATE PlayerState = STATE::NONE;
@@ -130,6 +142,7 @@ private:
 	bool isMove = false;//움직이는 경우
 	bool isHandUp = false;//손을 위로 올린 경우
 	bool isAtk = false;//공격 상태
+	bool isDie = false;
 	
 	DIRECTION dir=DIRECTION::NONE;
 	DIRECTION BlockDir = DIRECTION::NONE;
@@ -149,7 +162,6 @@ private:
 	//root
 	Vector3 RootPos;
 	OBBInfo* obbInfo;
-
 	//사격 
 	PROJECTILETYPE PlayerProjectileType = PROJECTILETYPE::PISTOL;
 	bool isHeavyFire = false;

@@ -109,16 +109,16 @@ void Projectile::ProjectileCollisionCheck()
 								this->HitPos = this->position;
 							}
 							dynamic_cast<Grenade*>(this)->SetIsHit(true);
-							//tempP->Hit(this->GetDamage(), this);
+							tempP->Hit(this->GetDamage(), this);
 						}
 						else
 						{
-							//tempP->Hit(this->GetDamage(), this);
+							tempP->Hit(this->GetDamage(), this);
 						}
 					}
 					else
 					{
-						//tempP->Hit(this->GetDamage());
+						tempP->Hit(this->GetDamage());
 						isNeedDestroy = true;
 					}
 				}
@@ -134,16 +134,16 @@ void Projectile::ProjectileCollisionCheck()
 								this->HitPos = this->position;
 							}
 							dynamic_cast<Grenade*>(this)->SetIsHit(true);
-							//tempP->Hit(this->GetDamage(), this);
+							tempP->Hit(this->GetDamage(), this);
 						}
 						else
 						{
-							//tempP->Hit(this->GetDamage(), this);
+							tempP->Hit(this->GetDamage(), this);
 						}
 					}
 					else
 					{
-						//tempP->Hit(this->GetDamage());
+						tempP->Hit(this->GetDamage());
 						isNeedDestroy = true;
 					}
 				}

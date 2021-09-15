@@ -185,17 +185,18 @@ void EnemySoldier::ATK()
 			DeltaTime += Time::Delta();
 	}
 
-
 	if (beforeEnemyState == ENEMYSOLDIERSTATE::KNIFE)
 	{
 		if (EnemyAnimator->GetIndex() == 10)
 		{//데미지 주는 구간
-			cout << epm << endl;
+			epm->AddBullet(firePos.Pos-Vector3(0,20*3,0), Vector3(24 * 3, 24 * 3, 0), 0, dir, PROJECTILETYPE::KNIFE);
+			isFirstCreateProjectile = true;
 		}
-		else if (EnemyAnimator->GetIndex() >= 12)
+		else if (!EnemyAnimator->isFirstPlay && enemyState == ENEMYSOLDIERSTATE::KNIFE)
 		{
-			beforeEnemyState = ENEMYSOLDIERSTATE::THROW;
+			beforeEnemyState = ENEMYSOLDIERSTATE::KNIFE;
 			enemyState = ENEMYSOLDIERSTATE::IDLE;
+			isFirstCreateProjectile = false;
 		}
 	}
 	else if (beforeEnemyState == ENEMYSOLDIERSTATE::THROW)

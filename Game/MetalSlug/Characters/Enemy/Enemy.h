@@ -48,6 +48,8 @@ protected:
 	OBBInfo* obbInfo;
 	HP EnemyHP = 0;
 	ENEMYTYPE enemyType = ENEMYTYPE::NONE;
+	PROJECTILETYPE HitBy = PROJECTILETYPE::NONE;
+
 	//이동 속도
 	SPEED walkSpeed=0;
 	SPEED runSpeed=0;

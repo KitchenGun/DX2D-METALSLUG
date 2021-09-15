@@ -40,7 +40,10 @@ void Player::Update()
 		upperBody->SetisPistol(false);
 	}
 
-	Input(); 
+	if (!isDie)
+	{
+		Input();
+	}
 	lowerBody->Update();
 	upperBody->Update();
 	//jump
@@ -281,11 +284,11 @@ void Player::Input()
 		//collider 크기 조절
 		if (!isGround)
 		{
-			ColliderSizeChange(false);
+			ColliderSizeChange(COLLIDER::BIG);
 		}
 		else
 		{
-			ColliderSizeChange(true);
+			ColliderSizeChange(COLLIDER::SMALL);
 		}
 		if (!upperBody->GetisPistol())
 		{
@@ -325,7 +328,7 @@ void Player::Input()
 	else
 	{
 		isCrouch = false;
-		ColliderSizeChange(false);
+		ColliderSizeChange(COLLIDER::BIG);
 	}
 
 	//firepos세팅
@@ -624,7 +627,6 @@ void Player::Input()
 			soldierUpperState = SOLDIERSTATE::THROW;
 		}
 	}
-	
 
 	//하반신 상태 지정
 	if (!isGround)
@@ -650,6 +652,9 @@ void Player::Input()
 	{
 		soldierLowerState = SOLDIERSTATE::IDLE;
 	}
+
+	//체력 체크
+	HPCheck();
 
 	//ani세팅
 	SetLowerAni();
@@ -1165,15 +1170,19 @@ void Player::MoveFirePos(bool isFirstHandUp, bool isFirstCrouchJump)
 	}
 }
 
-void Player::ColliderSizeChange(bool isSmall)
+void Player::ColliderSizeChange(COLLIDER val)
 {
-	if (isSmall)
+	if (val==COLLIDER::SMALL)
 	{
 		this->size = Vector3(90, 25 * 3, 1);
 	}
-	else
+	else if(val == COLLIDER::BIG)
 	{
 		this->size = Vector3(90, 40 * 3, 1);
+	}
+	else if (val == COLLIDER::NONE)
+	{
+		this->size = Vector3(0,0,0);
 	}
 
 	D3DXMatrixScaling(&S, this->size.x, this->size.y, this->size.z);
@@ -1201,6 +1210,42 @@ void Player::HeavyFire()
 		else
 			deltaTime += Time::Delta();
 	}
+}
+
+void Player::Hit(DAMAGE val, Projectile* tempProjectile)
+{
+	static Projectile* PrevTemp;
+	Projectile* NowTemp;
+	NowTemp = tempProjectile;
+	HitBy = NowTemp->GetPT();
+	if (tempProjectile == nullptr)
+	{
+		PlayerHP -= val;
+		return;
+	}
+
+	if (NowTemp != PrevTemp)
+	{
+		PlayerHP -= val;
+	}
+	PrevTemp = NowTemp;
+
+}
+
+void Player::HPCheck()
+{
+	if (PlayerHP <= 0)
+	{
+		Die();
+	}
+}
+
+void Player::Die()
+{
+	isDie = true;
+	ColliderSizeChange(COLLIDER::NONE);
+	soldierUpperState = SOLDIERSTATE::DIE;
+	soldierLowerState = SOLDIERSTATE::NONE;
 }
 
 
@@ -1271,6 +1316,16 @@ void Player::SetUpperAni()
 			break;
 		case SOLDIERSTATE::UPSIDEATKSTART:
 			upperBody->SetClip("UpsideATKStart");
+			break;
+		case SOLDIERSTATE::DIE:
+			if (HitBy == PROJECTILETYPE::KNIFE)
+			{
+				upperBody->SetClip("KnifeDie");
+			}
+			else
+			{
+				upperBody->SetClip("Die");
+			}
 			break;
 		default:
 			break;

@@ -144,7 +144,7 @@ void GrenadierAni::PivotUpdate()
 		}
 		else if (dir == DIRECTION::LEFT)
 		{
-			SetPos(position + Vector3(0 * IMGsize, 0 * IMGsize, 0));
+			SetPos(position + Vector3(-20 * IMGsize, 0 * IMGsize, 0));
 		}
 		break;
 	case ENEMYSOLDIERSTATE::THROW:
