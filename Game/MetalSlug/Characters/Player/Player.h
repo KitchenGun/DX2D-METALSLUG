@@ -99,12 +99,12 @@ public://생성자 소멸자 update render
 	void Jump();
 	void MoveFirePos(bool isFirstHandUp, bool isFirstCrouchJump);
 	void ColliderSizeChange(COLLIDER val);
-
 	void HeavyFire();
 	void Hit(DAMAGE val, Projectile* tempProjectile = nullptr);
 	void HPCheck();
 	void Die();
 public://Get&Set
+	bool GetisDestroy() { return isDestroy; }
 	void SetUpperAni();
 	void SetLowerAni();
 	float GetSize() { return IMGsize; }
@@ -143,6 +143,7 @@ private:
 	bool isHandUp = false;//손을 위로 올린 경우
 	bool isAtk = false;//공격 상태
 	bool isDie = false;
+	bool isDestroy = false;
 	
 	DIRECTION dir=DIRECTION::NONE;
 	DIRECTION BlockDir = DIRECTION::NONE;

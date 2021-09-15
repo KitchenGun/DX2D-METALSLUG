@@ -44,6 +44,17 @@ void Player::Update()
 	{
 		Input();
 	}
+	else
+	{
+		static float DeltaTime = 0;
+
+		if (DeltaTime > 2.0f)
+		{
+			isDestroy = true;
+		}
+		else
+			DeltaTime += Time::Delta();
+	}
 	lowerBody->Update();
 	upperBody->Update();
 	//jump

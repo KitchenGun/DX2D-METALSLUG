@@ -4,7 +4,6 @@
 ProjectileManager::ProjectileManager(bool isPM)
 	:bIsPM(isPM)
 {
-	cout << bIsPM << endl;
 }
 
 ProjectileManager::~ProjectileManager()

@@ -30,6 +30,11 @@ void PlayerManager::Update()
 		{
 			tempPlayer->SetisGround(Math::GroundIntersect(tempPlayer, GroundList));
 			tempPlayer->Update();
+			if (tempPlayer->GetisDestroy())
+			{
+				RemovePlayer(tempPlayer);
+				break;
+			}
 		}
 	}
 }

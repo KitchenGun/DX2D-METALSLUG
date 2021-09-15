@@ -184,19 +184,35 @@ void EnemySoldier::ATK()
 		else
 			DeltaTime += Time::Delta();
 	}
-
 	if (beforeEnemyState == ENEMYSOLDIERSTATE::KNIFE)
 	{
 		if (EnemyAnimator->GetIndex() == 10)
 		{//데미지 주는 구간
-			epm->AddBullet(firePos.Pos-Vector3(0,20*3,0), Vector3(24 * 3, 24 * 3, 0), 0, dir, PROJECTILETYPE::KNIFE);
+			if (dir == DIRECTION::LEFT)
+			{
+				epm->AddBullet(firePos.Pos - Vector3(20, 20 * 3, 0), Vector3(35 * 3, 20 * 3, 0), 0, dir, PROJECTILETYPE::KNIFE);
+			}
+			else if (dir == DIRECTION::RIGHT)
+			{
+				epm->AddBullet(firePos.Pos - Vector3(20, 20 * 3, 0), Vector3(-20 * 3, 20 * 3, 0), 0, dir, PROJECTILETYPE::KNIFE);
+			}
 			isFirstCreateProjectile = true;
+			
 		}
 		else if (!EnemyAnimator->isFirstPlay && enemyState == ENEMYSOLDIERSTATE::KNIFE)
 		{
 			beforeEnemyState = ENEMYSOLDIERSTATE::KNIFE;
 			enemyState = ENEMYSOLDIERSTATE::IDLE;
 			isFirstCreateProjectile = false;
+
+			for (Projectile* temp : epm->GetList())
+			{
+				if (temp->GetPT() == PROJECTILETYPE::KNIFE)
+				{
+					epm->RemoveProjectile(temp);
+				}
+			}
+			nextEnemyState = ENEMYSOLDIERSTATE::IDLE;
 		}
 	}
 	else if (beforeEnemyState == ENEMYSOLDIERSTATE::THROW)
@@ -214,6 +230,7 @@ void EnemySoldier::ATK()
 			beforeEnemyState = ENEMYSOLDIERSTATE::THROW;
 			enemyState= ENEMYSOLDIERSTATE::IDLE;
 			isFirstCreateProjectile = false;
+			nextEnemyState = ENEMYSOLDIERSTATE::IDLE;
 		}
 	}
 }
@@ -222,7 +239,7 @@ void EnemySoldier::MoveFirePos()
 {
 	if (dir == DIRECTION::LEFT)
 	{
-		firePos.Pos = position + Vector3(11 * 3, 55 * 3, 0);
+		firePos.Pos = position + Vector3(15 * 3, 55 * 3, 0);
 		firePos.Rotation = 90.0f;
 	}
 	else if (dir == DIRECTION::RIGHT)
@@ -244,68 +261,68 @@ void EnemySoldier::ScoutRangeCheck()
 		for (Player* tempP : ppm->GetPlayerList())
 		{
 			if (Math::Distance(tempP->GetPointPos(), r.Point) < 800)
-			{
-				if (dir == DIRECTION::LEFT)
 				{
-					if (r.Point.x - tempP->GetPointPos().x <= 0)
-					{//플레이어보다 왼쪽에 있을 경우
-						dir = DIRECTION::LEFT;
-						enemyState = ENEMYSOLDIERSTATE::WALK;
+					if (dir == DIRECTION::LEFT)
+					{
+						if (r.Point.x - tempP->GetPointPos().x <= 0)
+						{//플레이어보다 왼쪽에 있을 경우
+							dir = DIRECTION::LEFT;
+							enemyState = ENEMYSOLDIERSTATE::WALK;
+						}
+						else
+						{//플레이어보다 오른쪽에 있을 경우
+							dir = DIRECTION::LEFT;
+							if (tempP == target)
+							{
+								enemyState = ENEMYSOLDIERSTATE::IDLE;
+							}
+							else
+							{
+								enemyState = ENEMYSOLDIERSTATE::SURPRISE;
+							}
+							//공격하도록 제작
+							if (Math::Distance(tempP->GetPointPos(), r.Point) < 150)
+							{
+								nextEnemyState = ENEMYSOLDIERSTATE::KNIFE;
+							}
+							else
+							{
+								nextEnemyState = ENEMYSOLDIERSTATE::THROW;
+							}
+						}
 					}
-					else
-					{//플레이어보다 오른쪽에 있을 경우
-						dir = DIRECTION::LEFT;
-						if (tempP == target)
-						{
-							enemyState = ENEMYSOLDIERSTATE::IDLE;
+					else if (dir == DIRECTION::RIGHT)
+					{
+						if (r.Point.x - tempP->GetPointPos().x <= 0)
+						{//플레이어보다 왼쪽에 있을 경우
+							dir = DIRECTION::RIGHT;
+							if (tempP == target)
+							{
+								enemyState = ENEMYSOLDIERSTATE::IDLE;
+							}
+							else
+							{
+								enemyState = ENEMYSOLDIERSTATE::SURPRISE;
+							}
+							//공격하도록 제작
+							if (Math::Distance(tempP->GetPointPos(), r.Point) < 150)
+							{
+								nextEnemyState = ENEMYSOLDIERSTATE::KNIFE;
+							}
+							else
+							{
+								nextEnemyState = ENEMYSOLDIERSTATE::THROW;
+							}
 						}
 						else
-						{
+						{//플레이어보다 오른쪽에 있을 경우
+							dir = DIRECTION::LEFT;
 							enemyState = ENEMYSOLDIERSTATE::SURPRISE;
-						}
-						//공격하도록 제작
-						if (Math::Distance(tempP->GetPointPos(), r.Point) < 150)
-						{
-							nextEnemyState = ENEMYSOLDIERSTATE::KNIFE;
-						}
-						else
-						{
-							nextEnemyState = ENEMYSOLDIERSTATE::THROW;
+							//도망치도록 제작
+							nextEnemyState = ENEMYSOLDIERSTATE::RUN;
 						}
 					}
 				}
-				else if (dir == DIRECTION::RIGHT)
-				{
-					if (r.Point.x - tempP->GetPointPos().x <= 0)
-					{//플레이어보다 왼쪽에 있을 경우
-						dir = DIRECTION::RIGHT;
-						if (tempP == target)
-						{
-							enemyState = ENEMYSOLDIERSTATE::IDLE;
-						}
-						else
-						{
-							enemyState = ENEMYSOLDIERSTATE::SURPRISE;
-						}
-						//공격하도록 제작
-						if (Math::Distance(tempP->GetPointPos(), r.Point) < 150)
-						{
-							nextEnemyState = ENEMYSOLDIERSTATE::KNIFE;
-						}
-						else
-						{
-							nextEnemyState = ENEMYSOLDIERSTATE::THROW;
-						}
-					}
-					else
-					{//플레이어보다 오른쪽에 있을 경우
-						dir = DIRECTION::LEFT;
-						enemyState = ENEMYSOLDIERSTATE::SURPRISE;
-						//도망치도록 제작
-						nextEnemyState = ENEMYSOLDIERSTATE::RUN;
-					}
-				}
-			}
 			target = tempP;
 		}
 	}
