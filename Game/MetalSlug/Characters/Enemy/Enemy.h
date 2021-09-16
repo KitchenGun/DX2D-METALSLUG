@@ -60,7 +60,7 @@ protected:
 	//πÊ«‚
 	FirePos firePos;
 	DIRECTION dir = DIRECTION::LEFT;
-
+	Projectile* PrevTemp=nullptr;
 	//playermanager
 	PlayerManager* ppm;
 	//enemyprojectileManager

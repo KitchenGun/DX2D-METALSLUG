@@ -112,7 +112,6 @@ void Enemy::Die()
 
 void Enemy::Hit(DAMAGE val,Projectile* tempProjectile)
 {
-	static Projectile *PrevTemp;
 	Projectile *NowTemp;
 	NowTemp = tempProjectile;
 	HitBy = tempProjectile->GetPT();
@@ -121,13 +120,12 @@ void Enemy::Hit(DAMAGE val,Projectile* tempProjectile)
 		EnemyHP -= val;
 		return;
 	}
-
-	if (NowTemp!=PrevTemp)
+	else if (NowTemp!=PrevTemp)
 	{
 		EnemyHP -= val;
 	}
 	PrevTemp = NowTemp;
-	
+
 }
 
 void Enemy::ColliderSizeChange(COLLIDER val)
