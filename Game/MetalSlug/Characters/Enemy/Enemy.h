@@ -21,7 +21,7 @@ public:
 	//사망&피격
 	virtual void Die();
 	void Hit(DAMAGE val, Projectile* tempProjectile=nullptr);
-
+	void ColliderSizeChange(COLLIDER val);
 	//Get&Set
 	void SetisGround(bool val) { isGround = val; }
 	bool GetisGround() { return isGround; }
@@ -29,10 +29,13 @@ public:
 	OBBInfo* GetObbInfo() { return obbInfo; }
 	void SetPM(PlayerManager* val) { ppm = val; }
 	void SetEPM(ProjectileManager* val) { epm = val; }
+	bool GetisNeedDestroy() { return isNeedDestroy; }
 	DIRECTION GetDir() { return dir; }
 protected:
 	bool isGround = false;//지상 판정
 	Vector3 RootPos;
+	bool isDie=false;
+	bool isNeedDestroy=false;
 
 	//점프 수치
 	JUMPPOW PlayerJumpPow = 0;
@@ -46,7 +49,7 @@ protected:
 	
 	//Obb 지면 충돌에 필요한 정보
 	OBBInfo* obbInfo;
-	HP EnemyHP = 0;
+	HP EnemyHP = 1;
 	ENEMYTYPE enemyType = ENEMYTYPE::NONE;
 	PROJECTILETYPE HitBy = PROJECTILETYPE::NONE;
 

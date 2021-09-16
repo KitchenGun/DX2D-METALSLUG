@@ -13,7 +13,7 @@ public:
 
 	void SetGroundList(vector<Ground*> val) { GroundList = val; }
 	list<Player*> GetPlayerList() { return playerList; }
-
+	Player* GetPlayer() { return player; }
 private:
 	list<Player*> playerList;
 	list<Player*>::iterator iter;
@@ -21,4 +21,6 @@ private:
 	vector<Ground*> GroundList;
 	ProjectileManager* PPM = nullptr;
 	EnemyManager* EM = nullptr;
+
+	Player* player;
 };

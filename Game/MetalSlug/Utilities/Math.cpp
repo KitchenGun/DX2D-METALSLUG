@@ -152,23 +152,21 @@ bool Math::GroundIntersect(Enemy* e1, vector<Ground*> GL)
 	static bool value = false;
 	for (Ground* tempGroundOBj : GL)
 	{
-		//수정 필요 로컬 좌표가 이상함
-		if (e1->GetPosition().x > tempGroundOBj->GetTransformedCoord().LT.x && e1->GetPosition().x < tempGroundOBj->GetTransformedCoord().RB.x)
+		if (tempGroundOBj->GetisObb())
 		{
-			if (tempGroundOBj->GetisObb())
-			{
-				value = GroundObbIntersect(e1, tempGroundOBj);
-				if (value == true)
-					return true;
-			}
-			else
-			{
-				//e1->GetObbInfo()->isObb = false;
-				value = Intersect(e1, tempGroundOBj);
-			}
+			value = GroundObbIntersect(e1, tempGroundOBj);
+			if (value == true)
+				return true;
 		}
+		else
+		{
+			e1->GetObbInfo()->isObb = false;
+			value = GroundIntersect(e1, tempGroundOBj);
+			if (value == true)
+				return true;
+		}
+		e1->GetObbInfo()->isObb = false;
 	}
-	//플레이어 좌표가 이상한 경우
 	return value;
 }
 

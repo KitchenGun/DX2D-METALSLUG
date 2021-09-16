@@ -4,7 +4,7 @@
 Enemy::Enemy(Vector3 position, Vector3 size, float rotation, ENEMYTYPE enemyType)
 	:PlayerAnimationRect(position, size, rotation)
 {
-
+	ColliderSizeChange(COLLIDER::BIG);
 }
 
 Enemy::~Enemy()
@@ -107,6 +107,7 @@ void Enemy::Jump()
 void Enemy::Die()
 {
 	//자식 객체에서 정의
+	ColliderSizeChange(COLLIDER::NONE);
 }
 
 void Enemy::Hit(DAMAGE val,Projectile* tempProjectile)
@@ -114,7 +115,7 @@ void Enemy::Hit(DAMAGE val,Projectile* tempProjectile)
 	static Projectile *PrevTemp;
 	Projectile *NowTemp;
 	NowTemp = tempProjectile;
-	HitBy = NowTemp->GetPT();
+	HitBy = tempProjectile->GetPT();
 	if (tempProjectile == nullptr)
 	{
 		EnemyHP -= val;
@@ -127,6 +128,28 @@ void Enemy::Hit(DAMAGE val,Projectile* tempProjectile)
 	}
 	PrevTemp = NowTemp;
 	
+}
+
+void Enemy::ColliderSizeChange(COLLIDER val)
+{
+	if (val == COLLIDER::SMALL)
+	{
+		this->size = Vector3(90, 25 * 3, 1);
+	}
+	else if (val == COLLIDER::BIG)
+	{
+		this->size = Vector3(90, 40 * 3, 1);
+	}
+	else if (val == COLLIDER::NONE)
+	{
+		this->size = Vector3(1, 1, 1);
+	}
+
+	D3DXMatrixScaling(&S, this->size.x, this->size.y, this->size.z);
+
+	world = S * R * T;
+	WB->SetWorld(world);
+	TransformVertices();
 }
 
 

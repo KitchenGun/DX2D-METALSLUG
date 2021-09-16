@@ -52,11 +52,11 @@ void PlayerManager::Render()
 
 void PlayerManager::AddPlayer(Vector3 position)
 {
-	Player* tempPlayer = nullptr;
-	tempPlayer = new Player(position, Vector3(30 * 3, 40 * 3, 1), 0);
-	tempPlayer->SetPM(PPM);
-	tempPlayer->SetEM(EM);
-	playerList.push_back(tempPlayer);
+	player = nullptr;
+	player = new Player(position, Vector3(30 * 3, 40 * 3, 1), 0);
+	player->SetPM(PPM);
+	player->SetEM(EM);
+	playerList.push_back(player);
 }
 
 void PlayerManager::RemovePlayer(Player* tempPlayer)

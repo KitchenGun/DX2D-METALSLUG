@@ -25,19 +25,21 @@ void Editer::Init()
 	PlayerPM = new ProjectileManager();
 	EnemyPM = new ProjectileManager(false);
 	EnemyM = new EnemyManager(EnemyPM);
-	PlayerM = new PlayerManager(PlayerPM,EnemyM);
+	PlayerM = new PlayerManager(PlayerPM, EnemyM);
 	EnemyM->SetPM(PlayerM);
-	PlayerPM->SetGroundList(GroundList);
-	EnemyPM->SetGroundList(GroundList);
-	EnemyM->SetGroundList(GroundList);
 	PlayerPM->SetTargetM(EnemyM);
 	EnemyPM->SetTargetM(PlayerM);
 	PlayerM->AddPlayer(Vector3(200, 500, 0));
+
+	EnemyM->AddEnemy(Vector3(600, 500, 0), ENEMYTYPE::Grenadier);
+
+	GameM = new GameManager(PlayerM, EnemyM);
+
+	LoadGroundTile(L"./GroundData/Stage1.data");
 	PlayerM->SetGroundList(GroundList);
-
-	EnemyM->AddEnemy(Vector3(600, 400, 0), ENEMYTYPE::Grenadier);
-
-	//Camera::Get()->Move(player->GetPosition() - Vector3(200, 400, 0));
+	EnemyM->SetGroundList(GroundList);
+	EnemyPM->SetGroundList(GroundList);
+	PlayerPM->SetGroundList(GroundList);
 }
 
 void Editer::Update()
@@ -59,7 +61,7 @@ void Editer::Update()
 	EnemyM->Update();
 	PlayerM->Update(); 
 
-	//Camera::Get()->Move(player->GetPosition() - Vector3(200, 100, 0));
+	GameM->Update();
 }
 
 void Editer::PreRender()
@@ -138,6 +140,7 @@ void Editer::LoadGroundTile(const wstring& path)
 	}
 	else
 	{
+		cout << String::ToString(path) << endl;
 		if (GroundList.empty()) return;
 		FileStream* in = new FileStream(String::ToString(path), FILE_STREAM_READ);
 		int size = in->Read<UINT>();

@@ -22,6 +22,11 @@ void EnemyManager::Update()
 		{
 			tempEnemy->SetisGround(Math::GroundIntersect(tempEnemy, GroundList));
 			tempEnemy->Update();
+			if (tempEnemy->GetisNeedDestroy())
+			{
+				RemoveEnemy(tempEnemy);
+				break;
+			}
 		}
 	}
 }

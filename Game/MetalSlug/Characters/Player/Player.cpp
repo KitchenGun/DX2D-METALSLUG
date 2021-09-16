@@ -50,6 +50,7 @@ void Player::Update()
 
 		if (DeltaTime > 2.0f)
 		{
+			DeltaTime = 0;
 			isDestroy = true;
 		}
 		else

@@ -157,6 +157,7 @@
     <ClCompile Include="Characters\Enemy\Manager\EnemyManager.cpp" />
     <ClCompile Include="Characters\Enemy\Soldier\EnemySoldier.cpp" />
     <ClCompile Include="Characters\Enemy\Soldier\GrenadierAni.cpp" />
+    <ClCompile Include="Characters\GameManager.cpp" />
     <ClCompile Include="Characters\Object\Object.cpp" />
     <ClCompile Include="Characters\Object\Rock\Rock1.cpp" />
     <ClCompile Include="Characters\Player\Manager\PlayerManager.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="Characters\Enemy\Manager\EnemyManager.h" />
     <ClInclude Include="Characters\Enemy\Soldier\EnemySoldier.h" />
     <ClInclude Include="Characters\Enemy\Soldier\GrenadierAni.h" />
+    <ClInclude Include="Characters\GameManager.h" />
     <ClInclude Include="Characters\Object\Object.h" />
     <ClInclude Include="Characters\Object\Rock\Rock1.h" />
     <ClInclude Include="Characters\Player\Manager\PlayerManager.h" />

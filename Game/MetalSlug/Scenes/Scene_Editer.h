@@ -27,4 +27,5 @@ private:
 	ProjectileManager* PlayerPM = nullptr;
 	ProjectileManager* EnemyPM = nullptr;
 	EnemyManager* EnemyM = nullptr;
+	GameManager* GameM = nullptr;
 };
