@@ -28,7 +28,10 @@ void PlayerManager::Update()
 	{
 		if (tempPlayer != nullptr)
 		{
-			tempPlayer->SetisGround(Math::GroundIntersect(tempPlayer, GroundList));
+			if (!tempPlayer->GetisObject())
+			{
+				tempPlayer->SetisGround(Math::GroundIntersect(tempPlayer, GroundList));
+			}
 			tempPlayer->Update();
 			if (tempPlayer->GetisDestroy())
 			{

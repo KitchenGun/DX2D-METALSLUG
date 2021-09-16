@@ -18,5 +18,5 @@ private:
 	
 	//단계 phase(카메라 움직임 멈춤)
 	int phase = 0;
-	float SpawnRate = 2;
+	float SpawnRate = 1;
 };

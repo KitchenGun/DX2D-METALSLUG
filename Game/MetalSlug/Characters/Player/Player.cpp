@@ -61,8 +61,9 @@ void Player::Update()
 	//jump
 	Jump();
 
-	if (isGround)
+	if (isGround||isObject)
 	{
+		isGround = true;
 		isJumpEnd = false;
 		nJumpCount = 0;
 	}

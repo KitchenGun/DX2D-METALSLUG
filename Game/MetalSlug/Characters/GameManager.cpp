@@ -26,13 +26,11 @@ void GameManager::AddPlayer(Vector3 Pos)
 
 void GameManager::EnemySpawn()
 {
-	static int t = 0;
 	static float DeltaTime = 0;
-	if (DeltaTime > SpawnRate&&t<=4)
+	if (DeltaTime > SpawnRate)
 	{
 		AddEnemy(ENEMYTYPE::Grenadier,PM->GetPlayer()->GetPosition() + Vector3(1300, 300, 0));
 		DeltaTime = 0;
-		t++;
 	}
 	else
 		DeltaTime += Time::Delta();

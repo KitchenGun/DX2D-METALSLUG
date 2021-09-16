@@ -19,8 +19,7 @@ void Editer::Init()
 	Map->SetSRV(L"./_Textures/Map/Map.png");
 	//ground
 	InputGround();
-	//object = new Rock1(Vector3(300, 150, 0), Vector3(64 * 4, 45 * 4, 1), 0);
-	//object->SetTarget(player);
+	object = new Rock1(Vector3(400, 150, 0), Vector3(64 * 4, 45 * 4, 1), 0);
 	//manager
 	PlayerPM = new ProjectileManager();
 	EnemyPM = new ProjectileManager(false);
@@ -40,6 +39,8 @@ void Editer::Init()
 	EnemyM->SetGroundList(GroundList);
 	EnemyPM->SetGroundList(GroundList);
 	PlayerPM->SetGroundList(GroundList);
+	object->SetTarget(PlayerM);
+	object->SetTarget(EnemyM);
 }
 
 void Editer::Update()
@@ -49,7 +50,7 @@ void Editer::Update()
 		InputGround();
 	}
 	//충돌 처리
-	//object->Update();
+	object->Update();
 
 	for (Ground* tempGround : GroundList)
 	{
@@ -72,7 +73,7 @@ void Editer::Render()
 {//랜더 순서 명확하게하기
 
 	Map->Render();
-	//object->Render();
+	object->Render();
 	//manager
 	PlayerPM->Render();
 	EnemyPM->Render();

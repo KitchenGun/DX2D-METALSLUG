@@ -12,9 +12,9 @@ public:
 
 	void PlayerBlock();
 	void EnemyBlock();
-	void SetTarget(Player* val) { target = val; }
-
+	void SetTarget(PlayerManager* val) { target = val; }
+	void SetTarget(EnemyManager* val) { EM = val; }
 private:
 	EnemyManager* EM;
-	Player* target;
+	PlayerManager* target;
 };

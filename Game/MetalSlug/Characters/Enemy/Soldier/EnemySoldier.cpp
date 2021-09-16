@@ -128,22 +128,34 @@ void EnemySoldier::Move()
 	{
 		if (dir == DIRECTION::LEFT)
 		{
-			Enemy::Move(Vector3(-walkSpeed, 0, 0));
+			if (BlockDir != DIRECTION::LEFT)
+			{
+				Enemy::Move(Vector3(-walkSpeed, 0, 0));
+			}
 		}
 		else if (dir == DIRECTION::RIGHT)
 		{
-			Enemy::Move(Vector3(walkSpeed, 0, 0));
+			if (BlockDir != DIRECTION::RIGHT)
+			{
+				Enemy::Move(Vector3(walkSpeed, 0, 0));
+			}
 		}
 	}
 	else if (enemyState == ENEMYSOLDIERSTATE::RUN)
 	{
 		if (dir == DIRECTION::LEFT)
 		{
-			Enemy::Move(Vector3(-runSpeed, 0, 0));
+			if (BlockDir != DIRECTION::LEFT)
+			{
+				Enemy::Move(Vector3(-runSpeed, 0, 0));
+			}
 		}
 		else if (dir == DIRECTION::RIGHT)
 		{
-			Enemy::Move(Vector3(runSpeed, 0, 0));
+			if (BlockDir != DIRECTION::RIGHT)
+			{
+				Enemy::Move(Vector3(runSpeed, 0, 0));
+			}
 		}
 	}
 }

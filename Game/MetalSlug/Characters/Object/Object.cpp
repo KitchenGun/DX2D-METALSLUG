@@ -17,6 +17,7 @@ void Object::Update()
 {
 	PlayerAnimationRect::Update();
 	PlayerBlock();
+	EnemyBlock();
 }
 
 void Object::Render()
@@ -26,55 +27,59 @@ void Object::Render()
 
 void Object::PlayerBlock()
 {
-	if (Math::Intersect(this, target))
+	if (Math::Intersect(this, target->GetPlayer()))
 	{
-		if (Math::GroundIntersect(target, this))
+		if (Math::GroundIntersect(target->GetPlayer(), this))
 		{//오브젝트로 인한 바닥으로 충돌이 되는 경우
-			target->SetisGround(true);
+			target->GetPlayer()->SetisObject(true);
 			return;
 		}
-		else if (target->GetBlockDir() == DIRECTION::NONE)
+		else if (target->GetPlayer()->GetBlockDir() == DIRECTION::NONE)
 		{
-			if (this->GetTransformedCoord().LT.x > target->GetTransformedCoord().LT.x && this->GetTransformedCoord().LT.x < target->GetTransformedCoord().RB.x)
+			if (this->GetTransformedCoord().LT.x > target->GetPlayer()->GetTransformedCoord().LT.x && this->GetTransformedCoord().LT.x < target->GetPlayer()->GetTransformedCoord().RB.x)
 			{
-				target->SetBlockDir(DIRECTION::RIGHT);
+				target->GetPlayer()->SetBlockDir(DIRECTION::RIGHT);
 			}
-			else if (this->GetTransformedCoord().RB.x > target->GetTransformedCoord().LT.x && this->GetTransformedCoord().RB.x < target->GetTransformedCoord().RB.x)
+			else if (this->GetTransformedCoord().RB.x > target->GetPlayer()->GetTransformedCoord().LT.x && this->GetTransformedCoord().RB.x < target->GetPlayer()->GetTransformedCoord().RB.x)
 			{
-				target->SetBlockDir(DIRECTION::LEFT);
+				target->GetPlayer()->SetBlockDir(DIRECTION::LEFT);
 			}
 		}
+		target->GetPlayer()->SetisObject(false);
 	}
 	else
 	{
-		target->SetBlockDir(DIRECTION::NONE);
+		target->GetPlayer()->SetisObject(false);
+		target->GetPlayer()->SetBlockDir(DIRECTION::NONE);
 	}
 }
 
 void Object::EnemyBlock()
 {
-	if (Math::Intersect(this, target))
+	for (Enemy* tempE : EM->GetEnemyList())
 	{
-		if (Math::GroundIntersect(target, this))
-		{//오브젝트로 인한 바닥으로 충돌이 되는 경우
-			target->SetisGround(true);
-			return;
-		}
-		else if (target->GetBlockDir() == DIRECTION::NONE)
+		if (Math::Intersect(this, tempE))
 		{
-			if (this->GetTransformedCoord().LT.x > target->GetTransformedCoord().LT.x && this->GetTransformedCoord().LT.x < target->GetTransformedCoord().RB.x)
-			{
-				target->SetBlockDir(DIRECTION::RIGHT);
+			if (Math::GroundIntersect(tempE, this))
+			{//오브젝트로 인한 바닥으로 충돌이 되는 경우
+				tempE->SetisGround(true);
 			}
-			else if (this->GetTransformedCoord().RB.x > target->GetTransformedCoord().LT.x && this->GetTransformedCoord().RB.x < target->GetTransformedCoord().RB.x)
+			if (tempE->GetBlockDir() == DIRECTION::NONE)
 			{
-				target->SetBlockDir(DIRECTION::LEFT);
+				if (this->GetTransformedCoord().LT.x > tempE->GetTransformedCoord().LT.x && this->GetTransformedCoord().LT.x < tempE->GetTransformedCoord().RB.x)
+				{
+					tempE->SetBlockDir(DIRECTION::RIGHT);
+				}
+				else if (this->GetTransformedCoord().RB.x > tempE->GetTransformedCoord().LT.x && this->GetTransformedCoord().RB.x < tempE->GetTransformedCoord().RB.x)
+				{
+					tempE->SetBlockDir(DIRECTION::LEFT);
+				}
 			}
 		}
-	}
-	else
-	{
-		target->SetBlockDir(DIRECTION::NONE);
+		else
+		{
+			tempE->SetBlockDir(DIRECTION::NONE);
+		}
 	}
 }
 

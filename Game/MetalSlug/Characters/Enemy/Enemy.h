@@ -22,7 +22,10 @@ public:
 	virtual void Die();
 	void Hit(DAMAGE val, Projectile* tempProjectile=nullptr);
 	void ColliderSizeChange(COLLIDER val);
+
 	//Get&Set
+	void SetBlockDir(DIRECTION val) { BlockDir = val; }
+	DIRECTION GetBlockDir() { return BlockDir; }
 	void SetisGround(bool val) { isGround = val; }
 	bool GetisGround() { return isGround; }
 	Vector3 GetRootPos() { return RootPos; }
@@ -60,6 +63,7 @@ protected:
 	//πÊ«‚
 	FirePos firePos;
 	DIRECTION dir = DIRECTION::LEFT;
+	DIRECTION BlockDir = DIRECTION::NONE;
 	Projectile* PrevTemp=nullptr;
 	//playermanager
 	PlayerManager* ppm;

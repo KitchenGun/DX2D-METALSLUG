@@ -117,6 +117,8 @@ public://Get&Set
 	bool GetisJump() { return isJump; }
 	Vector3 GetRootPos() { return RootPos; }
 	void SetisGround(bool val) { isGround = val; }
+	bool GetisObject() { return isObject; }
+	void SetisObject(bool val) { isObject = val; }
 	void SetPM(ProjectileManager* val) { PM = val; }
 	void SetEM(EnemyManager* val) { EM = val; }
 	OBBInfo* GetObbInfo() { return obbInfo; }
@@ -136,7 +138,7 @@ private:
 	Animator* upperBodyAnimator = nullptr;
 
 	float IMGsize = 3;
-
+	bool isObject = false;
 	bool isGround = false;//지상 판정
 	bool isCrouch = false;//앉기 키를 누른경우
 	bool isMove = false;//움직이는 경우
