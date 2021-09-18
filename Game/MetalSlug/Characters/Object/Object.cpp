@@ -16,8 +16,6 @@ Object::~Object()
 void Object::Update()
 {
 	PlayerAnimationRect::Update();
-	PlayerBlock();
-	EnemyBlock();
 }
 
 void Object::Render()
@@ -45,7 +43,6 @@ void Object::PlayerBlock()
 				target->GetPlayer()->SetBlockDir(DIRECTION::LEFT);
 			}
 		}
-		target->GetPlayer()->SetisObject(false);
 	}
 	else
 	{

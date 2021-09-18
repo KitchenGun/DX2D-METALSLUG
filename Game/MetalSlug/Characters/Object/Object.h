@@ -1,6 +1,4 @@
 #pragma once
-class EnemyManager;
-
 class Object:public PlayerAnimationRect
 {
 public:

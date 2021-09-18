@@ -17,9 +17,16 @@ void Editer::Init()
 {
 	Map = new TextureRect(Vector3(4153 * 4 / 2, 306 * 4 / 2, 0), Vector3(4153 * 4, 306 * 4, 1), 0);
 	Map->SetSRV(L"./_Textures/Map/Map.png");
+	MapObj0 = new TextureRect(Vector3(1220 * 4, 30 * 4, 0), Vector3(69 * 4, 46 * 4, 1), 0);
+	MapObj0->SetSRV(L"./_Textures/Map/MapObj1.png");
+	MapObj1 = new TextureRect(Vector3(1440 * 4, 58 * 4, 0), Vector3(151 * 4, 90 * 4, 1), 0);
+	MapObj1->SetSRV(L"./_Textures/Map/MapObj2.png");
+	MapObj2 = new TextureRect(Vector3(2000 * 4, 110 * 4, 0), Vector3(65 * 4, 67 * 4, 1), 0);
+	MapObj2->SetSRV(L"./_Textures/Map/MapObj5.png");
 	//ground
 	InputGround();
-	object = new Rock1(Vector3(400, 150, 0), Vector3(64 * 4, 45 * 4, 1), 0);
+	object = new Rock1(Vector3(2150, 175, 0), Vector3(64 * 4, 45 * 4, 1), 0);
+	object1 = new Rock1(Vector3(2400, 5, 0), Vector3(64 * 4, 45 * 4, 1), 0);
 	//manager
 	PlayerPM = new ProjectileManager();
 	EnemyPM = new ProjectileManager(false);
@@ -28,7 +35,7 @@ void Editer::Init()
 	EnemyM->SetPM(PlayerM);
 	PlayerPM->SetTargetM(EnemyM);
 	EnemyPM->SetTargetM(PlayerM);
-	PlayerM->AddPlayer(Vector3(200, 500, 0));
+	PlayerM->AddPlayer(Vector3(400 *3, 500, 0));
 
 	EnemyM->AddEnemy(Vector3(600, 500, 0), ENEMYTYPE::Grenadier);
 
@@ -41,6 +48,8 @@ void Editer::Init()
 	PlayerPM->SetGroundList(GroundList);
 	object->SetTarget(PlayerM);
 	object->SetTarget(EnemyM);
+	object1->SetTarget(PlayerM);
+	object1->SetTarget(EnemyM);
 }
 
 void Editer::Update()
@@ -50,8 +59,16 @@ void Editer::Update()
 		InputGround();
 	}
 	//충돌 처리
-	object->Update();
-
+	if (PlayerM->GetPlayer()->GetTransformedCoord().Point.x < 2450)
+	{
+		object->Update();
+	}
+	else if (PlayerM->GetPlayer()->GetTransformedCoord().Point.x < 4000)
+	{
+		object1->Update();
+	}
+	object->EnemyBlock();
+	object1->EnemyBlock();
 	for (Ground* tempGround : GroundList)
 	{
 		tempGround->Update();
@@ -74,6 +91,8 @@ void Editer::Render()
 
 	Map->Render();
 	object->Render();
+	
+	MapObj2->Render();
 	//manager
 	PlayerPM->Render();
 	EnemyPM->Render();
@@ -82,8 +101,10 @@ void Editer::Render()
 	//ground
 	for (Ground* tempGround : GroundList)
 	{
-		tempGround->Render();
+		//tempGround->Render();
 	}
+	MapObj0->Render();
+	MapObj1->Render();
 }
 
 void Editer::PostRender()
@@ -104,6 +125,10 @@ void Editer::PostRender()
 void Editer::InputGround()
 {
 	GroundList.push_back(new Ground(Vector3(0, 100, 0), Vector3(200 * 4, 100, 1), 0, false));
+}
+
+void Editer::ObjectCollision()
+{
 }
 
 void Editer::SaveGroundTile(const wstring& path)

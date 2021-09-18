@@ -132,12 +132,20 @@ void EnemySoldier::Move()
 			{
 				Enemy::Move(Vector3(-walkSpeed, 0, 0));
 			}
+			else
+			{
+				dir = DIRECTION::RIGHT;
+			}
 		}
 		else if (dir == DIRECTION::RIGHT)
 		{
 			if (BlockDir != DIRECTION::RIGHT)
 			{
 				Enemy::Move(Vector3(walkSpeed, 0, 0));
+			}
+			else
+			{
+				dir = DIRECTION::LEFT;
 			}
 		}
 	}
