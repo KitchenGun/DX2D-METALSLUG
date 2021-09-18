@@ -20,9 +20,10 @@ public:
 	void PlayerBlock();
 	void EnemyBlock();
 
-	void AddObject(Vector3 position, ObjectType objectType);
+	void AddObject(Vector3 position, ObjectType objectType, bool isRender = true);
 	void RemoveObject(Object* tempO);
 	list<Object*> GetObjectList() { return objectList; }
+
 private:
 	list<Object*> objectList;
 	list<Object*>::iterator iter;

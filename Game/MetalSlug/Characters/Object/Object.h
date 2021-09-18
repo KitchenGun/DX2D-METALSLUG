@@ -2,7 +2,7 @@
 class Object:public PlayerAnimationRect
 {
 public:
-	Object(Vector3 position, Vector3 size, float rotation);
+	Object(Vector3 position, Vector3 size, float rotation,bool isRender=true);
 	virtual ~Object() override;
 
 	void Update() override;
@@ -15,4 +15,5 @@ public:
 private:
 	EnemyManager* EM;
 	PlayerManager* target;
+	bool IsRender = true;
 };

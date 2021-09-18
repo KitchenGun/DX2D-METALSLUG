@@ -2,9 +2,9 @@
 #include "Rock1.h"
 #include "Utilities/Animator.h"
 
-Rock1::Rock1(Vector3 position, Vector3 size, float rotation)
+Rock1::Rock1(Vector3 position, Vector3 size, float rotation,bool isRender)
 	:
-	Object(position,size,rotation)
+	Object(position,size,rotation,isRender)
 {
 	texture = new Texture2D(L"./_Textures/Object/Rock/Idle.png");
 	animClips.push_back(new AnimationClip(L"temp", texture, 1, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));

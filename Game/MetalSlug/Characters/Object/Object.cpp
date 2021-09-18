@@ -2,8 +2,9 @@
 #include "Object.h"
 #include "Utilities/Animator.h"
 
-Object::Object(Vector3 position, Vector3 size, float rotation)
-	:PlayerAnimationRect(position,size,rotation)
+Object::Object(Vector3 position, Vector3 size, float rotation, bool isRender)
+	:PlayerAnimationRect(position,size,rotation),
+	IsRender(isRender)
 {
 	TransformVertices();
 }
@@ -20,7 +21,10 @@ void Object::Update()
 
 void Object::Render()
 {
-	PlayerAnimationRect::Render();
+	if (IsRender)
+	{
+		PlayerAnimationRect::Render();
+	}
 }
 
 void Object::PlayerBlock()

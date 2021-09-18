@@ -92,13 +92,13 @@ void ObjectManager::EnemyBlock()
 	}
 }
 
-void ObjectManager::AddObject(Vector3 position, ObjectType objectType)
+void ObjectManager::AddObject(Vector3 position, ObjectType objectType, bool isRender)
 {
 	Object* tempO = nullptr;
 	switch (objectType)
 	{
 	case ObjectType::ROCK:
-		tempO = new Rock1(position, Vector3(64 * 4, 45 * 4, 1), 0);
+		tempO = new Rock1(position, Vector3(64 * 4, 45 * 4, 1), 0, isRender);
 		tempO->SetTarget(EM);
 		tempO->SetTarget(PM);
 

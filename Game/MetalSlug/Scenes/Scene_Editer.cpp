@@ -26,8 +26,6 @@ void Editer::Init()
 	//ground
 	InputGround();
 	
-	//object = new Rock1(Vector3(2150, 175, 0), Vector3(64 * 4, 45 * 4, 1), 0);
-	//object1 = new Rock1(Vector3(2400, 5, 0), Vector3(64 * 4, 45 * 4, 1), 0);
 	//manager
 	PlayerPM = new ProjectileManager();
 	EnemyPM = new ProjectileManager(false);
@@ -44,7 +42,7 @@ void Editer::Init()
 	
 	ObjectM = new ObjectManager(PlayerM, EnemyM,PlayerPM);
 	ObjectM->AddObject(Vector3(2150, 175, 0), ObjectType::ROCK);
-	ObjectM->AddObject(Vector3(2400, 5, 0), ObjectType::ROCK);
+	ObjectM->AddObject(Vector3(2400, 5, 0), ObjectType::ROCK,false);
 	
 
 	LoadGroundTile(L"./GroundData/Stage1.data");
@@ -52,10 +50,6 @@ void Editer::Init()
 	EnemyM->SetGroundList(GroundList);
 	EnemyPM->SetGroundList(GroundList);
 	PlayerPM->SetGroundList(GroundList);
-	//object->SetTarget(PlayerM);
-	//object->SetTarget(EnemyM);
-	//object1->SetTarget(EnemyM);
-	//object1->SetTarget(PlayerM);
 }
 
 void Editer::Update()
@@ -65,16 +59,6 @@ void Editer::Update()
 		InputGround();
 	}
 	//충돌 처리
-	//if (PlayerM->GetPlayer()->GetTransformedCoord().Point.x < 2450)
-	//{
-	//	object->Update();
-	//}
-	//else if (PlayerM->GetPlayer()->GetTransformedCoord().Point.x < 4000)
-	//{
-	//	object1->Update();
-	//}
-	//object->EnemyBlock();
-	//object1->EnemyBlock();
 	for (Ground* tempGround : GroundList)
 	{
 		tempGround->Update();
@@ -96,8 +80,6 @@ void Editer::Render()
 {//랜더 순서 명확하게하기
 
 	Map->Render();
-	//object->Render();
-	
 	MapObj2->Render();
 	//manager
 	PlayerPM->Render();
