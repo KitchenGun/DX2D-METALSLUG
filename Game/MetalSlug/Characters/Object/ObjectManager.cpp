@@ -99,6 +99,9 @@ void ObjectManager::AddObject(Vector3 position, ObjectType objectType)
 	{
 	case ObjectType::ROCK:
 		tempO = new Rock1(position, Vector3(64 * 4, 45 * 4, 1), 0);
+		tempO->SetTarget(EM);
+		tempO->SetTarget(PM);
+
 		break;
 	}
 	objectList.push_back(tempO);

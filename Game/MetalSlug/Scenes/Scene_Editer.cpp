@@ -25,8 +25,9 @@ void Editer::Init()
 	MapObj2->SetSRV(L"./_Textures/Map/MapObj5.png");
 	//ground
 	InputGround();
-	object = new Rock1(Vector3(2150, 175, 0), Vector3(64 * 4, 45 * 4, 1), 0);
-	object1 = new Rock1(Vector3(2400, 5, 0), Vector3(64 * 4, 45 * 4, 1), 0);
+	
+	//object = new Rock1(Vector3(2150, 175, 0), Vector3(64 * 4, 45 * 4, 1), 0);
+	//object1 = new Rock1(Vector3(2400, 5, 0), Vector3(64 * 4, 45 * 4, 1), 0);
 	//manager
 	PlayerPM = new ProjectileManager();
 	EnemyPM = new ProjectileManager(false);
@@ -40,16 +41,21 @@ void Editer::Init()
 	EnemyM->AddEnemy(Vector3(600, 500, 0), ENEMYTYPE::Grenadier);
 
 	GameM = new GameManager(PlayerM, EnemyM);
+	
+	ObjectM = new ObjectManager(PlayerM, EnemyM,PlayerPM);
+	ObjectM->AddObject(Vector3(2150, 175, 0), ObjectType::ROCK);
+	ObjectM->AddObject(Vector3(2400, 5, 0), ObjectType::ROCK);
+	
 
 	LoadGroundTile(L"./GroundData/Stage1.data");
 	PlayerM->SetGroundList(GroundList);
 	EnemyM->SetGroundList(GroundList);
 	EnemyPM->SetGroundList(GroundList);
 	PlayerPM->SetGroundList(GroundList);
-	object->SetTarget(PlayerM);
-	object->SetTarget(EnemyM);
-	object1->SetTarget(PlayerM);
-	object1->SetTarget(EnemyM);
+	//object->SetTarget(PlayerM);
+	//object->SetTarget(EnemyM);
+	//object1->SetTarget(EnemyM);
+	//object1->SetTarget(PlayerM);
 }
 
 void Editer::Update()
@@ -59,16 +65,16 @@ void Editer::Update()
 		InputGround();
 	}
 	//충돌 처리
-	if (PlayerM->GetPlayer()->GetTransformedCoord().Point.x < 2450)
-	{
-		object->Update();
-	}
-	else if (PlayerM->GetPlayer()->GetTransformedCoord().Point.x < 4000)
-	{
-		object1->Update();
-	}
-	object->EnemyBlock();
-	object1->EnemyBlock();
+	//if (PlayerM->GetPlayer()->GetTransformedCoord().Point.x < 2450)
+	//{
+	//	object->Update();
+	//}
+	//else if (PlayerM->GetPlayer()->GetTransformedCoord().Point.x < 4000)
+	//{
+	//	object1->Update();
+	//}
+	//object->EnemyBlock();
+	//object1->EnemyBlock();
 	for (Ground* tempGround : GroundList)
 	{
 		tempGround->Update();
@@ -78,7 +84,7 @@ void Editer::Update()
 	EnemyPM->Update();
 	EnemyM->Update();
 	PlayerM->Update(); 
-
+	ObjectM->Update();
 	GameM->Update();
 }
 
@@ -90,13 +96,14 @@ void Editer::Render()
 {//랜더 순서 명확하게하기
 
 	Map->Render();
-	object->Render();
+	//object->Render();
 	
 	MapObj2->Render();
 	//manager
 	PlayerPM->Render();
 	EnemyPM->Render();
 	EnemyM->Render();
+	ObjectM->Render();
 	PlayerM->Render();
 	//ground
 	for (Ground* tempGround : GroundList)
