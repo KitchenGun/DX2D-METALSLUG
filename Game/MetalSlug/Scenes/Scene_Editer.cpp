@@ -34,7 +34,7 @@ void Editer::Init()
 	EnemyM->SetPM(PlayerM);
 	PlayerPM->SetTargetM(EnemyM);
 	EnemyPM->SetTargetM(PlayerM);
-	PlayerM->AddPlayer(Vector3(400 *3, 500, 0));
+	PlayerM->AddPlayer(Vector3(3200 *3, 500, 0));
 
 	EnemyM->AddEnemy(Vector3(600, 500, 0), ENEMYTYPE::Grenadier);
 
@@ -42,14 +42,19 @@ void Editer::Init()
 	
 	ObjectM = new ObjectManager(PlayerM, EnemyM,PlayerPM);
 	ObjectM->AddObject(Vector3(2150, 175, 0), ObjectType::ROCK);
-	ObjectM->AddObject(Vector3(2400, 5, 0), ObjectType::ROCK,false);
-	
+	ObjectM->AddObject(Vector3(2400, 5, 0), ObjectType::ROCK, false);
+	ObjectM->AddObject(Vector3(7350, 0, 0), Vector3(40 * 4, 30 * 4, 1), ObjectType::ROCK);
+	ObjectM->AddObject(Vector3(7750, 5, 0), ObjectType::ROCK);
+	ObjectM->AddObject(Vector3(8150, 20, 0), ObjectType::ROCK, false);
+	ObjectM->AddObject(Vector3(8300, 20, 0),Vector3(64 * 4, 90 * 4, 1), ObjectType::ROCK,false);
+	ObjectM->AddBuilding(Vector3(11300, 120, 0), Vector3(150 * 4, 169 * 4, 1),1);
 
 	LoadGroundTile(L"./GroundData/Stage1.data");
 	PlayerM->SetGroundList(GroundList);
 	EnemyM->SetGroundList(GroundList);
 	EnemyPM->SetGroundList(GroundList);
 	PlayerPM->SetGroundList(GroundList);
+	PlayerPM->SetOM(ObjectM);
 }
 
 void Editer::Update()
@@ -78,7 +83,7 @@ void Editer::PreRender()
 
 void Editer::Render()
 {//랜더 순서 명확하게하기
-
+	//player뒤에 출력
 	Map->Render();
 	MapObj2->Render();
 	//manager
@@ -90,8 +95,9 @@ void Editer::Render()
 	//ground
 	for (Ground* tempGround : GroundList)
 	{
-		//tempGround->Render();
+		tempGround->Render();
 	}
+	//player앞에 출력
 	MapObj0->Render();
 	MapObj1->Render();
 }

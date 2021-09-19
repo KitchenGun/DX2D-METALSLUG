@@ -1,4 +1,5 @@
 #pragma once
+class ObjectManager;
 
 class Projectile : public AnimationRect
 {
@@ -16,6 +17,8 @@ public:
 	float GetRotation() { return rotation; }
 	void SetEM(EnemyManager* val) { EM = val; }
 	void SetPM(PlayerManager* val) { PM = val; }
+	void SetOM(ObjectManager* val) { OM = val; }
+
 	bool GetIsNeedDestroy() { return isNeedDestroy; }
 protected:
 	const bool IsPPM = true;
@@ -27,5 +30,6 @@ protected:
 	PROJECTILETYPE pt = PROJECTILETYPE::NONE;
 	EnemyManager* EM = nullptr;
 	PlayerManager* PM = nullptr;
+	ObjectManager* OM = nullptr;
 	bool isNeedDestroy=false;
 };

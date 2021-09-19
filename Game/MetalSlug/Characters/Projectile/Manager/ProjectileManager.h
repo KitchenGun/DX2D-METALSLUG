@@ -15,6 +15,7 @@ public:
 	void SetTargetM(EnemyManager* val) { EM = val; }
 	void SetTargetM(PlayerManager* val) { PM = val; }
 	void SetGroundList(vector<Ground*> val) { GroundList = val; }
+	void SetOM(ObjectManager* val) { OM = val; }
 	list<Projectile*> GetList() {return projectileList;}
 
 	const bool bIsPM;
@@ -24,5 +25,6 @@ private:
 
 	EnemyManager* EM=nullptr;
 	PlayerManager* PM = nullptr;
+	ObjectManager* OM = nullptr;
 	vector<Ground*> GroundList;
 };

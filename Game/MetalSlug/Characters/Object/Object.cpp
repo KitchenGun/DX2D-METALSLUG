@@ -2,9 +2,10 @@
 #include "Object.h"
 #include "Utilities/Animator.h"
 
-Object::Object(Vector3 position, Vector3 size, float rotation, bool isRender)
+Object::Object(Vector3 position, Vector3 size, float rotation, ObjectType OT, bool isRender)
 	:PlayerAnimationRect(position,size,rotation),
-	IsRender(isRender)
+	IsRender(isRender),
+	ot(OT)
 {
 	TransformVertices();
 }
@@ -81,6 +82,26 @@ void Object::EnemyBlock()
 		{
 			tempE->SetBlockDir(DIRECTION::NONE);
 		}
+	}
+}
+
+void Object::Hit(DAMAGE val, Projectile* tempProjectile)
+{
+	if (ot == ObjectType::BUILDING)
+	{
+		cout << ObjHP << endl;
+		Projectile* NowTemp;
+		NowTemp = tempProjectile;
+		if (tempProjectile == nullptr)
+		{
+			ObjHP -= val;
+			return;
+		}
+		else if (NowTemp != PrevTemp)
+		{
+			ObjHP -= val;
+		}
+		PrevTemp = NowTemp;
 	}
 }
 

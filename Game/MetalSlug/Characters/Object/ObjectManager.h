@@ -1,12 +1,4 @@
 #pragma once
-#pragma once
-enum class ObjectType
-{
-	NONE = 0,
-	ROCK,
-	BOX,
-	POW
-};
 
 class ObjectManager
 {
@@ -20,7 +12,9 @@ public:
 	void PlayerBlock();
 	void EnemyBlock();
 
+	void AddObject(Vector3 position,Vector3 size, ObjectType objectType, bool isRender = true);
 	void AddObject(Vector3 position, ObjectType objectType, bool isRender = true);
+	void AddBuilding(Vector3 position, Vector3 size, int buildIndex);
 	void RemoveObject(Object* tempO);
 	list<Object*> GetObjectList() { return objectList; }
 

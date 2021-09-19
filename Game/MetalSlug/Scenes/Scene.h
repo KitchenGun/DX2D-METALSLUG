@@ -31,6 +31,7 @@
 //object
 #include "Characters/Object/Object.h"
 #include "Characters/Object/Rock/Rock1.h"
+#include "Characters/Object/Building/Building.h"
 #include "Characters/Object/ObjectManager.h"
 //Manager
 #include "Characters/Projectile/Manager/ProjectileManager.h"

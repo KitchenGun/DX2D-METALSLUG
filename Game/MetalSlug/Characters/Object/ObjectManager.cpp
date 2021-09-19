@@ -27,6 +27,11 @@ void ObjectManager::Update()
 		if (tempo != nullptr)
 		{
 			tempo->Update();
+			if (tempo->GetIsNeedDestroy())
+			{
+				RemoveObject(tempo);
+				break;
+			}
 		}
 	}
 	PlayerBlock();
@@ -92,6 +97,21 @@ void ObjectManager::EnemyBlock()
 	}
 }
 
+void ObjectManager::AddObject(Vector3 position, Vector3 size, ObjectType objectType, bool isRender)
+{
+	Object* tempO = nullptr;
+	switch (objectType)
+	{
+	case ObjectType::ROCK:
+		tempO = new Rock1(position, size, 0, isRender);
+		tempO->SetTarget(EM);
+		tempO->SetTarget(PM);
+		tempO->SetPPM(PPM);
+		break;
+	}
+	objectList.push_back(tempO);
+}
+
 void ObjectManager::AddObject(Vector3 position, ObjectType objectType, bool isRender)
 {
 	Object* tempO = nullptr;
@@ -101,12 +121,30 @@ void ObjectManager::AddObject(Vector3 position, ObjectType objectType, bool isRe
 		tempO = new Rock1(position, Vector3(64 * 4, 45 * 4, 1), 0, isRender);
 		tempO->SetTarget(EM);
 		tempO->SetTarget(PM);
-
-		break;
+		tempO->SetPPM(PPM);
+		break; 
 	}
+	objectList.push_back(tempO);
+}
+
+void ObjectManager::AddBuilding(Vector3 position, Vector3 size, int buildIndex)
+{
+	Object* tempO = nullptr;
+	tempO = new Building(position, size, 0, buildIndex);
+	tempO->SetTarget(EM);
+	tempO->SetTarget(PM);
+	tempO->SetPPM(PPM);
 	objectList.push_back(tempO);
 }
 
 void ObjectManager::RemoveObject(Object* tempO)
 {
+	for (iter = objectList.begin(); iter != objectList.end(); ++iter)
+	{
+		if (*iter == tempO)
+		{
+			iter = objectList.erase(iter);
+			break;
+		}
+	}
 }

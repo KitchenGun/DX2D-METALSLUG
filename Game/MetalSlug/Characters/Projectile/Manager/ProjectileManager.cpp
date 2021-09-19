@@ -55,6 +55,7 @@ void ProjectileManager::AddBullet(Vector3 position, Vector3 size, float rotation
 	{
 		tempBullet	= new Bullet(position, size, rotation, dir, BT);
 		tempBullet->SetEM(EM);
+		tempBullet->SetOM(OM);
 	}
 	else
 	{
@@ -72,6 +73,7 @@ void ProjectileManager::AddGrenade(Vector3 position, Vector3 size, float rotatio
 		tempGrenade = new Grenade(position, size, rotation, dir, BT);
 		tempGrenade->SetGroundList(GroundList);
 		tempGrenade->SetEM(EM);
+		tempGrenade->SetOM(OM);
 	}
 	else
 	{
