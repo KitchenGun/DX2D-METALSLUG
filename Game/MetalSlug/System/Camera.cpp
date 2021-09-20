@@ -3,7 +3,7 @@
 
 void Camera::Update()
 {
-	Move(position);
+	//Move(position);
 }
 
 void Camera::Render()
@@ -12,6 +12,15 @@ void Camera::Render()
 }
 
 void Camera::Move(Vector3 position)
+{
+	if (this->position.x+position.x > fMinXValue && this->position.x + position.x < fMaxXValue)
+	{
+		this->position += position * Time::Delta();
+		UpdateView();
+	}
+}
+
+void Camera::SetCamPos(Vector3 position)
 {
 	this->position = position;
 	UpdateView();
@@ -36,6 +45,7 @@ void Camera::UnProjection(Vector3 * out, Vector3 source, Matrix world)
 
 	D3DXVec3TransformCoord(out, out, &wvp);
 }
+
 
 Camera::Camera()
 {

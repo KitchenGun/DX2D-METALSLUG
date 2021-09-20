@@ -9,6 +9,7 @@ public:
 	void AddEnemy(ENEMYTYPE ET,Vector3 Pos);
 	void AddPlayer(Vector3 Pos);
 
+	void CameraMove();
 	void EnemySpawn();
 	void Update();
 	void PlayerTracking();
