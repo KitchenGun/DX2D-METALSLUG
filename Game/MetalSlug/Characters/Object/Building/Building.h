@@ -7,7 +7,8 @@ public:
 	~Building();
 
 	void Update() override;
-
+	void HPCheck();
 private:
 	bool isNeedDestroy = false;
+	int BuildIndex = 0;
 };

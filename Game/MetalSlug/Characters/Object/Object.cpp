@@ -12,6 +12,14 @@ Object::Object(Vector3 position, Vector3 size, float rotation, ObjectType OT, bo
 
 Object::~Object()
 {
+	for (Projectile* tempP : vecHitProjectile)
+	{
+		SAFE_DELETE(tempP);
+	}
+	SAFE_DELETE(PrevTemp);
+	SAFE_DELETE(PPM);
+	SAFE_DELETE(target);
+	SAFE_DELETE(EM);
 	PlayerAnimationRect::~PlayerAnimationRect();
 }
 
@@ -89,19 +97,38 @@ void Object::Hit(DAMAGE val, Projectile* tempProjectile)
 {
 	if (ot == ObjectType::BUILDING)
 	{
+	
 		cout << ObjHP << endl;
 		Projectile* NowTemp;
 		NowTemp = tempProjectile;
-		if (tempProjectile == nullptr)
+	
+		bool TempSearchResult = false;
+
+		for (Projectile* tempP : vecHitProjectile)
 		{
-			ObjHP -= val;
-			return;
+			if (tempP == NowTemp)
+			{
+				TempSearchResult = true;
+			}
 		}
-		else if (NowTemp != PrevTemp)
+		//수류탄 중복 데미지 때문에 이렇게 처리
+		if(TempSearchResult == false)
 		{
-			ObjHP -= val;
+			if (tempProjectile == nullptr)
+			{
+				ObjHP -= val;
+				return;
+			}
+			else if (NowTemp != PrevTemp)
+			{
+				ObjHP -= val;
+			}
+			if (NowTemp->GetPT() == PROJECTILETYPE::Grenade)
+			{
+				PrevTemp = NowTemp;
+				vecHitProjectile.push_back(PrevTemp);
+			}
 		}
-		PrevTemp = NowTemp;
 	}
 }
 

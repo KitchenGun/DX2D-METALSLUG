@@ -24,7 +24,7 @@ public:
 	void SetTarget(EnemyManager* val) { EM = val; }
 	void SetPPM(ProjectileManager* val) { PPM = val; }
 	bool GetIsNeedDestroy() { return IsNeedDestroy; }
-
+	ObjectType GetObjType() { return ot; }
 	void Hit(DAMAGE val, Projectile* tempProjectile = nullptr);
 protected:
 	EnemyManager* EM;
@@ -34,7 +34,7 @@ protected:
 	ObjectType ot = ObjectType::NONE;
 
 	HP ObjHP = 0;
-
+	vector<Projectile*> vecHitProjectile;
 	bool IsRender = true;
 	bool IsNeedDestroy = false;
 };

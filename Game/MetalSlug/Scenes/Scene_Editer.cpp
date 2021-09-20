@@ -47,7 +47,7 @@ void Editer::Init()
 	ObjectM->AddObject(Vector3(7750, 5, 0), ObjectType::ROCK);
 	ObjectM->AddObject(Vector3(8150, 20, 0), ObjectType::ROCK, false);
 	ObjectM->AddObject(Vector3(8300, 20, 0),Vector3(64 * 4, 90 * 4, 1), ObjectType::ROCK,false);
-	ObjectM->AddBuilding(Vector3(11300, 120, 0), Vector3(150 * 4, 169 * 4, 1),1);
+	ObjectM->AddBuilding(Vector3(11300, 50, 0), Vector3(150 * 4, 169 *4 , 1),1);
 
 	LoadGroundTile(L"./GroundData/Stage1.data");
 	PlayerM->SetGroundList(GroundList);

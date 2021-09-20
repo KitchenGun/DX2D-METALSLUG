@@ -57,61 +57,18 @@ void Projectile::ProjectileCollisionCheck()
 					}
 					
 				}
-				////aabb
-				//else if (Math::Intersect(tempE, this))
-				//{
-				//	if (pt == PROJECTILETYPE::Grenade)
-				//	{
-				//		if (!dynamic_cast<Grenade*>(this)->GetIsHit())
-				//		{
-				//			this->HitPos = this->position;
-				//		}
-				//		dynamic_cast<Grenade*>(this)->SetIsHit(true);
-				//		tempE->Hit(this->GetDamage(), this);
-				//	}
-				//	else
-				//	{
-				//		tempE->Hit(this->GetDamage(), this);
-				//		if (pt != PROJECTILETYPE::KNIFE && pt != PROJECTILETYPE::Grenade)
-				//		{
-				//			isNeedDestroy = true;
-				//		}
-				//	}
-				//}
 			}
 
 		}
 		for (Object* tempO : OM->GetObjectList())
 		{
-			if (Math::Distance(tempO->GetTransformedCoord().Point, this->GetPosition()) < 50 * 4)
+			if (tempO->GetObjType()==ObjectType::BUILDING)
 			{
-				////obb
-				//if (Math::OBBIntersect(tempO, this))
-				//{
-				//	if (this->GetPT() == PROJECTILETYPE::Grenade)
-				//	{
-				//		if (!dynamic_cast<Grenade*>(this)->GetIsHit())
-				//		{
-				//			this->HitPos = this->position;
-				//		}
-				//		dynamic_cast<Grenade*>(this)->SetIsHit(true);
-				//		tempO->Hit(this->GetDamage(), this);
-				//	}
-				//	else
-				//	{
-				//		tempO->Hit(this->GetDamage(), this);
-				//		if (pt != PROJECTILETYPE::KNIFE && pt != PROJECTILETYPE::Grenade)
-				//		{
-				//			isNeedDestroy = true;
-				//		}
-				//	}
-				//
-				//}
-				////aabb
-				//else 
-				if (Math::Intersect(tempO, this))
+				//obb
+				if (Math::OBBIntersect(tempO, this))
 				{
-					if (pt == PROJECTILETYPE::Grenade)
+					cout << "Ãæµ¹" << endl;
+					if (this->GetPT() == PROJECTILETYPE::Grenade)
 					{
 						if (!dynamic_cast<Grenade*>(this)->GetIsHit())
 						{
@@ -128,7 +85,30 @@ void Projectile::ProjectileCollisionCheck()
 							isNeedDestroy = true;
 						}
 					}
+				
 				}
+				//aabb
+				//else 
+				//if (Math::Intersect(tempO, this))
+				//{
+				//	if (pt == PROJECTILETYPE::Grenade)
+				//	{
+				//		if (!dynamic_cast<Grenade*>(this)->GetIsHit())
+				//		{
+				//			this->HitPos = this->position;
+				//		}
+				//		dynamic_cast<Grenade*>(this)->SetIsHit(true);
+				//		tempO->Hit(this->GetDamage(), this);
+				//	}
+				//	else
+				//	{
+				//		tempO->Hit(this->GetDamage(), this);
+				//		if (pt != PROJECTILETYPE::KNIFE && pt != PROJECTILETYPE::Grenade)
+				//		{
+				//			isNeedDestroy = true;
+				//		}
+				//	}
+				//}
 			}
 
 		}
