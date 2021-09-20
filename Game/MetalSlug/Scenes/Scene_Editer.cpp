@@ -23,6 +23,9 @@ void Editer::Init()
 	MapObj1->SetSRV(L"./_Textures/Map/MapObj2.png");
 	MapObj2 = new TextureRect(Vector3(2000 * 4, 110 * 4, 0), Vector3(65 * 4, 67 * 4, 1), 0);
 	MapObj2->SetSRV(L"./_Textures/Map/MapObj5.png");
+	MapObj3 = new TextureRect(Vector3(8200, 40 * 4, 0), Vector3(47 * 4, 32 * 4, 1), 0);
+	MapObj3->SetSRV(L"./_Textures/Map/MapObj3.png");
+	//ground
 	//ground
 	InputGround();
 	
@@ -86,6 +89,7 @@ void Editer::Render()
 	//player뒤에 출력
 	Map->Render();
 	MapObj2->Render();
+	MapObj3->Render();
 	//manager
 	PlayerPM->Render();
 	EnemyPM->Render();
@@ -93,10 +97,10 @@ void Editer::Render()
 	ObjectM->Render();
 	PlayerM->Render();
 	//ground
-	for (Ground* tempGround : GroundList)
-	{
-		tempGround->Render();
-	}
+	//for (Ground* tempGround : GroundList)
+	//{
+	//	tempGround->Render();
+	//}
 	//player앞에 출력
 	MapObj0->Render();
 	MapObj1->Render();

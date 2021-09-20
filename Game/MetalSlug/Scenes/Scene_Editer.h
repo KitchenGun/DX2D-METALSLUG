@@ -23,6 +23,7 @@ private:
 	TextureRect* MapObj1 = nullptr;
 	TextureRect* MapObj2 = nullptr;
 	TextureRect* MapObj3 = nullptr;
+	TextureRect* MapObj4 = nullptr;
 
 	PlayerManager* PlayerM = nullptr;
 	//지형 테스트
