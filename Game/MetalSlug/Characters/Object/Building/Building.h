@@ -7,6 +7,8 @@ public:
 	~Building();
 
 	void Update() override;
+
+	void ColliderSizeChange(COLLIDER val);
 	void HPCheck();
 private:
 	bool isNeedDestroy = false;

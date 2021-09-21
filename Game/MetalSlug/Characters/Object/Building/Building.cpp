@@ -23,6 +23,7 @@ Building::Building(Vector3 position, Vector3 size, float rotation, int BuildInde
 			animClips.push_back(new AnimationClip(L"Building4", texture, 1, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 			break;
 		case 2:
+			//보트랑 다리 
 			texture = new Texture2D(L"./_Textures/Object/Building/Building1.png");
 			animClips.push_back(new AnimationClip(L"temp", texture, 1, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 			break;
@@ -30,6 +31,7 @@ Building::Building(Vector3 position, Vector3 size, float rotation, int BuildInde
 		break;
 	}
 	ObjHP = 100;
+	ColliderSizeChange(COLLIDER::BIG);
 	animator = new Animator(animClips);
 	texture = new Texture2D//(L"./_Textures/TestBox.png");
 	(L"./_Textures/Object/Building/Building1.png");
@@ -49,8 +51,36 @@ void Building::Update()
 	Object::Update();
 }
 
-void Building::HPCheck()
+
+
+void Building::ColliderSizeChange(COLLIDER val)
 {
+	static Vector3 startpos;
+	switch (val)
+	{
+	case COLLIDER::NONE:
+		size = Vector3(0 * 4, 0 * 4, 1);
+		break;
+	case COLLIDER::SMALL:
+		size = Vector3(59 * 4, 169 * 4, 1);
+		position = startpos + Vector3((150 - 59) * 4, 0 * 4, 0);
+		break;
+	case COLLIDER::BIG://생성때 한번만 설정
+		startpos = position;
+		size = Vector3(150 * 4, 169 * 4, 1);
+		break;
+	default:
+		break;
+	}
+	D3DXMatrixScaling(&S, this->size.x, this->size.y, this->size.z);
+	D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
+	world = S * R * T;
+	WB->SetWorld(world);
+	TransformVertices();
+}
+
+void Building::HPCheck()
+{	
 	switch (BuildIndex)
 	{
 	case 1:
@@ -76,6 +106,12 @@ void Building::HPCheck()
 		}
 		else if (ObjHP > 0)
 		{
+			static bool isSmall = false;
+			if (isSmall == false)
+			{
+				ColliderSizeChange(COLLIDER::SMALL);
+				isSmall = true;
+			}
 			texture = new Texture2D(L"./_Textures/Object/Building/Building1-4.png");
 			animator->SetCurrentAnimClip(L"Building4");
 		}

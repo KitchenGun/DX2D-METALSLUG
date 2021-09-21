@@ -67,7 +67,6 @@ void Projectile::ProjectileCollisionCheck()
 				//obb
 				if (Math::OBBIntersect(tempO, this))
 				{
-					cout << "Ãæµ¹" << endl;
 					if (this->GetPT() == PROJECTILETYPE::Grenade)
 					{
 						if (!dynamic_cast<Grenade*>(this)->GetIsHit())
@@ -87,28 +86,6 @@ void Projectile::ProjectileCollisionCheck()
 					}
 				
 				}
-				//aabb
-				//else 
-				//if (Math::Intersect(tempO, this))
-				//{
-				//	if (pt == PROJECTILETYPE::Grenade)
-				//	{
-				//		if (!dynamic_cast<Grenade*>(this)->GetIsHit())
-				//		{
-				//			this->HitPos = this->position;
-				//		}
-				//		dynamic_cast<Grenade*>(this)->SetIsHit(true);
-				//		tempO->Hit(this->GetDamage(), this);
-				//	}
-				//	else
-				//	{
-				//		tempO->Hit(this->GetDamage(), this);
-				//		if (pt != PROJECTILETYPE::KNIFE && pt != PROJECTILETYPE::Grenade)
-				//		{
-				//			isNeedDestroy = true;
-				//		}
-				//	}
-				//}
 			}
 
 		}

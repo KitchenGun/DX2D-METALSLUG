@@ -352,7 +352,6 @@ void Player::Input()
 	//좌우
 	if (isCrouch && isAtk)
 	{
-		cout << (int)BlockDir << endl;
 		//앉아서 공격하는 상황에서는 이동을 처리안하기 위해서 사용함
 		if (!isGround)
 		{

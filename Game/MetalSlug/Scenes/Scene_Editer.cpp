@@ -25,6 +25,7 @@ void Editer::Init()
 	MapObj2->SetSRV(L"./_Textures/Map/MapObj5.png");
 	MapObj3 = new TextureRect(Vector3(8200, 40 * 4, 0), Vector3(47 * 4, 32 * 4, 1), 0);
 	MapObj3->SetSRV(L"./_Textures/Map/MapObj3.png");
+	MapObj4= new TextureRect(Vector3(12000,50*4,0),Vector3())
 	//ground
 	//ground
 	InputGround();
@@ -37,7 +38,7 @@ void Editer::Init()
 	EnemyM->SetPM(PlayerM);
 	PlayerPM->SetTargetM(EnemyM);
 	EnemyPM->SetTargetM(PlayerM);
-	PlayerM->AddPlayer(Vector3(100 *3, 500, 0));
+	PlayerM->AddPlayer(Vector3(50 *3, 1000, 0));
 
 	EnemyM->AddEnemy(Vector3(600, 500, 0), ENEMYTYPE::Grenadier);
 
@@ -51,7 +52,7 @@ void Editer::Init()
 	ObjectM->AddObject(Vector3(8150, 20, 0), ObjectType::ROCK, false);
 	ObjectM->AddObject(Vector3(8300, 20, 0),Vector3(64 * 4, 90 * 4, 1), ObjectType::ROCK,false);
 	ObjectM->AddBuilding(Vector3(11300, 80, 0), Vector3(150 * 4, 169 *4 , 1),1);
-
+	//ObjectM->AddObject(Vector3(500, 500, 0), ObjectType::ROCK);
 	LoadGroundTile(L"./GroundData/Stage1.data");
 	PlayerM->SetGroundList(GroundList);
 	EnemyM->SetGroundList(GroundList);
