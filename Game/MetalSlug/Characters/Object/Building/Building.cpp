@@ -2,8 +2,8 @@
 #include "Building.h"
 #include "Utilities/Animator.h"
 
-Building::Building(Vector3 position, Vector3 size, float rotation, int BuildIndex)
-:Object(position, size, rotation, ObjectType::BUILDING,true)
+Building::Building(Vector3 position, Vector3 size, float rotation, int BuildIndex, bool isRender)
+:Object(position, size, rotation, ObjectType::BUILDING, isRender)
 {
 	this->BuildIndex = BuildIndex;
 	switch (BuildIndex)
@@ -24,8 +24,8 @@ Building::Building(Vector3 position, Vector3 size, float rotation, int BuildInde
 			break;
 		case 2:
 			//보트랑 다리 
-			texture = new Texture2D(L"./_Textures/Object/Building/Building1.png");
-			animClips.push_back(new AnimationClip(L"temp", texture, 1, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+			texture = new Texture2D(L"./_Textures/Object/Building/Building1-4.png");
+			animClips.push_back(new AnimationClip(L"Building4", texture, 1, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 			break;
 		default:
 		break;
@@ -35,7 +35,21 @@ Building::Building(Vector3 position, Vector3 size, float rotation, int BuildInde
 	animator = new Animator(animClips);
 	texture = new Texture2D//(L"./_Textures/TestBox.png");
 	(L"./_Textures/Object/Building/Building1.png");
-	animator->SetCurrentAnimClip(L"Building1");
+		switch (BuildIndex)
+		{
+		case 1:
+			texture = new Texture2D//(L"./_Textures/TestBox.png");
+			(L"./_Textures/Object/Building/Building1.png");
+			animator->SetCurrentAnimClip(L"Building1");
+			break;
+		case 2:
+			texture = new Texture2D(L"./_Textures/Object/Building/Building1-4.png");
+			animator->SetCurrentAnimClip(L"Building4");
+			break;
+		default:
+			break;
+		}
+	
 	animator->bLoop = true;
 	TransformVertices();
 }
@@ -63,7 +77,7 @@ void Building::ColliderSizeChange(COLLIDER val)
 		break;
 	case COLLIDER::SMALL:
 		size = Vector3(59 * 4, 169 * 4, 1);
-		position = startpos + Vector3((150 - 59) * 4, 0 * 4, 0);
+		position = startpos - Vector3(200*4, -30 * 4, 0);
 		break;
 	case COLLIDER::BIG://생성때 한번만 설정
 		startpos = position;
@@ -107,7 +121,7 @@ void Building::HPCheck()
 		else if (ObjHP > 0)
 		{
 			static bool isSmall = false;
-			if (isSmall == false)
+			if (isSmall == false&&Stage1Texture==nullptr)
 			{
 				ColliderSizeChange(COLLIDER::SMALL);
 				isSmall = true;
@@ -117,6 +131,25 @@ void Building::HPCheck()
 		}
 		else
 		{
+			IsNeedDestroy = true;
+		}
+		break;
+	case 2:
+		if (ObjHP > 70)
+		{
+			Stage1Texture->SetSRV(L"./_Textures/Map/MapObj6.png");
+		}
+		else if (ObjHP > 40)
+		{
+			Stage1Texture->SetSRV(L"./_Textures/Map/MapObj6-1.png");
+		}
+		if (ObjHP >= 0)
+		{
+			Stage1Texture->SetSRV(L"./_Textures/Map/MapObj6-2.png");
+		}
+		else
+		{
+			Stage1Texture->SetSRV(L"./_Textures/Map/MapObj6-3.png");
 			IsNeedDestroy = true;
 		}
 		break;

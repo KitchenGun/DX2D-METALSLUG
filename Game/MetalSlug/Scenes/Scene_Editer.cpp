@@ -25,8 +25,8 @@ void Editer::Init()
 	MapObj2->SetSRV(L"./_Textures/Map/MapObj5.png");
 	MapObj3 = new TextureRect(Vector3(8200, 40 * 4, 0), Vector3(47 * 4, 32 * 4, 1), 0);
 	MapObj3->SetSRV(L"./_Textures/Map/MapObj3.png");
-	MapObj4= new TextureRect(Vector3(12000,50*4,0),Vector3())
-	//ground
+	MapObj4 = new TextureRect(Vector3(12200, 80 * 4, 0), Vector3(236 * 4, 224 * 4, 1),0);
+	MapObj4->SetSRV(L"./_Textures/Map/MapObj6.png");
 	//ground
 	InputGround();
 	
@@ -52,7 +52,8 @@ void Editer::Init()
 	ObjectM->AddObject(Vector3(8150, 20, 0), ObjectType::ROCK, false);
 	ObjectM->AddObject(Vector3(8300, 20, 0),Vector3(64 * 4, 90 * 4, 1), ObjectType::ROCK,false);
 	ObjectM->AddBuilding(Vector3(11300, 80, 0), Vector3(150 * 4, 169 *4 , 1),1);
-	//ObjectM->AddObject(Vector3(500, 500, 0), ObjectType::ROCK);
+	ObjectM->SetStage1Texture(MapObj4);
+	ObjectM->AddBuilding(Vector3(12200, 80, 0), Vector3(150 * 4, 169 * 4, 1), 2, false);
 	LoadGroundTile(L"./GroundData/Stage1.data");
 	PlayerM->SetGroundList(GroundList);
 	EnemyM->SetGroundList(GroundList);
@@ -105,6 +106,7 @@ void Editer::Render()
 	//player앞에 출력
 	MapObj0->Render();
 	MapObj1->Render();
+	MapObj4->Render();
 }
 
 void Editer::PostRender()

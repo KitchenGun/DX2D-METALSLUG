@@ -11,6 +11,7 @@ ObjectManager::ObjectManager(PlayerManager* pm, EnemyManager* em, ProjectileMana
 
 ObjectManager::~ObjectManager()
 {
+	SAFE_DELETE(Stage1Texture);
 	SAFE_DELETE(PPM);
 	SAFE_DELETE(EM);
 	SAFE_DELETE(PM);
@@ -127,10 +128,14 @@ void ObjectManager::AddObject(Vector3 position, ObjectType objectType, bool isRe
 	objectList.push_back(tempO);
 }
 
-void ObjectManager::AddBuilding(Vector3 position, Vector3 size, int buildIndex)
+void ObjectManager::AddBuilding(Vector3 position, Vector3 size, int buildIndex, bool isRender)
 {
 	Object* tempO = nullptr;
-	tempO = new Building(position, size, 0, buildIndex);
+	tempO = new Building(position, size, 0, buildIndex,isRender);
+	if (buildIndex == 2)
+	{
+		dynamic_cast<Building*>(tempO)->SetStage1Texture(Stage1Texture);
+	}
 	tempO->SetTarget(EM);
 	tempO->SetTarget(PM);
 	tempO->SetPPM(PPM);

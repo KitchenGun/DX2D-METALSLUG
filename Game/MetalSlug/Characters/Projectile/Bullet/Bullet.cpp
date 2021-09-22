@@ -22,13 +22,13 @@ Bullet::Bullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PR
 		break;
 	case PROJECTILETYPE::PISTOL:
 		Damage = 1;
-		Speed = 100000;
+		Speed = 300000;
 		texture = new Texture2D(L"./_Textures/SFX/Weapon/NormalBullet.png");
 		animator->SetCurrentAnimClip(L"NormalBullet");
 	break;
 	case PROJECTILETYPE::HEAVY:
 		Damage = 1;
-		Speed = 100000;
+		Speed = 300000;
 		texture = new Texture2D(L"./_Textures/SFX/Weapon/NormalBullet.png");
 		animator->SetCurrentAnimClip(L"NormalBullet");
 		break;
