@@ -153,6 +153,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Characters\Enemy\Boss\Boss.cpp" />
+    <ClCompile Include="Characters\Enemy\Boss\BossCannon.cpp" />
     <ClCompile Include="Characters\Enemy\Enemy.cpp" />
     <ClCompile Include="Characters\Enemy\Manager\EnemyManager.cpp" />
     <ClCompile Include="Characters\Enemy\Soldier\EnemySoldier.cpp" />
@@ -211,6 +213,8 @@
     <ClCompile Include="Utilities\String.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Characters\Enemy\Boss\Boss.h" />
+    <ClInclude Include="Characters\Enemy\Boss\BossCannon.h" />
     <ClInclude Include="Characters\Enemy\Enemy.h" />
     <ClInclude Include="Characters\Enemy\Manager\EnemyManager.h" />
     <ClInclude Include="Characters\Enemy\Soldier\EnemySoldier.h" />

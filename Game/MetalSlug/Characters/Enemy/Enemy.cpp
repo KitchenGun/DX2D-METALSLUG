@@ -5,6 +5,7 @@ Enemy::Enemy(Vector3 position, Vector3 size, float rotation, ENEMYTYPE enemyType
 	:PlayerAnimationRect(position, size, rotation)
 {
 	ColliderSizeChange(COLLIDER::BIG);
+	this->enemyType = enemyType;
 }
 
 Enemy::~Enemy()
@@ -25,7 +26,10 @@ void Enemy::Update()
 	}
 	else
 	{
-		Move({ 0,GravatiyPower,0 });
+		if (enemyType != ENEMYTYPE::Boss)
+		{
+			Move({ 0,GravatiyPower,0 });
+		}
 	}
 
 	PlayerAnimationRect::Update();

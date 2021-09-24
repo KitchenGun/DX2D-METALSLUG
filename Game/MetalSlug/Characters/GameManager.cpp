@@ -5,7 +5,8 @@ GameManager::GameManager(PlayerManager* pm, EnemyManager* em)
 	:PM(pm),
 	EM(em)
 {
-	Camera::Get()->SetCamPos(Vector3(80, 50, 0));
+	Camera::Get()->SetCamPos(Vector3(15000, 300, 0));//³ôÀÌ50
+	EM->AddBoss(Vector3(15800, 810, 0));
 }
 
 GameManager::~GameManager()

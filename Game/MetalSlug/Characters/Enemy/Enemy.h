@@ -4,7 +4,8 @@ class Projectile;
 enum class ENEMYTYPE
 {
 	NONE = 0,
-	Grenadier
+	Grenadier,
+	Boss
 };
 class Enemy : public PlayerAnimationRect
 {
@@ -20,7 +21,7 @@ public:
 	void Jump();
 	//사망&피격
 	virtual void Die();
-	void Hit(DAMAGE val, Projectile* tempProjectile=nullptr);
+	virtual void Hit(DAMAGE val, Projectile* tempProjectile=nullptr);
 	void ColliderSizeChange(COLLIDER val);
 
 	//Get&Set
@@ -34,6 +35,7 @@ public:
 	void SetEPM(ProjectileManager* val) { epm = val; }
 	bool GetisNeedDestroy() { return isNeedDestroy; }
 	DIRECTION GetDir() { return dir; }
+	ENEMYTYPE GetET() { return enemyType; }
 protected:
 	bool isGround = false;//지상 판정
 	Vector3 RootPos;

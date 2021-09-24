@@ -38,7 +38,7 @@ void Editer::Init()
 	EnemyM->SetPM(PlayerM);
 	PlayerPM->SetTargetM(EnemyM);
 	EnemyPM->SetTargetM(PlayerM);
-	PlayerM->AddPlayer(Vector3(50 *3, 1000, 0));
+	PlayerM->AddPlayer(Vector3(5000 *3, 1200, 0));
 
 	EnemyM->AddEnemy(Vector3(600, 500, 0), ENEMYTYPE::Grenadier);
 
@@ -93,9 +93,9 @@ void Editer::Render()
 	MapObj2->Render();
 	MapObj3->Render();
 	//manager
-	PlayerPM->Render();
 	EnemyPM->Render();
 	EnemyM->Render();
+	PlayerPM->Render();
 	ObjectM->Render();
 	PlayerM->Render();
 	//ground

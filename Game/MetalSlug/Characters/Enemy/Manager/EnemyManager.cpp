@@ -20,7 +20,10 @@ void EnemyManager::Update()
 	{
 		if (tempEnemy != nullptr)
 		{
-			tempEnemy->SetisGround(Math::GroundIntersect(tempEnemy, GroundList));
+			if(tempEnemy->GetET()!=ENEMYTYPE::Boss)
+			{
+				tempEnemy->SetisGround(Math::GroundIntersect(tempEnemy, GroundList));
+			}
 			tempEnemy->Update();
 			if (tempEnemy->GetisNeedDestroy())
 			{
@@ -53,6 +56,15 @@ void EnemyManager::AddEnemy(Vector3 position, ENEMYTYPE enemyType)
 	default:
 		break;
 	}
+	tempEnemy->SetPM(PM);
+	tempEnemy->SetEPM(EPM);
+	enemyList.push_back(tempEnemy);
+}
+
+void EnemyManager::AddBoss(Vector3 position)
+{
+	Enemy* tempEnemy = nullptr;
+	tempEnemy = new Boss(position, Vector3(384 * 3, 288 * 3, 1), 0);
 	tempEnemy->SetPM(PM);
 	tempEnemy->SetEPM(EPM);
 	enemyList.push_back(tempEnemy);
