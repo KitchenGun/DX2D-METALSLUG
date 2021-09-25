@@ -6,9 +6,12 @@ Bullet::Bullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PR
 {
 	texture = new Texture2D(L"./_Textures/SFX/Weapon/NormalBullet.png");
 	animClips.push_back(new AnimationClip(L"NormalBullet", texture, 1, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/SFX/Weapon/EnemyBossLaser.png");
+	animClips.push_back(new AnimationClip(L"EnemyBossLaser", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	texture = new Texture2D(L"./_Textures/TestBox.png");
 	animClips.push_back(new AnimationClip(L"TestBox", texture, 1, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	animator = new Animator(animClips);
+	animator->bLoop = false;
 	
 	switch (pt)
 	{
@@ -32,6 +35,14 @@ Bullet::Bullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PR
 		texture = new Texture2D(L"./_Textures/SFX/Weapon/NormalBullet.png");
 		animator->SetCurrentAnimClip(L"NormalBullet");
 		break;
+	case PROJECTILETYPE::BOSSLASER:
+		Damage = 1;
+		Speed = 0;
+		animator->playRate = 1.0f / 3;
+		texture = new Texture2D(L"./_Textures/SFX/Weapon/EnemyBossLaser.png");
+		animator->SetCurrentAnimClip(L"EnemyBossLaser");
+		// 탄약 이미지 추가해야함
+		break;
 	default:
 		break;
 	}
@@ -44,15 +55,17 @@ Bullet::~Bullet()
 
 void Bullet::Update()
 {
-	if (rotation != 0 || rotation != 180)
+	if (pt != PROJECTILETYPE::BOSSLASER)
 	{
-		Move(Speed * Vector3(cosf(D3DXToRadian(rotation)) * Time::Delta(), sinf(D3DXToRadian(rotation)) * Time::Delta(), 0));
+		if (rotation != 0 || rotation != 180)
+		{
+			Move(Speed * Vector3(cosf(D3DXToRadian(rotation)) * Time::Delta(), sinf(D3DXToRadian(rotation)) * Time::Delta(), 0));
+		}
+		else if (Dir == DIRECTION::RIGHT)
+			Move(Vector3(Speed * Time::Delta(), 0, 0));
+		else if (Dir == DIRECTION::LEFT)
+			Move(Vector3(-Speed * Time::Delta(), 0, 0));
 	}
-	else if (Dir == DIRECTION::RIGHT)
-		Move(Vector3(Speed * Time::Delta(), 0, 0));
-	else if(Dir==DIRECTION::LEFT)
-		Move(Vector3(-Speed * Time::Delta(), 0, 0));
-
 	Projectile::Update();
 }
 

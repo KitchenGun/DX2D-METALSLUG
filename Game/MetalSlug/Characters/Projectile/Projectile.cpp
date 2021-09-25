@@ -99,7 +99,7 @@ void Projectile::ProjectileCollisionCheck()
 				//obb
 				if (Math::OBBIntersect(tempP, this))
 				{
-					if (pt == PROJECTILETYPE::KNIFE || pt == PROJECTILETYPE::EnemyGrenade|| pt == PROJECTILETYPE::BOSSARTY)
+					if (pt == PROJECTILETYPE::KNIFE || pt == PROJECTILETYPE::EnemyGrenade|| pt == PROJECTILETYPE::BOSSARTY|| pt == PROJECTILETYPE::BOSSLASER)
 					{
 						if (pt == PROJECTILETYPE::EnemyGrenade)
 						{

@@ -10,7 +10,7 @@ Boss::Boss(Vector3 position, Vector3 size, float rotation)
 	BossBody = new TextureRect(position, size, 0);
 	BossBody->SetSRV(L"./_Textures/Map/BossObj-0.png");
 	bossCannon = new BossCannon(position, Vector3(53 * 3, 79 * 3, 0), this);
-	EnemyHP = 400;
+	EnemyHP = 150;
 	texture = new Texture2D(L"./_Textures/TestBox.png");
 	animClips.push_back(new AnimationClip(L"test", texture, 1, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	animator = new Animator(animClips);
@@ -166,16 +166,33 @@ void Boss::SetAni()
 
 void Boss::LaserAtk()
 {
+	static bool isLaserFire = false;
+	if (!isLaserFire)
+	{
+		isLaserFire = true;
+		epm->AddLaser(firePos.Pos+Vector3(-555,-110,0), Vector3(300 * 4, 10 * 4, 0), PROJECTILETYPE::BOSSLASER);
+	}
+	if (bossCannon->GetAnimator()->GetIndex()==5)
+	{
+		for (Projectile* temp : epm->GetList())
+		{
+			if (temp->GetPT() == PROJECTILETYPE::BOSSLASER)
+			{
+				epm->RemoveProjectile(temp);
+			}
+		}
+	}
 	if (!bossCannon->GetAnimator()->isFirstPlay)
 	{
 		isLaserATK = false;
 		nextState = BOSSSTATE::LASERTOARTY;
+		isLaserFire = false;
+		
 	}
 }
 
 void Boss::ArtyAtk(float Angle)
 {
-	cout << "throw" << endl;
 	epm->AddArty(firePos.Pos, Vector3(10 * 4, 10 * 4, 0), Angle,PROJECTILETYPE::BOSSARTY);
 }
 

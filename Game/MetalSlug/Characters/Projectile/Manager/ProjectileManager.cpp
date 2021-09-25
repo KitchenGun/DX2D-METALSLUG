@@ -64,6 +64,7 @@ void ProjectileManager::AddBullet(Vector3 position, Vector3 size, float rotation
 	{
 		tempBullet = new Bullet(position, size, rotation, dir, BT,false);
 		tempBullet->SetPM(PM);
+		tempBullet->SetOM(OM);
 	}
 	projectileList.push_back(tempBullet);
 }
@@ -94,6 +95,15 @@ void ProjectileManager::AddArty(Vector3 position, Vector3 size, float rotation, 
 	tempGrenade->SetGroundList(GroundList);
 	tempGrenade->SetPM(PM);
 	projectileList.push_back(tempGrenade);
+}
+
+void ProjectileManager::AddLaser(Vector3 position, Vector3 size, PROJECTILETYPE BT)
+{
+	Bullet* tempBullet = nullptr;
+	tempBullet = new Bullet(position, size,0,DIRECTION::NONE,PROJECTILETYPE::BOSSLASER, false);
+	tempBullet->SetPM(PM);
+	tempBullet->SetOM(OM);
+	projectileList.push_back(tempBullet);
 }
 
 
