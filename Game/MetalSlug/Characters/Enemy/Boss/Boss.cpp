@@ -47,7 +47,7 @@ void Boss::Update()
 			if (DeltaTime > 0.3f && fireCount < 3)
 			{
 				DeltaTime = 0;
-				ArtyAtk(ArtyAngle()+fireCount*15);
+				ArtyAtk(ArtyAngle()+fireCount*5);
 				fireCount++;
 			}
 			else
@@ -180,8 +180,33 @@ void Boss::ArtyAtk(float Angle)
 }
 
 int Boss::ArtyAngle()
-{
-	return 135;
+{//±Ù°Å¸® 90 135
+	float fRange = Math::Distance(this->GetTransformedCoord().Point, ppm->GetPlayer()->GetTransformedCoord().Point);
+	if (fRange > 900)
+	{
+		fRange = 1;
+	}
+	else if (fRange > 800)
+	{
+		fRange = 0.8f;
+	}
+	else if (fRange > 700)
+	{
+		fRange = 0.6f;
+	}
+	else if (fRange > 500)
+	{
+		fRange = 0.4f;
+	}
+	else if (fRange > 200)
+	{
+		fRange = 0.2f;
+	}
+	else
+	{
+		fRange = 0.0f;
+	}
+	return Math::Lerpf(90, 135, fRange);
 }
 
 void Boss::Die()

@@ -161,7 +161,7 @@ void Grenade::Move()
 	if (pt == PROJECTILETYPE::BOSSARTY)
 	{
 		this->position = StartPos +
-			Vector3((Speed * cosf(Angle) * ThrowingTime), ((Speed * sinf(Angle) * ThrowingTime) - (0.3f * Gravity * powf(ThrowingTime, 2)) ), 0) * 0.5f;
+			Vector3((Speed * cosf(Angle) * ThrowingTime), ((Speed * sinf(Angle) * ThrowingTime) - (0.2f * Gravity * powf(ThrowingTime, 2)) ), 0);
 	}
 	else
 	{
