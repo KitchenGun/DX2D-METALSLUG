@@ -42,7 +42,10 @@ void ProjectileManager::Render()
 	{
 		if (tempProjectile != nullptr)
 		{
-			tempProjectile->Render();
+			if (tempProjectile->GetPT() != PROJECTILETYPE::KNIFE)
+			{
+				tempProjectile->Render();
+			}
 		}
 	}
 }
@@ -81,6 +84,15 @@ void ProjectileManager::AddGrenade(Vector3 position, Vector3 size, float rotatio
 		tempGrenade->SetGroundList(GroundList);
 		tempGrenade->SetPM(PM);
 	}
+	projectileList.push_back(tempGrenade);
+}
+
+void ProjectileManager::AddArty(Vector3 position, Vector3 size, float rotation, PROJECTILETYPE BT)
+{
+	Grenade* tempGrenade = nullptr;
+	tempGrenade = new Grenade(position, size, rotation, DIRECTION::NONE, BT, false);
+	tempGrenade->SetGroundList(GroundList);
+	tempGrenade->SetPM(PM);
 	projectileList.push_back(tempGrenade);
 }
 

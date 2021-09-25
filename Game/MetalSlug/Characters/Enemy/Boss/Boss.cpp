@@ -3,13 +3,14 @@
 #include "Utilities/Animator.h"
 
 Boss::Boss(Vector3 position, Vector3 size, float rotation)
-	:Enemy(position + Vector3(300, -180, 1), Vector3(100, 300, 1),rotation,ENEMYTYPE::Boss)
+	:Enemy(position + Vector3(300, -180, 0), Vector3(100, 300, 1),rotation,ENEMYTYPE::Boss)
 {
+	firePos.Pos = position + Vector3(180, 0, 0);
 	BossState = BOSSSTATE::IDLE;
 	BossBody = new TextureRect(position, size, 0);
 	BossBody->SetSRV(L"./_Textures/Map/BossObj-0.png");
 	bossCannon = new BossCannon(position, Vector3(53 * 3, 79 * 3, 0), this);
-	EnemyHP = 200;
+	EnemyHP = 400;
 	texture = new Texture2D(L"./_Textures/TestBox.png");
 	animClips.push_back(new AnimationClip(L"test", texture, 1, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	animator = new Animator(animClips);
@@ -38,6 +39,20 @@ void Boss::Update()
 			else if (phase == 1)
 			{
 				isLaserATK = true;
+			}
+		}
+		if (nextState == BOSSSTATE::ARTY)
+		{
+			static float DeltaTime = 0.0f;
+			if (DeltaTime > 0.3f && fireCount < 3)
+			{
+				DeltaTime = 0;
+				ArtyAtk(ArtyAngle()+fireCount*15);
+				fireCount++;
+			}
+			else
+			{
+				DeltaTime += Time::Delta();
 			}
 		}
 	}
@@ -92,6 +107,8 @@ void Boss::SetAni()
 		else
 		{
 			nextState = BOSSSTATE::ARTYTOLASER;
+			isArtyATK = true;
+			fireCount = 0;
 		}
 		break;
 	}
@@ -110,7 +127,6 @@ void Boss::SetAni()
 	case BOSSSTATE::LASERCHARGE:
 	{
 		static float DeltaTime = 0;
-		cout << DeltaTime << endl;
 		if (!isLaserATK && phase == 0)
 		{
 			nextState = BOSSSTATE::LASERTOARTY;
@@ -157,9 +173,15 @@ void Boss::LaserAtk()
 	}
 }
 
-void Boss::ArtyAtk()
+void Boss::ArtyAtk(float Angle)
 {
+	cout << "throw" << endl;
+	epm->AddArty(firePos.Pos, Vector3(10 * 4, 10 * 4, 0), Angle,PROJECTILETYPE::BOSSARTY);
+}
 
+int Boss::ArtyAngle()
+{
+	return 135;
 }
 
 void Boss::Die()
@@ -188,6 +210,28 @@ void Boss::HPCheck()
 	{
 		phase = 1;
 	}
+
+	if (EnemyHP >= 275)
+	{
+		BossBody->SetSRV(L"./_Textures/Map/BossObj-0.png");
+	}
+	else if (EnemyHP >= 150)
+	{
+		BossBody->SetSRV(L"./_Textures/Map/BossObj-1.png");
+	}
+	else if (EnemyHP >= 75)
+	{
+		BossBody->SetSRV(L"./_Textures/Map/BossObj-2.png");
+	}
+	else if (EnemyHP >= 0)
+	{
+		BossBody->SetSRV(L"./_Textures/Map/BossObj-3.png");
+	}
+	else if (EnemyHP <= 0)
+	{
+		BossBody->SetSRV(L"./_Textures/Map/BossObj-4.png");
+	}
+
 	if (EnemyHP <= 0)
 	{
 		Die();

@@ -25,6 +25,12 @@ Grenade::Grenade(Vector3 position, Vector3 size, float rotation, DIRECTION dir, 
 		texture = new Texture2D(L"./_Textures/SFX/Explosion/EnemyGrenadeExplosion.png");
 		animClips.push_back(new AnimationClip(L"EnemyGrenadeExplosion", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	}
+	else if (pt == PROJECTILETYPE::BOSSARTY)
+	{
+		Damage = 1;
+		texture = new Texture2D(L"./_Textures/SFX/Weapon/EnemyBossArty.png");
+		animClips.push_back(new AnimationClip(L"EnemyBossArty", texture, 3, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	}
 	animator = new Animator(animClips);
 	StartPos = position;
 	if (pt == PROJECTILETYPE::Grenade)
@@ -56,6 +62,13 @@ Grenade::Grenade(Vector3 position, Vector3 size, float rotation, DIRECTION dir, 
 			texture = new Texture2D(L"./_Textures/SFX/Weapon/LEnemyGrenade.png");
 			animator->SetCurrentAnimClip(L"LEnemyGrenade", false);
 		}
+	}
+	else if (pt == PROJECTILETYPE::BOSSARTY)
+	{
+		Angle = (float)D3DXToRadian(rotation);
+		cout << D3DXToDegree(Angle) << endl;
+		texture = new Texture2D(L"./_Textures/SFX/Weapon/EnemyBossArty.png");
+		animator->SetCurrentAnimClip(L"EnemyBossArty", false);
 	}
 }
 
@@ -127,6 +140,14 @@ void Grenade::Update()
 			}
 		}
 	}
+	else if (pt == PROJECTILETYPE::BOSSARTY)
+	{
+		if (!isHit)
+		{
+			ThrowingTime += Time::Delta();
+			Move();
+		}
+	}
 	Projectile::Update();
 }
 
@@ -137,8 +158,16 @@ void Grenade::Render()
 
 void Grenade::Move()
 {
-	this->position = StartPos+
-		Vector3((Speed * cosf(Angle) * ThrowingTime), ((Speed * sinf(Angle) * ThrowingTime) - (0.5f * Gravity * powf(ThrowingTime,2))), 0);
+	if (pt == PROJECTILETYPE::BOSSARTY)
+	{
+		this->position = StartPos +
+			Vector3((Speed * cosf(Angle) * ThrowingTime), ((Speed * sinf(Angle) * ThrowingTime) - (0.3f * Gravity * powf(ThrowingTime, 2)) ), 0) * 0.5f;
+	}
+	else
+	{
+		this->position = StartPos +
+			Vector3((Speed * cosf(Angle) * ThrowingTime), ((Speed * sinf(Angle) * ThrowingTime) - (0.5f * Gravity * powf(ThrowingTime, 2))), 0);
+	}
 	D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
 	world = S * R * T;
 	WB->SetWorld(world);

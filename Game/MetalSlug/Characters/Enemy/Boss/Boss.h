@@ -22,8 +22,8 @@ public:
 	void SetAni();
 
 	void LaserAtk();
-	void ArtyAtk();
-
+	void ArtyAtk(float Angle);
+	int ArtyAngle();
 	//»ç¸Á&ÇÇ°Ý
 	virtual void Die();
 	void HPCheck();
@@ -35,7 +35,8 @@ protected:
 	vector<Projectile*> vecHitProjectile;
 
 	bool isLaserATK = false;
-
+	bool isArtyATK = false;
+	int fireCount = 0;
 	int phase = -1;
 	BOSSSTATE prevState = BOSSSTATE::NONE;
 	BOSSSTATE BossState = BOSSSTATE::NONE;

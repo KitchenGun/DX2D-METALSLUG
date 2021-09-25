@@ -93,8 +93,8 @@ void Editer::Render()
 	MapObj2->Render();
 	MapObj3->Render();
 	//manager
-	EnemyPM->Render();
 	EnemyM->Render();
+	EnemyPM->Render();
 	PlayerPM->Render();
 	ObjectM->Render();
 	PlayerM->Render();

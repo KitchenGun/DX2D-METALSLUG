@@ -3,7 +3,7 @@
 class ProjectileManager
 {
 public:
-	ProjectileManager(bool isPM=true);
+	ProjectileManager(bool isPM = true);
 	~ProjectileManager();
 
 	void Update();
@@ -11,6 +11,7 @@ public:
 
 	void AddBullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT);
 	void AddGrenade(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT);
+	void AddArty(Vector3 position, Vector3 size, float rotation,PROJECTILETYPE BT);
 	void RemoveProjectile(Projectile* tempProjectile);
 	void SetTargetM(EnemyManager* val) { EM = val; }
 	void SetTargetM(PlayerManager* val) { PM = val; }

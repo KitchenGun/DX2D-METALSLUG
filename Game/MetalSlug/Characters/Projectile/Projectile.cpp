@@ -99,35 +99,9 @@ void Projectile::ProjectileCollisionCheck()
 				//obb
 				if (Math::OBBIntersect(tempP, this))
 				{
-
-					if (pt == PROJECTILETYPE::KNIFE || pt == PROJECTILETYPE::EnemyGrenade)
+					if (pt == PROJECTILETYPE::KNIFE || pt == PROJECTILETYPE::EnemyGrenade|| pt == PROJECTILETYPE::BOSSARTY)
 					{
 						if (pt == PROJECTILETYPE::EnemyGrenade)
-						{
-							if (!dynamic_cast<Grenade*>(this)->GetIsHit())
-							{
-								this->HitPos = this->position;
-							}
-							dynamic_cast<Grenade*>(this)->SetIsHit(true);
-							tempP->Hit(this->GetDamage(), this);
-						}
-						else
-						{
-							tempP->Hit(this->GetDamage(), this);
-						}
-					}
-					else
-					{
-						tempP->Hit(this->GetDamage());
-						isNeedDestroy = true;
-					}
-				}
-				//aabb
-				else if (Math::Intersect(tempP, this))
-				{
-					if (pt == PROJECTILETYPE::KNIFE || pt == PROJECTILETYPE::Grenade)
-					{
-						if (pt == PROJECTILETYPE::Grenade)
 						{
 							if (!dynamic_cast<Grenade*>(this)->GetIsHit())
 							{
