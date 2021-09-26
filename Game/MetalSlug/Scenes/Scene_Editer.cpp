@@ -38,7 +38,7 @@ void Editer::Init()
 	EnemyM->SetPM(PlayerM);
 	PlayerPM->SetTargetM(EnemyM);
 	EnemyPM->SetTargetM(PlayerM);
-	PlayerM->AddPlayer(Vector3(5000 *3, 1200, 0));
+	PlayerM->AddPlayer(Vector3(50 *3, 700, 0));
 
 	EnemyM->AddEnemy(Vector3(600, 500, 0), ENEMYTYPE::Grenadier);
 

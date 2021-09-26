@@ -722,20 +722,26 @@ void Player::Knife()
 			{
 				if (Math::Distance(temp->GetTransformedCoord().Point, this->r.Point) <= KnifeRange)
 				{
-					firePos.Rotation = 0;
-					isKnife = true;
-					isAtk = true;
-					if (isCrouch)
+					if (temp->GetET() == ENEMYTYPE::Grenadier)
 					{
-						PM->AddBullet(r.Point + Vector3(KnifeRange / 2, 0, 0), Vector3(KnifeRange, 5 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::KNIFE);
-						upperBody->SetClip("CrouchKnifeATK");
-						soldierUpperState = SOLDIERSTATE::CROUCHKNIFEATK;
-					}
-					else
-					{
-						PM->AddBullet(r.Point+Vector3(KnifeRange/2,0,0), Vector3(KnifeRange, 5 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::KNIFE);
-						upperBody->SetClip("KnifeATK");
-						soldierUpperState = SOLDIERSTATE::KNIFEATK;
+						if (dynamic_cast<EnemySoldier*>(temp)->GetState()!=ENEMYSOLDIERSTATE::DIE)
+						{
+							firePos.Rotation = 0;
+							isKnife = true;
+							isAtk = true;
+							if (isCrouch)
+							{
+								PM->AddBullet(r.Point + Vector3(KnifeRange / 2, 0, 0), Vector3(KnifeRange, 5 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::KNIFE);
+								upperBody->SetClip("CrouchKnifeATK");
+								soldierUpperState = SOLDIERSTATE::CROUCHKNIFEATK;
+							}
+							else
+							{
+								PM->AddBullet(r.Point + Vector3(KnifeRange / 2, 0, 0), Vector3(KnifeRange, 5 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::KNIFE);
+								upperBody->SetClip("KnifeATK");
+								soldierUpperState = SOLDIERSTATE::KNIFEATK;
+							}
+						}
 					}
 				}
 			}

@@ -5,7 +5,7 @@ GameManager::GameManager(PlayerManager* pm, EnemyManager* em)
 	:PM(pm),
 	EM(em)
 {
-	Camera::Get()->SetCamPos(Vector3(15000, 300, 0));//높이50
+	Camera::Get()->SetCamPos(Vector3(80, 50, 0));//높이50
 	EM->AddBoss(Vector3(15800, 810, 0));
 }
 
@@ -91,7 +91,7 @@ void GameManager::Update()
 {
 	if (PM->GetPlayerList().size() <= 0)
 	{
-		AddPlayer(Vector3(4000, 400, 0));
+		AddPlayer(Camera::Get()->GetCamPos()+Vector3(200,600,0));
 	}
 	else
 	{
