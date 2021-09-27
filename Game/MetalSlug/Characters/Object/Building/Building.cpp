@@ -2,9 +2,10 @@
 #include "Building.h"
 #include "Utilities/Animator.h"
 
-Building::Building(Vector3 position, Vector3 size, float rotation, int BuildIndex, bool isRender)
+Building::Building(Vector3 position, Vector3 size, float rotation, int BuildIndex, bool isRender, TextureRect* Stage1Texture)
 :Object(position, size, rotation, ObjectType::BUILDING, isRender)
 {
+	this->Stage1Texture = Stage1Texture;
 	this->BuildIndex = BuildIndex;
 	switch (BuildIndex)
 	{
@@ -35,22 +36,22 @@ Building::Building(Vector3 position, Vector3 size, float rotation, int BuildInde
 	animator = new Animator(animClips);
 	texture = new Texture2D//(L"./_Textures/TestBox.png");
 	(L"./_Textures/Object/Building/Building1.png");
-		switch (BuildIndex)
-		{
-		case 1:
-			texture = new Texture2D//(L"./_Textures/TestBox.png");
-			(L"./_Textures/Object/Building/Building1.png");
-			animator->SetCurrentAnimClip(L"Building1");
-			break;
-		case 2:
-			texture = new Texture2D(L"./_Textures/Object/Building/Building1-4.png");
-			animator->SetCurrentAnimClip(L"Building4");
-			break;
-		default:
-			break;
-		}
-	
+	switch (BuildIndex)
+	{
+	case 1:
+		texture = new Texture2D//(L"./_Textures/TestBox.png");
+		(L"./_Textures/Object/Building/Building1.png");
+		animator->SetCurrentAnimClip(L"Building1");
+		break;
+	case 2:
+		texture = new Texture2D(L"./_Textures/Object/Building/Building1-4.png");
+		animator->SetCurrentAnimClip(L"Building4");
+		break;
+	default:
+		break;
+	}
 	animator->bLoop = true;
+	Stage1Texture->SetSRV(L"./_Textures/Map/MapObj6.png");
 	TransformVertices();
 }
 
@@ -121,7 +122,7 @@ void Building::HPCheck()
 		else if (ObjHP > 0)
 		{
 			static bool isSmall = false;
-			if (isSmall == false&&Stage1Texture==nullptr)
+			if (isSmall == false)
 			{
 				ColliderSizeChange(COLLIDER::SMALL);
 				isSmall = true;
@@ -143,7 +144,7 @@ void Building::HPCheck()
 		{
 			Stage1Texture->SetSRV(L"./_Textures/Map/MapObj6-1.png");
 		}
-		if (ObjHP >= 0)
+		else if (ObjHP >= 0)
 		{
 			Stage1Texture->SetSRV(L"./_Textures/Map/MapObj6-2.png");
 		}

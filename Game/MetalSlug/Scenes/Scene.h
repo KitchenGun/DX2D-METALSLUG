@@ -10,6 +10,7 @@
 #include "Geometry/AnimationRect.h"
 #include "Geometry/PlayerAnimationRect.h"
 #include "Geometry/Ground.h"
+#include "Geometry/BackGround.h"
 
 //플레이어
 #include "Characters/Player/SoldierLower.h"

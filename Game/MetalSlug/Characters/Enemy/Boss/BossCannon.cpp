@@ -139,7 +139,7 @@ void BossCannon::PivotUpdate()
 		SetPos(position + Vector3(0, 20 * 3, 0));
 		break;
 	case BOSSSTATE::LASER:
-		SetPos(position-Vector3(70, -25 * 3, 0));
+		SetPos(position-Vector3(70, -30 * 3, 0));
 		break;
 	case BOSSSTATE::LASERCHARGE:
 		SetPos(position + Vector3(-70, -5 * 3, 0));

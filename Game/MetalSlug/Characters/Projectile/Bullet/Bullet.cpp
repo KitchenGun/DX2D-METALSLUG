@@ -25,13 +25,13 @@ Bullet::Bullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PR
 		break;
 	case PROJECTILETYPE::PISTOL:
 		Damage = 1;
-		Speed = 300000;
+		Speed = 100000;
 		texture = new Texture2D(L"./_Textures/SFX/Weapon/NormalBullet.png");
 		animator->SetCurrentAnimClip(L"NormalBullet");
 	break;
 	case PROJECTILETYPE::HEAVY:
 		Damage = 1;
-		Speed = 300000;
+		Speed = 100000;
 		texture = new Texture2D(L"./_Textures/SFX/Weapon/NormalBullet.png");
 		animator->SetCurrentAnimClip(L"NormalBullet");
 		break;
@@ -41,7 +41,7 @@ Bullet::Bullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PR
 		animator->playRate = 1.0f / 3;
 		texture = new Texture2D(L"./_Textures/SFX/Weapon/EnemyBossLaser.png");
 		animator->SetCurrentAnimClip(L"EnemyBossLaser");
-		// 탄약 이미지 추가해야함
+		TransformVertices();
 		break;
 	default:
 		break;

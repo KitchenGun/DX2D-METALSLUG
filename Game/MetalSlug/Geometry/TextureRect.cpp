@@ -115,7 +115,7 @@ void TextureRect::SetShader(wstring shaderPath)
 
 void TextureRect::Move(Vector3 position)
 {
-	this->position += position;
+	this->position = position;
 	D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
 
 	world = S * R * T;

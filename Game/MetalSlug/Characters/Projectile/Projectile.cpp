@@ -94,35 +94,32 @@ void Projectile::ProjectileCollisionCheck()
 	{
 		for (Player* tempP : PM->GetPlayerList())
 		{
-			if (Math::Distance(tempP->GetTransformedCoord().Point, this->GetPosition()) < 50 * 4)
+			
+			//obb
+			if (Math::OBBIntersect(tempP, this))
 			{
-				//obb
-				if (Math::OBBIntersect(tempP, this))
+				if (pt == PROJECTILETYPE::KNIFE || pt == PROJECTILETYPE::EnemyGrenade|| pt == PROJECTILETYPE::BOSSARTY|| pt == PROJECTILETYPE::BOSSLASER)
 				{
-					if (pt == PROJECTILETYPE::KNIFE || pt == PROJECTILETYPE::EnemyGrenade|| pt == PROJECTILETYPE::BOSSARTY|| pt == PROJECTILETYPE::BOSSLASER)
+					if (pt == PROJECTILETYPE::EnemyGrenade)
 					{
-						if (pt == PROJECTILETYPE::EnemyGrenade)
+						if (!dynamic_cast<Grenade*>(this)->GetIsHit())
 						{
-							if (!dynamic_cast<Grenade*>(this)->GetIsHit())
-							{
-								this->HitPos = this->position;
-							}
-							dynamic_cast<Grenade*>(this)->SetIsHit(true);
-							tempP->Hit(this->GetDamage(), this);
+							this->HitPos = this->position;
 						}
-						else
-						{
-							tempP->Hit(this->GetDamage(), this);
-						}
+						dynamic_cast<Grenade*>(this)->SetIsHit(true);
+						tempP->Hit(this->GetDamage(), this);
 					}
 					else
 					{
-						tempP->Hit(this->GetDamage());
-						isNeedDestroy = true;
+						tempP->Hit(this->GetDamage(), this);
 					}
 				}
+				else
+				{
+					tempP->Hit(this->GetDamage());
+					isNeedDestroy = true;
+				}
 			}
-
 		}
 	}
 }

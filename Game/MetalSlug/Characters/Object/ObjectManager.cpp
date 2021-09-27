@@ -131,11 +131,7 @@ void ObjectManager::AddObject(Vector3 position, ObjectType objectType, bool isRe
 void ObjectManager::AddBuilding(Vector3 position, Vector3 size, int buildIndex, bool isRender)
 {
 	Object* tempO = nullptr;
-	tempO = new Building(position, size, 0, buildIndex,isRender);
-	if (buildIndex == 2)
-	{
-		dynamic_cast<Building*>(tempO)->SetStage1Texture(Stage1Texture);
-	}
+	tempO = new Building(position, size, 0, buildIndex,isRender, Stage1Texture);
 	tempO->SetTarget(EM);
 	tempO->SetTarget(PM);
 	tempO->SetPPM(PPM);

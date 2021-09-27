@@ -3,7 +3,7 @@
 class Building :public Object
 {
 public:
-	Building(Vector3 position, Vector3 size, float rotation, int BuildIndex, bool isRender = true);
+	Building(Vector3 position, Vector3 size, float rotation, int BuildIndex, bool isRender = true, TextureRect* Stage1Texture=nullptr);
 	~Building();
 
 	void Update() override;

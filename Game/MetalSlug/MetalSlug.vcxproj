@@ -173,6 +173,7 @@
     <ClCompile Include="Characters\Projectile\Manager\ProjectileManager.cpp" />
     <ClCompile Include="Characters\Projectile\Projectile.cpp" />
     <ClCompile Include="Geometry\AnimationRect.cpp" />
+    <ClCompile Include="Geometry\BackGround.cpp" />
     <ClCompile Include="Geometry\Circle.cpp" />
     <ClCompile Include="Geometry\FilledCircle.cpp" />
     <ClCompile Include="Geometry\Ground.cpp" />
@@ -233,6 +234,7 @@
     <ClInclude Include="Characters\Projectile\Manager\ProjectileManager.h" />
     <ClInclude Include="Characters\Projectile\Projectile.h" />
     <ClInclude Include="Geometry\AnimationRect.h" />
+    <ClInclude Include="Geometry\BackGround.h" />
     <ClInclude Include="Geometry\Circle.h" />
     <ClInclude Include="Geometry\FilledCircle.h" />
     <ClInclude Include="Geometry\Ground.h" />

@@ -170,7 +170,7 @@ void Boss::LaserAtk()
 	if (!isLaserFire)
 	{
 		isLaserFire = true;
-		epm->AddLaser(firePos.Pos+Vector3(-555,-110,0), Vector3(300 * 4, 10 * 4, 0), PROJECTILETYPE::BOSSLASER);
+		epm->AddLaser(firePos.Pos+Vector3(-555,-90,0), Vector3(300 * 4, 10 * 4, 0), PROJECTILETYPE::BOSSLASER);
 	}
 	if (bossCannon->GetAnimator()->GetIndex()==5)
 	{
@@ -228,6 +228,13 @@ int Boss::ArtyAngle()
 
 void Boss::Die()
 {
+	for (Projectile* temp : epm->GetList())
+	{
+		if (temp->GetPT() == PROJECTILETYPE::BOSSLASER)
+		{
+			epm->RemoveProjectile(temp);
+		}
+	}
 	BossState = BOSSSTATE::DIE;
 	nextState = BOSSSTATE::DIE;
 }
@@ -315,6 +322,4 @@ void Boss::Hit(DAMAGE val, Projectile* tempProjectile)
 	}
 }
 
-void Boss::ColliderSizeChange(COLLIDER val)
-{
-}
+

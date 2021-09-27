@@ -28,7 +28,6 @@ public:
 	virtual void Die();
 	void HPCheck();
 	void Hit(DAMAGE val, Projectile* tempProjectile = nullptr) override;
-	void ColliderSizeChange(COLLIDER val);
 	//set get
 	BOSSSTATE GetBossState() { return BossState; }
 protected:
