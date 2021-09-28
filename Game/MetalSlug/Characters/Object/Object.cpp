@@ -95,10 +95,8 @@ void Object::EnemyBlock()
 
 void Object::Hit(DAMAGE val, Projectile* tempProjectile)
 {
-	if (ot == ObjectType::BUILDING)
+	if (ot == ObjectType::BUILDING|| ot == ObjectType::BOX)
 	{
-	
-		cout << ObjHP << endl;
 		Projectile* NowTemp;
 		NowTemp = tempProjectile;
 	

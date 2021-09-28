@@ -12,6 +12,7 @@ ObjectManager::ObjectManager(PlayerManager* pm, EnemyManager* em, ProjectileMana
 ObjectManager::~ObjectManager()
 {
 	SAFE_DELETE(Stage1Texture);
+	SAFE_DELETE(IM);
 	SAFE_DELETE(PPM);
 	SAFE_DELETE(EM);
 	SAFE_DELETE(PM);
@@ -124,6 +125,12 @@ void ObjectManager::AddObject(Vector3 position, ObjectType objectType, bool isRe
 		tempO->SetTarget(PM);
 		tempO->SetPPM(PPM);
 		break; 
+	case  ObjectType::BOX:
+		tempO = new ItemBox(position, Vector3(40*3,33*3,1), 0, isRender, PROJECTILETYPE::HEAVY,IM);
+		tempO->SetTarget(EM);
+		tempO->SetTarget(PM);
+		tempO->SetPPM(PPM);
+		break;
 	}
 	objectList.push_back(tempO);
 }

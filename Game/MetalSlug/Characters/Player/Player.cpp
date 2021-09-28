@@ -38,8 +38,9 @@ void Player::Update()
 	{
 		PlayerProjectileType = PROJECTILETYPE::HEAVY;
 		upperBody->SetisPistol(false);
+		Ammo = 200;
 	}
-
+	AmmoCheck();
 	if (!isDie)
 	{
 		Input();
@@ -75,7 +76,7 @@ void Player::Update()
 
 void Player::Render()
 {
-	PlayerAnimationRect::Render();
+	//PlayerAnimationRect::Render();
 	lowerBody->Render();
 	upperBody->Render();
 }
@@ -1218,6 +1219,7 @@ void Player::HeavyFire()
 		if (deltaTime > HeavyfireRate&&HeavyFireCount>0)
 		{
 			PM->AddBullet(firePos.Pos+Vector3(0,(HeavyFireCount%3)*2*IMGsize,0), Vector3(24 * IMGsize, 4 * IMGsize, 1), firePos.Rotation, dir, PlayerProjectileType);
+			--Ammo;
 			deltaTime = 0.0f;
 			HeavyFireCount--;
 			if (HeavyFireCount == 0)
@@ -1264,6 +1266,37 @@ void Player::Die()
 	ColliderSizeChange(COLLIDER::NONE);
 	soldierUpperState = SOLDIERSTATE::DIE;
 	soldierLowerState = SOLDIERSTATE::NONE;
+}
+
+void Player::AmmoCheck()
+{
+	if (Ammo <= 0)
+	{
+		PlayerProjectileType = PROJECTILETYPE::PISTOL;
+		upperBody->SetisPistol(true);
+		Ammo = 0;
+	}
+	else if(PlayerProjectileType == PROJECTILETYPE::HEAVY)
+	{
+		upperBody->SetisPistol(false);
+	}
+}
+
+void Player::ItemTake(PROJECTILETYPE ItemInfo)
+{
+	switch (ItemInfo)
+	{
+	case PROJECTILETYPE::HEAVY:
+		PlayerProjectileType = PROJECTILETYPE::HEAVY;
+		upperBody->SetisPistol(false);
+		Ammo = 200;
+		break;
+	case PROJECTILETYPE::Grenade:
+		break;
+	
+	default:
+		break;
+	}
 }
 
 

@@ -8,6 +8,7 @@ Editer::Editer()
 Editer::~Editer()
 {
 	SAFE_DELETE(GameM);
+	SAFE_DELETE(ItemM);
 	SAFE_DELETE(ObjectM);
 	SAFE_DELETE(EnemyM);
 	SAFE_DELETE(EnemyPM);
@@ -77,6 +78,7 @@ void Editer::Init()
 	EnemyPM = new ProjectileManager(false);
 	EnemyM = new EnemyManager(EnemyPM);
 	PlayerM = new PlayerManager(PlayerPM, EnemyM);
+	ItemM = new ItemManager(PlayerM);
 	EnemyM->SetPM(PlayerM);
 	PlayerPM->SetTargetM(EnemyM);
 	EnemyPM->SetTargetM(PlayerM);
@@ -87,6 +89,7 @@ void Editer::Init()
 	GameM = new GameManager(PlayerM, EnemyM);
 	
 	ObjectM = new ObjectManager(PlayerM, EnemyM,PlayerPM);
+	ObjectM->SetIM(ItemM);
 	ObjectM->SetStage1Texture(MapObj4);
 	ObjectM->AddObject(Vector3(2150, 175, 0), ObjectType::ROCK);
 	ObjectM->AddObject(Vector3(2400, 5, 0), ObjectType::ROCK, false);
@@ -96,6 +99,9 @@ void Editer::Init()
 	ObjectM->AddObject(Vector3(8300, 20, 0),Vector3(64 * 4, 90 * 4, 1), ObjectType::ROCK,false);
 	ObjectM->AddBuilding(Vector3(11300, 80, 0), Vector3(150 * 4, 169 *4 , 1),1);
 	ObjectM->AddBuilding(Vector3(12200, 80, 0), Vector3(150 * 4, 169 * 4, 1), 2, false);
+	//¾ÆÀÌÅÛ
+	ObjectM->AddObject(Vector3(2050, 170, 0), ObjectType::BOX, true);
+	ObjectM->AddObject(Vector3(5050, 80, 0), ObjectType::BOX, true);
 	LoadGroundTile(L"./GroundData/Stage1.data");
 	PlayerM->SetGroundList(GroundList);
 	EnemyM->SetGroundList(GroundList);
@@ -122,6 +128,7 @@ void Editer::Update()
 	PlayerM->Update(); 
 	ObjectM->Update();
 	GameM->Update();
+	ItemM->Update();
 	//animation
 	MapGroundWaterDown->Update();
 	MapGroundWaterUp->Update();
@@ -131,7 +138,6 @@ void Editer::Update()
 	MapWaterFall->Update();
 	MapWaterFall1->Update();
 	MapWaterFall2->Update();
-	//MapObj4->Update();
 }
 
 void Editer::PreRender()
@@ -155,6 +161,7 @@ void Editer::Render()
 	EnemyM->Render();
 	EnemyPM->Render();
 	ObjectM->Render();
+	ItemM->Render();
 	PlayerM->Render();
 	PlayerPM->Render();
 	//ground

@@ -105,6 +105,9 @@ public://持失切 社瑚切 update render
 	void Hit(DAMAGE val, Projectile* tempProjectile = nullptr);
 	void HPCheck();
 	void Die();
+
+	void AmmoCheck();
+	void ItemTake(PROJECTILETYPE ItemInfo);
 public://Get&Set
 	bool GetisDestroy() { return isDestroy; }
 	void SetUpperAni();

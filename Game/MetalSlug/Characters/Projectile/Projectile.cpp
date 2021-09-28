@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Projectile.h"
 
+
 Projectile::Projectile(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE PT, bool isPPM)
 	:AnimationRect(position, size, rotation),
 	Dir(dir),
@@ -62,7 +63,7 @@ void Projectile::ProjectileCollisionCheck()
 		}
 		for (Object* tempO : OM->GetObjectList())
 		{
-			if (tempO->GetObjType()==ObjectType::BUILDING)
+			if (tempO->GetObjType()==ObjectType::BUILDING||tempO->GetObjType() == ObjectType::BOX)
 			{
 				//obb
 				if (Math::OBBIntersect(tempO, this))

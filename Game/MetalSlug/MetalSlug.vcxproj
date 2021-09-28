@@ -160,7 +160,11 @@
     <ClCompile Include="Characters\Enemy\Soldier\EnemySoldier.cpp" />
     <ClCompile Include="Characters\Enemy\Soldier\GrenadierAni.cpp" />
     <ClCompile Include="Characters\GameManager.cpp" />
+    <ClCompile Include="Characters\Item\Item.cpp" />
+    <ClCompile Include="Characters\Item\Manager\ItemManager.cpp" />
+    <ClCompile Include="Characters\Object\BoxAnimation.cpp" />
     <ClCompile Include="Characters\Object\Building\Building.cpp" />
+    <ClCompile Include="Characters\Object\ItemBox.cpp" />
     <ClCompile Include="Characters\Object\Object.cpp" />
     <ClCompile Include="Characters\Object\ObjectManager.cpp" />
     <ClCompile Include="Characters\Object\Rock\Rock1.cpp" />
@@ -221,7 +225,11 @@
     <ClInclude Include="Characters\Enemy\Soldier\EnemySoldier.h" />
     <ClInclude Include="Characters\Enemy\Soldier\GrenadierAni.h" />
     <ClInclude Include="Characters\GameManager.h" />
+    <ClInclude Include="Characters\Item\Item.h" />
+    <ClInclude Include="Characters\Item\Manager\ItemManager.h" />
+    <ClInclude Include="Characters\Object\BoxAnimation.h" />
     <ClInclude Include="Characters\Object\Building\Building.h" />
+    <ClInclude Include="Characters\Object\ItemBox.h" />
     <ClInclude Include="Characters\Object\Object.h" />
     <ClInclude Include="Characters\Object\ObjectManager.h" />
     <ClInclude Include="Characters\Object\Rock\Rock1.h" />

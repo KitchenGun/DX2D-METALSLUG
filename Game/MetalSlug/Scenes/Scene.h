@@ -35,6 +35,10 @@
 #include "Characters/Object/Object.h"
 #include "Characters/Object/Rock/Rock1.h"
 #include "Characters/Object/Building/Building.h"
+#include "Characters/Object/BoxAnimation.h"
+#include "Characters/Item/Item.h"
+#include "Characters/Object/ItemBox.h"
+#include "Characters/Item/Manager/ItemManager.h"
 #include "Characters/Object/ObjectManager.h"
 //Manager
 #include "Characters/Projectile/Manager/ProjectileManager.h"
