@@ -127,3 +127,9 @@ void GameManager::PlayerTracking()
 		phase = 0;
 	}
 }
+
+void GameManager::ScoreChange(int val)
+{
+	Score += val;
+	cout << Score << endl;
+}

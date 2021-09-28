@@ -13,11 +13,15 @@ public:
 	void EnemySpawn();
 	void Update();
 	void PlayerTracking();
+
+	void ScoreChange(int val);
 private:
 	PlayerManager* PM;
 	EnemyManager* EM;
-	
+
 	//단계 phase(카메라 움직임 멈춤)
 	int phase = 0;
 	float SpawnRate = 1;
+	//점수
+	int Score=0;
 };

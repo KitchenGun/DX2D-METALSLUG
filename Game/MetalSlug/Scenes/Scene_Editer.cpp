@@ -87,7 +87,7 @@ void Editer::Init()
 	EnemyM->AddEnemy(Vector3(600, 500, 0), ENEMYTYPE::Grenadier);
 
 	GameM = new GameManager(PlayerM, EnemyM);
-	
+	EnemyM->SetGM(GameM);
 	ObjectM = new ObjectManager(PlayerM, EnemyM,PlayerPM);
 	ObjectM->SetIM(ItemM);
 	ObjectM->SetStage1Texture(MapObj4);

@@ -76,6 +76,7 @@ void EnemyManager::RemoveEnemy(Enemy* tempEnemy)
 	{
 		if (*iter == tempEnemy)
 		{
+			GM->ScoreChange(100);
 			iter = enemyList.erase(iter);
 			break;
 		}
