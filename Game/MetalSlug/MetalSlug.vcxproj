@@ -178,6 +178,7 @@
     <ClCompile Include="Characters\Projectile\Projectile.cpp" />
     <ClCompile Include="Characters\UI\Ammo\AmmoUI.cpp" />
     <ClCompile Include="Characters\UI\Manager\UIManager.cpp" />
+    <ClCompile Include="Characters\UI\Score\ScoreUI.cpp" />
     <ClCompile Include="Geometry\AnimationRect.cpp" />
     <ClCompile Include="Geometry\BackGround.cpp" />
     <ClCompile Include="Geometry\Circle.cpp" />
@@ -245,6 +246,7 @@
     <ClInclude Include="Characters\Projectile\Projectile.h" />
     <ClInclude Include="Characters\UI\Ammo\AmmoUI.h" />
     <ClInclude Include="Characters\UI\Manager\UIManager.h" />
+    <ClInclude Include="Characters\UI\Score\ScoreUI.h" />
     <ClInclude Include="Geometry\AnimationRect.h" />
     <ClInclude Include="Geometry\BackGround.h" />
     <ClInclude Include="Geometry\Circle.h" />

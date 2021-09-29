@@ -15,6 +15,7 @@ public:
 	void PlayerTracking();
 	void Win();
 	void ScoreChange(int val);
+	int GetScore() { return Score; }
 private:
 	PlayerManager* PM;
 	EnemyManager* EM;

@@ -3,13 +3,15 @@
 class UIManager
 {
 public:
-	UIManager(PlayerManager* pm);
+	UIManager(PlayerManager* pm, GameManager* gm);
 	~UIManager();
 
 	void Update();
 	void Render();
 
 private:
-	AmmoUI* ammoUI;
+	AmmoUI* ammoUI=nullptr;
+	ScoreUI* scoreUI=nullptr;
 	PlayerManager* pm = nullptr;
+	GameManager* gm = nullptr;
 };

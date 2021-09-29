@@ -1309,9 +1309,9 @@ void Player::ItemTake(PROJECTILETYPE ItemInfo)
 		{
 			Ammo = 200;
 		}
-		break;
 		PlayerProjectileType = PROJECTILETYPE::HEAVY;
 		upperBody->SetisPistol(false);
+		break;
 	case PROJECTILETYPE::Grenade:
 		PlayerProjectileType = PROJECTILETYPE::Grenade;
 		Bomb += 10;

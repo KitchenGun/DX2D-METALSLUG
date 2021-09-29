@@ -88,7 +88,7 @@ void EnemySoldier::Update()
 
 void EnemySoldier::Render()
 {
-	Enemy::Render();
+	//Enemy::Render();
 	switch (enemyType)
 	{
 	case ENEMYTYPE::Grenadier:

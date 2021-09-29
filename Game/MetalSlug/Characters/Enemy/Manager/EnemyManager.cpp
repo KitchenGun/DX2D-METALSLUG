@@ -76,7 +76,14 @@ void EnemyManager::RemoveEnemy(Enemy* tempEnemy)
 	{
 		if (*iter == tempEnemy)
 		{
-			GM->ScoreChange(100);
+			if (tempEnemy->GetET() == ENEMYTYPE::Boss)
+			{
+				GM->ScoreChange(10000);
+			}
+			else
+			{
+				GM->ScoreChange(100);
+			}
 			iter = enemyList.erase(iter);
 			break;
 		}

@@ -41,13 +41,14 @@
 #include "Characters/Item/Manager/ItemManager.h"
 #include "Characters/Object/ObjectManager.h"
 
-#include "Characters/UI/Ammo/AmmoUI.h"
-
-#include "Characters/UI/Manager/UIManager.h"
 
 //Manager
 #include "Characters/Projectile/Manager/ProjectileManager.h"
 #include "Characters/GameManager.h"
+//UI
+#include "Characters/UI/Ammo/AmmoUI.h"
+#include "Characters/UI/Score/ScoreUI.h"
+#include "Characters/UI/Manager/UIManager.h"
 
 class Scene
 {//순수 가상함수가 들어간 인터페이스 제작

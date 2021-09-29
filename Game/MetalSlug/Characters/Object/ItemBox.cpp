@@ -37,7 +37,7 @@ void ItemBox::Update()
 
 void ItemBox::Render()
 {
-	Object::Render();
+	//Object::Render();
 	BAni->Render();
 }
 

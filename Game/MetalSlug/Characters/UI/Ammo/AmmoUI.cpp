@@ -25,7 +25,7 @@ AmmoUI::~AmmoUI()
 
 void AmmoUI::Update()
 {
-	SetPos(Camera::Get()->GetCamPos() + Vector3(500, WinMaxHeight - 50, 0));
+	SetPos(Camera::Get()->GetCamPos() + Vector3(400, WinMaxHeight - 50, 0));
 	AmmoNumChange();
 	BombNumChange();
 }
@@ -178,75 +178,75 @@ void AmmoUI::AmmoNumChange()
 
 void AmmoUI::BombNumChange()
 {
-		//srv 설정
-		switch (pm->GetPlayer()->GetBomb() / 10)
-		{
-		case 0:
-			bomb0->SetSRV(L"./_Textures/UI/Ammo0.png");
-			break;
-		case 1:
-			bomb0->SetSRV(L"./_Textures/UI/Ammo1.png");
-			break;
-		case 2:
-			bomb0->SetSRV(L"./_Textures/UI/Ammo2.png");
-			break;
-		case 3:
-			bomb0->SetSRV(L"./_Textures/UI/Ammo3.png");
-			break;
-		case 4:
-			bomb0->SetSRV(L"./_Textures/UI/Ammo4.png");
-			break;
-		case 5:
-			bomb0->SetSRV(L"./_Textures/UI/Ammo5.png");
-			break;
-		case 6:
-			bomb0->SetSRV(L"./_Textures/UI/Ammo6.png");
-			break;
-		case 7:
-			bomb0->SetSRV(L"./_Textures/UI/Ammo7.png");
-			break;
-		case 8:
-			bomb0->SetSRV(L"./_Textures/UI/Ammo8.png");
-			break;
-		case 9:
-			bomb0->SetSRV(L"./_Textures/UI/Ammo9.png");
-			break;
-		default:
-			break;
-		}
-		switch (pm->GetPlayer()->GetBomb() % 10)
-		{
-		case 0:
-			bomb1->SetSRV(L"./_Textures/UI/Ammo0.png");
-			break;
-		case 1:
-			bomb1->SetSRV(L"./_Textures/UI/Ammo1.png");
-			break;
-		case 2:
-			bomb1->SetSRV(L"./_Textures/UI/Ammo2.png");
-			break;
-		case 3:
-			bomb1->SetSRV(L"./_Textures/UI/Ammo3.png");
-			break;
-		case 4:
-			bomb1->SetSRV(L"./_Textures/UI/Ammo4.png");
-			break;
-		case 5:
-			bomb1->SetSRV(L"./_Textures/UI/Ammo5.png");
-			break;
-		case 6:
-			bomb1->SetSRV(L"./_Textures/UI/Ammo6.png");
-			break;
-		case 7:
-			bomb1->SetSRV(L"./_Textures/UI/Ammo7.png");
-			break;
-		case 8:
-			bomb1->SetSRV(L"./_Textures/UI/Ammo8.png");
-			break;
-		case 9:
-			bomb1->SetSRV(L"./_Textures/UI/Ammo9.png");
-			break;
-		default:
-			break;
-		}
+	//srv 설정
+	switch (pm->GetPlayer()->GetBomb() / 10)
+	{
+	case 0:
+		bomb0->SetSRV(L"./_Textures/UI/Ammo0.png");
+		break;
+	case 1:
+		bomb0->SetSRV(L"./_Textures/UI/Ammo1.png");
+		break;
+	case 2:
+		bomb0->SetSRV(L"./_Textures/UI/Ammo2.png");
+		break;
+	case 3:
+		bomb0->SetSRV(L"./_Textures/UI/Ammo3.png");
+		break;
+	case 4:
+		bomb0->SetSRV(L"./_Textures/UI/Ammo4.png");
+		break;
+	case 5:
+		bomb0->SetSRV(L"./_Textures/UI/Ammo5.png");
+		break;
+	case 6:
+		bomb0->SetSRV(L"./_Textures/UI/Ammo6.png");
+		break;
+	case 7:
+		bomb0->SetSRV(L"./_Textures/UI/Ammo7.png");
+		break;
+	case 8:
+		bomb0->SetSRV(L"./_Textures/UI/Ammo8.png");
+		break;
+	case 9:
+		bomb0->SetSRV(L"./_Textures/UI/Ammo9.png");
+		break;
+	default:
+		break;
+	}
+	switch (pm->GetPlayer()->GetBomb() % 10)
+	{
+	case 0:
+		bomb1->SetSRV(L"./_Textures/UI/Ammo0.png");
+		break;
+	case 1:
+		bomb1->SetSRV(L"./_Textures/UI/Ammo1.png");
+		break;
+	case 2:
+		bomb1->SetSRV(L"./_Textures/UI/Ammo2.png");
+		break;
+	case 3:
+		bomb1->SetSRV(L"./_Textures/UI/Ammo3.png");
+		break;
+	case 4:
+		bomb1->SetSRV(L"./_Textures/UI/Ammo4.png");
+		break;
+	case 5:
+		bomb1->SetSRV(L"./_Textures/UI/Ammo5.png");
+		break;
+	case 6:
+		bomb1->SetSRV(L"./_Textures/UI/Ammo6.png");
+		break;
+	case 7:
+		bomb1->SetSRV(L"./_Textures/UI/Ammo7.png");
+		break;
+	case 8:
+		bomb1->SetSRV(L"./_Textures/UI/Ammo8.png");
+		break;
+	case 9:
+		bomb1->SetSRV(L"./_Textures/UI/Ammo9.png");
+		break;
+	default:
+		break;
+	}
 }
