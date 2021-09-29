@@ -12,6 +12,7 @@ public:
 private:
 	AmmoUI* ammoUI=nullptr;
 	ScoreUI* scoreUI=nullptr;
+	Timer* timer = nullptr;
 	PlayerManager* pm = nullptr;
 	GameManager* gm = nullptr;
 };
