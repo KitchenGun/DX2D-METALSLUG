@@ -36,6 +36,7 @@ public:
 	bool GetisNeedDestroy() { return isNeedDestroy; }
 	DIRECTION GetDir() { return dir; }
 	ENEMYTYPE GetET() { return enemyType; }
+	HP GetHP() { return EnemyHP; }
 protected:
 	bool isGround = false;//지상 판정
 	Vector3 RootPos;

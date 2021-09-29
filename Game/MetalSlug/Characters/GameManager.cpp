@@ -101,6 +101,7 @@ void GameManager::Update()
 		PlayerTracking();
 		CameraMove();
 		EnemySpawn();
+		Win();
 	}
 }
 
@@ -125,6 +126,23 @@ void GameManager::PlayerTracking()
 	else
 	{//시작하고 헬기 등장까지
 		phase = 0;
+	}
+}
+
+void GameManager::Win()
+{
+	if (phase > 3)
+	{
+		for (Enemy* temp : EM->GetEnemyList())
+		{
+			if (temp->GetET() == ENEMYTYPE::Boss)
+			{
+				if (temp->GetHP() <= 0)
+				{
+					PM->GetPlayer()->Win();
+				}
+			}
+		}
 	}
 }
 

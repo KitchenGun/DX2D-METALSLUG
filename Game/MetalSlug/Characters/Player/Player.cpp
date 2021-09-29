@@ -33,45 +33,55 @@ Player::~Player()
 
 void Player::Update()
 {
-	/*임시*/
-	if (Keyboard::Get()->Down('1'))
+	if (!isEnd)
 	{
-		PlayerProjectileType = PROJECTILETYPE::HEAVY;
-		upperBody->SetisPistol(false);
-		Ammo = 200;
-	}
-	AmmoCheck();
-	if (!isDie)
-	{
-		Input();
-	}
-	else
-	{
-		static float DeltaTime = 0;
-
-		if (DeltaTime > 2.0f)
+		/*임시*/
+		if (Keyboard::Get()->Down('1'))
 		{
-			DeltaTime = 0;
-			isDestroy = true;
+			PlayerProjectileType = PROJECTILETYPE::HEAVY;
+			upperBody->SetisPistol(false);
+			Ammo = 200;
+		}
+		AmmoCheck();
+		if (!isDie)
+		{
+			Input();
+			//체력 체크
+			HPCheck();
+
 		}
 		else
-			DeltaTime += Time::Delta();
+		{
+			static float DeltaTime = 0;
+
+			if (DeltaTime > 2.0f)
+			{
+				DeltaTime = 0;
+				isDestroy = true;
+			}
+			else
+				DeltaTime += Time::Delta();
+		}
+		//jump
+		Jump();
+		if (isGround || isObject)
+		{
+			isGround = true;
+			isJumpEnd = false;
+			nJumpCount = 0;
+		}
+		else
+		{
+			Move({ 0,GravatiyPower,0 });
+		}
 	}
+	//ani세팅
+	SetLowerAni();
+	SetUpperAni();
 	lowerBody->Update();
 	upperBody->Update();
-	//jump
-	Jump();
 
-	if (isGround||isObject)
-	{
-		isGround = true;
-		isJumpEnd = false;
-		nJumpCount = 0;
-	}
-	else
-	{
-		Move({ 0,GravatiyPower,0 });
-	}
+
 }
 
 void Player::Render()
@@ -665,13 +675,6 @@ void Player::Input()
 	{
 		soldierLowerState = SOLDIERSTATE::IDLE;
 	}
-
-	//체력 체크
-	HPCheck();
-
-	//ani세팅
-	SetLowerAni();
-	SetUpperAni();
 }
 
 void Player::Move(Vector3 tempPos)
@@ -912,7 +915,12 @@ void Player::Grenade()
 		}
 		
 	}
-	PM->AddGrenade(firePos.Pos, Vector3(19 * IMGsize, 19 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::Grenade);
+
+	if (Bomb > 0)
+	{
+		--Bomb;
+		PM->AddGrenade(firePos.Pos, Vector3(19 * IMGsize, 19 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::Grenade);
+	}
 }
 
 void Player::Jump()
@@ -1268,6 +1276,12 @@ void Player::Die()
 	soldierLowerState = SOLDIERSTATE::NONE;
 }
 
+void Player::Win()
+{
+	isEnd = true;
+	soldierUpperState = SOLDIERSTATE::WIN;
+}
+
 void Player::AmmoCheck()
 {
 	if (Ammo <= 0)
@@ -1287,19 +1301,26 @@ void Player::ItemTake(PROJECTILETYPE ItemInfo)
 	switch (ItemInfo)
 	{
 	case PROJECTILETYPE::HEAVY:
+		if (PlayerProjectileType == PROJECTILETYPE::HEAVY)
+		{
+			Ammo += 200;
+		}
+		else
+		{
+			Ammo = 200;
+		}
+		break;
 		PlayerProjectileType = PROJECTILETYPE::HEAVY;
 		upperBody->SetisPistol(false);
-		Ammo = 200;
-		break;
 	case PROJECTILETYPE::Grenade:
+		PlayerProjectileType = PROJECTILETYPE::Grenade;
+		Bomb += 10;
 		break;
 	
 	default:
 		break;
 	}
 }
-
-
 
 void Player::SetUpperAni()
 {
@@ -1378,6 +1399,9 @@ void Player::SetUpperAni()
 				upperBody->SetClip("Die");
 			}
 			break;
+		case SOLDIERSTATE::WIN:
+			upperBody->SetClip("Win");
+			break;
 		default:
 			break;
 	}
@@ -1406,8 +1430,3 @@ void Player::SetLowerAni()
 	}
 
 }
-
-
-
-
-

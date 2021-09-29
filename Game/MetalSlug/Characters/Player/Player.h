@@ -60,6 +60,7 @@ enum class SOLDIERSTATE
 	UPSIDEATK,
 	UPSIDEATKSTART,
 	DIE,
+	WIN,
 	//하반신
 	MOVE
 };
@@ -105,7 +106,7 @@ public://생성자 소멸자 update render
 	void Hit(DAMAGE val, Projectile* tempProjectile = nullptr);
 	void HPCheck();
 	void Die();
-
+	void Win();
 	void AmmoCheck();
 	void ItemTake(PROJECTILETYPE ItemInfo);
 public://Get&Set
@@ -131,6 +132,7 @@ public://Get&Set
 	SOLDIERSTATE GetUpperState() { return soldierUpperState; }
 	PROJECTILETYPE GetProjectileType() { return PlayerProjectileType; }
 	int GetAmmo() { return Ammo; }
+	int GetBomb() { return Bomb; }
 protected:
 	PROJECTILETYPE HitBy=PROJECTILETYPE::NONE;
 	HP PlayerHP = 1;
@@ -151,6 +153,7 @@ private:
 	bool isHandUp = false;//손을 위로 올린 경우
 	bool isAtk = false;//공격 상태
 	bool isDie = false;
+	bool isEnd = false;
 	bool isDestroy = false;
 	
 	DIRECTION dir=DIRECTION::NONE;
@@ -175,6 +178,7 @@ private:
 	PROJECTILETYPE PlayerProjectileType = PROJECTILETYPE::PISTOL;
 	bool isHeavyFire = false;
 	int Ammo = 0;
+	int Bomb = 10;
 	int HeavyFireCount = 0;
 	ProjectileManager* PM = nullptr;
 	FirePos firePos;

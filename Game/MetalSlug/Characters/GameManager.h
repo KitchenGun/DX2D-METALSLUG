@@ -13,7 +13,7 @@ public:
 	void EnemySpawn();
 	void Update();
 	void PlayerTracking();
-
+	void Win();
 	void ScoreChange(int val);
 private:
 	PlayerManager* PM;

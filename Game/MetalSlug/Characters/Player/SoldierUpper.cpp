@@ -431,6 +431,13 @@ void SoldierUpper::SetClip(string name,bool isRestart)
 				name = "LDie";
 			}
 		}
+		else if (name == "Win")
+		{
+			SetSize(Vector3(38 * player->GetSize(), 44 * player->GetSize(), 1));
+			animator->bLoop = true;
+			texture = new Texture2D(L"./_Textures/Character/Win/Win.png");
+			name = "Win";
+		}
 	}
 	else
 	{
@@ -1005,6 +1012,13 @@ void SoldierUpper::SetClip(string name,bool isRestart)
 				name = "LDie";
 			}
 		}
+		else if (name == "Win")
+		{
+			SetSize(Vector3(39 * player->GetSize(), 39 * player->GetSize(), 1));
+			animator->bLoop = true;
+			texture = new Texture2D(L"./_Textures/Character/Win/WinMachine.png");
+			name = "WinMachine";
+		}
 	}
 	animator->SetCurrentAnimClip(String::ToWString(name), isRestart);
 }
@@ -1363,6 +1377,10 @@ void SoldierUpper::PivotUpdate()
 			{
 				SetPos(player->GetPosition() + Vector3(-20 * player->GetSize(), 0 * player->GetSize(), 0));
 			}
+		}
+		else if (player->GetUpperState() == SOLDIERSTATE::WIN)
+		{
+			SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), 0 * player->GetSize(), 0));
 		}
 	}
 	else
@@ -1855,6 +1873,10 @@ void SoldierUpper::PivotUpdate()
 				SetPos(player->GetPosition() + Vector3(-20 * player->GetSize(), 0 * player->GetSize(), 0));
 			}
 		}
+		else if (player->GetUpperState() == SOLDIERSTATE::WIN)
+		{
+			SetPos(player->GetPosition() + Vector3(0 * player->GetSize(), 0 * player->GetSize(), 0));
+		}
 	}
 }
 
@@ -2023,7 +2045,11 @@ void SoldierUpper::SetAnimation()
 	animClips.push_back(new AnimationClip(L"LDie", texture, 10, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }, true));
 	texture = new Texture2D(L"./_Textures/Character/Die/RDie.png");
 	animClips.push_back(new AnimationClip(L"RDie", texture, 10, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
-
+	//Win
+	texture = new Texture2D(L"./_Textures/Character/Win/Win.png");
+	animClips.push_back(new AnimationClip(L"Win", texture, 4, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+	texture = new Texture2D(L"./_Textures/Character/Win/WinMachine.png");
+	animClips.push_back(new AnimationClip(L"WinMachine", texture, 4, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	animator = new Animator(animClips);
 }
 
