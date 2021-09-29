@@ -127,6 +127,15 @@ void TextureRect::MoveLocalRect(Vector4 localMove)
 	LB->MoveLocalRect(localMove);
 }
 
+void TextureRect::SetSize(Vector3 size)
+{
+	this->size = size;
+	D3DXMatrixScaling(&S, this->size.x, this->size.y, this->size.z);
+
+	world = S * R * T;
+	WB->SetWorld(world);//내부에서 transpose해줌
+}
+
 void TextureRect::Update()
 {
 	if (Keyboard::Get()->Down(VK_00))
@@ -158,31 +167,34 @@ void TextureRect::Update()
 
 void TextureRect::Render()
 {
-	VB->SetIA();
-	IB->SetIA();
-	IL->SetIA();
-	//기본 도형 형성 방법 지정
-	DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-
-	WB->SetVSBuffer(0);
-	VS->SetShader();
-
-	PS->SetShader();
-	if (srv)
+	if (isRender)
 	{
-		DC->PSSetShaderResources(0, 1, &srv);
-	}
-	SB->SetPSBuffer(0);//ps단계에서 사용하는 첫번째 값이여서 0으로 입력해도됨
-	//블러효과위해서 추가함
-	BB->SetPSBuffer(1);
-	LB->SetPSBuffer(2);
-	//인덱스 버퍼를 이용해서 그리기
-	DC->DrawIndexed(IB->GetCount(), 0, 0);
-	if (srv)//텍스쳐를 지정하지 않아도 지정이 되는 문제를 해결하기 위한 예외 처리
-	{
-		DC->PSSetShaderResources(0, 1, &nullView);//더블 포인터 요청하는데 nullptr넣으면 당연히 안됨 
-		//nullView는 엄밀히 말하면 nullView != nullptr
+		VB->SetIA();
+		IB->SetIA();
+		IL->SetIA();
+		//기본 도형 형성 방법 지정
+		DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+
+		WB->SetVSBuffer(0);
+		VS->SetShader();
+
+		PS->SetShader();
+		if (srv)
+		{
+			DC->PSSetShaderResources(0, 1, &srv);
+		}
+		SB->SetPSBuffer(0);//ps단계에서 사용하는 첫번째 값이여서 0으로 입력해도됨
+		//블러효과위해서 추가함
+		BB->SetPSBuffer(1);
+		LB->SetPSBuffer(2);
+		//인덱스 버퍼를 이용해서 그리기
+		DC->DrawIndexed(IB->GetCount(), 0, 0);
+		if (srv)//텍스쳐를 지정하지 않아도 지정이 되는 문제를 해결하기 위한 예외 처리
+		{
+			DC->PSSetShaderResources(0, 1, &nullView);//더블 포인터 요청하는데 nullptr넣으면 당연히 안됨 
+			//nullView는 엄밀히 말하면 nullView != nullptr
+		}
 	}
 }
 

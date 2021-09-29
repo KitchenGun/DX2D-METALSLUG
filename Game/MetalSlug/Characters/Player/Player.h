@@ -130,6 +130,7 @@ public://Get&Set
 	SOLDIERSTATE GetLowerState() { return soldierLowerState; }
 	SOLDIERSTATE GetUpperState() { return soldierUpperState; }
 	PROJECTILETYPE GetProjectileType() { return PlayerProjectileType; }
+	int GetAmmo() { return Ammo; }
 protected:
 	PROJECTILETYPE HitBy=PROJECTILETYPE::NONE;
 	HP PlayerHP = 1;

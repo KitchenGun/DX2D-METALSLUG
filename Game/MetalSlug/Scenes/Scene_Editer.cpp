@@ -87,6 +87,7 @@ void Editer::Init()
 	EnemyM->AddEnemy(Vector3(600, 500, 0), ENEMYTYPE::Grenadier);
 
 	GameM = new GameManager(PlayerM, EnemyM);
+	UIM = new UIManager(PlayerM);
 	EnemyM->SetGM(GameM);
 	ObjectM = new ObjectManager(PlayerM, EnemyM,PlayerPM);
 	ObjectM->SetIM(ItemM);
@@ -129,6 +130,7 @@ void Editer::Update()
 	ObjectM->Update();
 	GameM->Update();
 	ItemM->Update();
+	UIM->Update();
 	//animation
 	MapGroundWaterDown->Update();
 	MapGroundWaterUp->Update();
@@ -177,6 +179,7 @@ void Editer::Render()
 	MapGroundWaterDown1->Render();
 	MapGroundWaterDown->Render();
 	MapWaterFall2->Render();
+	UIM->Render();
 }
 
 void Editer::PostRender()

@@ -40,6 +40,11 @@
 #include "Characters/Object/ItemBox.h"
 #include "Characters/Item/Manager/ItemManager.h"
 #include "Characters/Object/ObjectManager.h"
+
+#include "Characters/UI/Ammo/AmmoUI.h"
+
+#include "Characters/UI/Manager/UIManager.h"
+
 //Manager
 #include "Characters/Projectile/Manager/ProjectileManager.h"
 #include "Characters/GameManager.h"

@@ -96,12 +96,13 @@ public:
 	void Move(Vector3 position);
 	//블러효과 이동 함수
 	void MoveLocalRect(Vector4 localMove);
+	void SetSize(Vector3 size);
 
 	void Update();
 	void Render();
 	
 	void GUI(int ordinal);
-
+	void SetIsRender(bool val) { isRender = val; }
 private:
 	//경로 교체 함수
 	void ChangeImageFunc(const wstring& path = L"");
@@ -133,4 +134,6 @@ private:
 	wstring texturePath = L"";
 	wstring shaderPath = L"";
 	char text[255] = "";
+
+	bool isRender = true;
 };
