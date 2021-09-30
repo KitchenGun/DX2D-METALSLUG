@@ -5,6 +5,7 @@ enum class ENEMYTYPE
 {
 	NONE = 0,
 	Grenadier,
+	Helicopter,
 	Boss
 };
 class Enemy : public PlayerAnimationRect
@@ -72,5 +73,4 @@ protected:
 	PlayerManager* ppm;
 	//enemyprojectileManager
 	ProjectileManager* epm;
-
 };

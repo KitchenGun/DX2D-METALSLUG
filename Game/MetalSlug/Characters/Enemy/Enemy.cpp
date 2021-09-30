@@ -26,7 +26,11 @@ void Enemy::Update()
 	}
 	else
 	{
-		if (enemyType != ENEMYTYPE::Boss)
+		if (enemyType == ENEMYTYPE::Boss || enemyType == ENEMYTYPE::Helicopter)
+		{
+
+		}
+		else
 		{
 			Move({ 0,GravatiyPower,0 });
 		}

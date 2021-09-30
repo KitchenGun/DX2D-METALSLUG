@@ -24,6 +24,8 @@
 #include "Characters/Enemy/Soldier/EnemySoldier.h"
 #include "Characters/Enemy/Boss/BossCannon.h"
 #include "Characters/Enemy/Boss/Boss.h"
+#include "Characters/Enemy/Helicopter/Blade.h"
+#include "Characters/Enemy/Helicopter/Helicopter.h"
 #include "Characters/Enemy/Manager/EnemyManager.h"
 
 //≈ıªÁ√º

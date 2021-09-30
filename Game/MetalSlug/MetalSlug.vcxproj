@@ -156,6 +156,8 @@
     <ClCompile Include="Characters\Enemy\Boss\Boss.cpp" />
     <ClCompile Include="Characters\Enemy\Boss\BossCannon.cpp" />
     <ClCompile Include="Characters\Enemy\Enemy.cpp" />
+    <ClCompile Include="Characters\Enemy\Helicopter\Blade.cpp" />
+    <ClCompile Include="Characters\Enemy\Helicopter\Helicopter.cpp" />
     <ClCompile Include="Characters\Enemy\Manager\EnemyManager.cpp" />
     <ClCompile Include="Characters\Enemy\Soldier\EnemySoldier.cpp" />
     <ClCompile Include="Characters\Enemy\Soldier\GrenadierAni.cpp" />
@@ -225,6 +227,8 @@
     <ClInclude Include="Characters\Enemy\Boss\Boss.h" />
     <ClInclude Include="Characters\Enemy\Boss\BossCannon.h" />
     <ClInclude Include="Characters\Enemy\Enemy.h" />
+    <ClInclude Include="Characters\Enemy\Helicopter\Blade.h" />
+    <ClInclude Include="Characters\Enemy\Helicopter\Helicopter.h" />
     <ClInclude Include="Characters\Enemy\Manager\EnemyManager.h" />
     <ClInclude Include="Characters\Enemy\Soldier\EnemySoldier.h" />
     <ClInclude Include="Characters\Enemy\Soldier\GrenadierAni.h" />
