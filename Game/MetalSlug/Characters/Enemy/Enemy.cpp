@@ -4,8 +4,15 @@
 Enemy::Enemy(Vector3 position, Vector3 size, float rotation, ENEMYTYPE enemyType)
 	:PlayerAnimationRect(position, size, rotation)
 {
-	ColliderSizeChange(COLLIDER::BIG);
 	this->enemyType = enemyType;
+	if (enemyType == ENEMYTYPE::Helicopter || enemyType == ENEMYTYPE::Boss)
+	{
+	
+	}
+	else
+	{
+		ColliderSizeChange(COLLIDER::BIG);
+	}
 }
 
 Enemy::~Enemy()

@@ -17,7 +17,8 @@ public:
 
 	void SetClip(); 
 	Vector3 GetPos() { return position; }
+	HELISTATE GetState() { return HeliState; }
 private:
 	Blade* blade = nullptr;
-
+	HELISTATE HeliState = HELISTATE::NONE;
 };

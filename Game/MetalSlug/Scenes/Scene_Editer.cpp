@@ -107,6 +107,7 @@ void Editer::Init()
 	EnemyPM->SetGroundList(GroundList);
 	PlayerPM->SetGroundList(GroundList);
 	PlayerPM->SetOM(ObjectM);
+
 }
 
 void Editer::Update()

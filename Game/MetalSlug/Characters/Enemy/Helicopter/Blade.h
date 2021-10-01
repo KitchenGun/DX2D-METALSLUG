@@ -9,7 +9,7 @@ public:
 	void Update() override;
 	void Render() override;
 public:
-	void SetAnimation();
+	void SetClip();
 	void SetSize(Vector3 tempSize);
 	void SetPos(Vector3 tempPos);
 private:

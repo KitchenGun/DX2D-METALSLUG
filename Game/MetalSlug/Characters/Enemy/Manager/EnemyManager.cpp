@@ -20,7 +20,11 @@ void EnemyManager::Update()
 	{
 		if (tempEnemy != nullptr)
 		{
-			if(tempEnemy->GetET()!=ENEMYTYPE::Boss)
+			if (tempEnemy->GetET() == ENEMYTYPE::Boss || tempEnemy->GetET() == ENEMYTYPE::Helicopter)
+			{
+
+			}
+			else
 			{
 				tempEnemy->SetisGround(Math::GroundIntersect(tempEnemy, GroundList));
 			}
@@ -52,6 +56,9 @@ void EnemyManager::AddEnemy(Vector3 position, ENEMYTYPE enemyType)
 	{
 	case ENEMYTYPE::Grenadier:
 		tempEnemy = new EnemySoldier(position, Vector3(30 * 3, 40 * 3, 1), 0, enemyType);
+		break;
+	case ENEMYTYPE::Helicopter:
+		tempEnemy = new Helicopter(position, Vector3(89 * 3, 68 * 3, 1), 0);
 		break;
 	default:
 		break;
