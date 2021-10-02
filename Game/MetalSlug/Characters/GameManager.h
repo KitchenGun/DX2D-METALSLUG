@@ -16,6 +16,7 @@ public:
 	void Win();
 	void ScoreChange(int val);
 	int GetScore() { return Score; }
+	bool GetisWin() { return isWin; }
 private:
 	PlayerManager* PM;
 	EnemyManager* EM;
@@ -23,6 +24,7 @@ private:
 	//단계 phase(카메라 움직임 멈춤)
 	int phase = 0;
 	float SpawnRate = 1;
+	bool isWin = false;
 	//점수
 	int Score=0;
 };

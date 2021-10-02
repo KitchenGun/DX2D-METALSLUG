@@ -2,6 +2,8 @@
 #include "UIManager.h"
 
 UIManager::UIManager(PlayerManager* pm,GameManager* gm)
+	:gm(gm),
+	pm(pm)
 {
 	ammoUI = new AmmoUI(pm);
 	scoreUI = new ScoreUI(gm);
@@ -21,7 +23,10 @@ void UIManager::Update()
 {
 	ammoUI->Update();
 	scoreUI->Update();
-	timer->Update();
+	if (!gm->GetisWin())
+	{
+		timer->Update();
+	}
 }
 
 void UIManager::Render()

@@ -14,11 +14,20 @@ public:
 
 	void Update() override;
 	void Render() override;
+	void DropBomb();
+	void AddBomb();
 
+	void AltitudeHold();
+	void PlayerPosTracking();
+	void SetPos(Vector3 tempPos);
 	void SetClip(); 
 	Vector3 GetPos() { return position; }
 	HELISTATE GetState() { return HeliState; }
 private:
 	Blade* blade = nullptr;
 	HELISTATE HeliState = HELISTATE::NONE;
+	bool isEngage = false;
+	bool isAtk = false;
+	float AtkRate = 2.0f;
+	float DropRate = 0.3f;
 };

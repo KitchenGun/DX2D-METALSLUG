@@ -57,12 +57,14 @@ void ProjectileManager::AddBullet(Vector3 position, Vector3 size, float rotation
 	if (bIsPM)
 	{
 		tempBullet	= new Bullet(position, size, rotation, dir, BT);
+		tempBullet->SetGroundList(GroundList);
 		tempBullet->SetEM(EM);
 		tempBullet->SetOM(OM);
 	}
 	else
 	{
 		tempBullet = new Bullet(position, size, rotation, dir, BT,false);
+		tempBullet->SetGroundList(GroundList);
 		tempBullet->SetPM(PM);
 		tempBullet->SetOM(OM);
 	}
@@ -92,7 +94,6 @@ void ProjectileManager::AddArty(Vector3 position, Vector3 size, float rotation, 
 {
 	Grenade* tempGrenade = nullptr;
 	tempGrenade = new Grenade(position, size, rotation, DIRECTION::NONE, BT, false);
-	tempGrenade->SetGroundList(GroundList);
 	tempGrenade->SetPM(PM);
 	projectileList.push_back(tempGrenade);
 }

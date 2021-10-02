@@ -11,7 +11,7 @@ Helicopter::Helicopter(Vector3 position, Vector3 size, float altitude)
 	blade = new Blade(position, Vector3(80 * 3, 20 * 3, 0), 0,this);
 	SetClip();
 	animator->bLoop = false;
-	animator->SetCurrentAnimClip(L"LMove");
+	animator->SetCurrentAnimClip(L"RFlyF");
 	TransformVertices();
 }
 
@@ -23,6 +23,16 @@ Helicopter::~Helicopter()
 
 void Helicopter::Update()
 {
+	if (!isAtk)
+	{
+		DropBomb();
+	}
+	else
+	{
+		AddBomb();
+	}
+	PlayerPosTracking();
+	AltitudeHold();
 	blade->Update();
 	Enemy::Update();
 }
@@ -31,6 +41,91 @@ void Helicopter::Render()
 {
 	Enemy::Render();
 	blade->Render();
+}
+
+void Helicopter::DropBomb()
+{
+	static float DeltaTime = 0;
+	if (DeltaTime > AtkRate)
+	{
+		DeltaTime = 0;
+		isAtk = true;
+	}
+	else
+		DeltaTime += Time::Delta();
+}
+
+void Helicopter::AddBomb()
+{
+	static int DropCount = 0;
+	static float DeltaTime = 0;
+	if (DeltaTime > DropRate)
+	{
+		DeltaTime = 0;
+		DropCount++;
+		cout << "폭탄 투하"<<DropCount << endl;
+	}
+	else
+		DeltaTime += Time::Delta();
+	if (DropCount == 3)
+	{
+		DropCount = 0;
+		isAtk = false;
+	}
+}
+
+void Helicopter::AltitudeHold()
+{
+	if (this->position.y - ppm->GetPlayer()->GetPosition().y > 350)
+	{
+		this->position += Vector3(0, -85, 0) * Time::Delta();
+		D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
+
+		world = S * R * T;
+		WB->SetWorld(world);
+
+		RootPos = position + Vector3(size.x / 2, 0, 0);
+		TransformVertices();
+		isEngage = true;
+	}
+	else
+	{
+		isEngage = false;
+	}
+}
+
+void Helicopter::PlayerPosTracking()
+{
+	Vector3 tempPos = Vector3(0, 0, 0);
+	float thisXPos = this->r.Point.x;
+	float playerXPos = ppm->GetPlayer()->GetPointPos().x;
+
+	if (thisXPos-10 > playerXPos)//player보다 앞에 있는 경우
+	{
+		HeliState = HELISTATE::LEFTMOVE;
+		animator->SetCurrentAnimClip(L"RFlyB");
+		tempPos = Vector3(-200, 0, 0);
+		SetPos(tempPos);
+	}
+	else if (playerXPos>thisXPos+10)//player가 앞에 있는 경우
+	{
+		HeliState=HELISTATE::RIGHTMOVE;
+		animator->SetCurrentAnimClip(L"RFlyF");
+		tempPos = Vector3(200, 0, 0);
+		SetPos(tempPos);
+	}
+}
+
+void Helicopter::SetPos(Vector3 tempPos)
+{
+	this->position += tempPos * Time::Delta();
+	D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
+
+	world = S * R * T;
+	WB->SetWorld(world);
+
+	RootPos = position + Vector3(size.x / 2, 0, 0);
+	TransformVertices();
 }
 
 void Helicopter::SetClip()

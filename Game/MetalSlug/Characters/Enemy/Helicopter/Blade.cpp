@@ -22,7 +22,10 @@ void Blade::Update()
 	switch (Heli->GetState())
 	{
 	case HELISTATE::RIGHTMOVE:
-		SetPos(Vector3(160, 150, 0));
+		SetPos(Heli->GetPos()+Vector3(160, 170, 0));
+		break;
+	case HELISTATE::LEFTMOVE:
+		SetPos(Heli->GetPos() + Vector3(160, 150, 0));
 		break;
 	default:
 		break;
@@ -49,7 +52,7 @@ void Blade::SetSize(Vector3 tempSize)
 
 void Blade::SetPos(Vector3 tempPos)
 {
-	Vector3 temp= position + tempPos;
+	Vector3 temp= tempPos;
 	D3DXMatrixTranslation(&T, temp.x, temp.y,temp.z);
 	world = S * R * T;
 	WB->SetWorld(world);

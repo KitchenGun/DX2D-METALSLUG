@@ -7,7 +7,7 @@ GameManager::GameManager(PlayerManager* pm, EnemyManager* em)
 {
 	Camera::Get()->SetCamPos(Vector3(80, 50, 0));//³ôÀÌ50
 	EM->AddBoss(Vector3(15900, 810, 0));
-	AddEnemy(ENEMYTYPE::Helicopter, PM->GetPlayer()->GetPosition()+Vector3(300,-300,0));
+	AddEnemy(ENEMYTYPE::Helicopter, PM->GetPlayer()->GetPosition()+Vector3(300,-00,0));
 }
 
 GameManager::~GameManager()
@@ -141,6 +141,7 @@ void GameManager::Win()
 				if (temp->GetHP() <= 0)
 				{
 					PM->GetPlayer()->Win();
+					isWin = true;
 				}
 			}
 		}

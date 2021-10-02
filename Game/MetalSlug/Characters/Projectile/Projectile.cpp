@@ -95,7 +95,6 @@ void Projectile::ProjectileCollisionCheck()
 	{
 		for (Player* tempP : PM->GetPlayerList())
 		{
-			
 			//obb
 			if (Math::OBBIntersect(tempP, this))
 			{
