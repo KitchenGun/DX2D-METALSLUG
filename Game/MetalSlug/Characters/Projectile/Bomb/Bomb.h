@@ -3,11 +3,14 @@
 class Bomb : public Projectile
 {
 public:
-	Bomb(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT, bool bisPPM = false);
+	Bomb(Vector3 position, Vector3 size, float rotation, bool bisPPM);
 	~Bomb();
 public:
 	void Update() override;
 	void Render() override;
 	void Move(Vector3 position) override;
+
+	void Hit();
 private:
+	HP PHP = 6;
 };

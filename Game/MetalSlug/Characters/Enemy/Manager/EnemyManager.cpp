@@ -58,7 +58,7 @@ void EnemyManager::AddEnemy(Vector3 position, ENEMYTYPE enemyType)
 		tempEnemy = new EnemySoldier(position, Vector3(30 * 3, 40 * 3, 1), 0, enemyType);
 		break;
 	case ENEMYTYPE::Helicopter:
-		tempEnemy = new Helicopter(position, Vector3(89 * 3, 68 * 3, 1), 0);
+		tempEnemy = new Helicopter(position, Vector3(89 * 3, 68 * 3, 1), 500);
 		break;
 	default:
 		break;

@@ -198,7 +198,7 @@ void Boss::ArtyAtk(float Angle)
 
 int Boss::ArtyAngle()
 {//±Ù°Å¸® 90 135
-	float fRange = Math::Distance(this->GetTransformedCoord().Point, ppm->GetPlayer()->GetTransformedCoord().Point);
+	float fRange = Math::Distance(this->GetTransformedCoord().Point, pm->GetPlayer()->GetTransformedCoord().Point);
 	if (fRange > 900)
 	{
 		fRange = 1;
@@ -241,9 +241,9 @@ void Boss::Die()
 
 void Boss::HPCheck()
 {
-	if (ppm->GetPlayer() != nullptr)
+	if (pm->GetPlayer() != nullptr)
 	{
-		if (Math::Distance(ppm->GetPlayer()->GetTransformedCoord().Point,this->GetTransformedCoord().Point)<800)
+		if (Math::Distance(pm->GetPlayer()->GetTransformedCoord().Point,this->GetTransformedCoord().Point)<800)
 		{
 			if (EnemyHP >= 100)
 			{

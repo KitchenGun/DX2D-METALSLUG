@@ -32,7 +32,7 @@ public:
 	bool GetisGround() { return isGround; }
 	Vector3 GetRootPos() { return RootPos; }
 	OBBInfo* GetObbInfo() { return obbInfo; }
-	void SetPM(PlayerManager* val) { ppm = val; }
+	void SetPM(PlayerManager* val) { pm = val; }
 	void SetEPM(ProjectileManager* val) { epm = val; }
 	bool GetisNeedDestroy() { return isNeedDestroy; }
 	DIRECTION GetDir() { return dir; }
@@ -70,7 +70,8 @@ protected:
 	DIRECTION BlockDir = DIRECTION::NONE;
 	Projectile* PrevTemp=nullptr;
 	//playermanager
-	PlayerManager* ppm;
+	PlayerManager* pm;
+
 	//enemyprojectileManager
 	ProjectileManager* epm;
 };

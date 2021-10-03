@@ -8,6 +8,13 @@ ProjectileManager::ProjectileManager(bool isPM)
 
 ProjectileManager::~ProjectileManager()
 {
+	SAFE_DELETE(EPM);
+	for (Ground* temp : GroundList)
+	{
+		SAFE_DELETE(temp);
+	}
+	SAFE_DELETE(OM);
+	SAFE_DELETE(PM);
 	SAFE_DELETE(EM);
 	for (Projectile* tempProjectile : projectileList)
 	{
@@ -23,6 +30,11 @@ void ProjectileManager::Update()
 		{
 			tempProjectile->Update();
 			if (Math::Distance(tempProjectile->GetStartPos(), tempProjectile->GetPosition()) > 1200.0f)//일정 거리 이상일 경우 삭제
+			{
+				RemoveProjectile(tempProjectile);
+				break;//삭제시 프로젝트 리스트가 변경되서 break걸고 다시 돌려야함
+			}
+			if (Math::GroundIntersect(tempProjectile, GroundList))
 			{
 				RemoveProjectile(tempProjectile);
 				break;//삭제시 프로젝트 리스트가 변경되서 break걸고 다시 돌려야함
@@ -58,6 +70,7 @@ void ProjectileManager::AddBullet(Vector3 position, Vector3 size, float rotation
 	{
 		tempBullet	= new Bullet(position, size, rotation, dir, BT);
 		tempBullet->SetGroundList(GroundList);
+		tempBullet->SetEPM(EPM);
 		tempBullet->SetEM(EM);
 		tempBullet->SetOM(OM);
 	}
@@ -78,6 +91,7 @@ void ProjectileManager::AddGrenade(Vector3 position, Vector3 size, float rotatio
 	{
 		tempGrenade = new Grenade(position, size, rotation, dir, BT);
 		tempGrenade->SetGroundList(GroundList);
+		tempGrenade->SetEPM(EPM);
 		tempGrenade->SetEM(EM);
 		tempGrenade->SetOM(OM);
 	}
@@ -105,6 +119,15 @@ void ProjectileManager::AddLaser(Vector3 position, Vector3 size, PROJECTILETYPE 
 	tempBullet->SetPM(PM);
 	tempBullet->SetOM(OM);
 	projectileList.push_back(tempBullet);
+}
+
+void ProjectileManager::AddHeliBomb(Vector3 position, Vector3 size)
+{
+	Bomb* tempBomb = nullptr;
+	tempBomb = new Bomb(position, size, 0, false);
+	tempBomb->SetPM(PM);
+	tempBomb->SetOM(OM);
+	projectileList.push_back(tempBomb);
 }
 
 

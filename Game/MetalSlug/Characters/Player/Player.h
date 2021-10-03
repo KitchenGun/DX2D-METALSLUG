@@ -12,7 +12,8 @@ enum class PROJECTILETYPE
 	Grenade,
 	EnemyGrenade,
 	BOSSLASER,
-	BOSSARTY
+	BOSSARTY,
+	HELIBOMB
 };
 
 struct OBBInfo

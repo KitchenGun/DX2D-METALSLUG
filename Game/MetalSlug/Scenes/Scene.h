@@ -32,6 +32,7 @@
 #include "Characters/Projectile/Projectile.h"
 #include "Characters/Projectile/Bullet/Bullet.h"
 #include "Characters/Projectile/Grenade/Grenade.h"
+#include "Characters/Projectile/Bomb/Bomb.h"
 
 //object
 #include "Characters/Object/Object.h"
@@ -43,10 +44,10 @@
 #include "Characters/Item/Manager/ItemManager.h"
 #include "Characters/Object/ObjectManager.h"
 
-
 //Manager
 #include "Characters/Projectile/Manager/ProjectileManager.h"
 #include "Characters/GameManager.h"
+
 //UI
 #include "Characters/UI/Ammo/AmmoUI.h"
 #include "Characters/UI/Score/ScoreUI.h"

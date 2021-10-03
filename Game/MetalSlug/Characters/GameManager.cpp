@@ -78,7 +78,7 @@ void GameManager::EnemySpawn()
 	case 0:
 		if (DeltaTime > SpawnRate)
 		{
-			AddEnemy(ENEMYTYPE::Grenadier,PM->GetPlayer()->GetPosition() + Vector3(1300, 300, 0));
+			//AddEnemy(ENEMYTYPE::Grenadier,PM->GetPlayer()->GetPosition() + Vector3(1300, 300, 0));
 			DeltaTime = 0;
 		}
 		break;

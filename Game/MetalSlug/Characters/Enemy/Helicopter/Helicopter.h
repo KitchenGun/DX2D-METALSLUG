@@ -30,4 +30,5 @@ private:
 	bool isAtk = false;
 	float AtkRate = 2.0f;
 	float DropRate = 0.3f;
+	float Altitude = 0;
 };

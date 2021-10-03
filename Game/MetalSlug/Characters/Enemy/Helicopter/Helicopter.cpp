@@ -4,7 +4,8 @@
 #include "Utilities/Animator.h"
 
 Helicopter::Helicopter(Vector3 position, Vector3 size, float altitude)
-	:Enemy(position,size,0,ENEMYTYPE::Helicopter)
+	:Enemy(position,size,0,ENEMYTYPE::Helicopter),
+	Altitude(altitude)
 {
 	HeliState = HELISTATE::RIGHTMOVE; 
 	EnemyHP = 75;
@@ -63,7 +64,7 @@ void Helicopter::AddBomb()
 	{
 		DeltaTime = 0;
 		DropCount++;
-		cout << "폭탄 투하"<<DropCount << endl;
+		epm->AddHeliBomb(this->r.Point+Vector3(0,-80,0), Vector3(14 * 3, 26 * 3, 1));
 	}
 	else
 		DeltaTime += Time::Delta();
@@ -76,9 +77,9 @@ void Helicopter::AddBomb()
 
 void Helicopter::AltitudeHold()
 {
-	if (this->position.y - ppm->GetPlayer()->GetPosition().y > 350)
+	if (this->position.y - pm->GetPlayer()->GetPosition().y > Altitude)
 	{
-		this->position += Vector3(0, -85, 0) * Time::Delta();
+		this->position += Vector3(0, -75, 0) * Time::Delta();
 		D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
 
 		world = S * R * T;
@@ -98,7 +99,7 @@ void Helicopter::PlayerPosTracking()
 {
 	Vector3 tempPos = Vector3(0, 0, 0);
 	float thisXPos = this->r.Point.x;
-	float playerXPos = ppm->GetPlayer()->GetPointPos().x;
+	float playerXPos = pm->GetPlayer()->GetPointPos().x;
 
 	if (thisXPos-10 > playerXPos)//player보다 앞에 있는 경우
 	{

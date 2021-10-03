@@ -16,6 +16,7 @@ public:
 	PROJECTILETYPE GetPT() { return pt; }
 	float GetRotation() { return rotation; }
 	void SetEM(EnemyManager* val) { EM = val; }
+	void SetEPM(ProjectileManager* val) { EPM = val; }
 	void SetPM(PlayerManager* val) { PM = val; }
 	void SetOM(ObjectManager* val) { OM = val; }
 
@@ -32,6 +33,7 @@ protected:
 	EnemyManager* EM = nullptr;
 	PlayerManager* PM = nullptr;
 	ObjectManager* OM = nullptr;
+	ProjectileManager* EPM = nullptr;
 	bool isNeedDestroy=false;
 	vector<Ground*> GroundList;
 };

@@ -122,6 +122,52 @@ bool Math::OBBIntersect(PlayerAnimationRect* r1, AnimationRect* r2)
 	return true;
 }
 
+bool Math::OBBIntersect(AnimationRect* r1, AnimationRect* r2)
+{
+	Vector3 dist = r1->GetTransformedCoord().Point - r2->GetTransformedCoord().Point;
+
+	Vector3 r1Up = r1->Up() * r1->GetScale().y * 0.5f;
+	Vector3 r1Right = r1->Right() * r1->GetScale().x * 0.5f;
+
+	Vector3 r2Up = r2->Up() * r2->GetScale().y * 0.5f;
+	Vector3 r2Right = r2->Right() * r2->GetScale().x * 0.5f;
+
+	//첫번째 조건 : r1->Right()가 임의의 축
+	float c = fabs(Dot(dist, r1->Right()));
+	float a = fabs(Dot(r2Up, r1->Right())) + fabs((Dot(r2Right, r1->Right())));
+	float b = r1->GetScale().x * 0.5f;
+	if (c > a + b)
+	{
+		return false;
+	}
+	//두번재 조건 : r1->Up()가 임의의 축
+	c = fabs(Dot(dist, r1->Up()));
+	a = fabs(Dot(r2Up, r1->Up())) + fabs((Dot(r2Right, r1->Up())));
+	b = r1->GetScale().y * 0.5f;
+	if (c > a + b)
+	{
+		return false;
+	}
+	//세번째 조건 : r2->Right()가 임의의 축
+	c = fabs(Dot(dist, r2->Right()));
+	a = fabs(Dot(r1Up, r2->Right())) + fabs((Dot(r1Right, r2->Right())));
+	b = r2->GetScale().x * 0.5f;
+	if (c > a + b)
+	{
+		return false;
+	}
+	//네번째 조건 : r2->Up()가 임의의 축
+	c = fabs(Dot(dist, r2->Up()));
+	a = fabs(Dot(r1Up, r2->Up())) + fabs((Dot(r1Right, r2->Up())));
+	b = r2->GetScale().y * 0.5f;
+	if (c > a + b)
+	{
+		return false;
+	}
+
+	return true;
+}
+
 bool Math::GroundIntersect(Player* p1, vector<Ground*> GL)
 {
 	static bool value = false;

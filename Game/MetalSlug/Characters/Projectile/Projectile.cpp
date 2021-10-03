@@ -13,8 +13,15 @@ Projectile::Projectile(Vector3 position, Vector3 size, float rotation, DIRECTION
 
 Projectile::~Projectile()
 {
-	AnimationRect::~AnimationRect();
+	for (Ground* tempGround : GroundList)
+	{
+		SAFE_DELETE(tempGround);
+	}
+	SAFE_DELETE(EPM);
+	SAFE_DELETE(OM);
+	SAFE_DELETE(PM);
 	SAFE_DELETE(EM);
+	AnimationRect::~AnimationRect();
 }
 
 void Projectile::Update()
@@ -90,6 +97,17 @@ void Projectile::ProjectileCollisionCheck()
 			}
 
 		}
+		for (Projectile* tempEP : EPM->GetList())
+		{
+			if (tempEP->GetPT() == PROJECTILETYPE::HELIBOMB)
+			{
+				if (Math::OBBIntersect(this,tempEP))
+				{
+					dynamic_cast<Bomb*>(tempEP)->Hit();
+					isNeedDestroy = true;
+				}
+			}
+		}
 	}
 	else
 	{
@@ -98,7 +116,7 @@ void Projectile::ProjectileCollisionCheck()
 			//obb
 			if (Math::OBBIntersect(tempP, this))
 			{
-				if (pt == PROJECTILETYPE::KNIFE || pt == PROJECTILETYPE::EnemyGrenade|| pt == PROJECTILETYPE::BOSSARTY|| pt == PROJECTILETYPE::BOSSLASER)
+				if (pt == PROJECTILETYPE::KNIFE || pt == PROJECTILETYPE::EnemyGrenade|| pt == PROJECTILETYPE::BOSSARTY|| pt == PROJECTILETYPE::BOSSLASER || pt==PROJECTILETYPE::HELIBOMB)
 				{
 					if (pt == PROJECTILETYPE::EnemyGrenade)
 					{
@@ -112,6 +130,10 @@ void Projectile::ProjectileCollisionCheck()
 					else
 					{
 						tempP->Hit(this->GetDamage(), this);
+					}
+					if (pt == PROJECTILETYPE::HELIBOMB)
+					{
+						isNeedDestroy = true;
 					}
 				}
 				else
