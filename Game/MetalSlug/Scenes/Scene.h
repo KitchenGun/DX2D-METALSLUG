@@ -28,6 +28,11 @@
 #include "Characters/Enemy/Helicopter/Helicopter.h"
 #include "Characters/Enemy/Manager/EnemyManager.h"
 
+//SFX
+#include "Characters/SFX/SFX.h"
+#include "Characters/SFX/BulletSFX/BulletSFX.h"
+
+
 //≈ıªÁ√º
 #include "Characters/Projectile/Projectile.h"
 #include "Characters/Projectile/Bullet/Bullet.h"

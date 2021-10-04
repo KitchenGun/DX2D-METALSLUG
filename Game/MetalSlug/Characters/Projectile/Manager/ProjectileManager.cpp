@@ -34,10 +34,13 @@ void ProjectileManager::Update()
 				RemoveProjectile(tempProjectile);
 				break;//삭제시 프로젝트 리스트가 변경되서 break걸고 다시 돌려야함
 			}
-			if (Math::GroundIntersect(tempProjectile, GroundList))
+			if (tempProjectile->GetPT() != PROJECTILETYPE::Grenade)
 			{
-				RemoveProjectile(tempProjectile);
-				break;//삭제시 프로젝트 리스트가 변경되서 break걸고 다시 돌려야함
+				if (Math::GroundIntersect(tempProjectile, GroundList))
+				{
+					RemoveProjectile(tempProjectile);
+					break;//삭제시 프로젝트 리스트가 변경되서 break걸고 다시 돌려야함
+				}
 			}
 			if (tempProjectile->GetIsNeedDestroy())
 			{

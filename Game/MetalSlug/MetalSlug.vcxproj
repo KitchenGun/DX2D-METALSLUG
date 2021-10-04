@@ -179,6 +179,8 @@
     <ClCompile Include="Characters\Projectile\Grenade\Grenade.cpp" />
     <ClCompile Include="Characters\Projectile\Manager\ProjectileManager.cpp" />
     <ClCompile Include="Characters\Projectile\Projectile.cpp" />
+    <ClCompile Include="Characters\SFX\BulletSFX\BulletSFX.cpp" />
+    <ClCompile Include="Characters\SFX\SFX.cpp" />
     <ClCompile Include="Characters\UI\Ammo\AmmoUI.cpp" />
     <ClCompile Include="Characters\UI\Manager\UIManager.cpp" />
     <ClCompile Include="Characters\UI\Score\ScoreUI.cpp" />
@@ -251,6 +253,8 @@
     <ClInclude Include="Characters\Projectile\Grenade\Grenade.h" />
     <ClInclude Include="Characters\Projectile\Manager\ProjectileManager.h" />
     <ClInclude Include="Characters\Projectile\Projectile.h" />
+    <ClInclude Include="Characters\SFX\BulletSFX\BulletSFX.h" />
+    <ClInclude Include="Characters\SFX\SFX.h" />
     <ClInclude Include="Characters\UI\Ammo\AmmoUI.h" />
     <ClInclude Include="Characters\UI\Manager\UIManager.h" />
     <ClInclude Include="Characters\UI\Score\ScoreUI.h" />

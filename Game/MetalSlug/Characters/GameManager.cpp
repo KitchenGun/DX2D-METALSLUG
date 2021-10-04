@@ -7,7 +7,7 @@ GameManager::GameManager(PlayerManager* pm, EnemyManager* em)
 {
 	Camera::Get()->SetCamPos(Vector3(80, 50, 0));//³ôÀÌ50
 	EM->AddBoss(Vector3(15900, 810, 0));
-	AddEnemy(ENEMYTYPE::Helicopter, PM->GetPlayer()->GetPosition()+Vector3(300,-00,0));
+	//AddEnemy(ENEMYTYPE::Helicopter, PM->GetPlayer()->GetPosition()+Vector3(300,-00,0));
 }
 
 GameManager::~GameManager()
@@ -78,7 +78,7 @@ void GameManager::EnemySpawn()
 	case 0:
 		if (DeltaTime > SpawnRate)
 		{
-			//AddEnemy(ENEMYTYPE::Grenadier,PM->GetPlayer()->GetPosition() + Vector3(1300, 300, 0));
+			AddEnemy(ENEMYTYPE::Grenadier,PM->GetPlayer()->GetPosition() + Vector3(1300, 300, 0));
 			DeltaTime = 0;
 		}
 		break;
