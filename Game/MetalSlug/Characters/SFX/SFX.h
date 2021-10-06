@@ -13,8 +13,8 @@ public:
 	SFX(Vector3 pos, Vector3 size, float rotation, SFXTYPE sfxt);
 	~SFX();
 
-	void Update() override;
-	void Render() override;
+	virtual void Update() override;
+	virtual void Render() override;
 
 private:
 	SFXTYPE SFXT=SFXTYPE::NONE;
