@@ -16,7 +16,8 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
-private:
+	bool GetIsNeedDestroy() { return isNeedDestroy; }
+protected:
 	SFXTYPE SFXT=SFXTYPE::NONE;
 	bool isNeedDestroy = false;
 
