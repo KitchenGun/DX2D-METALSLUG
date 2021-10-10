@@ -22,7 +22,7 @@ void Stage::Init()
 	//ground
 	SetGround();
 	//manager
-	PlayerPM = new ProjectileManager();
+	//PlayerPM = new ProjectileManager();
 	player->SetPM(PlayerPM);
 
 	EnemyM = new EnemyManager(PlayerPM);

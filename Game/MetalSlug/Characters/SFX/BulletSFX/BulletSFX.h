@@ -2,7 +2,7 @@
 class BulletSFX : public SFX
 {
 public:
-	BulletSFX(Vector3 pos, Vector3 size, float rotation, SFXTYPE sfxt,DIRECTION dir);
+	BulletSFX(Vector3 pos, SFXTYPE sfxt,DIRECTION dir);
 	~BulletSFX();
 
 	void Update() override;
@@ -11,7 +11,8 @@ public:
 	void SetRotation(float rotation);
 
 	void SetSFX();
-
+	void SetSize(Vector3 tempSize);
+	void SetPos(Vector3 tempPos);
 private:	   
 	DIRECTION dir = DIRECTION::NONE;
 	SFXTYPE sfxt;

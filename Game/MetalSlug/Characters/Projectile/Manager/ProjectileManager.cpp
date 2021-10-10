@@ -1,8 +1,9 @@
 #include"stdafx.h"
 #include "ProjectileManager.h"
 
-ProjectileManager::ProjectileManager(bool isPM)
-	:bIsPM(isPM)
+ProjectileManager::ProjectileManager(SFXManager* sfxm,bool isPM)
+	:bIsPM(isPM),
+	SFXM(sfxm)
 {
 }
 
@@ -44,6 +45,19 @@ void ProjectileManager::Update()
 			}
 			if (tempProjectile->GetIsNeedDestroy())
 			{
+				cout << tempProjectile->GetRotation() << endl;
+				if (tempProjectile->GetRotation() >=-10&& tempProjectile->GetRotation() <= 10)
+				{
+					SFXM->AddSFX(tempProjectile->GetPosition(), DIRECTION::RIGHT, tempProjectile->GetPT());
+				}
+				else if (tempProjectile->GetRotation() >= -180 && tempProjectile->GetRotation() <= 10)
+				{
+					SFXM->AddSFX(tempProjectile->GetPosition(), DIRECTION::RIGHT, tempProjectile->GetPT());
+				}
+				else 
+				{// tempProjectile->GetDir()
+					SFXM->AddSFX(tempProjectile->GetPosition(), tempProjectile->GetDir() , tempProjectile->GetPT());
+				}
 				RemoveProjectile(tempProjectile);
 				break;//삭제시 프로젝트 리스트가 변경되서 break걸고 다시 돌려야함
 			}

@@ -7,6 +7,8 @@ Editer::Editer()
 
 Editer::~Editer()
 {
+	SAFE_DELETE(SFXM);
+	SAFE_DELETE(UIM);
 	SAFE_DELETE(GameM);
 	SAFE_DELETE(ItemM);
 	SAFE_DELETE(ObjectM);
@@ -74,8 +76,9 @@ void Editer::Init()
 	InputGround();
 	
 	//manager
-	PlayerPM = new ProjectileManager();
-	EnemyPM = new ProjectileManager(false);
+	SFXM = new SFXManager();
+	PlayerPM = new ProjectileManager(SFXM);
+	EnemyPM = new ProjectileManager(SFXM,false);
 	EnemyM = new EnemyManager(EnemyPM);
 	PlayerM = new PlayerManager(PlayerPM, EnemyM);
 	ItemM = new ItemManager(PlayerM);
@@ -123,6 +126,7 @@ void Editer::Update()
 		tempGround->Update();
 	}
 	//manager
+	SFXM->Update();
 	PlayerPM->Update();
 	EnemyPM->Update();
 	EnemyM->Update();
@@ -166,6 +170,7 @@ void Editer::Render()
 	ItemM->Render();
 	PlayerM->Render();
 	PlayerPM->Render();
+	SFXM->Render();
 	//ground
 	//for (Ground* tempGround : GroundList)
 	//{
@@ -184,17 +189,17 @@ void Editer::Render()
 
 void Editer::PostRender()
 {
-	Gui::Get()->GroundGUIS(GroundList, "GroundList");
-	static bool bOpen = true;
-	if (ImGui::Begin("GroundList", &bOpen))
-	{
-		if (ImGui::Button("Save", ImVec2(50, 30)))
-			SaveGroundTile();
-
-		if (ImGui::Button("Load", ImVec2(50, 30)))
-			LoadGroundTile();
-	}
-	ImGui::End();
+	//Gui::Get()->GroundGUIS(GroundList, "GroundList");
+	//static bool bOpen = true;
+	//if (ImGui::Begin("GroundList", &bOpen))
+	//{
+	//	if (ImGui::Button("Save", ImVec2(50, 30)))
+	//		SaveGroundTile();
+	//
+	//	if (ImGui::Button("Load", ImVec2(50, 30)))
+	//		LoadGroundTile();
+	//}
+	//ImGui::End();
 }
 
 void Editer::InputGround()

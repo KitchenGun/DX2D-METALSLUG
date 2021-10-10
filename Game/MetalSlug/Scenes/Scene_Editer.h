@@ -49,4 +49,5 @@ private:
 	ItemManager* ItemM = nullptr;
 	GameManager* GameM = nullptr;
 	UIManager* UIM = nullptr;
+	SFXManager* SFXM = nullptr;
 };

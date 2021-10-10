@@ -3,7 +3,7 @@
 class ProjectileManager
 {
 public:
-	ProjectileManager(bool isPM = true);
+	ProjectileManager(SFXManager* sfxm,bool isPM = true);
 	~ProjectileManager();
 
 	void Update();
@@ -30,6 +30,7 @@ private:
 	EnemyManager* EM=nullptr;
 	PlayerManager* PM = nullptr;
 	ObjectManager* OM = nullptr;
+	SFXManager* SFXM = nullptr;
 	vector<Ground*> GroundList;
 	//enemyProjectile 충돌처리를 위해서
 	ProjectileManager* EPM = nullptr;

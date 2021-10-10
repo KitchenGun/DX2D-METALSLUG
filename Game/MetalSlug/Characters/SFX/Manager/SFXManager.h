@@ -8,7 +8,7 @@ public:
 	void Update();
 	void Render();
 
-	void AddSFX(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT);
+	void AddSFX(Vector3 position, DIRECTION dir, PROJECTILETYPE BT);
 	void RemoveSFX(SFX* tempSFX);
 
 	list<SFX*> GetList() { return SFXList; }

@@ -19,7 +19,7 @@ public:
 	void SetEPM(ProjectileManager* val) { EPM = val; }
 	void SetPM(PlayerManager* val) { PM = val; }
 	void SetOM(ObjectManager* val) { OM = val; }
-
+	DIRECTION GetDir() { return Dir; }
 	void SetGroundList(vector<Ground*> val) { GroundList = val; }
 	bool GetIsNeedDestroy() { return isNeedDestroy; }
 protected:

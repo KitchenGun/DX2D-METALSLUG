@@ -2,11 +2,37 @@
 #include "BulletSFX.h"
 #include "Utilities/Animator.h"
 
-BulletSFX::BulletSFX(Vector3 pos, Vector3 size, float rotation, SFXTYPE sfxt, DIRECTION dir)
+BulletSFX::BulletSFX(Vector3 pos, SFXTYPE sfxt, DIRECTION dir)
 	:SFX(pos, size, rotation, sfxt),
-	dir(dir)
+	dir(dir),
+	sfxt(sfxt)
 {
-	
+	SetSFX();
+	animator->bLoop = false;
+	switch (sfxt)
+	{
+	case SFXTYPE::BULLET:
+		switch (dir)
+		{
+		case DIRECTION::NONE:
+			SetSize(Vector3(32 * 2, 68 * 2, 1));
+			break;
+		case DIRECTION::LEFT:
+			SetSize(Vector3(68 * 2, 32 * 2, 1));
+			break;				 
+		case DIRECTION::RIGHT:	
+			SetSize(Vector3(68 * 2, 32 * 2, 1));
+			break;
+		default:
+			break;
+		}
+		break;
+	case SFXTYPE::ENEMYGRENADE:
+
+		break;
+	default:
+		break;
+	}
 }
 
 BulletSFX::~BulletSFX()
@@ -17,10 +43,33 @@ BulletSFX::~BulletSFX()
 void BulletSFX::Update()
 {
 	SFX::Update();
-	if (!animator->isFirstPlay)
+	switch (sfxt)
 	{
-		isNeedDestroy = true;
+	case SFXTYPE::BULLET:
+		if (dir != DIRECTION::RIGHT)
+		{		
+			if (animator->GetIndex() >= 10)
+			{
+				isNeedDestroy = true;
+			}
+		}
+		else
+		{
+			/// <summary>
+			/// /수정필요
+			/// </summary>
+			if (animator->GetIndex() <= 1)
+			{
+				isNeedDestroy = true;
+			}
+		}
+		break;
+	case SFXTYPE::ENEMYGRENADE:
+		break;
+	default:
+		break;
 	}
+	
 }
 
 void BulletSFX::Render()
@@ -55,7 +104,7 @@ void BulletSFX::SetSFX()
 			break;
 		case DIRECTION::RIGHT:
 			texture = new Texture2D(L"./_Textures/SFX/Explosion/RNormalBulletExplosion.png");
-			animClips.push_back(new AnimationClip(L"NormalBulletExplosion", texture, 12, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+			animClips.push_back(new AnimationClip(L"NormalBulletExplosion", texture, 12, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() },true));
 			break;
 		default:
 			break;
@@ -69,4 +118,24 @@ void BulletSFX::SetSFX()
 		break;
 	}
 	animator = new Animator(animClips);
+}
+
+void BulletSFX::SetSize(Vector3 tempSize)
+{
+	this->size = tempSize;
+	D3DXMatrixScaling(&S, this->size.x, this->size.y, this->size.z);
+
+	world = S * R * T;
+	WB->SetWorld(world);//내부에서 transpose해줌
+	TransformVertices();
+}
+
+void BulletSFX::SetPos(Vector3 tempPos)
+{
+	this->position = tempPos;
+	D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
+
+	world = S * R * T;
+	WB->SetWorld(world);//내부에서 transpose해줌
+	TransformVertices();
 }

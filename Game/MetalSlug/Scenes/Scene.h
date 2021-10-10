@@ -31,7 +31,7 @@
 //SFX
 #include "Characters/SFX/SFX.h"
 #include "Characters/SFX/BulletSFX/BulletSFX.h"
-
+#include "Characters/SFX/Manager/SFXManager.h"
 
 //≈ıªÁ√º
 #include "Characters/Projectile/Projectile.h"

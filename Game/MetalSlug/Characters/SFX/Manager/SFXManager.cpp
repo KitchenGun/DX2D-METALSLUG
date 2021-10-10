@@ -41,15 +41,18 @@ void SFXManager::Render()
 	}
 }
 
-void SFXManager::AddSFX(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT)
+void SFXManager::AddSFX(Vector3 position, DIRECTION dir, PROJECTILETYPE BT)
 {
-	SFX* temp = nullptr;
+	BulletSFX* tempB = nullptr;
 	switch (BT)
 	{
 	case PROJECTILETYPE::PISTOL:
-		temp = new BulletSFX(position, size, rotation, dir, BT);
+		tempB = new BulletSFX(position,SFXTYPE::BULLET, dir);
+		SFXList.push_back(tempB);
 		break;
 	case PROJECTILETYPE::HEAVY:
+		tempB = new BulletSFX(position, SFXTYPE::BULLET, dir);
+		SFXList.push_back(tempB);
 		break;
 	case PROJECTILETYPE::EnemyGrenade:
 		break;
@@ -58,9 +61,17 @@ void SFXManager::AddSFX(Vector3 position, Vector3 size, float rotation, DIRECTIO
 	default:
 		break;
 	}
-	SFXList.push_back(temp);
 }
 
 void SFXManager::RemoveSFX(SFX* tempSFX)
 {
+	for (iter = SFXList.begin(); iter != SFXList.end(); ++iter)
+	{
+		if (*iter == tempSFX)
+		{
+			iter = SFXList.erase(iter);
+			cout <<"»èÁ¦" <<endl;
+			break;
+		}
+	}
 }
