@@ -39,25 +39,36 @@ void ProjectileManager::Update()
 			{
 				if (Math::GroundIntersect(tempProjectile, GroundList))
 				{
+					if (tempProjectile->GetRotation() == 0)
+					{
+						SFXM->AddSFX(tempProjectile->GetPosition(), DIRECTION::RIGHT, tempProjectile->GetPT());
+					}
+					else if (tempProjectile->GetRotation() == 180)
+					{
+						SFXM->AddSFX(tempProjectile->GetPosition(), DIRECTION::LEFT, tempProjectile->GetPT());
+					}
+					else
+					{
+						SFXM->AddSFX(tempProjectile->GetPosition(), DIRECTION::NONE, tempProjectile->GetPT());
+					}
 					RemoveProjectile(tempProjectile);
 					break;//삭제시 프로젝트 리스트가 변경되서 break걸고 다시 돌려야함
 				}
 			}
 			if (tempProjectile->GetIsNeedDestroy())
 			{
-				cout << tempProjectile->GetRotation() << endl;
-				if (tempProjectile->GetRotation() >=-10&& tempProjectile->GetRotation() <= 10)
-				{
-					SFXM->AddSFX(tempProjectile->GetPosition(), DIRECTION::RIGHT, tempProjectile->GetPT());
-				}
-				else if (tempProjectile->GetRotation() >= -180 && tempProjectile->GetRotation() <= 10)
-				{
-					SFXM->AddSFX(tempProjectile->GetPosition(), DIRECTION::RIGHT, tempProjectile->GetPT());
-				}
-				else 
-				{// tempProjectile->GetDir()
-					SFXM->AddSFX(tempProjectile->GetPosition(), tempProjectile->GetDir() , tempProjectile->GetPT());
-				}
+				//if (tempProjectile->GetRotation() == 0)
+				//{
+				//	SFXM->AddSFX(tempProjectile->GetPosition(), DIRECTION::RIGHT, PROJECTILETYPE::NONE);
+				//}
+				//else if (tempProjectile->GetRotation() == 180)
+				//{
+				//	SFXM->AddSFX(tempProjectile->GetPosition(), DIRECTION::LEFT, PROJECTILETYPE::NONE);
+				//}
+				//else
+				//{
+				//	SFXM->AddSFX(tempProjectile->GetPosition(), DIRECTION::NONE, PROJECTILETYPE::NONE);
+				//}
 				RemoveProjectile(tempProjectile);
 				break;//삭제시 프로젝트 리스트가 변경되서 break걸고 다시 돌려야함
 			}
@@ -85,7 +96,7 @@ void ProjectileManager::AddBullet(Vector3 position, Vector3 size, float rotation
 	Bullet* tempBullet=nullptr;
 	if (bIsPM)
 	{
-		tempBullet	= new Bullet(position, size, rotation, dir, BT);
+		tempBullet	= new Bullet(position, size, rotation, dir, BT,SFXM);
 		tempBullet->SetGroundList(GroundList);
 		tempBullet->SetEPM(EPM);
 		tempBullet->SetEM(EM);
@@ -93,7 +104,7 @@ void ProjectileManager::AddBullet(Vector3 position, Vector3 size, float rotation
 	}
 	else
 	{
-		tempBullet = new Bullet(position, size, rotation, dir, BT,false);
+		tempBullet = new Bullet(position, size, rotation, dir, BT, SFXM, false);
 		tempBullet->SetGroundList(GroundList);
 		tempBullet->SetPM(PM);
 		tempBullet->SetOM(OM);
@@ -132,7 +143,7 @@ void ProjectileManager::AddArty(Vector3 position, Vector3 size, float rotation, 
 void ProjectileManager::AddLaser(Vector3 position, Vector3 size, PROJECTILETYPE BT)
 {
 	Bullet* tempBullet = nullptr;
-	tempBullet = new Bullet(position, size,0,DIRECTION::NONE,PROJECTILETYPE::BOSSLASER, false);
+	tempBullet = new Bullet(position, size,0,DIRECTION::NONE,PROJECTILETYPE::BOSSLASER,false);
 	tempBullet->SetPM(PM);
 	tempBullet->SetOM(OM);
 	projectileList.push_back(tempBullet);
@@ -141,7 +152,7 @@ void ProjectileManager::AddLaser(Vector3 position, Vector3 size, PROJECTILETYPE 
 void ProjectileManager::AddHeliBomb(Vector3 position, Vector3 size)
 {
 	Bomb* tempBomb = nullptr;
-	tempBomb = new Bomb(position, size, 0, false);
+	tempBomb = new Bomb(position, size, 0, SFXM, false);
 	tempBomb->SetPM(PM);
 	tempBomb->SetOM(OM);
 	projectileList.push_back(tempBomb);

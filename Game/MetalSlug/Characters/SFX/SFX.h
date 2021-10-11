@@ -4,7 +4,8 @@ enum class SFXTYPE
 {
 	NONE =0,
 	BULLET,
-	ENEMYGRENADE
+	ENEMYGRENADE,
+	BLOOD
 };
 
 class SFX :public AnimationRect

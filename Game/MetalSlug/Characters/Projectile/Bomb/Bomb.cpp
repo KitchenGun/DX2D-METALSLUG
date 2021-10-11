@@ -2,8 +2,8 @@
 #include "Bomb.h"
 #include "Utilities/Animator.h"
 
-Bomb::Bomb(Vector3 position, Vector3 size, float rotation, bool bisPPM)
-	:Projectile(position,size,rotation,DIRECTION::NONE,PROJECTILETYPE::HELIBOMB,bisPPM)
+Bomb::Bomb(Vector3 position, Vector3 size, float rotation, SFXManager* sfxm, bool bisPPM)
+	:Projectile(position,size,rotation,DIRECTION::NONE,PROJECTILETYPE::HELIBOMB, sfxm, bisPPM)
 {
 	texture = new Texture2D(L"./_Textures/SFX/Weapon/HelicopterBomb.png");
 	animClips.push_back(new AnimationClip(L"HelicopterBomb", texture, 7, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));

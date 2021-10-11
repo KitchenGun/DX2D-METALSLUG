@@ -4,7 +4,7 @@ class ObjectManager;
 class Projectile : public AnimationRect
 {
 public:
-	Projectile(Vector3 position, Vector3 size, float rotation, DIRECTION dir,PROJECTILETYPE BT,bool isPPM=true);
+	Projectile(Vector3 position, Vector3 size, float rotation, DIRECTION dir,PROJECTILETYPE BT,SFXManager* sfxm,bool isPPM=true);
 	virtual ~Projectile();
 public:
 	virtual void Update() override;
@@ -34,6 +34,7 @@ protected:
 	PlayerManager* PM = nullptr;
 	ObjectManager* OM = nullptr;
 	ProjectileManager* EPM = nullptr;
+	SFXManager* SFXM = nullptr;
 	bool isNeedDestroy=false;
 	vector<Ground*> GroundList;
 };

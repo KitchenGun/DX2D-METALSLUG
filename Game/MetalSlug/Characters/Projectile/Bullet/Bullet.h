@@ -3,7 +3,7 @@
 class Bullet : public Projectile
 {
 public:
-	Bullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT,bool bisPPM=true);
+	Bullet(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE BT,SFXManager* sfxm,bool bisPPM=true);
 	~Bullet();
 public:
 	void Update() override;

@@ -2,10 +2,11 @@
 #include "Projectile.h"
 
 
-Projectile::Projectile(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE PT, bool isPPM)
+Projectile::Projectile(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE PT, SFXManager* sfxm, bool isPPM)
 	:AnimationRect(position, size, rotation),
 	Dir(dir),
 	pt(PT),
+	SFXM(sfxm),
 	IsPPM(isPPM)
 {
 	StartPos = position;
@@ -17,6 +18,7 @@ Projectile::~Projectile()
 	{
 		SAFE_DELETE(tempGround);
 	}
+	SAFE_DELETE(SFXM);
 	SAFE_DELETE(EPM);
 	SAFE_DELETE(OM);
 	SAFE_DELETE(PM);

@@ -3,7 +3,7 @@
 class Bomb : public Projectile
 {
 public:
-	Bomb(Vector3 position, Vector3 size, float rotation, bool bisPPM);
+	Bomb(Vector3 position, Vector3 size, float rotation, SFXManager* sfxm, bool bisPPM);
 	~Bomb();
 public:
 	void Update() override;

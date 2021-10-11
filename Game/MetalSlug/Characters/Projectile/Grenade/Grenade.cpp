@@ -3,7 +3,7 @@
 #include "Utilities/Animator.h"
 
 Grenade::Grenade(Vector3 position, Vector3 size, float rotation, DIRECTION dir, PROJECTILETYPE PT, bool bisPPM)
-	:Projectile(position,size,0,dir,PT,bisPPM)
+	:Projectile(position,size,0,dir,PT,nullptr,bisPPM)
 {
 	if (pt == PROJECTILETYPE::Grenade)
 	{

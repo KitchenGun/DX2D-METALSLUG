@@ -46,6 +46,10 @@ void SFXManager::AddSFX(Vector3 position, DIRECTION dir, PROJECTILETYPE BT)
 	BulletSFX* tempB = nullptr;
 	switch (BT)
 	{
+	case PROJECTILETYPE::NONE:
+		tempB = new BulletSFX(position, SFXTYPE::BLOOD, dir);
+		SFXList.push_back(tempB);
+		break;
 	case PROJECTILETYPE::PISTOL:
 		tempB = new BulletSFX(position,SFXTYPE::BULLET, dir);
 		SFXList.push_back(tempB);
@@ -70,7 +74,6 @@ void SFXManager::RemoveSFX(SFX* tempSFX)
 		if (*iter == tempSFX)
 		{
 			iter = SFXList.erase(iter);
-			cout <<"»èÁ¦" <<endl;
 			break;
 		}
 	}

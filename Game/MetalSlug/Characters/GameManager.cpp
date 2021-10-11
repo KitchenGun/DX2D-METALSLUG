@@ -151,5 +151,4 @@ void GameManager::Win()
 void GameManager::ScoreChange(int val)
 {
 	Score += val;
-	cout << Score << endl;
 }
