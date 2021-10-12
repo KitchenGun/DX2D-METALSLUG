@@ -116,15 +116,10 @@ void Editer::Init()
 
 void Editer::Update()
 {
-	if (Keyboard::Get()->Down(VK_SPACE))
-	{
-		InputGround();
-	}
-	//충돌 처리
-	for (Ground* tempGround : GroundList)
-	{
-		tempGround->Update();
-	}
+	//if (Keyboard::Get()->Down(VK_SPACE))
+	//{
+	//	InputGround();
+	//}
 	//manager
 	SFXM->Update();
 	PlayerPM->Update();
@@ -136,6 +131,7 @@ void Editer::Update()
 	ItemM->Update();
 	UIM->Update();
 	//animation
+	
 	MapGroundWaterDown->Update();
 	MapGroundWaterUp->Update();
 	MapGroundWaterDown1->Update();
@@ -176,7 +172,6 @@ void Editer::Render()
 	//{
 	//	tempGround->Render();
 	//}
-	//player앞에 출력
 	MapObj0->Render();
 	MapObj1->Render();
 	MapObj4->Render();

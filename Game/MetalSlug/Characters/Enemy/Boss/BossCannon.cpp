@@ -80,7 +80,6 @@ void BossCannon::SetAnimation()
 		SetSize(Vector3(75 * 3, 79 * 3, 1));
 		animator->playRate = 1.0f / 1;
 		animator->bLoop = true;
-		cout << "LASERCHARGE" << endl;
 		texture = new Texture2D(L"./_Textures/Boss/CannonHighLaserCharge.png");
 		animator->SetCurrentAnimClip(L"CannonHighLaserCharge");
 		break;

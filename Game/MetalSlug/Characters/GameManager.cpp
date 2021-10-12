@@ -7,7 +7,7 @@ GameManager::GameManager(PlayerManager* pm, EnemyManager* em)
 {
 	Camera::Get()->SetCamPos(Vector3(80, 50, 0));//³ôÀÌ50
 	EM->AddBoss(Vector3(15900, 810, 0));
-	//AddEnemy(ENEMYTYPE::Helicopter, PM->GetPlayer()->GetPosition()+Vector3(300,-00,0));
+	AddEnemy(ENEMYTYPE::Helicopter, PM->GetPlayer()->GetPosition() + Vector3(300, -00, 0));
 }
 
 GameManager::~GameManager()
@@ -41,6 +41,7 @@ void GameManager::CameraMove()
 		Camera::Get()->SetCamPosLimit(10800, 80, 80);
 		if (PM->GetPlayer()->GetPointPos().x >= Camera::Get()->GetCamPos().x + (WinMaxWidth / 4))
 		{
+			AddEnemy(ENEMYTYPE::Helicopter, PM->GetPlayer()->GetPosition() + Vector3(300, -00, 0));
 			Camera::Get()->Move(Vector3(340, 0, 0));
 		}
 		break;

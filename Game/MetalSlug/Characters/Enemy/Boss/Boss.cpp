@@ -198,7 +198,11 @@ void Boss::ArtyAtk(float Angle)
 
 int Boss::ArtyAngle()
 {//±Ù°Å¸® 90 135
-	float fRange = Math::Distance(this->GetTransformedCoord().Point, pm->GetPlayer()->GetTransformedCoord().Point);
+	float fRange = 1;
+	if (pm->GetPlayer() != nullptr)
+	{
+		fRange = Math::Distance(this->GetTransformedCoord().Point, pm->GetPlayer()->GetTransformedCoord().Point);
+	}
 	if (fRange > 900)
 	{
 		fRange = 1;
@@ -289,7 +293,6 @@ void Boss::HPCheck()
 
 void Boss::Hit(DAMAGE val, Projectile* tempProjectile)
 {
-	cout <<"Enemy boss "<< EnemyHP << endl;
 	Projectile* NowTemp;
 	NowTemp = tempProjectile;
 

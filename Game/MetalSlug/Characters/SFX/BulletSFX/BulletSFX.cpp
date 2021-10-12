@@ -12,6 +12,7 @@ BulletSFX::BulletSFX(Vector3 pos, SFXTYPE sfxt, DIRECTION dir)
 	switch (sfxt)
 	{
 	case SFXTYPE::BULLET:
+		animator->playRate = 1.0f / 60;
 		switch (dir)
 		{
 		case DIRECTION::NONE:

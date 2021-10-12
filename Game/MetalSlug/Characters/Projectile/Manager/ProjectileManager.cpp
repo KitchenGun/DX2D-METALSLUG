@@ -57,18 +57,6 @@ void ProjectileManager::Update()
 			}
 			if (tempProjectile->GetIsNeedDestroy())
 			{
-				//if (tempProjectile->GetRotation() == 0)
-				//{
-				//	SFXM->AddSFX(tempProjectile->GetPosition(), DIRECTION::RIGHT, PROJECTILETYPE::NONE);
-				//}
-				//else if (tempProjectile->GetRotation() == 180)
-				//{
-				//	SFXM->AddSFX(tempProjectile->GetPosition(), DIRECTION::LEFT, PROJECTILETYPE::NONE);
-				//}
-				//else
-				//{
-				//	SFXM->AddSFX(tempProjectile->GetPosition(), DIRECTION::NONE, PROJECTILETYPE::NONE);
-				//}
 				RemoveProjectile(tempProjectile);
 				break;//삭제시 프로젝트 리스트가 변경되서 break걸고 다시 돌려야함
 			}
@@ -135,7 +123,7 @@ void ProjectileManager::AddGrenade(Vector3 position, Vector3 size, float rotatio
 void ProjectileManager::AddArty(Vector3 position, Vector3 size, float rotation, PROJECTILETYPE BT)
 {
 	Grenade* tempGrenade = nullptr;
-	tempGrenade = new Grenade(position, size, rotation, DIRECTION::NONE, BT, false);
+	tempGrenade = new Grenade(position, size, rotation, DIRECTION::NONE, BT,false);
 	tempGrenade->SetPM(PM);
 	projectileList.push_back(tempGrenade);
 }
@@ -143,7 +131,7 @@ void ProjectileManager::AddArty(Vector3 position, Vector3 size, float rotation, 
 void ProjectileManager::AddLaser(Vector3 position, Vector3 size, PROJECTILETYPE BT)
 {
 	Bullet* tempBullet = nullptr;
-	tempBullet = new Bullet(position, size,0,DIRECTION::NONE,PROJECTILETYPE::BOSSLASER,false);
+	tempBullet = new Bullet(position, size,0,DIRECTION::NONE,PROJECTILETYPE::BOSSLASER,nullptr,false);
 	tempBullet->SetPM(PM);
 	tempBullet->SetOM(OM);
 	projectileList.push_back(tempBullet);

@@ -62,7 +62,19 @@ void Projectile::ProjectileCollisionCheck()
 						tempE->Hit(this->GetDamage(), this);
 						if (pt != PROJECTILETYPE::KNIFE && pt != PROJECTILETYPE::Grenade)
 						{
+							if (tempE->GetET() == ENEMYTYPE::Boss || tempE->GetET() == ENEMYTYPE::Helicopter)
+							{
+
+							}
+							else
+							{
+								SFXM->AddSFX(tempE->GetPointPos(), Dir, PROJECTILETYPE::NONE);
+							}
 							isNeedDestroy = true;
+						}
+						if (pt == PROJECTILETYPE::KNIFE)
+						{//칼질로 인한 피 이펙트 생성
+							SFXM->AddSFX(tempE->GetPointPos(), DIRECTION::NONE, PROJECTILETYPE::NONE);
 						}
 					}
 					
@@ -91,10 +103,19 @@ void Projectile::ProjectileCollisionCheck()
 						tempO->Hit(this->GetDamage(), this);
 						if (pt != PROJECTILETYPE::KNIFE && pt != PROJECTILETYPE::Grenade)
 						{
+							SFXM->AddSFX(position, Dir, pt);
 							isNeedDestroy = true;
 						}
 					}
 				
+				}
+			}
+			else
+			{
+				if (Math::OBBIntersect(tempO, this))
+				{
+					SFXM->AddSFX(position, Dir, pt);
+					isNeedDestroy = true;
 				}
 			}
 
@@ -132,6 +153,11 @@ void Projectile::ProjectileCollisionCheck()
 					else
 					{
 						tempP->Hit(this->GetDamage(), this);
+					}
+					if (pt == PROJECTILETYPE::KNIFE)
+					{
+						SFXM->AddSFX(tempP->GetPointPos(), Dir, PROJECTILETYPE::NONE);
+						isNeedDestroy = true;
 					}
 					if (pt == PROJECTILETYPE::HELIBOMB)
 					{
