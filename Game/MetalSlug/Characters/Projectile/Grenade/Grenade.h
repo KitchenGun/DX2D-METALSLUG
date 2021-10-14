@@ -13,6 +13,7 @@ public:
 	void Explosion();
 	bool GetIsHit() { return isHit; }
 	void SetIsHit(bool val) { isHit = val; }
+	void SetSFXM(SFXManager* val) { SFXM = val; }
 private:
 	float ThrowingTime = 0;//던지고 경과한 시간
 	float MaxTime = 0;

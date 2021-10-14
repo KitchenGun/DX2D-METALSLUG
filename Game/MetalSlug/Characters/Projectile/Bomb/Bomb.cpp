@@ -41,9 +41,9 @@ void Bomb::Move(Vector3 position)
 void Bomb::Hit()
 {
 	--PHP;
-	cout <<"hit"<< PHP << endl;
 	if (PHP == 0)
 	{
+		SFXM->AddSFX(position, DIRECTION::NONE, PROJECTILETYPE::EnemyGrenade);
 		isNeedDestroy = true;
 	}
 }

@@ -13,6 +13,7 @@ BulletSFX::BulletSFX(Vector3 pos, SFXTYPE sfxt, DIRECTION dir)
 	{
 	case SFXTYPE::BULLET:
 		animator->playRate = 1.0f / 60;
+		animator->SetCurrentAnimClip(L"NormalBulletExplosion");
 		switch (dir)
 		{
 		case DIRECTION::NONE:
@@ -30,9 +31,11 @@ BulletSFX::BulletSFX(Vector3 pos, SFXTYPE sfxt, DIRECTION dir)
 		}
 		break;
 	case SFXTYPE::ENEMYGRENADE:
-
-		break;
+		animator->SetCurrentAnimClip(L"EnemyGrenadeExplosion");
+		SetSize(Vector3(32 * 3, 32 * 3, 1));
+		break; 
 	case SFXTYPE::BLOOD:
+		animator->SetCurrentAnimClip(L"Blood");
 		switch (dir)
 		{
 		case DIRECTION::NONE:
@@ -72,6 +75,10 @@ void BulletSFX::Update()
 		}
 		break;
 	case SFXTYPE::ENEMYGRENADE:
+		if (animator->GetIndex() >= 7)
+		{
+			isNeedDestroy = true;
+		}
 		break;
 	case SFXTYPE::BLOOD:
 

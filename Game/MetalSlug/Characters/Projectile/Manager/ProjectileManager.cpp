@@ -41,7 +41,14 @@ void ProjectileManager::Update()
 				{
 					if (tempProjectile->GetRotation() == 0)
 					{
-						SFXM->AddSFX(tempProjectile->GetPosition(), DIRECTION::RIGHT, tempProjectile->GetPT());
+						if (tempProjectile->GetPT() != PROJECTILETYPE::HELIBOMB)
+						{
+							SFXM->AddSFX(tempProjectile->GetPosition(), DIRECTION::RIGHT, tempProjectile->GetPT());
+						}
+						else
+						{
+							SFXM->AddSFX(tempProjectile->GetPosition(), DIRECTION::RIGHT, PROJECTILETYPE::EnemyGrenade);
+						}
 					}
 					else if (tempProjectile->GetRotation() == 180)
 					{
@@ -114,6 +121,7 @@ void ProjectileManager::AddGrenade(Vector3 position, Vector3 size, float rotatio
 	else
 	{
 		tempGrenade = new Grenade(position, size, rotation, dir, BT, false);
+		tempGrenade->SetSFXM(SFXM);
 		tempGrenade->SetGroundList(GroundList);
 		tempGrenade->SetPM(PM);
 	}

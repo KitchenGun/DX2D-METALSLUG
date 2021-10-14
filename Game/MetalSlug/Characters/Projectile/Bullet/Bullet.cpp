@@ -67,7 +67,6 @@ void Bullet::Update()
 			Move(Vector3(-Speed * Time::Delta(), 0, 0));
 	}
 
-	
 	Projectile::Update();
 }
 
