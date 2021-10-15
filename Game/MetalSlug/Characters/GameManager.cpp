@@ -111,10 +111,16 @@ void GameManager::PlayerTracking()
 {
 	if (PM->GetPlayer()->GetPosition().x > 14700)
 	{
+		//폭포수 올라갈때
 		phase = 4;
 	}
 	else if (PM->GetPlayer()->GetPosition().x > 13200)
 	{
+		//첫번째 건물 지나서
+		phase = 3;
+	}
+	else if ()
+	{//건물 단계가 2단계일때
 		phase = 3;
 	}
 	else if(PM->GetPlayer()->GetPosition().x > 11600)

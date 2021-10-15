@@ -161,6 +161,7 @@ void Projectile::ProjectileCollisionCheck()
 					}
 					if (pt == PROJECTILETYPE::HELIBOMB)
 					{
+						SFXM->AddSFX(tempP->GetPointPos(), Dir, PROJECTILETYPE::EnemyGrenade);
 						isNeedDestroy = true;
 					}
 				}
