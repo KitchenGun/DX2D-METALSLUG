@@ -19,7 +19,9 @@ public:
 	list<Object*> GetObjectList() { return objectList; }
 	void SetIM(ItemManager* val) { IM = val; }
 	void SetStage1Texture(TextureRect* val) { Stage1Texture = val; }
+	Building* GetTriggerBuilding() { return TriggerBuilding; }
 private:
+	Building* TriggerBuilding = nullptr;
 	list<Object*> objectList;
 	list<Object*>::iterator iter;
 	PlayerManager* PM=nullptr;

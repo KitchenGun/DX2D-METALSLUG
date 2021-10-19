@@ -139,6 +139,10 @@ void ObjectManager::AddBuilding(Vector3 position, Vector3 size, int buildIndex, 
 {
 	Object* tempO = nullptr;
 	tempO = new Building(position, size, 0, buildIndex,isRender, Stage1Texture);
+	if (buildIndex == 1)
+	{
+		TriggerBuilding =dynamic_cast<Building*>(tempO);
+	}
 	tempO->SetTarget(EM);
 	tempO->SetTarget(PM);
 	tempO->SetPPM(PPM);

@@ -12,6 +12,7 @@ public:
 	void HPCheck();
 
 	void SetStage1Texture(TextureRect* val) { Stage1Texture = val; }
+	HP GetHP() { return ObjHP; }
 private:
 	bool isNeedDestroy = false;
 	int BuildIndex = 0;

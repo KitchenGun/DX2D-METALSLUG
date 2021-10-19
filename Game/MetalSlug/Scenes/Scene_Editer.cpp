@@ -102,6 +102,7 @@ void Editer::Init()
 	ObjectM->AddObject(Vector3(8300, 20, 0),Vector3(64 * 4, 90 * 4, 1), ObjectType::ROCK,false);
 	ObjectM->AddBuilding(Vector3(11300, 80, 0), Vector3(150 * 4, 169 *4 , 1),1);
 	ObjectM->AddBuilding(Vector3(12200, 80, 0), Vector3(150 * 4, 169 * 4, 1), 2, false);
+	GameM->SetTarget(ObjectM->GetTriggerBuilding());
 	//¾ÆÀÌÅÛ
 	ObjectM->AddObject(Vector3(2050, 170, 0), ObjectType::BOX, true);
 	ObjectM->AddObject(Vector3(5050, 80, 0), ObjectType::BOX, true);

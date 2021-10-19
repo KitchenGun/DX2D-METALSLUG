@@ -17,9 +17,12 @@ public:
 	void ScoreChange(int val);
 	int GetScore() { return Score; }
 	bool GetisWin() { return isWin; }
+	void SetTarget(Building* target) { Target=target; }
 private:
 	PlayerManager* PM;
 	EnemyManager* EM;
+
+	Building* Target = nullptr;
 
 	//단계 phase(카메라 움직임 멈춤)
 	int phase = 0;
