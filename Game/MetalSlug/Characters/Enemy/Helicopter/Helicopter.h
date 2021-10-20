@@ -16,6 +16,8 @@ public:
 	void Render() override;
 	void DropBomb();
 	void AddBomb();
+	void HPCheck();
+	void Die() override;
 
 	void AltitudeHold();
 	void PlayerPosTracking();

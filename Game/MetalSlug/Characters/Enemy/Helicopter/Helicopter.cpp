@@ -24,18 +24,26 @@ Helicopter::~Helicopter()
 
 void Helicopter::Update()
 {
-	if (!isAtk)
+	if (!isDie)
 	{
-		DropBomb();
+		if (!isAtk)
+		{
+			DropBomb();
+		}
+		else
+		{
+			AddBomb();
+		}
+		PlayerPosTracking();
+		AltitudeHold();
+		blade->Update();
+		Enemy::Update();
+		HPCheck();
 	}
 	else
 	{
-		AddBomb();
+		isNeedDestroy = true;
 	}
-	PlayerPosTracking();
-	AltitudeHold();
-	blade->Update();
-	Enemy::Update();
 }
 
 void Helicopter::Render()
@@ -73,6 +81,20 @@ void Helicopter::AddBomb()
 		DropCount = 0;
 		isAtk = false;
 	}
+}
+
+void Helicopter::HPCheck()
+{
+	if (EnemyHP <= 0)
+	{
+		Die();
+	}
+}
+
+void Helicopter::Die()
+{
+	isDie = true;
+	Enemy::Die();
 }
 
 void Helicopter::AltitudeHold()

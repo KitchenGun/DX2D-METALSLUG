@@ -29,7 +29,6 @@ void GameManager::AddPlayer(Vector3 Pos)
 
 void GameManager::CameraMove()
 {
-	cout << phase << endl;
 	switch (phase)
 	{
 	case 0:
@@ -114,7 +113,7 @@ void GameManager::Update()
 	else
 	{
 		//cout <<"Cam :"<< String::ToString(Camera::Get()->GetCamPos()) << endl;
-		cout <<"Player :"<< String::ToString(PM->GetPlayer()->GetPointPos()) << endl;
+		//cout <<"Player :"<< String::ToString(PM->GetPlayer()->GetPointPos()) << endl;
 
 		PlayerTracking();
 		CameraMove();
