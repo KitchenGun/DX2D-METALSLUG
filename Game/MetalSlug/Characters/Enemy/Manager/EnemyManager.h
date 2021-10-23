@@ -1,5 +1,6 @@
 #pragma once
 class GameManager;
+class SFXManager;
 class EnemyManager
 {
 public:
@@ -16,6 +17,7 @@ public:
 	void SetGM(GameManager* val) { GM = val; }
 	void SetGroundList(vector<Ground*> val) { GroundList = val; }
 	list<Enemy*> GetEnemyList() { return enemyList; }
+	void SetSFX(SFXManager* val) { SFXM = val; }
 private:
 	list<Enemy*> enemyList;
 	list<Enemy*>::iterator iter;
@@ -24,4 +26,5 @@ private:
 	ProjectileManager* EPM;
 	PlayerManager* PM;
 	GameManager* GM;
+	SFXManager* SFXM;
 };

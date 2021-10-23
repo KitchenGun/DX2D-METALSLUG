@@ -34,6 +34,11 @@ BulletSFX::BulletSFX(Vector3 pos, SFXTYPE sfxt, DIRECTION dir)
 		animator->SetCurrentAnimClip(L"EnemyGrenadeExplosion");
 		SetSize(Vector3(32 * 3, 32 * 3, 1));
 		break; 
+	case SFXTYPE::EXPLOSION:
+		animator->SetCurrentAnimClip(L"Explosion");
+		SetPos(Vector3(30 * 3, 35 * 3, 1));
+		SetSize(Vector3(80 * 3, 85 * 3, 1));
+		break;
 	case SFXTYPE::BLOOD:
 		animator->SetCurrentAnimClip(L"Blood");
 		switch (dir)
@@ -76,6 +81,12 @@ void BulletSFX::Update()
 		break;
 	case SFXTYPE::ENEMYGRENADE:
 		if (animator->GetIndex() >= 7)
+		{
+			isNeedDestroy = true;
+		}
+		break;
+	case SFXTYPE::EXPLOSION:
+		if (animator->GetIndex() >= 27)
 		{
 			isNeedDestroy = true;
 		}
@@ -134,6 +145,10 @@ void BulletSFX::SetSFX()
 	case SFXTYPE::ENEMYGRENADE:
 		texture = new Texture2D(L"./_Textures/SFX/Explosion/EnemyGrenadeExplosion.png");
 		animClips.push_back(new AnimationClip(L"EnemyGrenadeExplosion", texture, 8, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
+		break;
+	case SFXTYPE::EXPLOSION:
+		texture = new Texture2D(L"./_Textures/SFX/Explosion/Explosion.png");
+		animClips.push_back(new AnimationClip(L"Explosion", texture, 28, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 		break;
 	case SFXTYPE::BLOOD:
 		texture = new Texture2D(L"./_Textures/SFX/Explosion/Blood.png");

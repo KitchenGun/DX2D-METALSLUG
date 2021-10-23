@@ -61,4 +61,5 @@ Camera::Camera()
 
 Camera::~Camera()
 {
+	SAFE_DELETE(VPBuffer);
 }

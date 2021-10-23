@@ -17,6 +17,9 @@ Enemy::Enemy(Vector3 position, Vector3 size, float rotation, ENEMYTYPE enemyType
 
 Enemy::~Enemy()
 {
+	SAFE_DELETE(PrevTemp);
+	SAFE_DELETE(pm);
+	ProjectileManager* epm=nullptr;
 	SAFE_DELETE(obbInfo);
 	PlayerAnimationRect::~PlayerAnimationRect();
 }
@@ -121,12 +124,15 @@ void Enemy::Jump()
 
 void Enemy::Die()
 {
+	
 	//자식 객체에서 정의
 	ColliderSizeChange(COLLIDER::NONE);
 }
 
 void Enemy::Hit(DAMAGE val,Projectile* tempProjectile)
 {
+	//HLSL작업
+	SB->SetHit(true);
 	Projectile *NowTemp;
 	NowTemp = tempProjectile;
 	HitBy = tempProjectile->GetPT();

@@ -26,13 +26,16 @@ void Helicopter::Update()
 {
 	if (!isDie)
 	{
-		if (!isAtk)
+		if (!isEngage)
 		{
-			DropBomb();
-		}
-		else
-		{
-			AddBomb();
+			if (!isAtk)
+			{
+				DropBomb();
+			}
+			else
+			{
+				AddBomb();
+			}
 		}
 		PlayerPosTracking();
 		AltitudeHold();

@@ -63,6 +63,8 @@ void SFXManager::AddSFX(Vector3 position, DIRECTION dir, PROJECTILETYPE BT)
 		SFXList.push_back(tempB);
 		break;
 	case PROJECTILETYPE::HELIBOMB:
+		tempB = new BulletSFX(position, SFXTYPE::EXPLOSION, dir);
+		SFXList.push_back(tempB);
 		break;
 	default:
 		break;

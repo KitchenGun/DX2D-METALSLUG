@@ -5,6 +5,7 @@ enum class SFXTYPE
 	NONE =0,
 	BULLET,
 	ENEMYGRENADE,
+	EXPLOSION,
 	BLOOD
 };
 

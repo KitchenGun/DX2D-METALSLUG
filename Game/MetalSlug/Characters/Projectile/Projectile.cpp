@@ -62,9 +62,13 @@ void Projectile::ProjectileCollisionCheck()
 						tempE->Hit(this->GetDamage(), this);
 						if (pt != PROJECTILETYPE::KNIFE && pt != PROJECTILETYPE::Grenade)
 						{
-							if (tempE->GetET() == ENEMYTYPE::Boss || tempE->GetET() == ENEMYTYPE::Helicopter)
+							if (tempE->GetET() == ENEMYTYPE::Boss)//|| tempE->GetET() == ENEMYTYPE::Helicopter)
 							{
-
+								SFXM->AddSFX(position, Dir, pt);
+							}
+							else if (tempE->GetET() == ENEMYTYPE::Helicopter)
+							{
+								SFXM->AddSFX(position, DIRECTION::NONE, pt);
 							}
 							else
 							{

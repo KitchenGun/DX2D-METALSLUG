@@ -80,6 +80,7 @@ void Editer::Init()
 	PlayerPM = new ProjectileManager(SFXM);
 	EnemyPM = new ProjectileManager(SFXM,false);
 	EnemyM = new EnemyManager(EnemyPM);
+	EnemyM->SetSFX(SFXM);
 	PlayerM = new PlayerManager(PlayerPM, EnemyM);
 	ItemM = new ItemManager(PlayerM);
 	EnemyM->SetPM(PlayerM);
@@ -132,7 +133,6 @@ void Editer::Update()
 	ItemM->Update();
 	UIM->Update();
 	//animation
-	
 	MapGroundWaterDown->Update();
 	MapGroundWaterUp->Update();
 	MapGroundWaterDown1->Update();
@@ -238,7 +238,6 @@ void Editer::LoadGroundTile(const wstring& path)
 	}
 	else
 	{
-		cout << String::ToString(path) << endl;
 		if (GroundList.empty()) return;
 		FileStream* in = new FileStream(String::ToString(path), FILE_STREAM_READ);
 		int size = in->Read<UINT>();

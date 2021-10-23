@@ -207,7 +207,7 @@ void TextureRect::GUI(int ordinal)//ordinal에 따라서 다르게 함수를 실행함
 	{//GUI창 안에 메뉴를 띄우겠다
 
 		//선택시 외곽선 강조 활성화
-		SB->SetOutline(true);
+		//SB->SetOutline(true);
 		//선택한 파일 이름 텍스트 띄우기
 		ImGui::Text(objName.c_str());
 		ImGui::Text(imgName.c_str());
@@ -243,7 +243,7 @@ void TextureRect::GUI(int ordinal)//ordinal에 따라서 다르게 함수를 실행함
 	else
 	{
 		//선택시 외곽선 강조 해제
-		SB->SetOutline(false);
+		//SB->SetOutline(false);
 	}
 }
 

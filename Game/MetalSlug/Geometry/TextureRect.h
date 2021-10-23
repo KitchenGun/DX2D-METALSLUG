@@ -13,16 +13,16 @@ public:
 		data.selection = selection;
 	}
 
-	void SetOutline(bool bOutline)
+	void SetHit(bool Hit)
 	{
-		data.bOutline = bOutline;
+		data.bHit = Hit;
 	}
 
 	struct Struct
 	{//데이터 패딩
 		int selection = 1;															//4바이트
 		Vector2 texturSize = { WinMaxWidth,WinMaxHeight };//정의와 동시에 초기화		//8바이트
-		bool bOutline = false;													//1바이트
+		bool bHit = false;													//1바이트
 		bool dummy[3];																//3바이트
 	};
 

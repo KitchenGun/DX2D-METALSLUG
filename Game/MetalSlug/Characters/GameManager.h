@@ -13,6 +13,9 @@ public:
 	void EnemySpawn();
 	void Update();
 	void PlayerTracking();
+
+	void HeliDestroy();
+
 	void Win();
 	void ScoreChange(int val);
 	int GetScore() { return Score; }

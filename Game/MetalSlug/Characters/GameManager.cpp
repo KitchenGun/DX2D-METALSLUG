@@ -6,8 +6,6 @@ GameManager::GameManager(PlayerManager* pm, EnemyManager* em)
 	EM(em)
 {
 	Camera::Get()->SetCamPos(Vector3(80, 50, 0));//높이50
-	EM->AddBoss(Vector3(15900, 810, 0));
-	AddEnemy(ENEMYTYPE::Helicopter, PM->GetPlayer()->GetPosition() + Vector3(300, -00, 0));
 }
 
 GameManager::~GameManager()
@@ -29,10 +27,11 @@ void GameManager::AddPlayer(Vector3 Pos)
 
 void GameManager::CameraMove()
 {
+	cout << phase << endl;
 	switch (phase)
 	{
 	case 0:
-		Camera::Get()->SetCamPosLimit(6200, 80, 80);
+		Camera::Get()->SetCamPosLimit(6000, 80, 80);
 		if (PM->GetPlayer()->GetPointPos().x >= Camera::Get()->GetCamPos().x+(WinMaxWidth/4))
 		{
 			Camera::Get()->Move(Vector3(350, 0, 0));
@@ -42,7 +41,6 @@ void GameManager::CameraMove()
 		Camera::Get()->SetCamPosLimit(10660, 80, 80);
 		if (PM->GetPlayer()->GetPointPos().x >= Camera::Get()->GetCamPos().x + (WinMaxWidth / 4))
 		{
-			//AddEnemy(ENEMYTYPE::Helicopter, PM->GetPlayer()->GetPosition() + Vector3(300, -00, 0));
 			Camera::Get()->Move(Vector3(350, 0, 0));
 		}
 		break;
@@ -89,19 +87,25 @@ void GameManager::CameraMove()
 void GameManager::EnemySpawn()
 {
 	static float DeltaTime = 0;
+	static int CamXPos = 0;
 	switch (phase)
 	{
 	case 0:
 		if (DeltaTime > SpawnRate)
 		{
-			AddEnemy(ENEMYTYPE::Grenadier,PM->GetPlayer()->GetPosition() + Vector3(1300, 300, 0));
+			if (CamXPos != (int)Camera::Get()->GetCamPos().x)
+			{
+				AddEnemy(ENEMYTYPE::Grenadier, PM->GetPlayer()->GetPosition() + Vector3(1300, 300, 0));
+			}
 			DeltaTime = 0;
 		}
+		CamXPos = Camera::Get()->GetCamPos().x;
+		DeltaTime += Time::Delta();
 		break;
 	default:
+		
 		break;
 	}
-	DeltaTime += Time::Delta();
 }
 
 void GameManager::Update()
@@ -112,6 +116,7 @@ void GameManager::Update()
 	}
 	else
 	{
+		//cout << "Phase :" << phase << endl;
 		//cout <<"Cam :"<< String::ToString(Camera::Get()->GetCamPos()) << endl;
 		//cout <<"Player :"<< String::ToString(PM->GetPlayer()->GetPointPos()) << endl;
 
@@ -131,6 +136,12 @@ void GameManager::PlayerTracking()
 	}
 	else if (PM->GetPlayer()->GetPosition().x > 13400)
 	{//폭포수 조우
+		static bool Trigger = false;
+		if (Trigger == false)
+		{
+			EM->AddBoss(Vector3(15900, 810, 0));
+			Trigger = true;
+		}
 		phase = 5;
 	}
 	else if (PM->GetPlayer()->GetPosition().x > 12300)
@@ -144,11 +155,21 @@ void GameManager::PlayerTracking()
 	}
 	else if(Target->GetHP() < 30)
 	{//건물 단계가 터지기 일보 직전단계일때 헬기 스폰
-		phase = 2;
+		static bool Trigger = false;
+		if (Trigger == false)
+		{
+			AddEnemy(ENEMYTYPE::Helicopter, PM->GetPlayer()->GetPosition() + Vector3(-200, 700, 0));
+			Trigger = true;
+		}
 	}
-	else if (PM->GetPlayer()->GetPosition().x > 7000)
+	else if (PM->GetPlayer()->GetPosition().x > 6000)
 	{//헬기 등장이후
-		phase =	1;
+		static bool Trigger = false;
+		if (Trigger == false)
+		{
+			AddEnemy(ENEMYTYPE::Helicopter, PM->GetPlayer()->GetPosition() + Vector3(-200, 700, 0));
+			Trigger = true;
+		}
 	}
 	else
 	{//시작하고 헬기 등장까지
@@ -156,9 +177,21 @@ void GameManager::PlayerTracking()
 	}
 }
 
+void GameManager::HeliDestroy()
+{
+	if (phase == 0)
+	{
+		phase++;
+	}
+	else if (phase == 1)
+	{
+		phase++;
+	}
+}
+
 void GameManager::Win()
 {
-	if (phase > 3)
+	if (phase > 5)
 	{
 		for (Enemy* temp : EM->GetEnemyList())
 		{

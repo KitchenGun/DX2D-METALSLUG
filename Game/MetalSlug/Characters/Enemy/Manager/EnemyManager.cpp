@@ -8,6 +8,15 @@ EnemyManager::EnemyManager(ProjectileManager* epm)
 
 EnemyManager::~EnemyManager()
 {
+	SAFE_DELETE(SFXM);
+	SAFE_DELETE(GM);
+	SAFE_DELETE(PM);
+	SAFE_DELETE(EPM);
+
+	for (Ground* temp : GroundList)
+	{
+		SAFE_DELETE(temp);
+	}
 	for (Enemy* tempEnemy : enemyList)
 	{
 		SAFE_DELETE(tempEnemy);
@@ -86,6 +95,12 @@ void EnemyManager::RemoveEnemy(Enemy* tempEnemy)
 			if (tempEnemy->GetET() == ENEMYTYPE::Boss)
 			{
 				GM->ScoreChange(10000);
+			}
+			else if (tempEnemy->GetET() == ENEMYTYPE::Helicopter)
+			{
+				GM->HeliDestroy();
+				SFXM->AddSFX(tempEnemy->GetPosition(), DIRECTION::NONE, PROJECTILETYPE::HELIBOMB);
+				GM->ScoreChange(1000);
 			}
 			else
 			{
