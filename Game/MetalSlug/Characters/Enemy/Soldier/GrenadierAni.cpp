@@ -23,6 +23,15 @@ void GrenadierAni::Update()
 	ValueUpdate();
 	PivotUpdate();
 	PlayerAnimationRect::Update();
+
+	if (enemy->GetBeforeState() == ENEMYSOLDIERSTATE::DIE)
+	{
+		if (HitDeltaTime > 0.1f)
+		{
+			SB->SetHit(false);
+		}
+		HitDeltaTime += Time::Delta();
+	}
 }
 
 void GrenadierAni::Render()

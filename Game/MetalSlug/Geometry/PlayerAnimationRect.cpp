@@ -175,8 +175,8 @@ void PlayerAnimationRect::Render()
 		DC->PSSetShaderResources(0, 1, &srv);
 	}
 	PS->SetShader();
-	DC->PSSetSamplers(0, 1, &SS);
 	SB->SetPSBuffer(0);
+	DC->PSSetSamplers(0, 1, &SS);
 	/////////////수정 부분 blendstate를 추가하여 투명 부분을 자연스럽게 변경
 	DC->OMSetBlendState(BS, nullptr, 0xFFFFFFF);
 	DC->DrawIndexed(IB->GetCount(), 0, 0);

@@ -61,6 +61,26 @@ void Boss::Update()
 	nextState = BOSSSTATE::NONE;
 	Enemy::Update();
 	bossCannon->Update();
+	
+
+	if (isHit)
+	{
+		if (HitDeltaTime > 0.1f)
+		{
+			BossBody->SetHit(false);
+			bossCannon->SetHit(false);
+			HitDeltaTime = 0.0f;
+			isHit = false;
+		}
+		HitDeltaTime += Time::Delta();
+	}
+	
+	if (EnemyHP <= 0)
+	{
+		BossBody->SetHit(false);
+		bossCannon->SetHit(false);
+	}
+	
 }
 
 void Boss::Render()
@@ -293,6 +313,9 @@ void Boss::HPCheck()
 
 void Boss::Hit(DAMAGE val, Projectile* tempProjectile)
 {
+	BossBody->SetHit(true);
+	bossCannon->SetHit(true);
+	isHit = true;
 	Projectile* NowTemp;
 	NowTemp = tempProjectile;
 

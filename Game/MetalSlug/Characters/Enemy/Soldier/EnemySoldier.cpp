@@ -103,6 +103,7 @@ void EnemySoldier::HPCheck()
 {
 	if (EnemyHP <= 0)
 	{
+		
 		Die();
 	}
 }
@@ -170,6 +171,7 @@ void EnemySoldier::Move()
 
 void EnemySoldier::Die()
 {
+	grenadierAni->SetHit(true);
 	isDie = true;
 	enemyState = ENEMYSOLDIERSTATE::DIE;
 	Enemy::Die();

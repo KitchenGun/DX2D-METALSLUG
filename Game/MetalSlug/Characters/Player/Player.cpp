@@ -1280,6 +1280,7 @@ void Player::Win()
 {
 	isEnd = true;
 	soldierUpperState = SOLDIERSTATE::WIN;
+	soldierLowerState = SOLDIERSTATE::NONE;
 }
 
 void Player::AmmoCheck()

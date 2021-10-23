@@ -83,8 +83,8 @@ AnimationRect::AnimationRect(Vector3 position, Vector3 size, float rotation)
 		//색상결정에 대한 계산식 float4 color =(src*srcblend) Blend op (des*destblend)
 		HRESULT hr = DEVICE->CreateBlendState(&desc, &BS);
 		ASSERT(hr);
+		TransformVertices();
 	}
-
 	//Create SamplerState//텍스쳐를 uv에 맞게 바꾸는 과정
 	{
 		D3D11_SAMPLER_DESC desc;
@@ -106,8 +106,6 @@ AnimationRect::AnimationRect(Vector3 position, Vector3 size, float rotation)
 		HRESULT hr = DEVICE->CreateSamplerState(&desc, &SS);
 		ASSERT(hr);
 	}
-
-	TransformVertices();
 }
 
 AnimationRect::~AnimationRect()

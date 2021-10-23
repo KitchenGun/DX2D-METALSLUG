@@ -52,6 +52,7 @@ void Helicopter::Update()
 void Helicopter::Render()
 {
 	Enemy::Render();
+	SB->SetHit(false);
 	blade->Render();
 }
 

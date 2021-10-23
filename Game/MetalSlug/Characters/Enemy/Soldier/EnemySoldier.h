@@ -35,6 +35,7 @@ public:
 
 public: //SET&GET
 	ENEMYSOLDIERSTATE GetState() { return enemyState; }
+	ENEMYSOLDIERSTATE GetBeforeState() { return beforeEnemyState; }
 public://S*R*T
 	void SetSize(Vector3 tempSize);
 private:

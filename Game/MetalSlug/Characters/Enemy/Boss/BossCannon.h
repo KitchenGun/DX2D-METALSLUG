@@ -15,6 +15,7 @@ public:
 	void SetSize(Vector3 tempSize);
 	void SetPos(Vector3 tempPos);
 	Animator* GetAnimator() { return animator; }
+	void SetHit(bool val) { SB->SetHit(val); }
 private:
 	void PivotUpdate();
 	Boss* boss;

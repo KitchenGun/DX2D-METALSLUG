@@ -124,7 +124,6 @@ void Enemy::Jump()
 
 void Enemy::Die()
 {
-	
 	//자식 객체에서 정의
 	ColliderSizeChange(COLLIDER::NONE);
 }

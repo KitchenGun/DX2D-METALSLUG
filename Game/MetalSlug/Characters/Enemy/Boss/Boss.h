@@ -32,7 +32,8 @@ public:
 	BOSSSTATE GetBossState() { return BossState; }
 protected:
 	vector<Projectile*> vecHitProjectile;
-
+	bool isHit = false;
+	float HitDeltaTime = 0.0f;
 	bool isLaserATK = false;
 	bool isArtyATK = false;
 	int fireCount = 0;

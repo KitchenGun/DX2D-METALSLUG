@@ -39,7 +39,7 @@ TextureRect::TextureRect(Vector3 position, Vector3 size, float rotation)
 	IB->Create(indices, D3D11_USAGE_IMMUTABLE);
 
 
-	shaderPath = L"./_Shaders/VertexTexture.hlsl";
+	shaderPath = L"./_Shaders/Animation.hlsl";//VertexTexture.hlsl";
 	//경로의 변수화
 	VS->Create(shaderPath, "VS");
 	PS->Create(shaderPath, "PS");

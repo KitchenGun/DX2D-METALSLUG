@@ -40,14 +40,11 @@ float4 PS(PixelInput input) : SV_Target //현재 세팅한 타겟에 그려라
 	//투명 부분 색 버리는것 //r g b  a 1
 	//if (color.a < 0.1f)// blendState를 사용하여서 하는 중
 	//	discard;
-    if (!_bOutline)
+    if (_bOutline)
     {
-        return color;
+        color.g *= 0.4f;
+        color.b *= 0.4f;
     }
-    else
-    {
-        color.g *= 0.2f;
-        color.b *= 0.2f;
-    }
+   
     return color;
 }

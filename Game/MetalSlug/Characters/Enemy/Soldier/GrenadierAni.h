@@ -13,6 +13,7 @@ public:
 	void SetAnimation();
 	void SetSize(Vector3 tempSize);
 	void SetPos(Vector3 tempPos);
+	void SetHit(bool val) { SB->SetHit(val); }
 	Animator* GetAnimator() { return animator; }
 private:
 	void ValueUpdate();
@@ -21,5 +22,6 @@ private:
 private:
 	EnemySoldier* enemy;
 	DIRECTION dir = DIRECTION::NONE;
+	float HitDeltaTime = 0;
 	float IMGsize = 3;
 };

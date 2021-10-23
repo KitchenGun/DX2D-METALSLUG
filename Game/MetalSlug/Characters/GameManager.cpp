@@ -27,7 +27,6 @@ void GameManager::AddPlayer(Vector3 Pos)
 
 void GameManager::CameraMove()
 {
-	cout << phase << endl;
 	switch (phase)
 	{
 	case 0:
@@ -162,7 +161,7 @@ void GameManager::PlayerTracking()
 			Trigger = true;
 		}
 	}
-	else if (PM->GetPlayer()->GetPosition().x > 6000)
+	else if (PM->GetPlayer()->GetPosition().x > 5600)
 	{//헬기 등장이후
 		static bool Trigger = false;
 		if (Trigger == false)

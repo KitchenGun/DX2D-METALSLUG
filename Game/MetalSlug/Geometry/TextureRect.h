@@ -103,6 +103,7 @@ public:
 	
 	void GUI(int ordinal);
 	void SetIsRender(bool val) { isRender = val; }
+	void SetHit(bool val) { SB->SetHit(val); }
 private:
 	//경로 교체 함수
 	void ChangeImageFunc(const wstring& path = L"");

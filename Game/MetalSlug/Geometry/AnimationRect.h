@@ -2,6 +2,7 @@
 
 class Animator;
 class AnimationClip;
+class SelectBuffer;
 
 class AnimationRect
 {
@@ -47,6 +48,7 @@ protected:
 	ID3D11BlendState* BS;
 	ID3D11SamplerState* SS;
 
+	//gui
 	//충돌처리
 	void TransformVertices();
 	RectEdges r;
