@@ -41,7 +41,7 @@ void SFXManager::Render()
 	}
 }
 
-void SFXManager::AddSFX(Vector3 position, DIRECTION dir, PROJECTILETYPE BT)
+void SFXManager::AddSFX(Vector3 position, DIRECTION dir, PROJECTILETYPE BT, bool loop)
 {
 	BulletSFX* tempB = nullptr;
 	switch (BT)
@@ -63,7 +63,7 @@ void SFXManager::AddSFX(Vector3 position, DIRECTION dir, PROJECTILETYPE BT)
 		SFXList.push_back(tempB);
 		break;
 	case PROJECTILETYPE::HELIBOMB:
-		tempB = new BulletSFX(position, SFXTYPE::EXPLOSION, dir);
+		tempB = new BulletSFX(position, SFXTYPE::EXPLOSION, dir, loop);
 		SFXList.push_back(tempB);
 		break;
 	default:

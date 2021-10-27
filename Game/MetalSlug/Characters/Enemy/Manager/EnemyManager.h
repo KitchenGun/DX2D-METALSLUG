@@ -27,4 +27,6 @@ private:
 	PlayerManager* PM;
 	GameManager* GM;
 	SFXManager* SFXM;
+
+	Enemy* boss = nullptr;
 };

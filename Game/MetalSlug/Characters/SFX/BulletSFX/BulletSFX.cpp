@@ -2,13 +2,12 @@
 #include "BulletSFX.h"
 #include "Utilities/Animator.h"
 
-BulletSFX::BulletSFX(Vector3 pos, SFXTYPE sfxt, DIRECTION dir)
+BulletSFX::BulletSFX(Vector3 pos, SFXTYPE sfxt, DIRECTION dir,bool loop)
 	:SFX(pos, size, rotation, sfxt),
 	dir(dir),
 	sfxt(sfxt)
 {
 	SetSFX();
-	animator->bLoop = false;
 	switch (sfxt)
 	{
 	case SFXTYPE::BULLET:
@@ -59,6 +58,7 @@ BulletSFX::BulletSFX(Vector3 pos, SFXTYPE sfxt, DIRECTION dir)
 	default:
 		break;
 	}
+	animator->bLoop = loop;
 }
 
 BulletSFX::~BulletSFX()
@@ -69,39 +69,40 @@ BulletSFX::~BulletSFX()
 void BulletSFX::Update()
 {
 	SFX::Update();
-
-	switch (sfxt)
+	if (!animator->bLoop)
 	{
-	case SFXTYPE::BULLET:
-		
-		if (animator->GetIndex() >= 11)
+		switch (sfxt)
 		{
-			isNeedDestroy = true;
-		}
-		break;
-	case SFXTYPE::ENEMYGRENADE:
-		if (animator->GetIndex() >= 7)
-		{
-			isNeedDestroy = true;
-		}
-		break;
-	case SFXTYPE::EXPLOSION:
-		if (animator->GetIndex() >= 27)
-		{
-			isNeedDestroy = true;
-		}
-		break;
-	case SFXTYPE::BLOOD:
+		case SFXTYPE::BULLET:
 
-		if (animator->GetIndex() >= 7)
-		{
-			isNeedDestroy = true;
+			if (animator->GetIndex() >= 11)
+			{
+				isNeedDestroy = true;
+			}
+			break;
+		case SFXTYPE::ENEMYGRENADE:
+			if (animator->GetIndex() >= 7)
+			{
+				isNeedDestroy = true;
+			}
+			break;
+		case SFXTYPE::EXPLOSION:
+			if (animator->GetIndex() >= 27)
+			{
+				isNeedDestroy = true;
+			}
+			break;
+		case SFXTYPE::BLOOD:
+
+			if (animator->GetIndex() >= 7)
+			{
+				isNeedDestroy = true;
+			}
+			break;
+		default:
+			break;
 		}
-		break;
-	default:
-		break;
 	}
-	
 }
 
 void BulletSFX::Render()

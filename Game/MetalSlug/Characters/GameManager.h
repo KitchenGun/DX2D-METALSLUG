@@ -33,4 +33,6 @@ private:
 	bool isWin = false;
 	//Á¡¼ö
 	int Score=0;
+
+	SoundSystem* BGM = nullptr;
 };

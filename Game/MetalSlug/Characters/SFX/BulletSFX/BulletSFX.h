@@ -2,7 +2,7 @@
 class BulletSFX : public SFX
 {
 public:
-	BulletSFX(Vector3 pos, SFXTYPE sfxt,DIRECTION dir);
+	BulletSFX(Vector3 pos, SFXTYPE sfxt, DIRECTION dir, bool loop = false);
 	~BulletSFX();
 
 	void Update() override;

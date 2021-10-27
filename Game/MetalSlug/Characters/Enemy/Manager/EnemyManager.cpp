@@ -8,6 +8,7 @@ EnemyManager::EnemyManager(ProjectileManager* epm)
 
 EnemyManager::~EnemyManager()
 {
+	SAFE_DELETE(boss);
 	SAFE_DELETE(SFXM);
 	SAFE_DELETE(GM);
 	SAFE_DELETE(PM);
@@ -42,6 +43,20 @@ void EnemyManager::Update()
 			{
 				RemoveEnemy(tempEnemy);
 				break;
+			}
+		}
+	}
+
+	if (boss != nullptr)
+	{
+		static bool die = false;
+		if (boss->GetHP() < 0)
+		{
+			if (die == false)
+			{
+				SFXM->AddSFX(boss->GetPosition() + Vector3(-100, 300, 0), DIRECTION::NONE, PROJECTILETYPE::HELIBOMB,true);
+				SFXM->AddSFX(boss->GetPosition() + Vector3(-100, 0, 0), DIRECTION::NONE, PROJECTILETYPE::HELIBOMB, true);
+				die = true;
 			}
 		}
 	}
@@ -84,6 +99,7 @@ void EnemyManager::AddBoss(Vector3 position)
 	tempEnemy->SetPM(PM);
 	tempEnemy->SetEPM(EPM);
 	enemyList.push_back(tempEnemy);
+	boss = tempEnemy;
 }
 
 void EnemyManager::RemoveEnemy(Enemy* tempEnemy)
@@ -92,11 +108,7 @@ void EnemyManager::RemoveEnemy(Enemy* tempEnemy)
 	{
 		if (*iter == tempEnemy)
 		{
-			if (tempEnemy->GetET() == ENEMYTYPE::Boss)
-			{
-				GM->ScoreChange(10000);
-			}
-			else if (tempEnemy->GetET() == ENEMYTYPE::Helicopter)
+			if (tempEnemy->GetET() == ENEMYTYPE::Helicopter)
 			{
 				GM->HeliDestroy();
 				SFXM->AddSFX(tempEnemy->GetPosition(), DIRECTION::NONE, PROJECTILETYPE::HELIBOMB);

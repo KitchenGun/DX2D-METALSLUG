@@ -8,7 +8,7 @@ public:
 	void Update();
 	void Render();
 
-	void AddSFX(Vector3 position, DIRECTION dir, PROJECTILETYPE BT);
+	void AddSFX(Vector3 position, DIRECTION dir, PROJECTILETYPE BT,bool loop = false);
 	void RemoveSFX(SFX* tempSFX);
 
 	list<SFX*> GetList() { return SFXList; }
@@ -16,5 +16,4 @@ public:
 private:
 	list<SFX*> SFXList;
 	list<SFX*>::iterator iter;
-
 };

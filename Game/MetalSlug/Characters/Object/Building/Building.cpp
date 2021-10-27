@@ -64,6 +64,7 @@ void Building::Update()
 {
 	HPCheck();
 	Object::Update();
+
 }
 
 
@@ -95,7 +96,8 @@ void Building::ColliderSizeChange(COLLIDER val)
 }
 
 void Building::HPCheck()
-{	
+{
+	SB->SetHit(false);
 	switch (BuildIndex)
 	{
 	case 1:
@@ -158,5 +160,7 @@ void Building::HPCheck()
 		break;
 	}
 }
+
+
 
 

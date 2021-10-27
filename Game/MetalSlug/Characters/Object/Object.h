@@ -37,4 +37,5 @@ protected:
 	vector<Projectile*> vecHitProjectile;
 	bool IsRender = true;
 	bool IsNeedDestroy = false;
+
 };

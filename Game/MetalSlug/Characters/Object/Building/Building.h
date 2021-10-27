@@ -13,9 +13,10 @@ public:
 
 	void SetStage1Texture(TextureRect* val) { Stage1Texture = val; }
 	HP GetHP() { return ObjHP; }
+
+	int GetBuilding = 0;
 private:
 	bool isNeedDestroy = false;
 	int BuildIndex = 0;
-
 	TextureRect* Stage1Texture = nullptr;
 };

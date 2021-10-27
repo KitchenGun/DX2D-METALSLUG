@@ -87,6 +87,7 @@ void GameManager::EnemySpawn()
 {
 	static float DeltaTime = 0;
 	static int CamXPos = 0;
+	
 	switch (phase)
 	{
 	case 0:
@@ -95,6 +96,42 @@ void GameManager::EnemySpawn()
 			if (CamXPos != (int)Camera::Get()->GetCamPos().x)
 			{
 				AddEnemy(ENEMYTYPE::Grenadier, PM->GetPlayer()->GetPosition() + Vector3(1300, 300, 0));
+			}
+			DeltaTime = 0;
+		}
+		CamXPos = Camera::Get()->GetCamPos().x;
+		DeltaTime += Time::Delta();
+		break;
+	case 1:
+		if (DeltaTime > SpawnRate)
+		{
+			if (CamXPos != (int)Camera::Get()->GetCamPos().x)
+			{
+				AddEnemy(ENEMYTYPE::Grenadier, PM->GetPlayer()->GetPosition() + Vector3(1300, 300, 0));
+			}
+			DeltaTime = 0;
+		}
+		CamXPos = Camera::Get()->GetCamPos().x;
+		DeltaTime += Time::Delta();
+		break;
+	case 2:
+		if (DeltaTime > SpawnRate)
+		{
+			if (CamXPos != (int)Camera::Get()->GetCamPos().x)
+			{
+				AddEnemy(ENEMYTYPE::Grenadier, PM->GetPlayer()->GetPosition() + Vector3(1300, 800, 0));
+			}
+			DeltaTime = 0;
+		}
+		CamXPos = Camera::Get()->GetCamPos().x;
+		DeltaTime += Time::Delta();
+		break;
+	case 5:
+		if (DeltaTime > SpawnRate)
+		{
+			if (CamXPos != (int)Camera::Get()->GetCamPos().x)
+			{
+				AddEnemy(ENEMYTYPE::Grenadier, PM->GetPlayer()->GetPosition() + Vector3(2000, 1000, 0));
 			}
 			DeltaTime = 0;
 		}
@@ -115,10 +152,6 @@ void GameManager::Update()
 	}
 	else
 	{
-		//cout << "Phase :" << phase << endl;
-		//cout <<"Cam :"<< String::ToString(Camera::Get()->GetCamPos()) << endl;
-		//cout <<"Player :"<< String::ToString(PM->GetPlayer()->GetPointPos()) << endl;
-
 		PlayerTracking();
 		CameraMove();
 		EnemySpawn();
@@ -152,7 +185,7 @@ void GameManager::PlayerTracking()
 		//건물 파괴이후
 		phase = 3;
 	}
-	else if(Target->GetHP() < 30)
+	else if(Target->GetHP() < 40)
 	{//건물 단계가 터지기 일보 직전단계일때 헬기 스폰
 		static bool Trigger = false;
 		if (Trigger == false)
