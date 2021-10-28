@@ -57,6 +57,7 @@
 #include "Characters/UI/Ammo/AmmoUI.h"
 #include "Characters/UI/Score/ScoreUI.h"
 #include "Characters/UI/Timer/Timer.h"
+#include "Characters/UI/Start/Start.h"
 #include "Characters/UI/Manager/UIManager.h"
 
 class Scene

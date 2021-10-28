@@ -8,11 +8,13 @@ UIManager::UIManager(PlayerManager* pm,GameManager* gm)
 	ammoUI = new AmmoUI(pm);
 	scoreUI = new ScoreUI(gm);
 	timer = new Timer(pm);
+	start = new Start();
 }
 
 UIManager::~UIManager()
 {
 	SAFE_DELETE(gm);
+	SAFE_DELETE(start);
 	SAFE_DELETE(pm);
 	SAFE_DELETE(timer);
 	SAFE_DELETE(scoreUI);
@@ -27,6 +29,7 @@ void UIManager::Update()
 	{
 		timer->Update();
 	}
+	start->Update();
 }
 
 void UIManager::Render()
@@ -34,4 +37,5 @@ void UIManager::Render()
 	ammoUI->Render();
 	scoreUI->Render();
 	timer->Render();
+	start->Render();
 }

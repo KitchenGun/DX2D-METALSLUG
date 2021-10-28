@@ -14,5 +14,6 @@ private:
 	ScoreUI* scoreUI=nullptr;
 	Timer* timer = nullptr;
 	PlayerManager* pm = nullptr;
+	Start* start = nullptr;
 	GameManager* gm = nullptr;
 };
