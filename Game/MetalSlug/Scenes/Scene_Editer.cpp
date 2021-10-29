@@ -87,7 +87,7 @@ void Editer::Init()
 	PlayerPM->SetTargetM(EnemyM);
 	PlayerPM->SetEPM(EnemyPM);
 	EnemyPM->SetTargetM(PlayerM);
-	PlayerM->AddPlayer(Vector3(50 *3, 700, 0));
+	//PlayerM->AddPlayer(Vector3(50 *3, 700, 0));
 
 	GameM = new GameManager(PlayerM, EnemyM);
 	UIM = new UIManager(PlayerM,GameM);

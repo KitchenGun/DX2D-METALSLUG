@@ -6,6 +6,13 @@ GameManager::GameManager(PlayerManager* pm, EnemyManager* em)
 	EM(em)
 {
 	Camera::Get()->SetCamPos(Vector3(80, 50, 0));//높이50
+	//사운드
+	BGM = new SoundSystem();
+	BGM->CreateBGSound("_Sounds/GM/Stage.mp3");
+	Announcer = new SoundSystem();
+	Announcer->CreateEffSound("_Sounds/GM/mission-start.mp3");
+	BGM->Play();
+	Announcer->Play();
 }
 
 GameManager::~GameManager()
@@ -157,11 +164,24 @@ void GameManager::Update()
 		EnemySpawn();
 		Win();
 	}
+	BGM->Update();
+	Announcer->Update();
 }
 
 void GameManager::PlayerTracking()
 {
-	if (PM->GetPlayer()->GetPosition().x > 14700)
+	if (PM->GetPlayer()->GetPosition().x > 14900)
+	{
+		static bool Trigger = false;
+		if (Trigger == false)
+		{
+			BGM->Stop();
+			BGM->ChangeSoundFunc(L"_Sounds/GM/Boss.mp3");
+			BGM->Play();
+			Trigger = true;
+		}
+	}
+	else if (PM->GetPlayer()->GetPosition().x > 14600)
 	{
 		//보스전
 		phase = 6;
@@ -223,6 +243,7 @@ void GameManager::HeliDestroy()
 
 void GameManager::Win()
 {
+
 	if (phase > 5)
 	{
 		for (Enemy* temp : EM->GetEnemyList())
@@ -232,7 +253,18 @@ void GameManager::Win()
 				if (temp->GetHP() <= 0)
 				{
 					PM->GetPlayer()->Win();
-					isWin = true;
+					isWin = true; 
+					static bool Trigger = false;
+					if (Trigger == false)
+					{
+						BGM->Stop();
+						Announcer->Stop();
+						BGM->ChangeSoundFunc(L"_Sounds/GM/StageClear.mp3");
+						Announcer->ChangeSoundFunc(L"_Sounds/GM/mission-complete.wav");
+						BGM->Play();
+						Announcer->Play();
+						Trigger = true;
+					}
 				}
 			}
 		}

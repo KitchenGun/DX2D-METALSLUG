@@ -35,4 +35,5 @@ private:
 	int Score=0;
 
 	SoundSystem* BGM = nullptr;
+	SoundSystem* Announcer = nullptr;
 };
