@@ -4,10 +4,17 @@
 PlayerManager::PlayerManager(ProjectileManager* ppm, EnemyManager* em)
 :PPM(ppm),EM(em)
 {
+	Voice = new SoundSystem();
+	Voice->SetVolume(0.5f);
+	Voice->CreateEffSound("_Sounds/Player/Die.wav");
+	Sfx = new SoundSystem();
 }
 
 PlayerManager::~PlayerManager()
 {
+	SAFE_DELETE(Sfx);
+	SAFE_DELETE(Voice);
+
 	SAFE_DELETE(PPM);
 
 	for (Ground* temp : GroundList)
@@ -33,11 +40,13 @@ void PlayerManager::Update()
 				tempPlayer->SetisGround(Math::GroundIntersect(tempPlayer, GroundList));
 			}
 			tempPlayer->Update();
+			DieSoundPlay();
 			if (tempPlayer->GetisDestroy())
 			{
 				RemovePlayer(tempPlayer);
 				break;
 			}
+			
 		}
 	}
 }
@@ -59,6 +68,8 @@ void PlayerManager::AddPlayer(Vector3 position)
 	player = new Player(position, Vector3(30 * 3, 40 * 3, 1), 0);
 	player->SetPM(PPM);
 	player->SetEM(EM);
+	player->SetPlayerM(this);
+	isDieTrigger = false;
 	playerList.push_back(player);
 }
 
@@ -72,4 +83,37 @@ void PlayerManager::RemovePlayer(Player* tempPlayer)
 			break;
 		}
 	}
+}
+
+void PlayerManager::DieSoundPlay()
+{
+	if (player!=nullptr&&player->GetDie())
+	{
+		Voice->CreateEffSound("_Sounds/Player/Die.wav");
+		if (!isDieTrigger)
+		{
+			Voice->Play();
+			isDieTrigger = true;
+		}
+	}
+}
+
+void PlayerManager::GunFireSoundPlay(bool isHeavy)
+{
+	if (isHeavy)
+	{
+		Sfx->CreateEffSound("_Sounds/Player/HMG_Fire.mp3");
+		Sfx->Play();
+	}
+	else
+	{
+		Sfx->CreateEffSound("_Sounds/Player/Pistol.mp3");
+		Sfx->Play();
+	}
+}
+
+void PlayerManager::KnifeSoundPlay()
+{
+	Sfx->CreateEffSound("_Sounds/Player/Knife.wav");
+	Sfx->Play();
 }

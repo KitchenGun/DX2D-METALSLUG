@@ -1,4 +1,5 @@
 #pragma once
+class PlayerManager;
 class ProjectileManager;
 class EnemyManager;
 class Projectile;
@@ -134,6 +135,9 @@ public://Get&Set
 	PROJECTILETYPE GetProjectileType() { return PlayerProjectileType; }
 	int GetAmmo() { return Ammo; }
 	int GetBomb() { return Bomb; }
+	bool GetDie() { return isDie; }
+	void SetPlayerM(PlayerManager* val) { PlayerM = val; }
+	bool GetisHeavy() { return isHeavyFire; }
 protected:
 	PROJECTILETYPE HitBy=PROJECTILETYPE::NONE;
 	HP PlayerHP = 1;
@@ -197,4 +201,5 @@ private:
 	float ThrowRate = 1 / 10.0f;
 	bool isCoolTime = false;
 
+	PlayerManager* PlayerM = nullptr;;
 };

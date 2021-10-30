@@ -22,10 +22,12 @@ Player::Player(Vector3 position, Vector3 size, float rotation)
 	texture = new Texture2D(L"./_Textures/TestBox.png");
 
 	TransformVertices();
+
 }
 
 Player::~Player()
 {
+	SAFE_DELETE(PlayerM);
 	SAFE_DELETE(PM);
 	SAFE_DELETE(obbInfo);
 	PlayerAnimationRect::~PlayerAnimationRect();
@@ -80,8 +82,6 @@ void Player::Update()
 	SetUpperAni();
 	lowerBody->Update();
 	upperBody->Update();
-
-
 }
 
 void Player::Render()
@@ -730,6 +730,7 @@ void Player::Knife()
 					{
 						if (dynamic_cast<EnemySoldier*>(temp)->GetState()!=ENEMYSOLDIERSTATE::DIE)
 						{
+							PlayerM->KnifeSoundPlay();
 							firePos.Rotation = 0;
 							isKnife = true;
 							isAtk = true;
@@ -857,10 +858,12 @@ void Player::Fire(bool isFirstHandUp,bool isFirstCrouchJump)
 	{
 	case PROJECTILETYPE::PISTOL:
 	//pistol
+		PlayerM->GunFireSoundPlay(false);
 		PM->AddBullet(firePos.Pos, Vector3(17, 3*IMGsize, 1), firePos.Rotation, dir, PlayerProjectileType);
 		break;
 	case PROJECTILETYPE::HEAVY:
 	//Heavy
+		PlayerM->GunFireSoundPlay(true);
 		isHeavyFire = true;
 		HeavyFireCount = 6;
 		break;
@@ -1249,7 +1252,6 @@ void Player::Hit(DAMAGE val, Projectile* tempProjectile)
 	if (tempProjectile == nullptr)
 	{
 		PlayerHP -= val;
-		return;
 	}
 
 	if (NowTemp != PrevTemp)

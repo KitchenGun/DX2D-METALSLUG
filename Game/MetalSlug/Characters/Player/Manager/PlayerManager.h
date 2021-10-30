@@ -10,7 +10,9 @@ public:
 
 	void AddPlayer(Vector3 position);
 	void RemovePlayer(Player* tempPlayer);
-
+	void DieSoundPlay();
+	void GunFireSoundPlay(bool isHeavy);
+	void KnifeSoundPlay();
 	void SetGroundList(vector<Ground*> val) { GroundList = val; }
 	list<Player*> GetPlayerList() { return playerList; }
 	Player* GetPlayer() { return player; }
@@ -23,4 +25,9 @@ private:
 	EnemyManager* EM = nullptr;
 
 	Player* player;
+	bool isDieTrigger = false;
+
+	//»ç¿îµå
+	SoundSystem* Voice = nullptr;
+	SoundSystem* Sfx = nullptr;
 };
