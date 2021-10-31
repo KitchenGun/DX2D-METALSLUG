@@ -20,6 +20,8 @@ public:
 	void SetGroundList(vector<Ground*> val) { GroundList = val; }
 	void SetOM(ObjectManager* val) { OM = val; }
 	void SetEPM(ProjectileManager* val) { EPM = val; }
+	
+	void GrenadeSoundPlay(Grenade* temp);
 	list<Projectile*> GetList() {return projectileList;}
 
 	const bool bIsPM;
@@ -34,4 +36,6 @@ private:
 	vector<Ground*> GroundList;
 	//enemyProjectile 충돌처리를 위해서
 	ProjectileManager* EPM = nullptr;
+
+	SoundSystem* sound = nullptr;
 };

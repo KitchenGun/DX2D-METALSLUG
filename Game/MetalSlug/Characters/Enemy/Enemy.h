@@ -1,6 +1,6 @@
 #pragma once
 class Projectile;
-
+class EnemyManager;
 enum class ENEMYTYPE
 {
 	NONE = 0,
@@ -38,6 +38,8 @@ public:
 	DIRECTION GetDir() { return dir; }
 	ENEMYTYPE GetET() { return enemyType; }
 	HP GetHP() { return EnemyHP; }
+	void SetEM(EnemyManager* val) { EM = val; }
+	
 protected:
 	bool isGround = false;//지상 판정
 	Vector3 RootPos;
@@ -59,11 +61,9 @@ protected:
 	HP EnemyHP = 1;
 	ENEMYTYPE enemyType = ENEMYTYPE::NONE;
 	PROJECTILETYPE HitBy = PROJECTILETYPE::NONE;
-
 	//이동 속도
 	SPEED walkSpeed=0;
 	SPEED runSpeed=0;
-
 	//방향
 	FirePos firePos;
 	DIRECTION dir = DIRECTION::LEFT;
@@ -71,7 +71,8 @@ protected:
 	Projectile* PrevTemp=nullptr;
 	//playermanager
 	PlayerManager* pm;
-
 	//enemyprojectileManager
 	ProjectileManager* epm;
+	//em
+	EnemyManager* EM = nullptr;
 };

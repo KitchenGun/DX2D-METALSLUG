@@ -8,6 +8,8 @@ EnemyManager::EnemyManager(ProjectileManager* epm)
 
 EnemyManager::~EnemyManager()
 {
+	SAFE_DELETE(Sfx);
+	SAFE_DELETE(Voice);
 	SAFE_DELETE(boss);
 	SAFE_DELETE(SFXM);
 	SAFE_DELETE(GM);

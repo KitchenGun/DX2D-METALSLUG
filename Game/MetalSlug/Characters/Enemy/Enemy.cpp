@@ -17,9 +17,10 @@ Enemy::Enemy(Vector3 position, Vector3 size, float rotation, ENEMYTYPE enemyType
 
 Enemy::~Enemy()
 {
-	SAFE_DELETE(PrevTemp);
+	SAFE_DELETE(EM);
+	SAFE_DELETE(epm);
 	SAFE_DELETE(pm);
-	ProjectileManager* epm=nullptr;
+	SAFE_DELETE(PrevTemp);
 	SAFE_DELETE(obbInfo);
 	PlayerAnimationRect::~PlayerAnimationRect();
 }

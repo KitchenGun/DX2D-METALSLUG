@@ -16,4 +16,6 @@ public:
 private:
 	list<SFX*> SFXList;
 	list<SFX*>::iterator iter;
+
+	SoundSystem* sound = nullptr;
 };

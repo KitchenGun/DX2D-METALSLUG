@@ -11,6 +11,7 @@ public:
 	void AddPlayer(Vector3 position);
 	void RemovePlayer(Player* tempPlayer);
 	void DieSoundPlay();
+	void GetHeavy();
 	void GunFireSoundPlay(bool isHeavy);
 	void KnifeSoundPlay();
 	void SetGroundList(vector<Ground*> val) { GroundList = val; }

@@ -29,4 +29,7 @@ private:
 	SFXManager* SFXM;
 
 	Enemy* boss = nullptr;
+
+	SoundSystem* Voice = nullptr;
+	SoundSystem* Sfx = nullptr;
 };

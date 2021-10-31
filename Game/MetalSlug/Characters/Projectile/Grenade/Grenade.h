@@ -14,6 +14,9 @@ public:
 	bool GetIsHit() { return isHit; }
 	void SetIsHit(bool val) { isHit = val; }
 	void SetSFXM(SFXManager* val) { SFXM = val; }
+
+	bool GetIsSoundOutput() { return isSoundOutput; }
+	void SetIsSoundOutput(bool val) { isSoundOutput = val; }
 private:
 	float ThrowingTime = 0;//던지고 경과한 시간
 	float MaxTime = 0;
@@ -23,6 +26,8 @@ private:
 	float animationRate = 1 / 10.0f;
 	Vector3 StartPos;
 	bool isHit = false;
+
+	bool isSoundOutput = false;
 	//지면
 	int GroundIntersectCount = 0;
 

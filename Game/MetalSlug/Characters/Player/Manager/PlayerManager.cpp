@@ -5,9 +5,10 @@ PlayerManager::PlayerManager(ProjectileManager* ppm, EnemyManager* em)
 :PPM(ppm),EM(em)
 {
 	Voice = new SoundSystem();
-	Voice->SetVolume(0.5f);
-	Voice->CreateEffSound("_Sounds/Player/Die.wav");
 	Sfx = new SoundSystem();
+	Sfx->CreateEffSound("_Sounds/Player/HMG_Fire.mp3");
+	Sfx->CreateEffSound("_Sounds/Player/Pistol.mp3");
+	Sfx->CreateEffSound("_Sounds/Player/Knife.wav");
 }
 
 PlayerManager::~PlayerManager()
@@ -98,8 +99,15 @@ void PlayerManager::DieSoundPlay()
 	}
 }
 
+void PlayerManager::GetHeavy()
+{
+	Voice->CreateEffSound("_Sounds/Item/Heavy.wav");
+	Voice->Play();
+}
+
 void PlayerManager::GunFireSoundPlay(bool isHeavy)
 {
+	Sfx->SetVolume(0.1f);
 	if (isHeavy)
 	{
 		Sfx->CreateEffSound("_Sounds/Player/HMG_Fire.mp3");
@@ -107,7 +115,7 @@ void PlayerManager::GunFireSoundPlay(bool isHeavy)
 	}
 	else
 	{
-		Sfx->CreateEffSound("_Sounds/Player/Pistol.mp3");
+		Sfx->ChangeSoundFunc(L"_Sounds/Player/Pistol.mp3");
 		Sfx->Play();
 	}
 }

@@ -30,7 +30,7 @@ private:
 	struct FMOD_SOUND*	sound = nullptr;
 	struct FMOD_CHANNEL* channel = nullptr;
 
-	float volume = 0.2f;
+	float volume = 1.0f;
 	bool bMute = false;
 	bool bLoop = false;
 	bool bPlaying;

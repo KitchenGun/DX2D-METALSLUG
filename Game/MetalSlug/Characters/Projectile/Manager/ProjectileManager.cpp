@@ -5,10 +5,12 @@ ProjectileManager::ProjectileManager(SFXManager* sfxm,bool isPM)
 	:bIsPM(isPM),
 	SFXM(sfxm)
 {
+	sound = new SoundSystem();
 }
 
 ProjectileManager::~ProjectileManager()
 {
+	SAFE_DELETE(sound);
 	SAFE_DELETE(EPM);
 	for (Ground* temp : GroundList)
 	{
@@ -60,6 +62,17 @@ void ProjectileManager::Update()
 					}
 					RemoveProjectile(tempProjectile);
 					break;//삭제시 프로젝트 리스트가 변경되서 break걸고 다시 돌려야함
+				}
+			}
+			else
+			{
+				Grenade* temp = dynamic_cast<Grenade*>(tempProjectile);
+				if (temp->GetIsHit())
+				{
+					if (!temp->GetIsSoundOutput())
+					{
+						GrenadeSoundPlay(temp);
+					}
 				}
 			}
 			if (tempProjectile->GetIsNeedDestroy())
@@ -164,5 +177,15 @@ void ProjectileManager::RemoveProjectile(Projectile* Target)
 			iter=projectileList.erase(iter);
 			break;
 		}
+	}
+}
+
+void ProjectileManager::GrenadeSoundPlay(Grenade* temp)
+{
+	if (!temp->GetIsSoundOutput())
+	{
+		sound->CreateEffSound("_Sounds/SFX/HeliBomb.wav");
+		sound->Play();
+		temp->SetIsSoundOutput(true);
 	}
 }

@@ -3,10 +3,12 @@
 
 SFXManager::SFXManager()
 {
+	sound = new SoundSystem();
 }
 
 SFXManager::~SFXManager()
 {
+	SAFE_DELETE(sound);
 	for (SFX* temp : SFXList)
 	{
 		SAFE_DELETE(temp);
@@ -47,22 +49,32 @@ void SFXManager::AddSFX(Vector3 position, DIRECTION dir, PROJECTILETYPE BT, bool
 	switch (BT)
 	{
 	case PROJECTILETYPE::NONE:
+		sound->CreateEffSound("_Sounds/SFX/HitMetal.wav");
+		sound->Play();
 		tempB = new BulletSFX(position, SFXTYPE::BLOOD, dir);
 		SFXList.push_back(tempB);
 		break;
 	case PROJECTILETYPE::PISTOL:
+		sound->CreateEffSound("_Sounds/SFX/HitMetal.wav");
+		sound->Play();
 		tempB = new BulletSFX(position,SFXTYPE::BULLET, dir);
 		SFXList.push_back(tempB);
 		break;
 	case PROJECTILETYPE::HEAVY:
+		sound->CreateEffSound("_Sounds/SFX/HitMetal.wav");
+		sound->Play();
 		tempB = new BulletSFX(position, SFXTYPE::BULLET, dir);
 		SFXList.push_back(tempB);
 		break;
 	case PROJECTILETYPE::EnemyGrenade:
+		sound->CreateEffSound("_Sounds/SFX/EnemyGrenade.wav");
+		sound->Play();
 		tempB = new BulletSFX(position, SFXTYPE::ENEMYGRENADE, dir);
 		SFXList.push_back(tempB);
 		break;
 	case PROJECTILETYPE::HELIBOMB:
+		sound->CreateEffSound("_Sounds/SFX/HeliBomb.wav");
+		sound->Play();
 		tempB = new BulletSFX(position, SFXTYPE::EXPLOSION, dir, loop);
 		SFXList.push_back(tempB);
 		break;

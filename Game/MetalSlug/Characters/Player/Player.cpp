@@ -1304,6 +1304,7 @@ void Player::ItemTake(PROJECTILETYPE ItemInfo)
 	switch (ItemInfo)
 	{
 	case PROJECTILETYPE::HEAVY:
+		PlayerM->GetHeavy();
 		if (PlayerProjectileType == PROJECTILETYPE::HEAVY)
 		{
 			Ammo += 200;
