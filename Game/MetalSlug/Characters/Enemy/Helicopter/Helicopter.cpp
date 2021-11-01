@@ -106,7 +106,7 @@ void Helicopter::AltitudeHold()
 {
 	if (this->position.y - pm->GetPlayer()->GetPosition().y > Altitude)
 	{
-		this->position += Vector3(0, -75, 0) * Time::Delta();
+		this->position += Vector3(0, -105, 0) * Time::Delta();
 		D3DXMatrixTranslation(&T, this->position.x, this->position.y, this->position.z);
 
 		world = S * R * T;
@@ -128,18 +128,34 @@ void Helicopter::PlayerPosTracking()
 	float thisXPos = this->r.Point.x;
 	float playerXPos = pm->GetPlayer()->GetPointPos().x;
 
+	float Range = playerXPos - thisXPos;
+	float RangeNormalize = 0.0f;
+	Range = abs(Range);
+	if (Range>500)
+	{
+		RangeNormalize=1.0f;
+	}
+	else
+	{
+		RangeNormalize = Range / 500;
+	}
+
+
+	speed=Math::Lerpf(0, 500, RangeNormalize);
+
+
 	if (thisXPos-10 > playerXPos)//player보다 앞에 있는 경우
 	{
 		HeliState = HELISTATE::LEFTMOVE;
 		animator->SetCurrentAnimClip(L"RFlyB");
-		tempPos = Vector3(-200, 0, 0);
+		tempPos = Vector3(-speed, 0, 0);
 		SetPos(tempPos);
 	}
 	else if (playerXPos>thisXPos+10)//player가 앞에 있는 경우
 	{
 		HeliState=HELISTATE::RIGHTMOVE;
 		animator->SetCurrentAnimClip(L"RFlyF");
-		tempPos = Vector3(200, 0, 0);
+		tempPos = Vector3(speed, 0, 0);
 		SetPos(tempPos);
 	}
 }

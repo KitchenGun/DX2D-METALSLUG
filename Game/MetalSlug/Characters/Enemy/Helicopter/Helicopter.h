@@ -33,4 +33,5 @@ private:
 	float AtkRate = 2.0f;
 	float DropRate = 0.3f;
 	float Altitude = 0;
+	SPEED speed = 0.0f;
 };
