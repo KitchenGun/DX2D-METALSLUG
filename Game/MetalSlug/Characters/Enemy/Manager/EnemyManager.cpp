@@ -4,6 +4,8 @@
 EnemyManager::EnemyManager(ProjectileManager* epm)
 	:EPM(epm)
 {
+	Voice = new SoundSystem();
+	Sfx = new SoundSystem();
 }
 
 EnemyManager::~EnemyManager()
@@ -52,7 +54,7 @@ void EnemyManager::Update()
 	if (boss != nullptr)
 	{
 		static bool die = false;
-		if (boss->GetHP() < 0)
+		if (boss->GetHP() <= 0)
 		{
 			if (die == false)
 			{
@@ -91,6 +93,7 @@ void EnemyManager::AddEnemy(Vector3 position, ENEMYTYPE enemyType)
 	}
 	tempEnemy->SetPM(PM);
 	tempEnemy->SetEPM(EPM);
+	tempEnemy->SetEM(this);
 	enemyList.push_back(tempEnemy);
 }
 
@@ -100,6 +103,7 @@ void EnemyManager::AddBoss(Vector3 position)
 	tempEnemy = new Boss(position, Vector3(384 * 3, 288 * 3, 1), 0);
 	tempEnemy->SetPM(PM);
 	tempEnemy->SetEPM(EPM);
+	tempEnemy->SetEM(this);
 	enemyList.push_back(tempEnemy);
 	boss = tempEnemy;
 }
@@ -124,5 +128,77 @@ void EnemyManager::RemoveEnemy(Enemy* tempEnemy)
 			break;
 		}
 	}
+}
+
+void EnemyManager::ScearmSoundPlay()
+{
+	Voice->CreateEffSound("_Sounds/Enemy/Soldier/Surprise.wav");
+	Voice->Play();
+}
+
+void EnemyManager::DieSoundPlay()
+{
+	Sfx->Stop();
+	switch (rand() % 4)
+	{
+	case 0:
+		Sfx->CreateEffSound("_Sounds/Enemy/Soldier/Die.wav");
+		Sfx->Play();
+		break;
+	case 1:
+		Sfx->CreateEffSound("_Sounds/Enemy/Soldier/Die1.wav");
+		Sfx->Play();
+		break;
+	case 2:
+		Sfx->CreateEffSound("_Sounds/Enemy/Soldier/Die2.wav");
+		Sfx->Play();
+		break;
+	case 3:
+		Sfx->CreateEffSound("_Sounds/Enemy/Soldier/Die3.wav");
+		Sfx->Play();
+		break;
+	default:
+		Sfx->CreateEffSound("_Sounds/Enemy/Soldier/Die.wav");
+		Sfx->Play();
+		break;
+	}
+}
+
+void EnemyManager::DropBomb()
+{
+	Sfx->Stop();
+	Sfx->CreateEffSound("_Sounds/Heli/Drop.wav");
+	Sfx->Play();
+}
+
+void EnemyManager::BossAtrySoundPlay()
+{
+	Sfx->Stop();
+	Sfx->CreateEffSound("_Sounds/Boss/ArtyFire.wav");
+	Sfx->Play();
+}
+
+void EnemyManager::BossDie()
+{
+	Sfx->CreateEffSound("_Sounds/Boss/BossDie.wav");
+	Sfx->Play();
+}
+
+void EnemyManager::BossChangeMode()
+{
+	Sfx->CreateEffSound("_Sounds/Boss/BossChangeMode.wav");
+	Sfx->Play();
+}
+
+void EnemyManager::BossLaserCharge()
+{
+	Sfx->CreateEffSound("_Sounds/Boss/LaserCharge.wav");
+	Sfx->Play();
+}
+
+void EnemyManager::BossLaserFire()
+{
+	Sfx->CreateEffSound("_Sounds/Boss/LaserFire.wav");
+	Sfx->Play();
 }
 

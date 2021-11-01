@@ -18,6 +18,15 @@ public:
 	void SetGroundList(vector<Ground*> val) { GroundList = val; }
 	list<Enemy*> GetEnemyList() { return enemyList; }
 	void SetSFX(SFXManager* val) { SFXM = val; }
+
+	void ScearmSoundPlay();
+	void DieSoundPlay();
+	void DropBomb();
+	void BossAtrySoundPlay();
+	void BossDie();
+	void BossChangeMode();
+	void BossLaserCharge();
+	void BossLaserFire();
 private:
 	list<Enemy*> enemyList;
 	list<Enemy*>::iterator iter;
@@ -32,4 +41,5 @@ private:
 
 	SoundSystem* Voice = nullptr;
 	SoundSystem* Sfx = nullptr;
+	SoundSystem* Heli = nullptr;
 };

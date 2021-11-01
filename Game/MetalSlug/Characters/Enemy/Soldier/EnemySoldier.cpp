@@ -171,6 +171,7 @@ void EnemySoldier::Move()
 
 void EnemySoldier::Die()
 {
+	EM->DieSoundPlay();
 	grenadierAni->SetHit(true);
 	isDie = true;
 	enemyState = ENEMYSOLDIERSTATE::DIE;
@@ -333,6 +334,7 @@ void EnemySoldier::ScoutRangeCheck()
 						{
 							if (!isSpot)
 							{
+								EM->ScearmSoundPlay();
 								enemyState = ENEMYSOLDIERSTATE::SURPRISE;
 							}
 							else if (isSpot == true)
@@ -360,6 +362,7 @@ void EnemySoldier::ScoutRangeCheck()
 						dir = DIRECTION::RIGHT;
 						if (target == nullptr)
 						{
+							EM->ScearmSoundPlay();
 							enemyState = ENEMYSOLDIERSTATE::SURPRISE;
 						}
 						else
@@ -386,6 +389,7 @@ void EnemySoldier::ScoutRangeCheck()
 					else
 					{//플레이어보다 오른쪽에 있을 경우
 						dir = DIRECTION::LEFT;
+						EM->ScearmSoundPlay();
 						enemyState = ENEMYSOLDIERSTATE::SURPRISE;
 						//도망치도록 제작
 						nextEnemyState = ENEMYSOLDIERSTATE::RUN;

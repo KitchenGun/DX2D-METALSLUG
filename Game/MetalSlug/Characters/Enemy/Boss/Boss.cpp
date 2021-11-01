@@ -10,7 +10,7 @@ Boss::Boss(Vector3 position, Vector3 size, float rotation)
 	BossBody = new TextureRect(position, size, 0);
 	BossBody->SetSRV(L"./_Textures/Map/BossObj-0.png");
 	bossCannon = new BossCannon(position, Vector3(53 * 3, 79 * 3, 0), this);
-	EnemyHP = 150;
+	EnemyHP = 200;
 	texture = new Texture2D(L"./_Textures/TestBox.png");
 	animClips.push_back(new AnimationClip(L"test", texture, 1, { 0, 0 }, { (float)texture->GetWidth(),(float)texture->GetHeight() }));
 	animator = new Animator(animClips);
@@ -134,6 +134,13 @@ void Boss::SetAni()
 	}
 	case BOSSSTATE::ARTYTOLASER:
 	{
+		if (bossCannon->GetAnimator()->GetIndex() == 1)
+		{
+			if (phase == 1)
+			{
+				EM->BossChangeMode();
+			}
+		}
 		if (bossCannon->GetAnimator()->isFirstPlay)
 		{
 			nextState = BOSSSTATE::ARTYTOLASER;
@@ -146,6 +153,13 @@ void Boss::SetAni()
 	}
 	case BOSSSTATE::LASERCHARGE:
 	{
+		if (bossCannon->GetAnimator()->GetIndex() == 0)
+		{
+			if (phase == 1)
+			{
+				EM->BossLaserCharge();
+			}
+		}
 		static float DeltaTime = 0;
 		if (!isLaserATK && phase == 0)
 		{
@@ -190,6 +204,7 @@ void Boss::LaserAtk()
 	if (!isLaserFire)
 	{
 		isLaserFire = true;
+		EM->BossLaserFire();
 		epm->AddLaser(firePos.Pos+Vector3(-555,-90,0), Vector3(300 * 4, 10 * 4, 0), PROJECTILETYPE::BOSSLASER);
 	}
 	if (bossCannon->GetAnimator()->GetIndex()==5)
@@ -204,6 +219,7 @@ void Boss::LaserAtk()
 	}
 	if (!bossCannon->GetAnimator()->isFirstPlay)
 	{
+		EM->BossChangeMode();
 		isLaserATK = false;
 		nextState = BOSSSTATE::LASERTOARTY;
 		isLaserFire = false;
@@ -213,6 +229,7 @@ void Boss::LaserAtk()
 
 void Boss::ArtyAtk(float Angle)
 {
+	EM->BossAtrySoundPlay();
 	epm->AddArty(firePos.Pos, Vector3(10 * 4, 10 * 4, 0), Angle,PROJECTILETYPE::BOSSARTY);
 }
 
@@ -252,6 +269,12 @@ int Boss::ArtyAngle()
 
 void Boss::Die()
 {
+	static bool Trigger = false;
+	if (!Trigger)
+	{
+		EM->BossDie();
+		Trigger = true;
+	}
 	for (Projectile* temp : epm->GetList())
 	{
 		if (temp->GetPT() == PROJECTILETYPE::BOSSLASER)

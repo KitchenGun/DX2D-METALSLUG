@@ -73,7 +73,14 @@ void SFXManager::AddSFX(Vector3 position, DIRECTION dir, PROJECTILETYPE BT, bool
 		SFXList.push_back(tempB);
 		break;
 	case PROJECTILETYPE::HELIBOMB:
-		sound->CreateEffSound("_Sounds/SFX/HeliBomb.wav");
+		if (rand() % 2 == 0)
+		{
+			sound->CreateEffSound("_Sounds/SFX/Explosion.wav");
+		}
+		else
+		{
+			sound->CreateEffSound("_Sounds/SFX/Explosion1.wav");
+		}
 		sound->Play();
 		tempB = new BulletSFX(position, SFXTYPE::EXPLOSION, dir, loop);
 		SFXList.push_back(tempB);

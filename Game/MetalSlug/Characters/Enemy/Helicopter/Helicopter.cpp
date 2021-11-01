@@ -76,6 +76,7 @@ void Helicopter::AddBomb()
 	{
 		DeltaTime = 0;
 		DropCount++;
+		EM->DropBomb();
 		epm->AddHeliBomb(this->r.Point+Vector3(0,-80,0), Vector3(14 * 3, 26 * 3, 1));
 	}
 	else

@@ -66,7 +66,6 @@ Grenade::Grenade(Vector3 position, Vector3 size, float rotation, DIRECTION dir, 
 	else if (pt == PROJECTILETYPE::BOSSARTY)
 	{
 		Angle = (float)D3DXToRadian(rotation);
-		cout << D3DXToDegree(Angle) << endl;
 		texture = new Texture2D(L"./_Textures/SFX/Weapon/EnemyBossArty.png");
 		animator->SetCurrentAnimClip(L"EnemyBossArty", false);
 	}
