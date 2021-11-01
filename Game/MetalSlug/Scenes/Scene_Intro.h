@@ -15,5 +15,8 @@ public:
 	int index=0;
 
 private:
-private:
+	TextureRect* Main = nullptr;
+	SoundSystem* BGM = nullptr;
+	SoundSystem* OK = nullptr;
+	bool IsStart = false;
 };

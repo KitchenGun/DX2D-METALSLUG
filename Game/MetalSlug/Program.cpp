@@ -18,7 +18,7 @@ void Program::Init()
 	sceneList.push_back(new Intro());
 	sceneList.push_back(new Editer());
 	sceneList.push_back(new Stage());
-	currentScene = sceneList[1];
+	currentScene = sceneList[0];
 	currentScene->Init();
 }
 
@@ -27,11 +27,13 @@ void Program::Update()
 {
 
 	Camera::Get()->Update();
-	
-	if (Keyboard::Get()->Down(VK_F1))
+	if (sceneList[0] == currentScene)
 	{
-		currentScene = sceneList[0];
-		currentScene->Init();
+		if (dynamic_cast<Intro*>(currentScene)->index == 1)
+		{
+			currentScene = sceneList[1];
+			currentScene->Init();
+		}
 	}
 	
 	currentScene->Update();

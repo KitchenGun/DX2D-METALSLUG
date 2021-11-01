@@ -87,7 +87,7 @@ void Editer::Init()
 	PlayerPM->SetTargetM(EnemyM);
 	PlayerPM->SetEPM(EnemyPM);
 	EnemyPM->SetTargetM(PlayerM);
-	//PlayerM->AddPlayer(Vector3(50 *3, 700, 0));
+	PlayerM->AddPlayer(Vector3(50 *3, 2000, 0));
 
 	GameM = new GameManager(PlayerM, EnemyM);
 	UIM = new UIManager(PlayerM,GameM);
@@ -107,6 +107,7 @@ void Editer::Init()
 	//¾ÆÀÌÅÛ
 	ObjectM->AddObject(Vector3(2050, 170, 0), ObjectType::BOX, true);
 	ObjectM->AddObject(Vector3(5050, 80, 0), ObjectType::BOX, true);
+	ObjectM->AddObject(Vector3(12550, 80, 0), ObjectType::BOX, true);
 	LoadGroundTile(L"./GroundData/Stage1.data");
 	PlayerM->SetGroundList(GroundList);
 	EnemyM->SetGroundList(GroundList);
