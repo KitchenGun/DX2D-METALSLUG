@@ -191,7 +191,7 @@ void GameManager::PlayerTracking()
 		static bool Trigger = false;
 		if (Trigger == false)
 		{
-			EM->AddBoss(Vector3(15900, 810, 0));
+			EM->AddEnemy(Vector3(15900, 810, 0),ENEMYTYPE::Boss);
 			Trigger = true;
 		}
 		phase = 5;

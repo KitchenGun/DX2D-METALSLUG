@@ -88,6 +88,9 @@ void EnemyManager::AddEnemy(Vector3 position, ENEMYTYPE enemyType)
 	case ENEMYTYPE::Helicopter:
 		tempEnemy = new Helicopter(position, Vector3(89 * 3, 68 * 3, 1), 500);
 		break;
+	case ENEMYTYPE::Boss:
+		tempEnemy = new Boss(position, Vector3(384 * 3, 288 * 3, 1), 0);
+		break;
 	default:
 		break;
 	}
@@ -95,17 +98,6 @@ void EnemyManager::AddEnemy(Vector3 position, ENEMYTYPE enemyType)
 	tempEnemy->SetEPM(EPM);
 	tempEnemy->SetEM(this);
 	enemyList.push_back(tempEnemy);
-}
-
-void EnemyManager::AddBoss(Vector3 position)
-{
-	Enemy* tempEnemy = nullptr;
-	tempEnemy = new Boss(position, Vector3(384 * 3, 288 * 3, 1), 0);
-	tempEnemy->SetPM(PM);
-	tempEnemy->SetEPM(EPM);
-	tempEnemy->SetEM(this);
-	enemyList.push_back(tempEnemy);
-	boss = tempEnemy;
 }
 
 void EnemyManager::RemoveEnemy(Enemy* tempEnemy)
