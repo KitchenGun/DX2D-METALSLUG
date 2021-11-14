@@ -99,7 +99,7 @@ void PlayerManager::DieSoundPlay()
 	}
 }
 
-void PlayerManager::GetHeavy()
+void PlayerManager::GetHeavySoundPlay()
 {
 	Voice->CreateEffSound("_Sounds/Item/Heavy.wav");
 	Voice->Play();

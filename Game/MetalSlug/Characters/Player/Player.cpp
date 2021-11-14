@@ -722,13 +722,13 @@ void Player::Knife()
 	{
 		for (Enemy* temp : EM->GetEnemyList())
 		{
-			if (temp->GetTransformedCoord().Point.x > r.Point.x)
+			if (temp->GetET() == ENEMYTYPE::Grenadier)
 			{
-				if (Math::Distance(temp->GetTransformedCoord().Point, this->r.Point) <= KnifeRange)
+				if (temp->GetTransformedCoord().Point.x > r.Point.x)
 				{
-					if (temp->GetET() == ENEMYTYPE::Grenadier)
+					if (Math::Distance(temp->GetTransformedCoord().Point, this->r.Point) <= KnifeRange)
 					{
-						if (dynamic_cast<EnemySoldier*>(temp)->GetState()!=ENEMYSOLDIERSTATE::DIE)
+						if (dynamic_cast<EnemySoldier*>(temp)->GetState() != ENEMYSOLDIERSTATE::DIE)
 						{
 							PlayerM->KnifeSoundPlay();
 							firePos.Rotation = 0;
@@ -736,13 +736,13 @@ void Player::Knife()
 							isAtk = true;
 							if (isCrouch)
 							{
-								PM->AddBullet(r.Point + Vector3(KnifeRange / 2, 0, 0), Vector3(KnifeRange, 5 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::KNIFE);
+								PM->AddBullet(r.Point + Vector3(KnifeRange / 2, 0, 0), Vector3(KnifeRange, 5 * IMGsize, 1), 0, dir, PROJECTILETYPE::KNIFE);
 								upperBody->SetClip("CrouchKnifeATK");
 								soldierUpperState = SOLDIERSTATE::CROUCHKNIFEATK;
 							}
 							else
 							{
-								PM->AddBullet(r.Point + Vector3(KnifeRange / 2, 0, 0), Vector3(KnifeRange, 5 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::KNIFE);
+								PM->AddBullet(r.Point + Vector3(KnifeRange / 2, 0, 0), Vector3(KnifeRange, 5 * IMGsize, 1), 0, dir, PROJECTILETYPE::KNIFE);
 								upperBody->SetClip("KnifeATK");
 								soldierUpperState = SOLDIERSTATE::KNIFEATK;
 							}
@@ -765,13 +765,13 @@ void Player::Knife()
 					isAtk = true;
 					if (isCrouch)
 					{
-						PM->AddBullet(r.Point - Vector3(KnifeRange / 2, 0, 0), Vector3(KnifeRange, 5 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::KNIFE);
+						PM->AddBullet(r.Point - Vector3(KnifeRange / 2, 0, 0), Vector3(KnifeRange, 5 * IMGsize, 1), 0, dir, PROJECTILETYPE::KNIFE);
 						upperBody->SetClip("CrouchKnifeATK");
 						soldierUpperState = SOLDIERSTATE::CROUCHKNIFEATK;
 					}
 					else
 					{
-						PM->AddBullet(r.Point - Vector3(KnifeRange / 2, 0, 0), Vector3(KnifeRange, 5 * IMGsize, 1), firePos.Rotation, dir, PROJECTILETYPE::KNIFE);
+						PM->AddBullet(r.Point - Vector3(KnifeRange / 2, 0, 0), Vector3(KnifeRange, 5 * IMGsize, 1), 0, dir, PROJECTILETYPE::KNIFE);
 						upperBody->SetClip("KnifeATK");
 						soldierUpperState = SOLDIERSTATE::KNIFEATK;
 					}
@@ -858,15 +858,18 @@ void Player::Fire(bool isFirstHandUp,bool isFirstCrouchJump)
 	{
 	case PROJECTILETYPE::PISTOL:
 	//pistol
+	{
 		PlayerM->GunFireSoundPlay(false);
-		PM->AddBullet(firePos.Pos, Vector3(17, 3*IMGsize, 1), firePos.Rotation, dir, PlayerProjectileType);
+		PM->AddBullet(firePos.Pos, Vector3(17, 3 * IMGsize, 1), firePos.Rotation, dir, PlayerProjectileType);
 		break;
+	}
 	case PROJECTILETYPE::HEAVY:
 	//Heavy
-		PlayerM->GunFireSoundPlay(true);
-		isHeavyFire = true;
-		HeavyFireCount = 6;
-		break;
+	{	PlayerM->GunFireSoundPlay(true);
+	isHeavyFire = true;
+	HeavyFireCount = 6;
+	break;
+	}
 	default:
 		break;
 	}
@@ -1304,7 +1307,7 @@ void Player::ItemTake(PROJECTILETYPE ItemInfo)
 	switch (ItemInfo)
 	{
 	case PROJECTILETYPE::HEAVY:
-		PlayerM->GetHeavy();
+		PlayerM->GetHeavySoundPlay();
 		if (PlayerProjectileType == PROJECTILETYPE::HEAVY)
 		{
 			Ammo += 200;

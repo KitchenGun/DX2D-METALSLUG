@@ -284,7 +284,6 @@ bool Math::GroundObbIntersect(Player* p1, Ground* g1)
 		p1->GetObbInfo()->alphaVal = g1->GetTransformedCoord().RT.y - (p1->GetObbInfo()->Gradient * (g1->GetTransformedCoord().RT.x - 30));
 	}
 
-
 	Vector3 dist = p1->GetRootPos() - g1->GetTransformedCoord().Point;
 	Vector3 r1Up = p1->Up() * 0.5f;
 	Vector3 r1Right = p1->Right() * 0.5f;

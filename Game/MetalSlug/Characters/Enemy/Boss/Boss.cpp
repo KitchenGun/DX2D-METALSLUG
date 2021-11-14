@@ -307,7 +307,7 @@ void Boss::HPCheck()
 		phase = 1;
 	}
 
-	if (EnemyHP >= 275)
+	if (EnemyHP >= 175)
 	{
 		BossBody->SetSRV(L"./_Textures/Map/BossObj-0.png");
 	}

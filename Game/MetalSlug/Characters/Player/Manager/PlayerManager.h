@@ -10,17 +10,20 @@ public:
 
 	void AddPlayer(Vector3 position);
 	void RemovePlayer(Player* tempPlayer);
+
+	//사운드
 	void DieSoundPlay();
-	void GetHeavy();
+	void GetHeavySoundPlay();
 	void GunFireSoundPlay(bool isHeavy);
 	void KnifeSoundPlay();
+	//GetSet
 	void SetGroundList(vector<Ground*> val) { GroundList = val; }
 	list<Player*> GetPlayerList() { return playerList; }
 	Player* GetPlayer() { return player; }
 private:
 	list<Player*> playerList;
 	list<Player*>::iterator iter;
-	//지형
+	
 	vector<Ground*> GroundList;
 	ProjectileManager* PPM = nullptr;
 	EnemyManager* EM = nullptr;

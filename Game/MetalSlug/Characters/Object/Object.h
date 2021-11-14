@@ -6,7 +6,6 @@ enum class ObjectType
 	ROCK,
 	BOX,
 	BUILDING,
-	POW
 };
 
 class Object :public PlayerAnimationRect
